@@ -1,0 +1,44 @@
+{
+  "name": "undraw-ui",
+  "version": "0.3.1",
+  "author": {
+    "name": "readpage",
+    "email": "f1dao@qq.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/undraw/undraw-ui.git"
+  },
+  "keywords": [
+    "undraw-ui",
+    "element-plus",
+    "component library",
+    "ui framework",
+    "ui",
+    "vue"
+  ],
+  "homepage": "https://gitee.com/undraw/undraw-ui.git",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "style": "lib/style.css",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "build:package": "vue-tsc --noEmit && vite build -c build/vite.config.ts"
+  },
+  "dependencies": {
+    "element-plus": "^2.1.8",
+    "vue": "^3.2.31"
+  },
+  "devDependencies": {
+    "@types/node": "^16.4.7",
+    "@vitejs/plugin-vue": "^2.3.0",
+    "sass": "^1.49.7",
+    "typescript": "^4.5.4",
+    "unplugin-vue-define-options": "^0.6.0",
+    "vite": "^2.9.0",
+    "vite-plugin-dts": "^1.0.5",
+    "vue-tsc": "^0.29.8"
+  }
+}

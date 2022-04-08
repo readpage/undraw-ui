@@ -1,0 +1,19 @@
+# 忽略目录
+.git/
+docs/
+node_modules/
+packages/
+packages2/
+**/static
+
+# 忽略指定文件
+.vscode/*
+.gitignore
+.npmignore
+favicon.ico
+env.d.ts
+index.html
+package-lock.json
+tsconfig.json
+tsconfig.node.json
+vite.config.ts
