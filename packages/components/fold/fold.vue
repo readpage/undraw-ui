@@ -6,17 +6,16 @@
       </div>
     </div>
     <div class="action-box user-select">
-      <div class="expand-btn" v-if="isOver && unfold" @click="fold = !fold">{{fold ? '展开' : '收起'}}</div>
+      <div v-if="isOver && unfold" class="expand-btn" @click="fold = !fold">{{ fold ? '展开' : '收起' }}</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from "vue"
-import { isEmpty } from "~/utils";
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 defineOptions({
-  name: "UFold"
+  name: 'UFold'
 })
 
 interface Props {
@@ -25,7 +24,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  line: 5,
+  line: 5
 })
 const line = computed(() => {
   let line = Math.trunc(Number(props.line))
@@ -43,21 +42,20 @@ let observer: ResizeObserver
 
 onMounted(() => {
   observer = new ResizeObserver(entry => {
-    if (fold.value&&divBox.value) {
+    if (fold.value && divBox.value) {
       //offsetHeight：包括内容可见部分的高度，border，可见的padding，水平方向的scrollbar（如果存在）；不包括margin。
       // clientHeight：包括内容可见部分的高度，可见的padding；不包括border，水平方向的scrollbar，margin。
       //scrollHeight：包括内容的高度（可见与不可见），padding（可见与不可见）；不包括border，margin。
       isOver.value = divBox.value.offsetHeight < divBox.value.scrollHeight
     }
   })
- 
-	observer.observe(divBox.value as any);
+
+  observer.observe(divBox.value as any)
 })
 
 onUnmounted(() => {
   observer.disconnect()
 })
-
 </script>
 
 <style lang="scss" scoped>
@@ -89,10 +87,8 @@ onUnmounted(() => {
     text-overflow: ellipsis;
     //设置或检索伸缩盒对象的子元素的排列方式。
     -webkit-box-orient: vertical;
-    //用来限制在一个块元素显示的文本的行数。 
+    //用来限制在一个块元素显示的文本的行数。
     -webkit-line-clamp: v-bind(line);
   }
 }
-
-
 </style>

@@ -1,16 +1,21 @@
 # 忽略目录
 .git/
-docs/
+build/
+examples/
 node_modules/
 packages/
-packages2/
+public/
 **/static
 
 # 忽略指定文件
 .vscode/*
+favicon.ico
+.eslintignore
+.eslintrc.js
 .gitignore
 .npmignore
-favicon.ico
+.prettierignore
+.prettierrc.js
 env.d.ts
 index.html
 package-lock.json

@@ -7,3 +7,9 @@ declare module '*.vue' {
   export default component
   export function DefineOptions<DefineComponent>(): Readonly<DefineComponent>
 }
+
+declare module '*.md' {
+  import { Component } from 'vue'
+  const component: Component
+  export default component
+}

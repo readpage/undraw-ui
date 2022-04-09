@@ -1,0 +1,26 @@
+table {
+  display: block;
+  width: 100%;
+  background: #fff;
+  color: #494949;
+  font-size: 14px;
+  //边框会合并为一个单一的边框
+  border-collapse: collapse;
+  overflow: auto;
+  margin-bottom: 30px;
+  th {
+    border: 0.8px solid #dcdfe6;
+    padding: 15px;
+    text-align: left;
+    font-size: 13.2px;
+    color: #494949;
+    background: #fafbfc;
+  }
+  td {
+    border: 0.8px solid #dcdfe6;
+    padding: 15px;
+    text-align: left;
+    font-size: 13.2px;
+    color: #494949;
+  }
+}

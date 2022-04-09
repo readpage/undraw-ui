@@ -1,6 +1,7 @@
 {
   "name": "undraw-ui",
-  "version": "0.3.1",
+  "private": false,
+  "version": "0.3.2",
   "author": {
     "name": "readpage",
     "email": "f1dao@qq.com"
@@ -19,26 +20,36 @@
   ],
   "homepage": "https://gitee.com/undraw/undraw-ui.git",
   "license": "ISC",
-  "main": "lib/index.js",
-  "style": "lib/style.css",
+  "main": "dist/index.js",
+  "style": "dist/style.css",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "build:package": "vue-tsc --noEmit && vite build -c build/vite.config.ts"
+    "build:package": "vue-tsc --noEmit && vite build -c build/vite.config.ts",
+    "format": "prettier --write **/*.{ts,js,json,vue}"
   },
   "dependencies": {
     "element-plus": "^2.1.8",
+    "undraw-ui": "^0.3.2",
     "vue": "^3.2.31"
   },
   "devDependencies": {
     "@types/node": "^16.4.7",
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.18.0",
     "@vitejs/plugin-vue": "^2.3.0",
+    "eslint": "^8.12.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.6.0",
+    "prettier": "^2.6.2",
     "sass": "^1.49.7",
     "typescript": "^4.5.4",
     "unplugin-vue-define-options": "^0.6.0",
     "vite": "^2.9.0",
     "vite-plugin-dts": "^1.0.5",
+    "vite-plugin-vuedoc": "^3.1.3",
     "vue-tsc": "^0.29.8"
   }
 }
