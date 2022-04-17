@@ -14,7 +14,7 @@ export default defineConfig({
     DefineOptions(),
     dts({
       include: ['packages/**/*'],
-      exclude: ['node_modules/**', 'examples/**']
+      exclude: ['node_modules/**', 'demo/**']
     })
   ],
   resolve: {

@@ -1,10 +1,12 @@
 import { h, render } from 'vue'
 import { withInstall } from '~/utils'
-import toast, { toastApi } from './index.vue'
+import toast from './index.vue'
+import type { ToastApi } from './index.vue'
 
 // 函数式调用
-export function UToast(options: toastApi) {
+export function UToast(options: ToastApi) {
   let delay = options.delay
+  if (!options.message) return
   options.delay = delay ? delay : 1000
   // 根据components定义生成虚拟DOM
   const vnode = h(toast, options)

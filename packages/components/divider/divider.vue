@@ -1,7 +1,7 @@
 <template>
   <div class="u-divider" :class="{ vertical: vertical }">
     <fieldset class="field">
-      <legend class="inner" :class="contentPosition"><slot></slot></legend>
+      <legend v-if="$slots.default" class="inner" :class="contentPosition"><slot></slot></legend>
     </fieldset>
   </div>
 </template>
@@ -53,6 +53,7 @@ onUnmounted(() => {
   .field {
     border: 0;
     padding: 0;
+    margin: 0;
     border-top: 1px v-bind('props.borderStyle') #dcdfe6;
 
     .inner {

@@ -1,14 +1,15 @@
 # 忽略目录
+.vscode/
 .git/
 build/
-examples/
+docs/
+demo/
 node_modules/
 packages/
 public/
-**/static
+**/static/
 
 # 忽略指定文件
-.vscode/*
 favicon.ico
 .eslintignore
 .eslintrc.js

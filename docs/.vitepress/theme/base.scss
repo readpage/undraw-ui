@@ -1,0 +1,19 @@
+pre {
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0px;
+  padding: 0.25rem;
+  margin: 0;
+  text-align: left;
+  overflow-x: auto;
+
+  code {
+    padding: 0;
+    font-family: var(--code-font-family);
+    font-size: 14px;
+    color: var(--c-text-light);
+    background-color: transparent;
+  }
+}
+

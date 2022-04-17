@@ -1,5 +1,6 @@
 <template>
   <u-fold unfold line="1" style="width: 50px">hello world!</u-fold>
+  <u-divider />
   <u-divider>我是分割线</u-divider>
   <u-divider border-style="dashed">我是虚线</u-divider>
   <span>left</span>

@@ -1,12 +1,14 @@
 <template>
-  <svg class="u-icon" aria-hidden="true" :style="style">
-    <use :xlink:href="name"></use>
-  </svg>
+  <i class="u-icon" :style="style">
+    <slot v-if="$slots.default" />
+    <svg v-else aria-hidden="true">
+      <use :xlink:href="name"></use>
+    </svg>
+  </i>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import './iconfont'
 import { isNumber } from '~/utils'
 
 defineOptions({
@@ -14,7 +16,7 @@ defineOptions({
 })
 
 interface Props {
-  name: string
+  name?: string
   size?: string | number
   color?: string
 }
@@ -34,10 +36,12 @@ const style = computed(() => {
 
 <style lang="scss" scoped>
 .u-icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.15em;
-  fill: currentColor;
-  overflow: hidden;
+  :deep(svg) {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
 }
 </style>

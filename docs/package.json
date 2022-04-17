@@ -1,0 +1,29 @@
+{
+  "name": "docs",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build"
+  },
+  "dependencies": {
+    "element-plus": "^2.1.8",
+    "undraw-ui": "^0.3.7",
+    "vue": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/escape-html": "^1.0.2",
+    "@types/markdown-it": "^12.2.3",
+    "@types/markdown-it-container": "^2.0.5",
+    "@types/node": "^16.4.7",
+    "@types/prismjs": "^1.26.0",
+    "escape-html": "^1.0.3",
+    "markdown-it": "^12.3.2",
+    "markdown-it-container": "^3.0.0",
+    "prismjs": "^1.27.0",
+    "sass": "^1.49.7",
+    "typescript": "^4.5.4",
+    "unplugin-vue-define-options": "^0.6.0",
+    "vitepress": "^0.22.3"
+  }
+}

@@ -15,7 +15,7 @@
 import { onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import iconVue from '../icon'
 
-export interface toastApi {
+export interface ToastApi {
   message?: string
   delay?: number
   type?: string
@@ -25,7 +25,7 @@ defineOptions({
   name: 'UToast'
 })
 
-const props = withDefaults(defineProps<toastApi>(), {
+const props = withDefaults(defineProps<ToastApi>(), {
   message: '',
   delay: 2000,
   type: 'normal'
