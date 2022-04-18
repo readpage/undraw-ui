@@ -6,6 +6,7 @@ docs/
 demo/
 node_modules/
 packages/
+demo-dist/
 public/
 **/static/
 

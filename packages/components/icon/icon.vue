@@ -22,8 +22,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size: 16,
-  color: 'inherit'
+  size: 16
 })
 const name = computed(() => '#icon' + props.name)
 const style = computed(() => {

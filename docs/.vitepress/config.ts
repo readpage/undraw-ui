@@ -58,6 +58,7 @@ export default defineConfig({
   title: 'undraw-ui',
   description: 'a Vue 3 based component library for designers and developers',
   themeConfig: {
+    logo: '/u.webp',
     nav,
     sidebar,
     algolia: {

@@ -5,7 +5,6 @@ import 'element-plus/dist/index.css'
 
 import UndrawUi from '~/index'
 import '~/base.scss'
-import '@/assets/iconfont'
 
 const app = createApp(App)
 app.use(ElementPlus)

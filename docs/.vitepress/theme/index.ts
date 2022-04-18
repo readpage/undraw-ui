@@ -2,9 +2,7 @@ import { globals } from '../components/index'
 import DefaultTheme from 'vitepress/theme'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import UndrawUi from 'undraw-ui'
 import 'undraw-ui/dist/style.css'
-import 'undraw-ui/dist/iconfont'
 import './base.scss'
 
 export default {
@@ -15,6 +13,8 @@ export default {
       await import('undraw-ui').then(module => {
         app.use(module.default)
       })
+      // @ts-ignore
+      await import('undraw-ui/dist/iconfont')
     }
     globals.forEach(([name, Comp]) => {
       app.component(name, Comp)

@@ -3,12 +3,14 @@
   <u-icon name="comment2" color="#67c23a" size="24"></u-icon>
   <u-icon name="dianzan" color="#67c23a" size="24"></u-icon>
   <u-icon name="dianzan2" color="#67c23a" size="24"></u-icon>
-  <u-icon>
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
-      <path d="M160 389a20.91 20.91 0 0 1-13.82-5.2l-128-112a21 21 0 0 1 0-31.6l128-112a21 21 0 0 1 27.66 31.61L63.89 256l109.94 96.19A21 21 0 0 1 160 389z" fill="currentColor"></path>
-      <path d="M352 389a21 21 0 0 1-13.84-36.81L448.11 256l-109.94-96.19a21 21 0 0 1 27.66-31.61l128 112a21 21 0 0 1 0 31.6l-128 112A20.89 20.89 0 0 1 352 389z" fill="currentColor"></path>
-    </svg>
-  </u-icon>
+  <div class="test">
+    <u-icon>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
+        <path d="M160 389a20.91 20.91 0 0 1-13.82-5.2l-128-112a21 21 0 0 1 0-31.6l128-112a21 21 0 0 1 27.66 31.61L63.89 256l109.94 96.19A21 21 0 0 1 160 389z" fill="currentColor"></path>
+        <path d="M352 389a21 21 0 0 1-13.84-36.81L448.11 256l-109.94-96.19a21 21 0 0 1 27.66-31.61l128 112a21 21 0 0 1 0 31.6l-128 112A20.89 20.89 0 0 1 352 389z" fill="currentColor"></path>
+      </svg>
+    </u-icon>
+  </div>
   <u-icon>
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
       <path
@@ -17,9 +19,15 @@
       ></path>
     </svg>
   </u-icon>
+  <u-icon name="top"></u-icon>
 </template>
 <script setup lang="ts">
 import {} from 'vue'
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.test {
+  color: skyblue;
+  display: inline-block;
+}
+</style>
