@@ -1,4 +1,4 @@
-  <p style="line-height: 55px; height: 80px; text-align: center;">
+  <p align="center" style="line-height: 55px; height: 80px">
     <img width="55px" style="vertical-align: top;"  src="https://s2.loli.net/2022/04/19/srdvW4MyYbmzIUD.png">
     <span style="font-size: 40px; ">ndrawUI</span>
   </p>
@@ -15,6 +15,7 @@
    <a href="https://github.com/element-plus/element-plus">
     <img src="https://img.shields.io/badge/dependencies-ElementPlus%E2%89%A52.1.8-green">
   </a>
+
 
 <p align="center">Undraw UI - A Vue.js 3 UI library</p>
 
