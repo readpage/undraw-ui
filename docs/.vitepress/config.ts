@@ -3,8 +3,8 @@ import { mdPlugin } from './plugins'
 
 export const nav: DefaultTheme.NavItem[] = [
   {
-    text: '指导',
-    link: '/guide/design'
+    text: '指南',
+    link: '/guide/introduce'
   },
   {
     text: '组件',
@@ -15,15 +15,19 @@ export const nav: DefaultTheme.NavItem[] = [
 export const sidebar:DefaultTheme.MultiSideBarConfig = {
   '/guide/': [
     {
-      text: '指导',
+      text: '指南',
       children: [
         {
-          text: '设计',
-          link: '/guide/design'
+          text: '介绍',
+          link: '/guide/introduce'
         },
         {
           text: '安装',
           link: '/guide/install'
+        },
+        {
+          text: '使用',
+          link: '/guide/usage'
         }
       ]
     },
@@ -33,19 +37,27 @@ export const sidebar:DefaultTheme.MultiSideBarConfig = {
       text: '组件',
       children: [
         {
-          text: "折叠",
+          text: "Fold 折叠",
           link: '/components/fold'
         },
         {
-          text: "评论",
+          text: "Comment 评论",
           link: '/components/comment'
         },
         {
-          text: "分隔",
+          text: 'Anchor 锚点',
+          link: '/components/anchor'
+        },
+        {
+          text: 'Chat 聊天',
+          link: '/components/chat'
+        },
+        {
+          text: "Divider 分割线",
           link: '/components/divider'
         },
         {
-          text: "图标",
+          text: "Icon 图标",
           link: '/components/icon'
         }
       ]

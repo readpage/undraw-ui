@@ -38,11 +38,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, ref } from 'vue'
+import { computed, inject, nextTick, ref } from 'vue'
 import CommentBox from './comment-box.vue'
-import { UFold, UIcon } from '~/components'
+import { EmojiApi, InjectionEmojiApi, UFold, UIcon } from '~/components'
 import type { CommentBoxApi } from './comment-box.vue'
-import { emojiList } from './emoji/emoji'
 import { commentApi } from '.'
 
 interface Props {
@@ -56,6 +55,8 @@ const props = defineProps<Props>()
 const active = ref(false)
 const commentRef = ref<CommentBoxApi>()
 const btnRef = ref<HTMLDivElement>()
+
+const emojiApi = inject(InjectionEmojiApi) as EmojiApi
 
 function reply() {
   active.value = !active.value
@@ -81,7 +82,7 @@ function parse(val: string): string {
   const reg = /\[.+?\]/g
   val = val.replace(reg, (str: any) => {
     let src = ''
-    emojiList.map((item: any) => {
+    emojiApi.emojiList.map((item: any) => {
       if (item[str]) {
         src = item[str]
       }

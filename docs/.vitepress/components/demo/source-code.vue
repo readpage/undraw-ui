@@ -1,6 +1,6 @@
 <template>
   <div class="source-wrapper">
-    <div class="source" v-html="source"></div>
+    <div class="source source-vue" v-html="source"></div>
   </div>
 </template>
 <script setup lang="ts">

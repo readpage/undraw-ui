@@ -9,7 +9,7 @@
     <div class="emoji-body user-select">
       <div class="emjio-container" :style="{ transform: `translateX(${offsetX}%)` }">
         <div v-for="(list, index) in emojis" :key="index" class="emoji-wrapper">
-          <span v-for="(value, key) in list" :key="key" class="emoji-item" @click="$emit('addEmoji', key)">
+          <span v-for="(value, key) in list" :key="key" class="emoji-item" @click="$emit('addEmoji', (key as unknown as string))">
             <el-image :src="value" :title="String(key)" class="emoji" style="width: 24px; height: 24px; margin: 5px" lazy></el-image>
           </span>
         </div>
@@ -32,12 +32,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { emojiList, faceList } from './emoji'
+import { inject, ref, toRefs, reactive } from 'vue'
+import { InjectionEmojiApi, EmojiApi } from '~/components'
 
 const activeIndex = ref(0)
 const offsetX = ref(0)
-const emojis = ref<{}[]>(new Array(2))
+const emojis = ref(new Array(2))
+
+const emojiApi = inject(InjectionEmojiApi) as EmojiApi
+const { emojiList, faceList } = toRefs(emojiApi)
 
 const emit = defineEmits<{
   (e: 'addEmoji', key: string): void
@@ -52,13 +55,13 @@ function change(val: number) {
       break
     case 1:
       offsetX.value = -50
-      emojis.value[1] = emojiList[1]
+      emojis.value[1] = emojiList.value[1]
       break
   }
 }
 
 function onBefore() {
-  emojis.value[0] = emojiList[0]
+  emojis.value[0] = emojiList.value[0]
 }
 </script>
 

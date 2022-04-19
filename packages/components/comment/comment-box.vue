@@ -23,7 +23,7 @@
 import { isEmpty } from '~/utils/index'
 import { ClickOutside as vClickOutside } from 'element-plus'
 import { inject, nextTick, ref } from 'vue'
-import Emoji from './emoji/index.vue'
+import Emoji from './emoji.vue'
 import { editorInstance } from '../editor'
 import { commentFun, InjectionCommentFun } from '.'
 

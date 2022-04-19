@@ -1,6 +1,9 @@
 <template>
   <ClientOnly>
+    <p v-html="decodeURIComponent(description)"></p>
     <div class="example">
+      <exampleVue :example="examples[path]" />
+      <u-divider style="margin: 0;" />
       <div class="op-btns">
         <el-tooltip content="复制代码">
           <u-icon class="op-btn" name="copy" @click="copyCode"></u-icon>
@@ -9,9 +12,6 @@
           <u-icon class="op-btn" name="code" @click="sourceVisible = !sourceVisible"></u-icon>
         </el-tooltip>
       </div>
-      <u-divider style="margin: 0;" />
-      {{decodeURIComponent(description)}}
-      <exampleVue :example="example" />
       <el-collapse-transition v-show="sourceVisible">
         <sourceCodeVue :source="decodeURIComponent(source)" />
       </el-collapse-transition>
@@ -36,6 +36,7 @@ import { useClipboard } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
 
 export interface DemoProps {
+  path: string
   demos: any
   description: string
   source: string
@@ -48,12 +49,12 @@ const { copy, isSupported } =  useClipboard({
   source: decodeURIComponent(props.rawSource)
 })
 
-const example = computed(() => {
-  let example = {}
-  Object.values(props.demos).forEach((item: any) => {
-    example = item.default
+const examples = computed(() => {
+  let examples: any[] = []
+  Object.keys(props.demos).forEach((key: any) => {
+    examples[key.replace('../../examples/', '').replace('.vue', '')] = props.demos[key].default
   })
-  return example
+  return examples
 })
 
 async function copyCode() {
@@ -80,8 +81,8 @@ async function copyCode() {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    height: 3rem;
-    line-height: 3rem;
+    height: 2rem;
+    line-height: 2rem;
     
     .op-btn {
       margin: 0 0.5rem;

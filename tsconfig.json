@@ -25,8 +25,8 @@
     "demo/**/*.vue",
     "packages/**/*.ts", 
     "packages/**/*.vue", 
-    "env.d.ts",
+    "env.d.ts", "public/emoji.ts",
   ],
-  "exclude": ["node_modules/**"],
+  "exclude": ["node_modules/**", "docs/**"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

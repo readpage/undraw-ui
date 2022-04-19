@@ -1,8 +1,8 @@
 const raw = 'http://cdn.undraw.cn'
 
-export const faceList = [`${raw}/emoji/smile.webp`, `${raw}/emoji/tv/tv.webp`]
+const faceList = [`${raw}/emoji/smile.webp`, `${raw}/emoji/tv/tv.webp`]
 
-export const emojiList = [
+const emojiList: {}[] = [
   {
     '[口罩]': `${raw}/emoji/kouzhao.webp`,
     '[狗头]': `${raw}/emoji/goutou.webp`,
@@ -126,3 +126,8 @@ export const emojiList = [
     '[tv_目瞪口呆]': `${raw}/emoji/tv/mudengkoudai.webp`
   }
 ]
+
+export default {
+  faceList,
+  emojiList
+}

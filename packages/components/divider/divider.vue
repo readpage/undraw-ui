@@ -1,7 +1,7 @@
 <template>
   <div class="u-divider" :class="{ vertical: vertical }">
     <fieldset class="field">
-      <legend v-if="$slots.default" class="inner" :class="contentPosition"><slot></slot></legend>
+      <legend v-if="$slots.default || vertical" class="inner" :class="position"><slot></slot></legend>
     </fieldset>
   </div>
 </template>
@@ -16,25 +16,25 @@ defineOptions({
 interface Props {
   borderStyle?: string
   vertical?: boolean
-  contentPosition?: string
+  position?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   borderStyle: 'solid',
-  contentPosition: 'center'
+  position: 'center'
 })
 
-const contentPosition = ref()
+const position = ref()
 
 const unwatch = watch(
-  () => props.contentPosition,
+  () => props.position,
   val => {
     switch (val) {
       case 'left':
-        contentPosition.value = 'is-left'
+        position.value = 'is-left'
         break
       case 'right':
-        contentPosition.value = 'is-right'
+        position.value = 'is-right'
         break
     }
   },

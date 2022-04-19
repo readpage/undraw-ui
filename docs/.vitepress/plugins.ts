@@ -42,13 +42,13 @@ export const mdPlugin = (md: MarkdownIt) => {
           if (existingScriptIndex === -1) {
             hoistedTags.push(`
               <script setup>
-              const demos = import.meta.globEager('../../examples/${sourceFile}.vue')
+              const demos = import.meta.globEager('../../examples/${sourceFile.split('/')[0]}/*.vue')
               </script>
             `)
           }
         }
         return `
-          <Demo :demos="demos" source="${encodeURIComponent(highlight(source, 'vue'))}" raw-source="${encodeURIComponent(source)}" description="${encodeURIComponent(markdown.render(description))}">`
+          <Demo :demos="demos" source="${encodeURIComponent(highlight(source, 'vue'))}" path="${sourceFile}" raw-source="${encodeURIComponent(source)}" description="${encodeURIComponent(markdown.render(description))}">`
       } else {
         return '</Demo>'
       }

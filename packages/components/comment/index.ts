@@ -1,8 +1,8 @@
-import { InjectionKey, Ref } from 'vue'
+import { InjectionKey } from 'vue'
 import { withInstall } from '~/utils'
 import commentVue from './comment.vue'
 
-export interface commentApi {
+export interface CommentApi {
   id: number
   parentId: number | null
   avatar: string
@@ -11,16 +11,22 @@ export interface commentApi {
   reply?: replyApi | null
 }
 
-export interface replyApi {
+export interface ReplyApi {
   total: number
-  list: commentApi[]
+  list: CommentApi[]
 }
 
-export interface commentFun {
+export interface EmojiApi {
+  faceList: string[]
+  emojiList: {}[]
+}
+
+export interface CommentFun {
   submit: (clear: () => void, content: string, parentId?: number) => void
 }
 
-export const InjectionCommentFun: InjectionKey<commentFun> = Symbol()
+export const InjectionCommentFun: InjectionKey<CommentFun> = Symbol()
+export const InjectionEmojiApi: InjectionKey<EmojiApi> = Symbol()
 
 export const UComment = withInstall(commentVue)
 export default UComment

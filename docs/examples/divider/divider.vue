@@ -7,8 +7,3 @@
   <u-divider content-position="left">我是左分割线</u-divider>
   <u-divider content-position="right">我是右分割线</u-divider>
 </template>
-<script setup lang="ts">
-import { ref } from 'vue'
-</script>
-
-<style lang="scss" scoped></style>

@@ -23,7 +23,8 @@
 
 <script setup lang="ts">
 import { provide } from 'vue'
-import { commentApi, InjectionCommentFun } from '.'
+import { commentApi, InjectionCommentFun, InjectionEmojiApi } from '.'
+import { EmojiApi } from '..'
 import CommentBox from './comment-box.vue'
 import CommentList from './comment-list.vue'
 
@@ -33,6 +34,7 @@ defineOptions({
 
 interface Props {
   comments: commentApi[]
+  emoji: EmojiApi
 }
 
 const props = defineProps<Props>()
@@ -46,6 +48,7 @@ function submit(clear: () => void, content: string, parentId: number | undefined
 }
 
 provide(InjectionCommentFun, { submit })
+provide(InjectionEmojiApi, props.emoji)
 </script>
 
 <style lang="scss" scoped>
