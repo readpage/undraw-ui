@@ -17,7 +17,12 @@
 
 
 
+
 <p align="center">Undraw UI - A Vue.js 3 UI library</p>
+
+# 入门
+
+请遵循[https://undraw.gitee.io/undraw-ui/](https://undraw.gitee.io/undraw-ui/)上的文档!
 
 # 安装
 
