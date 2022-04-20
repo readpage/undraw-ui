@@ -6,6 +6,7 @@
   <iconVue />
   <signVue />
   <editorVue /> -->
+  <commentVue />
   <tabsVue />
 </template>
 <script setup lang="ts">

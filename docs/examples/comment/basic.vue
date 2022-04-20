@@ -1,15 +1,15 @@
 <template>
-  <u-comment :comments="comments" :emoji="emoji" @submit="submit"></u-comment>
+  <u-comment :emojis="emojis" :comments="comments" @submit="submit"></u-comment>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { UToast, commentApi } from 'undraw-ui'
-import emoji from 'undraw-ui/dist/emoji'
+import { ref } from 'vue'
+import { UToast, CommentApi, CommentSubmitFun } from 'undraw-ui'
+import emojis from './emoji'
 
-const comments = ref([] as commentApi[])
+const comments = ref([] as CommentApi[])
 
-function submit(clear: () => void, content: string, parentId: number | undefined) {
+const submit: CommentSubmitFun = (clear, content, parentId) => {
   console.log(content, parentId)
   UToast({ message: '评论成功!', type: 'info' })
   clear()

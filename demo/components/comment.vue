@@ -1,13 +1,12 @@
 <template>
   <div class="comment-view">
-    <div>title</div>
     <u-comment :comments="comments" :emojis="emojis" style="width: 820px; margin-left: 2rem" @submit="submit"></u-comment>
   </div>
 </template>
 
 <script setup lang="ts">
-import { CommentApi, CommentSubmitFun } from '~/components/comment'
-import { UToast } from '~/index'
+import { CommentApi, CommentSubmitFun } from '^/index'
+import { UToast } from '^/index'
 import { onMounted, ref } from 'vue'
 import emojis from '@/assets/emoji'
 
