@@ -23,8 +23,8 @@
 
 <script setup lang="ts">
 import { provide } from 'vue'
-import { commentApi, InjectionCommentFun, InjectionEmojiApi } from '.'
-import { EmojiApi } from '..'
+import { CommentApi, InjectionCommentFun, InjectionEmojiApi } from '.'
+import { CommentSubmitFun, EmojiApi } from '..'
 import CommentBox from './comment-box.vue'
 import CommentList from './comment-list.vue'
 
@@ -33,8 +33,8 @@ defineOptions({
 })
 
 interface Props {
-  comments: commentApi[]
-  emoji: EmojiApi
+  comments: CommentApi[]
+  emojis: EmojiApi
 }
 
 const props = defineProps<Props>()
@@ -43,12 +43,12 @@ const emit = defineEmits<{
   (e: 'submit', clear: () => void, content: string, parentId?: number): void
 }>()
 
-function submit(clear: () => void, content: string, parentId: number | undefined) {
+const submit: CommentSubmitFun = (clear, content, parentId) => {
   emit('submit', () => clear(), content, parentId)
 }
 
-provide(InjectionCommentFun, { submit })
-provide(InjectionEmojiApi, props.emoji)
+provide(InjectionCommentFun, submit)
+provide(InjectionEmojiApi, props.emojis)
 </script>
 
 <style lang="scss" scoped>

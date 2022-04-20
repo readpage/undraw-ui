@@ -24,8 +24,9 @@ import { isEmpty } from '~/utils/index'
 import { ClickOutside as vClickOutside } from 'element-plus'
 import { inject, nextTick, ref } from 'vue'
 import Emoji from './emoji.vue'
-import { editorInstance } from '../editor'
-import { commentFun, InjectionCommentFun } from '.'
+import { EditorInstance } from '../editor'
+import { InjectionCommentFun } from '.'
+import { CommentSubmitFun } from '..'
 
 export interface CommentBoxApi {
   focus(): void
@@ -42,14 +43,14 @@ const props = defineProps<Props>()
 const content = ref('')
 const action = ref(false)
 const disabled = ref(true)
-const editorRef = ref<editorInstance>()
+const editorRef = ref<EditorInstance>()
 const popperRef = ref()
 
 const emit = defineEmits<{
   (e: 'hide', event: Event): void
 }>()
 
-const { submit } = inject(InjectionCommentFun) as commentFun
+const submit = inject(InjectionCommentFun) as CommentSubmitFun
 
 function onClickOutside(event: Event) {
   // const child = event.target as HTMLElement

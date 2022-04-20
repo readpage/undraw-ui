@@ -48,7 +48,7 @@ export default defineConfig({
         }
       },
       // 打包过滤掉第三方库
-      external: ['vue', 'element-plus']
+      external: ['vue', 'element-plus', 'sortablejs']
     }
   }
 })

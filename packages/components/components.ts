@@ -6,6 +6,6 @@ import Editor from './editor'
 import Fold from './fold'
 import Icon from './icon'
 import Sign from './sign'
-import Toast from './toast'
+import Tabs from './tabs'
 
-export default [Comment, Dialog, Divider, Editor, Fold, Icon, Sign, Toast] as Plugin[]
+export default [Comment, Dialog, Divider, Editor, Fold, Icon, Sign, Tabs] as Plugin[]

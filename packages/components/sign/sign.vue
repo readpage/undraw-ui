@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { signApi } from '.'
+import { SignApi } from '.'
 import formVue from './form.vue'
 
 defineOptions({
@@ -27,7 +27,7 @@ defineOptions({
 })
 
 const emit = defineEmits<{
-  (e: 'submit', form: signApi): void
+  (e: 'submit', form: SignApi): void
 }>()
 
 const visible = ref(false)

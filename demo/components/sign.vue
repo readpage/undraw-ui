@@ -3,10 +3,10 @@
 </template>
 
 <script setup lang="ts">
-import { signApi } from '~/components/sign'
+import { SignApi } from '~/components/sign'
 import {} from 'vue'
 
-function submit(form: signApi) {
+function submit(form: SignApi) {
   console.log(form)
 }
 </script>

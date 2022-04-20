@@ -8,7 +8,7 @@ export interface CommentApi {
   avatar: string
   username: string
   content: string
-  reply?: replyApi | null
+  reply?: ReplyApi | null
 }
 
 export interface ReplyApi {
@@ -21,11 +21,11 @@ export interface EmojiApi {
   emojiList: {}[]
 }
 
-export interface CommentFun {
-  submit: (clear: () => void, content: string, parentId?: number) => void
+export interface CommentSubmitFun {
+  (clear: () => void, content: string, parentId?: number): void
 }
 
-export const InjectionCommentFun: InjectionKey<CommentFun> = Symbol()
+export const InjectionCommentFun: InjectionKey<CommentSubmitFun> = Symbol()
 export const InjectionEmojiApi: InjectionKey<EmojiApi> = Symbol()
 
 export const UComment = withInstall(commentVue)

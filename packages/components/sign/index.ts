@@ -1,22 +1,22 @@
 import { withInstall } from '~/utils'
 import signVue from './sign.vue'
 
-export interface signApi {
+export interface SignApi {
   type: string
   email: string
   password: string
   checkPass?: string
 }
 
-export interface callBackApi {
+export interface CallBackApi {
   (message?: string | Error | undefined): Error | void
 }
 
-export interface validateApi {
-  (rule: object, value: string, callback: callBackApi): void
+export interface ValidateApi {
+  (rule: object, value: string, callback: CallBackApi): void
 }
 
-export type signInstance = InstanceType<typeof signVue>
+export type SignInstance = InstanceType<typeof signVue>
 
-const USign = withInstall(signVue)
+export const USign = withInstall(signVue)
 export default USign

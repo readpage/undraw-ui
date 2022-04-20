@@ -23,6 +23,9 @@
       </svg>
     </div>
     <slot></slot>
+    <template v-if="$slots.footer" #footer>
+      <slot name="footer"></slot>
+    </template>
   </el-dialog>
 </template>
 

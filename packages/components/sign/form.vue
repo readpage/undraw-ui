@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import { nextTick, reactive, ref, watch } from 'vue'
-import { signApi, validateApi } from '.'
+import { SignApi, ValidateApi } from '.'
 
 interface Props {
   modelValue: string
@@ -29,13 +29,13 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const form = reactive<signApi>({
+const form = reactive<SignApi>({
   type: '',
   email: '',
   password: ''
 })
 
-const checkEmail: validateApi = (rule, value, callback) => {
+const checkEmail: ValidateApi = (rule, value, callback) => {
   const emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
   if (!value) {
     return callback('请输入邮箱!')
@@ -44,7 +44,7 @@ const checkEmail: validateApi = (rule, value, callback) => {
   callback()
 }
 
-const validatePass: validateApi = (rule, value, callback) => {
+const validatePass: ValidateApi = (rule, value, callback) => {
   if (!value) {
     callback('请确认密码')
   } else if (value != form.password) {
@@ -120,7 +120,7 @@ watch(
 )
 
 const emit = defineEmits<{
-  (e: 'submit', form: signApi): void
+  (e: 'submit', form: SignApi): void
   (e: 'update:modelValue', key: string): void
   (e: 'toggle', val: number): void
 }>()

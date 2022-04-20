@@ -17,6 +17,7 @@
     "paths": {
       "@/*": ["demo/*"],
       "~/*": ["packages/*"],
+      "^/*": ["dist/*"]
     },
     "skipLibCheck": true
   },

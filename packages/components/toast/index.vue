@@ -17,7 +17,7 @@ import iconVue from '../icon'
 
 export interface ToastApi {
   message?: string
-  delay?: number
+  duration?: number
   type?: string
 }
 
@@ -27,7 +27,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<ToastApi>(), {
   message: '',
-  delay: 2000,
+  duration: 2000,
   type: 'normal'
 })
 
@@ -71,7 +71,7 @@ onMounted(() => {
   visible.value = true
   setTimeout(() => {
     visible.value = false
-  }, props.delay)
+  }, props.duration)
 })
 
 onUnmounted(() => {

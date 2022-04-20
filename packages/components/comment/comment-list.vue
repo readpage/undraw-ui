@@ -8,12 +8,12 @@
 
 <script setup lang="ts">
 import {} from 'vue'
-import { commentApi } from '.'
+import { CommentApi } from '.'
 import ContentBox from './content-box.vue'
 import ReplyBox from './reply-box.vue'
 
 interface Props {
-  data: commentApi[]
+  data: CommentApi[]
 }
 
 const props = defineProps<Props>()

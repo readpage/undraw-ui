@@ -53,12 +53,28 @@ export const sidebar:DefaultTheme.MultiSideBarConfig = {
           link: '/components/chat'
         },
         {
+          text: 'Search 搜索',
+          link: '/components/search'
+        },
+        {
           text: "Divider 分割线",
           link: '/components/divider'
         },
         {
           text: "Icon 图标",
           link: '/components/icon'
+        },
+        {
+          text: "Editor 编辑器",
+          link: '/components/editor'
+        },
+        {
+          text: "Dialog 对话框",
+          link: '/components/dialog'
+        },
+        {
+          text: "Toast 吐司",
+          link: '/components/toast'
         }
       ]
     }
@@ -69,6 +85,7 @@ export default defineConfig({
   srcDir: 'src',
   title: 'undraw-ui',
   description: 'a Vue 3 based component library for designers and developers',
+  base: '/undraw-ui/',
   themeConfig: {
     logo: '/u.webp',
     nav,
@@ -81,7 +98,6 @@ export default defineConfig({
       }
     },
   },
-
 
   markdown: {
     config: (md) => mdPlugin(md)

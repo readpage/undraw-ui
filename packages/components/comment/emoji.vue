@@ -32,15 +32,14 @@
 </template>
 
 <script setup lang="ts">
-import { inject, ref, toRefs, reactive } from 'vue'
+import { inject, ref } from 'vue'
 import { InjectionEmojiApi, EmojiApi } from '~/components'
 
 const activeIndex = ref(0)
 const offsetX = ref(0)
 const emojis = ref(new Array(2))
 
-const emojiApi = inject(InjectionEmojiApi) as EmojiApi
-const { emojiList, faceList } = toRefs(emojiApi)
+const { emojiList, faceList } = inject(InjectionEmojiApi) as EmojiApi
 
 const emit = defineEmits<{
   (e: 'addEmoji', key: string): void
@@ -55,13 +54,13 @@ function change(val: number) {
       break
     case 1:
       offsetX.value = -50
-      emojis.value[1] = emojiList.value[1]
+      emojis.value[1] = emojiList[1]
       break
   }
 }
 
 function onBefore() {
-  emojis.value[0] = emojiList.value[0]
+  emojis.value[0] = emojiList[0]
 }
 </script>
 
