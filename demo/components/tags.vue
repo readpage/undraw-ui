@@ -4,9 +4,9 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import { TagsApi } from '~/components'
+import { TagApi } from '~/components'
 
-const tagsList = ref<TagsApi[]>([
+const tagsList = ref<TagApi[]>([
   {
     title: '首页',
     path: '/home',
@@ -29,7 +29,7 @@ const tagsList = ref<TagsApi[]>([
   }
 ])
 
-const onChange = (val: TagsApi) => {
+const onChange = (val: TagApi) => {
   console.log(val)
 }
 

@@ -11,8 +11,15 @@ export const nav: DefaultTheme.NavItem[] = [
     link: '/components/fold'
   },
   {
-    text: '更新',
+    text: '更新日志',
     link: '/update/doc'
+  },
+  {
+    text: '项目地址',
+    items: [
+      { text: 'gitee⚡️', link: 'https://gitee.com/undraw/undraw-ui'},
+      { text: 'github📌', link: 'https://github.com/readpage/undraw'}
+    ]
   }
 ]
 
@@ -51,6 +58,14 @@ export const sidebar:DefaultTheme.MultiSideBarConfig = {
         {
           text: 'Anchor 锚点',
           link: '/components/anchor'
+        },
+        {
+          text: 'NoticeBar 通知栏',
+          link: '/components/notice-bar'
+        },
+        {
+          text: 'Tags 标签页',
+          link: '/components/tags'
         },
         {
           text: 'Chat 聊天',

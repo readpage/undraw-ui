@@ -22,7 +22,7 @@ defineOptions({
 })
 
 interface Props {
-  data: string | any[]
+  data: any
   size?: number | string
   vertical?: boolean
   // 通知栏高度，单位px
