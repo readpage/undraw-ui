@@ -24,11 +24,14 @@
 
 请遵循[https://undraw.gitee.io/undraw-ui/](https://undraw.gitee.io/undraw-ui/)上的文档!
 
+<<<<<<< HEAD
 # 地址
 
 - [gitee⚡️](https://gitee.com/undraw/undraw-ui)
 - [github📌](https://github.com/readpage/undraw-ui)
 
+=======
+>>>>>>> 16a32c4338a286ed945f49a5e86c40017b7d5453
 # 安装
 
 使用`npm`安装
