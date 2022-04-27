@@ -38,7 +38,7 @@ const alert = reactive({
 })
 const visible = ref(false)
 
-const unwatch = watch(
+watch(
   () => props.type,
   val => {
     switch (val) {
@@ -72,10 +72,6 @@ onMounted(() => {
   setTimeout(() => {
     visible.value = false
   }, props.duration)
-})
-
-onUnmounted(() => {
-  unwatch()
 })
 </script>
 

@@ -1,7 +1,7 @@
 {
   "name": "undraw-ui",
   "private": false,
-  "version": "0.4.3",
+  "version": "0.4.4",
   "author": "readpage <f1dao@qq.com>",
   "repository": {
     "type": "git",
@@ -15,8 +15,8 @@
     "ui",
     "vue"
   ],
-  "homepage": "https://gitee.com/undraw/undraw-ui.git",
-  "license": "ISC",
+  "homepage": "https://undraw.gitee.io/undraw-ui/",
+  "license": "MIT",
   "main": "dist/index.js",
   "style": "dist/style.css",
   "scripts": {

@@ -57,7 +57,7 @@ const emit = defineEmits<{
   (e: 'update:modelValue', val: boolean): void
 }>()
 
-const unwatch = watch(
+watch(
   () => props.modelValue,
   val => {
     visible.value = val
@@ -67,17 +67,13 @@ const unwatch = watch(
   }
 )
 
-const unwatch2 = watch(
+watch(
   () => visible.value,
   val => {
     emit('update:modelValue', val)
   }
 )
 
-onUnmounted(() => {
-  unwatch()
-  unwatch2()
-})
 </script>
 
 <style lang="scss">

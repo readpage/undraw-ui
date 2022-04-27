@@ -6,7 +6,7 @@
     <img src="https://img.shields.io/npm/v/undraw-ui.svg">
   </a>
   <a href="https://npmcharts.com/compare/undraw-ui?minimal=true">
-    <img src="https://img.shields.io/npm/dm/undraw-ui.svg">
+    <img src="https://img.shields.io/npm/dt/undraw-ui.svg">
   </a>
   <a href="https://github.com/vuejs/core">
     <img src="https://img.shields.io/badge/dependencies-vue%E2%89%A53.2.0-green">
@@ -17,7 +17,17 @@
 
 
 
+
 <p align="center">Undraw UI - A Vue.js 3 UI library</p>
+
+# 入门
+
+请遵循[https://undraw.gitee.io/undraw-ui/](https://undraw.gitee.io/undraw-ui/)上的文档!
+
+# 地址
+
+- [gitee⚡️](https://gitee.com/undraw/undraw-ui)
+- [github📌](https://github.com/readpage/undraw-ui)
 
 # 安装
 

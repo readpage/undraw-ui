@@ -6,17 +6,21 @@
   <iconVue />
   <signVue />
   <editorVue /> -->
-  <commentVue />
-  <tabsVue />
+  <!-- <commentVue /> -->
+  <tagsVue />
+  <!-- <noticeBarVue /> -->
+  <!-- <anchorVue /> -->
 </template>
 <script setup lang="ts">
 import {} from 'vue'
 import signVue from '~/components/sign/sign.vue'
+import anchorVue from './components/anchor.vue'
 import commentVue from './components/comment.vue'
 import dialogVue from './components/dialog.vue'
 import editorVue from './components/editor.vue'
 import iconVue from './components/icon.vue'
-import tabsVue from './components/tabs.vue'
+import noticeBarVue from './components/notice-bar.vue'
+import tagsVue from './components/tags.vue'
 import testVue from './components/test.vue'
 </script>
 

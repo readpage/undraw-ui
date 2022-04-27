@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const position = ref()
 
-const unwatch = watch(
+watch(
   () => props.position,
   val => {
     switch (val) {
@@ -40,10 +40,6 @@ const unwatch = watch(
   },
   { immediate: true }
 )
-
-onUnmounted(() => {
-  unwatch()
-})
 </script>
 
 <style lang="scss" scoped>

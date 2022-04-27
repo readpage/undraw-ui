@@ -10,6 +10,10 @@ export const nav: DefaultTheme.NavItem[] = [
     text: '组件',
     link: '/components/fold'
   },
+  {
+    text: '更新',
+    link: '/update/doc'
+  }
 ]
 
 export const sidebar:DefaultTheme.MultiSideBarConfig = {
@@ -78,11 +82,14 @@ export const sidebar:DefaultTheme.MultiSideBarConfig = {
         }
       ]
     }
-  ]
+  ],
 }
 
 export default defineConfig({
   srcDir: 'src',
+  head: [
+    ['link', { rel: 'icon', href: '/u.webp '}]
+  ],
   title: 'undraw-ui',
   description: 'a Vue 3 based component library for designers and developers',
   base: '/undraw-ui/',

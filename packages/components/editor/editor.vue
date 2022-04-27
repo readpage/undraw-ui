@@ -1,6 +1,15 @@
 <template>
   <div class="u-editor" :class="{ active: active }">
-    <div ref="editorRef" class="rich-input" contenteditable="true" :placeholder="placeholder" @focus="onFocus" @input="onInput" @blur="onBlur" v-html="text"></div>
+    <div
+      ref="editorRef"
+      class="rich-input"
+      contenteditable="true"
+      :placeholder="placeholder"
+      @focus="onFocus"
+      @input="onInput"
+      @blur="onBlur"
+      v-html="text"
+    ></div>
   </div>
 </template>
 <script setup lang="ts">
@@ -30,7 +39,7 @@ const emit = defineEmits<{
   (e: 'blur', event: Event): void
 }>()
 
-const unwatch = watch(
+watch(
   () => props.modelValue,
   val => {
     if (!isLocked.value) text.value = val
@@ -105,10 +114,6 @@ onMounted(() => {
       el.innerHTML = ''
     }
   })
-})
-
-onUnmounted(() => {
-  unwatch()
 })
 
 defineExpose({

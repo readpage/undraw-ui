@@ -6,6 +6,8 @@ import Editor from './editor'
 import Fold from './fold'
 import Icon from './icon'
 import Sign from './sign'
-import Tabs from './tabs'
+import Tags from './tags'
+import NoticeBar from './notice-bar'
+import Anchor from './anchor'
 
-export default [Comment, Dialog, Divider, Editor, Fold, Icon, Sign, Tabs] as Plugin[]
+export default [Comment, Dialog, Divider, Editor, Fold, Icon, Sign, Tags, NoticeBar, Anchor] as Plugin[]
