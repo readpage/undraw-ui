@@ -20,16 +20,32 @@
 
 <p align="center">Undraw UI - A Vue.js 3 UI library</p>
 
-# 入门
+## 🔥功能
+
+**折叠、评论、锚点、搜索**
+
+
+
+1. 折叠
+
+![](https://s2.loli.net/2022/04/28/frd5h8bulF7SZK6.png)
+
+
+
+2. 评论
+
+![](https://s2.loli.net/2022/04/28/HtGWBxsJ5LljDEU.png)
+
+## 入门
 
 请遵循[https://undraw.gitee.io/undraw-ui/](https://undraw.gitee.io/undraw-ui/)上的文档!
 
-# 地址
+## 地址
 
 - [gitee⚡️](https://gitee.com/undraw/undraw-ui)
-- [github📌](https://github.com/readpage/undraw)
+- [github📌](https://github.com/readpage/undraw-ui)
 
-# 安装
+## 安装
 
 使用`npm`安装
 
@@ -39,7 +55,7 @@ npm i undraw-ui
 
 
 
-# 使用
+## 使用
 
 1. 因为本组件是基于 `element-plus` 开发。首先需要引入 `element-plus`。
 
@@ -64,7 +80,7 @@ app.use(UndrawUi)
 app.mount('#app')
 ```
 
-# 开发交流
+## 开发交流
 
 敬请期待...
 

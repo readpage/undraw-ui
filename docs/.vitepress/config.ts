@@ -18,7 +18,7 @@ export const nav: DefaultTheme.NavItem[] = [
     text: '项目地址',
     items: [
       { text: 'gitee⚡️', link: 'https://gitee.com/undraw/undraw-ui'},
-      { text: 'github📌', link: 'https://github.com/readpage/undraw'}
+      { text: 'github📌', link: 'https://github.com/readpage/undraw-ui'}
     ]
   }
 ]
