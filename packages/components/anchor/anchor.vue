@@ -2,12 +2,12 @@
   <div class="u-anchor">
     <nav class="toc-content">
       <h3 class="toc-content-heading">目录</h3>
+      <u-divider></u-divider>
       <ul class="toc-items">
         <li v-for="(v, k) in navs" :key="k" :class="[{ active: active == k }, d1((v as HTMLDivElement).nodeName)]" @click="scrollTo(k as number)">
           {{ (v as HTMLDivElement).innerText }}
         </li>
       </ul>
-      <div class="toc-marker" style="opacity: 1; top: 129px"></div>
     </nav>
   </div>
 </template>
@@ -18,8 +18,18 @@ defineOptions({
   name: 'UAnchor'
 })
 
+interface Props {
+  // 指定监听的容器
+  container: string
+  // 触发滚动的对象
+  target?: string
+}
+
+const props = defineProps<Props>()
+
 const active = ref(0)
 const navs = ref({} as NodeListOf<HTMLDivElement>)
+const target = ref({} as Element | Window)
 
 const d1 = (val: string) => {
   switch (val) {
@@ -40,11 +50,14 @@ const onScroll = () => {
   navs.value.forEach(v => {
     offsetTopArr.push(v.offsetTop)
   })
+
+  let scroll = target.value instanceof Element ? target.value.scrollTop : undefined
+
   // 获取当前文档流的 scrollTop
-  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+  const scrollTop = scroll || document.documentElement.scrollTop || document.body.scrollTop
   // 定义当前点亮的导航下标
   offsetTopArr.forEach((v, k) => {
-    if (scrollTop >= v - 4.5) {
+    if (scrollTop >= v - 10) {
       active.value = k
     }
   })
@@ -57,30 +70,32 @@ const scrollTo = (k: number) => {
 }
 
 onMounted(() => {
+  if (props.target) {
+    target.value = document.querySelector(props.target) as Element
+  } else {
+    target.value = window
+  }
   // 获取所有锚点元素
-  navs.value = document.querySelector('.content')?.querySelectorAll('h1, h2, h3, h4, h5, h6') as NodeListOf<HTMLDivElement>
-  window.addEventListener('scroll', onScroll)
+  navs.value = document.querySelector(props.container)?.querySelectorAll('h1, h2, h3, h4, h5, h6') as NodeListOf<HTMLDivElement>
+  target.value.addEventListener('scroll', onScroll)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', onScroll)
+  target.value.removeEventListener('scroll', onScroll)
 })
 </script>
 
 <style lang="scss" scoped>
 .u-anchor {
-  position: fixed;
-  top: 80px;
-  left: 700px;
+  width: inherit;
 }
 .toc-content {
   padding: 10px;
   .toc-content-heading {
     font-size: 12px;
-    color: var(--text-color-light);
     font-weight: 600;
     text-transform: uppercase;
-    margin-top: 0;
+    margin: 0;
   }
   h3 {
     padding-left: 5px;
@@ -95,30 +110,33 @@ onUnmounted(() => {
       font-size: 14px;
       white-space: nowrap;
       text-overflow: ellipsis;
-      color: #909399;
+      font-weight: 400;
+      color: #000;
+      position: relative;
     }
     li:hover {
       background: #f7f8fa;
       border-radius: 4px;
+      color: #409eff;
     }
     .active {
       color: #409eff;
     }
     .d3 {
-      margin-left: 15px;
+      padding-left: 15px;
     }
     .d4 {
-      margin-left: 35px;
+      padding-left: 35px;
     }
     .active::before {
       content: '';
       position: absolute;
-      left: 0px;
+      left: -6px;
       background-color: #409eff;
       border-radius: 4px;
       width: 4px;
       height: 14px;
-      margin-top: 2%;
+      top: 8px;
     }
   }
 }

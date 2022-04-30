@@ -1,11 +1,11 @@
 <template>
-  <u-comment :emojis="emojis" :comments="comments" @submit="submit"></u-comment>
+  <u-comment :emoji="emoji" :comments="comments" @submit="submit"></u-comment>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { UToast, CommentApi, CommentSubmitFun } from 'undraw-ui'
-import emojis from './emoji'
+import emoji from './emoji'
 
 const comments = ref([] as CommentApi[])
 

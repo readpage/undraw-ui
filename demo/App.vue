@@ -7,9 +7,9 @@
   <signVue />
   <editorVue /> -->
   <!-- <commentVue /> -->
-  <tagsVue />
+  <!-- <tagsVue /> -->
   <!-- <noticeBarVue /> -->
-  <!-- <anchorVue /> -->
+  <anchorVue />
 </template>
 <script setup lang="ts">
 import {} from 'vue'

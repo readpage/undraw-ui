@@ -36,6 +36,10 @@
 
 ![](https://s2.loli.net/2022/04/28/HtGWBxsJ5LljDEU.png)
 
+3. 锚点
+
+![](https://s2.loli.net/2022/04/30/r2XbGviK8FqUoRQ.png)
+
 ## 入门
 
 请遵循[https://undraw.gitee.io/undraw-ui/](https://undraw.gitee.io/undraw-ui/)上的文档!

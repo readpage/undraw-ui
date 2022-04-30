@@ -60,20 +60,20 @@ export const sidebar:DefaultTheme.MultiSideBarConfig = {
           link: '/components/anchor'
         },
         {
-          text: 'NoticeBar 通知栏',
-          link: '/components/notice-bar'
-        },
-        {
-          text: 'Tags 标签页',
-          link: '/components/tags'
+          text: 'Search 搜索',
+          link: '/components/search'
         },
         {
           text: 'Chat 聊天',
           link: '/components/chat'
         },
         {
-          text: 'Search 搜索',
-          link: '/components/search'
+          text: 'NoticeBar 通知栏',
+          link: '/components/notice-bar'
+        },
+        {
+          text: 'Tags 标签页',
+          link: '/components/tags'
         },
         {
           text: "Divider 分割线",

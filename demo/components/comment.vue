@@ -1,6 +1,6 @@
 <template>
   <div class="comment-view">
-    <u-comment :comments="comments" :emojis="emojis" style="width: 820px; margin-left: 2rem" @submit="submit"></u-comment>
+    <u-comment :comments="comments" :emoji="emoji" style="width: 820px; margin-left: 2rem" @submit="submit"></u-comment>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import { CommentApi, CommentSubmitFun } from '^/index'
 import { UToast } from '^/index'
 import { onMounted, ref } from 'vue'
-import emojis from '@/assets/emoji'
+import emoji from '@/assets/emoji'
 
 const comments = ref([] as CommentApi[])
 

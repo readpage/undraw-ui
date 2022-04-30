@@ -34,7 +34,7 @@ defineOptions({
 
 interface Props {
   comments: CommentApi[]
-  emojis: EmojiApi
+  emoji: EmojiApi
 }
 
 const props = defineProps<Props>()
@@ -48,7 +48,7 @@ const submit: CommentSubmitFun = (clear, content, parentId) => {
 }
 
 provide(InjectionCommentFun, submit)
-provide(InjectionEmojiApi, props.emojis)
+provide(InjectionEmojiApi, props.emoji)
 </script>
 
 <style lang="scss" scoped>
