@@ -22,18 +22,18 @@ svg {
 }
 
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
-::-webkit-scrollbar {
+.emoji-wrapper::-webkit-scrollbar {
   width: 6px; /*滚动条宽度*/
   height: 8px; /*滚动条高度*/
 }
 
 /*定义滑块 内阴影+圆角*/
-::-webkit-scrollbar-track {
+.emoji-wrapper::-webkit-scrollbar-track {
   background-color: rgba(73, 177, 245, 0.2);
   border-radius: 2em;
 }
 
-::-webkit-scrollbar-thumb {
+.emoji-wrapper::-webkit-scrollbar-thumb {
   background-color: #49b1f5;
   background-image: -webkit-linear-gradient(
     45deg,
@@ -48,6 +48,6 @@ svg {
   border-radius: 2em;
 }
 
-::-webkit-scrollbar-corner {
+.emoji-wrapper::-webkit-scrollbar-corner {
   background-color: transparent;
 }
