@@ -11,8 +11,10 @@ export interface CommentApi {
   parentId: number | null
   avatar: string
   username: string
+  grade: number
   content: string
   like: number
+  createTime: string
   reply?: ReplyApi | null
 }
 
