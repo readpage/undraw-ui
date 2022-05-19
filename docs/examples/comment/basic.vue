@@ -5,6 +5,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { UToast, CommentApi, CommentSubmitFun } from 'undraw-ui'
+// 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases/v0.4.8
 import emoji from './emoji'
 
 const comments = ref([] as CommentApi[])
@@ -25,7 +26,7 @@ comments.value = [
     reply: null
   },
   {
-    id: 1,
+    id: 2,
     parentId: null,
     username: '碎梦遗忘录',
     avatar: 'https://static.juzicon.com/avatars/avatar-20210310192149-vkuj.jpeg?x-oss-process=image/resize,w_100',
@@ -74,14 +75,14 @@ comments.value = [
           content: '说的对，所以，综上所述，上课睡觉不怪我呀💤'
         },
         {
-          id: 12,
+          id: 15,
           parentId: 3,
           username: '三分打铁',
           avatar: 'https://static.juzicon.com/avatars/avatar-191031205903-I6EP.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
           content: ' 仔细一想还真有点感伤[大哭2]'
         },
         {
-          id: 12,
+          id: 16,
           parentId: 3,
           username: 'Blizzard',
           avatar: 'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',

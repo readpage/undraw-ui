@@ -1,4 +1,4 @@
-const raw = 'http://cdn.undraw.cn'
+const raw = '/static'
 
 const faceList = [`${raw}/emoji/smile.webp`, `${raw}/emoji/tv/tv.webp`]
 

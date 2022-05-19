@@ -24,7 +24,6 @@ interface Props {
   // 触发滚动的对象
   target?: string
 }
-
 const props = defineProps<Props>()
 
 const active = ref(0)

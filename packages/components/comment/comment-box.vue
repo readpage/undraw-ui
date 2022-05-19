@@ -11,7 +11,7 @@
     <Transition name="fade">
       <div v-if="action" class="action-box">
         <Emoji @add-emoji="val => editorRef?.addText(val)" />
-        <el-button type="primary" :disabled="disabled" @click="submit(() => editorRef?.clear(), content, parentId)">
+        <el-button type="primary" :disabled="disabled" @click="submit({ clear: () => editorRef?.clear(), content, parentId })">
           {{ props.contentBtn }}
         </el-button>
       </div>
@@ -25,8 +25,7 @@ import { ClickOutside as vClickOutside } from 'element-plus'
 import { inject, nextTick, ref } from 'vue'
 import Emoji from './emoji.vue'
 import { EditorInstance } from '../editor'
-import { InjectionCommentFun } from '.'
-import { CommentSubmitFun } from '..'
+import { CommentSubmitParam, InjectionCommentFun } from './interface'
 
 export interface CommentBoxApi {
   focus(): void
@@ -50,7 +49,7 @@ const emit = defineEmits<{
   (e: 'hide', event: Event): void
 }>()
 
-const submit = inject(InjectionCommentFun) as CommentSubmitFun
+const submit = inject(InjectionCommentFun) as (obj: CommentSubmitParam) => void
 
 function onClickOutside(event: Event) {
   // const child = event.target as HTMLElement

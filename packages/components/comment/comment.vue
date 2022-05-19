@@ -6,7 +6,7 @@
       </div>
       <div class="content">
         <div class="avatar-box">
-          <el-avatar :size="40" src="https://empty">
+          <el-avatar :size="40" :src="user.avatar">
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
         </div>
@@ -23,10 +23,18 @@
 
 <script setup lang="ts">
 import { provide } from 'vue'
-import { CommentApi, InjectionCommentFun, InjectionEmojiApi } from '.'
-import { CommentSubmitFun, EmojiApi } from '..'
 import CommentBox from './comment-box.vue'
 import CommentList from './comment-list.vue'
+import {
+  InjectionUserApi,
+  CommentSubmitParam,
+  UserApi,
+  EmojiApi,
+  CommentApi,
+  InjectionCommentFun,
+  InjectionEmojiApi,
+  InjectionLikeFun
+} from './interface'
 
 defineOptions({
   name: 'UComment'
@@ -35,20 +43,28 @@ defineOptions({
 interface Props {
   comments: CommentApi[]
   emoji: EmojiApi
+  user: UserApi
 }
 
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'submit', clear: () => void, content: string, parentId?: number): void
+  (e: 'submit', obj: CommentSubmitParam): void
+  (e: 'like', id: number): void
 }>()
 
-const submit: CommentSubmitFun = (clear, content, parentId) => {
-  emit('submit', () => clear(), content, parentId)
+const submit = (obj: CommentSubmitParam) => {
+  emit('submit', obj)
+}
+
+const like = (id: number) => {
+  emit('like', id)
 }
 
 provide(InjectionCommentFun, submit)
 provide(InjectionEmojiApi, props.emoji)
+provide(InjectionUserApi, props.user)
+provide(InjectionLikeFun, like)
 </script>
 
 <style lang="scss" scoped>

@@ -6,10 +6,10 @@
   <iconVue />
   <signVue />
   <editorVue /> -->
-  <!-- <commentVue /> -->
+  <commentVue />
   <!-- <tagsVue /> -->
   <!-- <noticeBarVue /> -->
-  <anchorVue />
+  <!-- <anchorVue /> -->
 </template>
 <script setup lang="ts">
 import {} from 'vue'
@@ -24,4 +24,8 @@ import tagsVue from './components/tags.vue'
 import testVue from './components/test.vue'
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+body {
+  margin: 0;
+}
+</style>
