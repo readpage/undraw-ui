@@ -1,7 +1,7 @@
 <template>
   <div class="comment" :class="{ small: small }">
     <div>
-      <el-avatar :size="40" fit="cover" :src="data.avatar">
+      <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.avatar">
         <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
       </el-avatar>
     </div>
@@ -170,7 +170,7 @@ function parse(val: string): string {
         font-weight: 500;
         font-size: 15px;
         color: #252933;
-        line-height: 26px;
+        line-height: 32px;
         margin-right: 4px;
       }
     }
