@@ -58,10 +58,11 @@ const editLike = (id: number, count: number) => {
   })
 }
 
+let temp_id = 100
 // 模拟后端处理
 const editSubmit = (content: string, parentId: number) => {
   let comment: CommentApi = {
-    id: user.id,
+    id: (temp_id += 1),
     parentId: parentId,
     username: user.username,
     avatar: user.avatar,
