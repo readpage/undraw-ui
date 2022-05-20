@@ -70,7 +70,7 @@ const title = computed(() => {
   .sign-oauth {
     display: flex;
     justify-content: space-evenly;
-    svg {
+    .u-icon {
       cursor: pointer;
       font-size: 32px !important;
     }

@@ -145,6 +145,9 @@ function parse(val: string): string {
 .comment {
   display: flex;
   padding: 16px 0;
+  a:hover {
+    text-decoration: none;
+  }
 }
 
 .small {

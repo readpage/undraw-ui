@@ -10,6 +10,7 @@
   <!-- <tagsVue /> -->
   <!-- <noticeBarVue /> -->
   <!-- <anchorVue /> -->
+  <signVue />
 </template>
 <script setup lang="ts">
 import {} from 'vue'
