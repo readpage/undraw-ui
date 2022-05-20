@@ -5,8 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import { CommentApi, CommentSubmitParam, UserApi, UToast } from '~/index'
-import { onMounted, reactive, ref } from 'vue'
+import { ref, reactive } from 'vue'
+import { UToast, CommentApi, UserApi, CommentSubmitParam } from '~/index'
+// 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases/v0.4.8
 import emoji from '@/assets/emoji'
 
 const comments = ref([] as CommentApi[])
@@ -14,7 +15,7 @@ const comments = ref([] as CommentApi[])
 const user = reactive<UserApi>({
   id: 1,
   username: 'user',
-  avatar: 'https://p6-passport.byteacctimg.com/img/user-avatar/20d2a9586e883e32f0ec97bcf4a77221~300x300.image',
+  avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
   // 评论id数组
   likes: [1, 2, 11]
 })
@@ -23,6 +24,9 @@ const user = reactive<UserApi>({
 const submit = ({ clear, content, parentId }: CommentSubmitParam) => {
   console.log(content, parentId)
   UToast({ message: '评论成功!', type: 'info' })
+  // 提交评论 --后端接口处理
+  editSubmit(content, parentId as number)
+  clear()
 }
 
 // 点赞按钮事件
@@ -41,6 +45,7 @@ const like = (id: number) => {
   }
 }
 
+// 模拟后端处理
 const editLike = (id: number, count: number) => {
   let tar = null
   comments.value.forEach(v => {
@@ -55,100 +60,149 @@ const editLike = (id: number, count: number) => {
   })
 }
 
-onMounted(() => {
-  setTimeout(() => {
-    comments.value = [
-      {
-        id: 1,
-        parentId: null,
-        username: '小生凡一',
-        avatar: 'https://p6-passport.byteacctimg.com/img/user-avatar/20d2a9586e883e32f0ec97bcf4a77221~300x300.image',
-        like: 3,
-        grade: 7,
-        createTime: '1分钟前',
-        content:
-          '是的，[狗头]掘友反馈第一版任务规则比较复杂。我们合并了任务，之前的参赛文章可以修改正文第一句关键词，依然算投稿成功。目前春招打卡任务为 4 关奖励。经验复盘（可以写项目经验、也可以写上岸经验）完成 1 篇的同学都有机会被明星导师选中、进行 1v1 职业规划咨询 or 模拟面试。是的，掘友反馈第一版任务规则比较复杂。我们合并了任务，之前的参赛文章可以修改正文第一句关键词，依然算投稿成功。目前春招打卡任务为 4 关奖励。经验复盘（可以写项目经验、也可以写上岸经验）完成 1 篇的同学都有机会被明星导师选中、进行 1v1 职业规划咨询 or 模拟面试。',
-        reply: null
-      },
-      {
-        id: 2,
-        parentId: null,
-        username: '掘金酱',
-        avatar: 'https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/mirror-assets/168e0858b6ccfd57fe5~tplv-t2oaga2asx-no-mark:40:40:40:40.awebp',
-        like: 4,
-        grade: 2,
-        createTime: '2分钟前',
-        content: '大家要阅读全文[大哭2]，找文中的 评论有奖关键词哦！发关键词才能参与抽奖～～',
-        reply: {
-          total: 1,
-          list: [
-            {
-              id: 11,
-              parentId: 2,
-              username: '11王',
-              avatar: 'https://p6-passport.byteacctimg.com/img/user-avatar/8803c8cce2f8567c524d075ee5d7f9ca~300x300.image',
-              createTime: '1天前',
-              content: '二月的更文奖励啥时候才能发啊',
-              grade: 2,
-              like: 1
-            }
-          ]
-        }
-      },
-      {
-        id: 3,
-        parentId: null,
-        username: 'JowayYoung',
-        avatar: 'https://p9-passport.byteacctimg.com/img/user-avatar/9ff5bb9ae1c53fd2c93a7a1a9e52da2e~300x300.image',
-        like: 5,
-        grade: 2,
-        createTime: '3分钟前',
-        content:
-          '个人觉得这种应试式面试，只会让大家在面试前封装刷题包装自己，而真正有能力的人有可能被这种反人类操作刷掉，见过太多面试良好试用期被无情刷掉的人了，为什么这么多公司跟风，不好好考察应试人各方面的技能，而去搞这种八股文和算法刷题？整个市场都被污浊了，相信再过几年，真正厉害的人都不多了，盲目内卷终究会导致盲目躺平，时间问题而已👏',
-        reply: {
-          total: 3,
-          list: [
-            {
-              id: 12,
-              parentId: 3,
-              username: '杰出D',
-              avatar: 'https://p3-passport.byteacctimg.com/img/user-avatar/2e8908f0995d5b92dfe5884745a78d4d~300x300.image',
-              createTime: '2天前',
-              content: '这个题目还算不上八股文和算法题吧。主要是想看能不能写递归，这个开发过程中还是很常见。😂',
-              grade: 1,
-              like: 0
-            },
-            {
-              id: 13,
-              parentId: 3,
-              username: 'ssslc',
-              avatar: 'https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/6/7/1728d1e35d9b207f~tplv-t2oaga2asx-no-mark:100:100:100:100.awebp',
-              content: '这种题算还好吧，在项目里也算实用。之前看过二叉树、深度遍历、广度遍历那些变形，就感觉属于刷题了😢',
-              createTime: '5天前',
-              grade: 3,
-              like: 1
-            },
-            {
-              id: 14,
-              parentId: 3,
-              username: '迷失的夜',
-              avatar: 'https://p3-passport.byteacctimg.com/img/mosaic-legacy/3797/2889309425~300x300.image',
-              like: 3,
-              createTime: '1天前',
-              content: '这个还真不是太复杂的转换 而且很常见，特别是在做图表 后端不给你特定的接口、或者是改版后端接口不动的时候，我尝试着实现了一下，没用递归大概十几分钟搞定吧',
-              grade: 6
-            }
-          ]
-        }
-      }
-    ]
-  }, 2000)
-})
-</script>
-
-<style lang="scss" scoped>
-.comment-view {
-  background-color: #f4f5f5;
-  min-height: 800px;
+let temp_id = 100
+// 模拟后端处理
+const editSubmit = (content: string, parentId: number) => {
+  let comment: CommentApi = {
+    id: (temp_id += 1),
+    parentId: parentId,
+    username: user.username,
+    detailUrl: '/user/1',
+    avatar: user.avatar,
+    like: 0,
+    level: 6,
+    createTime: '1分钟前',
+    content: content,
+    reply: null
+  }
+  if (parentId == undefined) {
+    comments.value.unshift(comment)
+  } else {
+    let raw_comment = comments.value.find(v => v.id == parentId)
+    let reply = raw_comment?.reply
+    if (reply) {
+      reply.list.unshift(comment)
+    } else if (raw_comment) {
+      raw_comment.reply = { total: 1, list: [comment] }
+    } else {
+      comments.value.unshift(comment)
+    }
+  }
 }
-</style>
+
+comments.value = [
+  {
+    id: 1,
+    parentId: null,
+    username: '落🤍尘',
+    detailUrl: '/user/1',
+    avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
+    like: 2,
+    level: 6,
+    createTime: '1分钟前',
+    content:
+      '缘生缘灭，缘起缘落，我在看别人的故事，别人何尝不是在看我的故事?别人在演绎人生，我又何尝不是在这场戏里?谁的眼神沧桑了谁?我的眼神，只是沧桑了自己[喝酒]',
+    reply: null
+  },
+  {
+    id: 2,
+    parentId: null,
+    username: '碎梦遗忘录',
+    detailUrl: '/user/2',
+    avatar: 'https://static.juzicon.com/avatars/avatar-20210310192149-vkuj.jpeg?x-oss-process=image/resize,w_100',
+    like: 4,
+    level: 5,
+    createTime: '2分钟前',
+    content: '说谎和沉默可以说是现在人类社会里日渐蔓延的两大罪恶。事实上，我们经常说谎，动不动就沉默不语',
+    reply: {
+      total: 3,
+      list: [
+        {
+          id: 11,
+          parentId: 2,
+          username: '欲知欲忘',
+          detailUrl: '/user/2',
+          avatar: 'https://static.juzicon.com/avatars/avatar-20220310090547-fxvx.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
+          like: 7,
+          level: 4,
+          createTime: '1天前',
+          content: '沉默，是保护自己。说谎是让自己不被注意，且不被攻击[狗头]'
+        },
+        {
+          id: 12,
+          parentId: 2,
+          username: '陵薮市朝',
+          detailUrl: '/user/12',
+          like: 3,
+          level: 3,
+          createTime: '2天前',
+          avatar: 'https://static.juzicon.com/avatars/avatar-20220302110828-1hm0.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
+          content: '[吃瓜]果真是了'
+        },
+        {
+          id: 13,
+          parentId: 2,
+          username: '每天至少八杯水',
+          detailUrl: '/user/13',
+          avatar: 'https://static.juzicon.com/avatars/avatar-20220308235453-v09s.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
+          like: 3,
+          level: 2,
+          createTime: '5天前',
+          content: '沉默是金[困狗]'
+        }
+      ]
+    }
+  },
+  {
+    id: 3,
+    parentId: null,
+    username: '悟二空',
+    detailUrl: '/user/3',
+    avatar: 'https://static.juzicon.com/user/avatar-bf22291e-ea5c-4280-850d-88bc288fcf5d-220408002256-ZBQQ.jpeg',
+    like: 11,
+    level: 1,
+    createTime: '1天前',
+    content: '知道在学校为什么感觉这么困吗？因为学校，是梦开始的地方。[脱单doge]',
+    reply: {
+      total: 3,
+      list: [
+        {
+          id: 14,
+          parentId: 3,
+          username: '别扰我清梦*ぁ',
+          detailUrl: '/user/14',
+          avatar:
+            'https://static.juzicon.com/user/avatar-8b6206c1-b28f-4636-8952-d8d9edec975d-191001105631-MDTM.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+          like: 3,
+          level: 5,
+          createTime: '1分钟前',
+          content: '说的对，所以，综上所述，上课睡觉不怪我呀💤'
+        },
+        {
+          id: 15,
+          parentId: 3,
+          username: '三分打铁',
+          detailUrl: '/user/15',
+          avatar: 'https://static.juzicon.com/avatars/avatar-191031205903-I6EP.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
+          like: 3,
+          level: 3,
+          createTime: '1天前',
+          content: ' 仔细一想还真有点感伤[大哭2]'
+        },
+        {
+          id: 16,
+          parentId: 3,
+          username: 'Blizzard',
+          detailUrl: '/user/16',
+          avatar:
+            'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+          like: 9,
+          level: 4,
+          createTime: '7天前',
+          content: '看完打了一个哈切。。。会传染。。。[委屈]'
+        }
+      ]
+    }
+  }
+]
+</script>

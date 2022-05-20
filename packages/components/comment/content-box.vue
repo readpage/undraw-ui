@@ -1,16 +1,18 @@
 <template>
   <div class="comment" :class="{ small: small }">
     <div>
-      <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.avatar">
-        <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
-      </el-avatar>
+      <a :href="data.detailUrl" target="_blank">
+        <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.avatar">
+          <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+        </el-avatar>
+      </a>
     </div>
     <div class="content-box">
       <div class="user-box">
-        <a href="/user/1556564194374926" target="_blank" rel="" class="username">
+        <a :href="data.detailUrl" target="_blank" class="username">
           <span class="name" style="max-width: 10em">{{ data.username }}</span>
           <span blank="true" class="rank">
-            <u-icon size="24" v-html="grade(data.grade)"></u-icon>
+            <u-icon size="24" v-html="level(data.level)"></u-icon>
           </span>
         </a>
         <!-- <span class="author-badge-text">（作者）</span> -->
@@ -83,7 +85,7 @@ const btnRef = ref<HTMLDivElement>()
 const emojiApi = inject(InjectionEmojiApi) as EmojiApi
 const user = inject(InjectionUserApi) as UserApi
 
-const grade = (v: number) => {
+const level = (v: number) => {
   switch (v) {
     case 1:
       return '<svg viewBox="0 0 1682 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="831"><path d="M219.428571 73.142857h1243.428572a146.285714 146.285714 0 0 1 146.285714 146.285714v585.142858a146.285714 146.285714 0 0 1-146.285714 146.285714H219.428571a146.285714 146.285714 0 0 1-146.285714-146.285714V219.428571a146.285714 146.285714 0 0 1 146.285714-146.285714z" fill="#8CDBF4" p-id="832"></path><path d="M219.428571 292.571429h146.285715v512H219.428571z m365.714286 146.285714h146.285714l146.285715 365.714286h-146.285715z" fill="#FFFFFF" p-id="833"></path><path d="M1024 438.857143h-146.285714l-146.285715 365.714286h146.285715zM219.428571 658.285714h365.714286v146.285715H219.428571z m950.857143-365.714285l73.142857-73.142858v146.285715h-73.142857z m73.142857-73.142858h146.285715v146.285715h-146.285715z m0 146.285715h146.285715v438.857143h-146.285715z" fill="#FFFFFF"></path></svg>'

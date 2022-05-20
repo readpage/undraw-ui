@@ -11,7 +11,8 @@ export interface CommentApi {
   parentId: number | null
   avatar: string
   username: string
-  grade: number
+  detailUrl: string
+  level: number
   content: string
   like: number
   createTime: string
