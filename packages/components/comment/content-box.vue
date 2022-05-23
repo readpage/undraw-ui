@@ -1,20 +1,18 @@
 <template>
   <div class="comment" :class="{ small: small }">
-    <div>
-      <a :href="data.detailUrl" target="_blank">
-        <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.avatar">
-          <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
-        </el-avatar>
-      </a>
+    <div style="cursor: pointer" @click="link">
+      <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.avatar">
+        <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+      </el-avatar>
     </div>
     <div class="content-box">
       <div class="user-box">
-        <a :href="data.detailUrl" target="_blank" class="username">
+        <div style="cursor: pointer" @click="link">
           <span class="name" style="max-width: 10em">{{ data.username }}</span>
           <span blank="true" class="rank">
             <u-icon size="24" v-html="level(data.level)"></u-icon>
           </span>
-        </a>
+        </div>
         <!-- <span class="author-badge-text">（作者）</span> -->
         <time class="time">{{ data.createTime }}</time>
       </div>
@@ -66,7 +64,7 @@
 <script setup lang="ts">
 import { computed, inject, nextTick, ref } from 'vue'
 import CommentBox from './comment-box.vue'
-import { EmojiApi, InjectionEmojiApi, InjectionLikeFun, InjectionUserApi, UFold, UIcon, UserApi } from '~/components'
+import { EmojiApi, InjectionEmojiApi, InjectionLikeFun, InjectionLinkFun, InjectionUserApi, UFold, UIcon, UserApi } from '~/components'
 import type { CommentBoxApi } from './comment-box.vue'
 import { CommentApi } from './interface'
 
@@ -84,6 +82,8 @@ const btnRef = ref<HTMLDivElement>()
 
 const emojiApi = inject(InjectionEmojiApi) as EmojiApi
 const user = inject(InjectionUserApi) as UserApi
+const like = inject(InjectionLikeFun) as (id: number) => void
+const link = inject(InjectionLinkFun) as () => void
 
 const level = (v: number) => {
   switch (v) {
@@ -112,8 +112,6 @@ function reply() {
     })
   }
 }
-
-const like = inject(InjectionLikeFun) as (id: number) => void
 
 function hide(event: Event) {
   const target = event.target as HTMLElement

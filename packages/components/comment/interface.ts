@@ -11,7 +11,6 @@ export interface CommentApi {
   parentId: number | null
   avatar: string
   username: string
-  detailUrl: string
   level: number
   content: string
   like: number
@@ -40,3 +39,4 @@ export const InjectionCommentFun: InjectionKey<(obj: CommentSubmitParam) => void
 export const InjectionEmojiApi: InjectionKey<EmojiApi> = Symbol()
 export const InjectionUserApi: InjectionKey<UserApi> = Symbol()
 export const InjectionLikeFun: InjectionKey<(id: number) => void> = Symbol()
+export const InjectionLinkFun: InjectionKey<() => void> = Symbol()

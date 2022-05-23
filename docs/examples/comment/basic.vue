@@ -5,7 +5,8 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { UToast, CommentApi, UserApi, CommentSubmitParam } from 'undraw-ui'
-// 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases/v0.4.8
+// 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases
+// static文件放在public下,引入emoji.ts文件
 import emoji from './emoji'
 
 const comments = ref([] as CommentApi[])

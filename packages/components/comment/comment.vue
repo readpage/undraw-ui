@@ -33,7 +33,8 @@ import {
   CommentApi,
   InjectionCommentFun,
   InjectionEmojiApi,
-  InjectionLikeFun
+  InjectionLikeFun,
+  InjectionLinkFun
 } from './interface'
 
 defineOptions({
@@ -51,6 +52,7 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   (e: 'submit', obj: CommentSubmitParam): void
   (e: 'like', id: number): void
+  (e: 'link', url: string): void
 }>()
 
 const submit = (obj: CommentSubmitParam) => {
@@ -65,6 +67,7 @@ provide(InjectionCommentFun, submit)
 provide(InjectionEmojiApi, props.emoji)
 provide(InjectionUserApi, props.user)
 provide(InjectionLikeFun, like)
+provide(InjectionLinkFun, (url: string) => emit('link', url))
 </script>
 
 <style lang="scss" scoped>
