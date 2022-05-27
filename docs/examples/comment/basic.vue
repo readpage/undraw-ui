@@ -19,6 +19,10 @@ const user = reactive<UserApi>({
   likes: [1, 2, 11]
 })
 
+const link = () => {
+  console.log('link')
+}
+
 // 提交评论事件
 const submit = ({ clear, content, parentId }: CommentSubmitParam) => {
   console.log(content, parentId)
@@ -66,7 +70,6 @@ const editSubmit = (content: string, parentId: number) => {
     id: (temp_id += 1),
     parentId: parentId,
     username: user.username,
-    detailUrl: '/user/1',
     avatar: user.avatar,
     like: 0,
     level: 6,
@@ -94,7 +97,6 @@ comments.value = [
     id: 1,
     parentId: null,
     username: '落🤍尘',
-    detailUrl: '/user/1',
     avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
     like: 2,
     level: 6,
@@ -107,7 +109,6 @@ comments.value = [
     id: 2,
     parentId: null,
     username: '碎梦遗忘录',
-    detailUrl: '/user/2',
     avatar: 'https://static.juzicon.com/avatars/avatar-20210310192149-vkuj.jpeg?x-oss-process=image/resize,w_100',
     like: 4,
     level: 5,
@@ -120,7 +121,6 @@ comments.value = [
           id: 11,
           parentId: 2,
           username: '欲知欲忘',
-          detailUrl: '/user/2',
           avatar: 'https://static.juzicon.com/avatars/avatar-20220310090547-fxvx.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
           like: 7,
           level: 4,
@@ -131,23 +131,21 @@ comments.value = [
           id: 12,
           parentId: 2,
           username: '陵薮市朝',
-          detailUrl: '/user/12',
           like: 3,
           level: 3,
           createTime: '2天前',
           avatar: 'https://static.juzicon.com/avatars/avatar-20220302110828-1hm0.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          content: '[吃瓜]果真是了'
+          content: '回复 <span style="color: blue;"">@欲知欲忘:</span> [吃瓜]果真是了'
         },
         {
           id: 13,
           parentId: 2,
           username: '每天至少八杯水',
-          detailUrl: '/user/13',
           avatar: 'https://static.juzicon.com/avatars/avatar-20220308235453-v09s.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
           like: 3,
           level: 2,
           createTime: '5天前',
-          content: '沉默是金[困狗]'
+          content: '回复 <span style="color: blue;"">@陵薮市朝:</span> 沉默是金[困狗]'
         }
       ]
     }
@@ -156,7 +154,6 @@ comments.value = [
     id: 3,
     parentId: null,
     username: '悟二空',
-    detailUrl: '/user/3',
     avatar: 'https://static.juzicon.com/user/avatar-bf22291e-ea5c-4280-850d-88bc288fcf5d-220408002256-ZBQQ.jpeg',
     like: 11,
     level: 1,
@@ -169,7 +166,6 @@ comments.value = [
           id: 14,
           parentId: 3,
           username: '别扰我清梦*ぁ',
-          detailUrl: '/user/14',
           avatar:
             'https://static.juzicon.com/user/avatar-8b6206c1-b28f-4636-8952-d8d9edec975d-191001105631-MDTM.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
           like: 3,
@@ -181,7 +177,6 @@ comments.value = [
           id: 15,
           parentId: 3,
           username: '三分打铁',
-          detailUrl: '/user/15',
           avatar: 'https://static.juzicon.com/avatars/avatar-191031205903-I6EP.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
           like: 3,
           level: 3,
@@ -192,13 +187,12 @@ comments.value = [
           id: 16,
           parentId: 3,
           username: 'Blizzard',
-          detailUrl: '/user/16',
           avatar:
             'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
           like: 9,
           level: 4,
           createTime: '7天前',
-          content: '看完打了一个哈切。。。会传染。。。[委屈]'
+          content: '回复 <span style="color: blue;"">@别扰我清梦*ぁ:</span> 看完打了一个哈切。。。会传染。。。[委屈]'
         }
       ]
     }

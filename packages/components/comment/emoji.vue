@@ -35,6 +35,10 @@
 import { inject, ref } from 'vue'
 import { InjectionEmojiApi, EmojiApi } from '~/components'
 
+import { ElPopover, ElImage } from 'element-plus'
+// import 'element-plus/es/components/image/style/css'
+// import 'element-plus/es/components/popover/style/css'
+
 const activeIndex = ref(0)
 const offsetX = ref(0)
 const emojis = ref(new Array(2))

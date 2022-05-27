@@ -3,7 +3,7 @@ title: 介绍
 ---
 
 # 介绍
-UndrawUI是一个基于ElementPlus库进行的二次封装的组件。
+UndrawUI是一个基于Vue的UI组件。
 
 ## 效率 Efficiency
 - 简化流程： 设计简洁直观的操作流程；

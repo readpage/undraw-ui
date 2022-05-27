@@ -32,6 +32,9 @@
 <script setup lang="ts">
 import { onUnmounted, ref, watch } from 'vue'
 
+import { ElDialog } from 'element-plus'
+// import 'element-plus/es/components/dialog/style/css'
+
 defineOptions({
   name: 'UDialog'
 })

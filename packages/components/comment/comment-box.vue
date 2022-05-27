@@ -11,7 +11,17 @@
     <Transition name="fade">
       <div v-if="action" class="action-box">
         <Emoji @add-emoji="val => editorRef?.addText(val)" />
-        <el-button type="primary" :disabled="disabled" @click="submit({ clear: () => editorRef?.clear(), content, parentId })">
+        <el-button
+          type="primary"
+          :disabled="disabled"
+          @click="
+            submit({
+              clear: () => editorRef?.clear(),
+              content: replay ? `回复 <span style='color: blue;'>@${replay}:</span> ${content}` : content,
+              parentId
+            })
+          "
+        >
           {{ props.contentBtn }}
         </el-button>
       </div>
@@ -27,6 +37,9 @@ import Emoji from './emoji.vue'
 import { EditorInstance } from '../editor'
 import { CommentSubmitParam, InjectionCommentFun } from './interface'
 
+import { ElButton } from 'element-plus'
+// import 'element-plus/es/components/button/style/css'
+
 export interface CommentBoxApi {
   focus(): void
 }
@@ -35,6 +48,7 @@ interface Props {
   placeholder: string
   contentBtn: string
   parentId?: number
+  replay?: string
 }
 
 const props = defineProps<Props>()

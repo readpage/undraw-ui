@@ -144,7 +144,7 @@ comments.value = [
           level: 3,
           createTime: '2天前',
           avatar: 'https://static.juzicon.com/avatars/avatar-20220302110828-1hm0.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          content: '[吃瓜]果真是了'
+          content: '回复 <span style="color: blue;"">@欲知欲忘:</span> [吃瓜]果真是了'
         },
         {
           id: 13,
@@ -154,7 +154,7 @@ comments.value = [
           like: 3,
           level: 2,
           createTime: '5天前',
-          content: '沉默是金[困狗]'
+          content: '回复 <span style="color: blue;"">@陵薮市朝:</span> 沉默是金[困狗]'
         }
       ]
     }
@@ -201,7 +201,7 @@ comments.value = [
           like: 9,
           level: 4,
           createTime: '7天前',
-          content: '看完打了一个哈切。。。会传染。。。[委屈]'
+          content: '回复 <span style="color: blue;"">@别扰我清梦*ぁ:</span> 看完打了一个哈切。。。会传染。。。[委屈]'
         }
       ]
     }

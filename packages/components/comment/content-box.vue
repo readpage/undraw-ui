@@ -7,7 +7,7 @@
     </div>
     <div class="content-box">
       <div class="user-box">
-        <div style="cursor: pointer" @click="link">
+        <div class="username" style="cursor: pointer" @click="link">
           <span class="name" style="max-width: 10em">{{ data.username }}</span>
           <span blank="true" class="rank">
             <u-icon size="24" v-html="level(data.level)"></u-icon>
@@ -50,7 +50,8 @@
         <CommentBox
           ref="commentRef"
           :parent-id="parentId"
-          :placeholder="`回复${data.username}...`"
+          :placeholder="`回复 @${data.username}...`"
+          :replay="data.parentId ? data.username : undefined"
           content-btn="发布"
           style="margin-top: 12px"
           @hide="hide"
@@ -67,6 +68,9 @@ import CommentBox from './comment-box.vue'
 import { EmojiApi, InjectionEmojiApi, InjectionLikeFun, InjectionLinkFun, InjectionUserApi, UFold, UIcon, UserApi } from '~/components'
 import type { CommentBoxApi } from './comment-box.vue'
 import { CommentApi } from './interface'
+
+import { ElAvatar } from 'element-plus'
+// import 'element-plus/es/components/avatar/style/css'
 
 interface Props {
   small?: boolean

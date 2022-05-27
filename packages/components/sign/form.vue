@@ -23,6 +23,11 @@
 import { nextTick, reactive, ref, watch } from 'vue'
 import { SignApi, ValidateApi } from '.'
 
+import { ElForm, ElFormItem, ElInput } from 'element-plus'
+// import 'element-plus/es/components/form/style/css'
+// import 'element-plus/es/components/form-item/style/css'
+// import 'element-plus/es/components/input/style/css'
+
 interface Props {
   modelValue: string
 }
