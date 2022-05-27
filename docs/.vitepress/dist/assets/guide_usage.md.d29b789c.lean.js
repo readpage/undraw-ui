@@ -1,0 +1,1 @@
+import{_ as n,o as s,c as a,j as t}from"./app.b9bcfbc4.js";const m='{"title":"\u4F7F\u7528","description":"","frontmatter":{},"headers":[],"relativePath":"guide/usage.md"}',p={},e=t("",3),o=[e];function c(r,i,l,u,k,d){return s(),a("div",null,o)}var f=n(p,[["render",c]]);export{m as __pageData,f as default};
