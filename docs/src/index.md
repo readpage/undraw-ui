@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: 开始使用 →
-      link: /guide/introduce
+      link: /undraw-ui/guide/introduce
     - theme: alt
       text: View on GitHub
       link: https://github.com/readpage/undraw-ui

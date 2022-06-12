@@ -100,13 +100,13 @@ export const sidebar = {
 export default defineConfig({
   srcDir: 'src',
   head: [
-    ['link', { rel: 'icon', href: '/u.webp '}]
+    ['link', { rel: 'icon', href: '/undraw-ui/u.webp '}]
   ],
   title: 'undraw-ui',
   description: 'a Vue 3 based component library for designers and developers',
   base: '/undraw-ui/',
   themeConfig: {
-    logo: '/u.webp',
+    logo: '/undraw-ui/u.webp',
     nav,
     sidebar,
     algolia: {
