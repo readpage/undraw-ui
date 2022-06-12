@@ -1,5 +1,5 @@
 <template>
-  <u-comment :user="user" :emoji="emoji" :comments="comments" @submit="submit" @like="like"></u-comment>
+  <u-comment style="padding: 0" :user="user" :emoji="emoji" :comments="comments" @submit="submit" @like="like"></u-comment>
 </template>
 
 <script setup lang="ts">

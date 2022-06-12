@@ -6,7 +6,7 @@ a:hover {
   text-decoration: none;
 }
 
-svg {
+img, svg, video, canvas, audio, iframe, embed, object {
   display: inline !important;
 }
 
