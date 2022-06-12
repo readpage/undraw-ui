@@ -110,7 +110,6 @@ onUnmounted(() => {
       white-space: nowrap;
       text-overflow: ellipsis;
       font-weight: 400;
-      color: #000;
       position: relative;
     }
     li:hover {

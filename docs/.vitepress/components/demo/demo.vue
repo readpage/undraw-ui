@@ -34,6 +34,7 @@ import exampleVue from './example.vue'
 import sourceCodeVue from './source-code.vue'
 import { useClipboard } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
+import theme from 'vitepress/theme'
 
 export interface DemoProps {
   path: string
@@ -69,11 +70,37 @@ async function copyCode() {
   }
 }
 
+const source = ref('')
+import { setCDN, getHighlighter } from 'shiki'
+setCDN('/undraw-ui/shiki/')
+const highlighter = getHighlighter(
+  {themes: ["material-palenight"], langs: ['vue', 'typescript']}
+) 
+highlighter.then(highlighter => {
+  const preRE = /^<pre.*?>/
+  const dark = highlighter.codeToHtml(decodeURIComponent(props.source), {lang: 'vue'}).replace(preRE, '<pre v-pre class="vp-code-dark">')
+  const light = highlighter.codeToHtml(decodeURIComponent(props.source), {lang: 'vue'}).replace(preRE, '<pre v-pre class="vp-code-light">')
+  source.value = dark + light
+})
+
 </script>
 
 <style lang="scss" scoped>
+.dark {
+  .example {
+    background-color: var(--vp-code-block-bg);
+    border-color: var(--vp-code-block-bg);
+    :deep(.u-fold) {
+      color: #ffffff !important;
+    }
+    .example-float-control {
+      background-color: var(--vp-code-block-bg);
+    }
+  }
+}
 .example {
   border: 1px solid #dcdfe6;
+  background-color: #ffffff;;
   border-radius: 4px;
 
   .op-btns {

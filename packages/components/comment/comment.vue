@@ -15,7 +15,9 @@
     </div>
     <!-- <div class="hot-list"></div> -->
     <div class="comment-list-wrapper">
-      <div class="title">全部评论</div>
+      <slot name="list-title">
+        <div class="title">全部评论</div>
+      </slot>
       <CommentList :data="comments" />
     </div>
   </div>

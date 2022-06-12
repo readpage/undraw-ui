@@ -8,5 +8,5 @@ module.exports = {
   tabWidth: 2,  // tab缩进大小,默认为2
   useTabs: false,   // 使用tab缩进，默认false
   endOfLine: 'auto',
-  htmlWhitespaceSensitivity: 'ignore'
+  htmlWhitespaceSensitivity: 'ignore',
 }

@@ -15,7 +15,6 @@ const props = defineProps<Props>()
 
 <style lang="scss" scoped>
 .source-wrapper {
-  background-color: rgba(27, 31, 35, 0.05);
   .source {
     padding: 16px;
   }

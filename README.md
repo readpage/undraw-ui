@@ -86,5 +86,5 @@ app.mount('#app')
 
 ## 开发交流
 
-敬请期待...
+QQ群:[undraw(682265529)](https://jq.qq.com/?_wv=1027&k=NsgARkfw)
 

@@ -8,7 +8,11 @@
       @link="link"
       @submit="submit"
       @like="like"
-    ></u-comment>
+    >
+    <template #list-title>
+      全部评论
+    </template>
+    </u-comment>
   </div>
 </template>
 
@@ -87,16 +91,16 @@ const editSubmit = (content: string, parentId: number) => {
     reply: null
   }
   if (parentId == undefined) {
-    comments.value.unshift(comment)
+    comments.value.push(comment)
   } else {
     let raw_comment = comments.value.find(v => v.id == parentId)
     let reply = raw_comment?.reply
     if (reply) {
-      reply.list.unshift(comment)
+      reply.list.push(comment)
     } else if (raw_comment) {
       raw_comment.reply = { total: 1, list: [comment] }
     } else {
-      comments.value.unshift(comment)
+      comments.value.push(comment)
     }
   }
 }

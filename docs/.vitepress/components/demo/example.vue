@@ -17,6 +17,5 @@ const props = defineProps<Props>()
 .example-show {
   padding: 1.5rem;
   margin: 0.5px;
-  background-color: #ffffff;;
 }
 </style>

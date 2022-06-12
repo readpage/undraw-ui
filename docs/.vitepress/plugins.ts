@@ -48,7 +48,7 @@ export const mdPlugin = (md: MarkdownIt) => {
           }
         }
         return `
-          <Demo :demos="demos" source="${encodeURIComponent(highlight(source, 'vue'))}" path="${sourceFile}" raw-source="${encodeURIComponent(source)}" description="${encodeURIComponent(markdown.render(description))}">`
+          <Demo :demos="demos" source="${encodeURIComponent(source)}" path="${sourceFile}" raw-source="${encodeURIComponent(source)}" description="${encodeURIComponent(markdown.render(description))}">`
       } else {
         return '</Demo>'
       }

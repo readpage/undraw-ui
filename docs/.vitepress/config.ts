@@ -14,20 +14,17 @@ export const nav: DefaultTheme.NavItem[] = [
     text: '更新日志',
     link: '/update/doc'
   },
-  {
-    text: '项目地址',
-    items: [
-      { text: 'gitee⚡️', link: 'https://gitee.com/undraw/undraw-ui'},
-      { text: 'github📌', link: 'https://github.com/readpage/undraw-ui'}
-    ]
-  }
+  { 
+    text: 'gitee⚡️', 
+    link: 'https://gitee.com/undraw/undraw-ui'
+  },
 ]
 
-export const sidebar:DefaultTheme.MultiSideBarConfig = {
+export const sidebar = {
   '/guide/': [
     {
       text: '指南',
-      children: [
+      items: [
         {
           text: '介绍',
           link: '/guide/introduce'
@@ -46,7 +43,7 @@ export const sidebar:DefaultTheme.MultiSideBarConfig = {
   '/components/': [
     {
       text: '组件',
-      children: [
+      items: [
         {
           text: "Fold 折叠",
           link: '/components/fold'
@@ -113,14 +110,20 @@ export default defineConfig({
     nav,
     sidebar,
     algolia: {
-      apiKey: 'your_api_key',
-      indexName: 'index_name',
-      searchParameters: {
-        facetFilters: ['tags:guide,api']
-      }
+      appId: '8J64VVRP8K',
+      apiKey: 'a18e2f4cc5665f6602c5631fd868adfd',
+      indexName: 'vitepress'
     },
+    footer: {
+      message: 'Released under the MIT License.',
+      copyright: 'Copyright © 2022 readpage'
+    },
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/readpage/undraw-ui' },
+    ]
   },
-
+  lastUpdated: true,
+  appearance: true,
   markdown: {
     config: (md) => mdPlugin(md)
   }
