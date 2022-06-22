@@ -14,6 +14,7 @@
         @animationend="animationend"
       >
         <input
+          ref="inputRef"
           v-model="data.search"
           type="text"
           :placeholder="placeholder"
@@ -93,6 +94,7 @@ defineOptions({
 
 const active = ref(false)
 const cardVisible = ref(false)
+const inputRef = ref({} as HTMLInputElement)
 
 const keywords = ref(props.config.keywords)
 const isFocus = ref(false)
@@ -150,6 +152,8 @@ const searchHandler = (keyword: string) => {
   }
   // 存储历史搜索记录
   store.set('searchHistory', data.historySearchList)
+  data.search = keyword
+  inputRef.value.focus()
   // 提交关键词搜索
   emit('submit', keyword)
 }
@@ -164,7 +168,7 @@ const closeHander = (val: string) => {
   store.set('searchHistory', data.historySearchList)
 }
 
-// 清楚历史标签
+// 清除历史标签
 const removeAllHistory = () => {
   data.historySearchList.length = 0
   store.remove('searchHistory')

@@ -6,13 +6,13 @@
   <iconVue />
   <signVue />
   <editorVue /> -->
-  <!-- <commentVue />  -->
+  <commentVue /> 
   <!-- <commentVue /> -->
   <!-- <tagsVue /> -->
   <!-- <noticeBarVue /> -->
   <!-- <anchorVue /> -->
   <!-- <signVue /> -->
-  <searchVue />
+  <!-- <searchVue /> -->
 </template>
 <script setup lang="ts">
 import {} from 'vue'

@@ -13,7 +13,7 @@
 
     <div class="emoji-body user-select">
       <div class="emjio-container" :style="{ transform: `translateX(${offsetX}%)` }">
-        <div v-for="(list, index) in emojis" :key="index" class="u-scrollbar">
+        <div v-for="(list, index) in emojis" :key="index" class="emoji-wrapper u-scrollbar">
           <span
             v-for="(value, key) in list"
             :key="key"

@@ -12,6 +12,7 @@ export interface CommentApi {
   avatar: string
   username: string
   level: number
+  address: string
   content: string
   like: number
   createTime: string

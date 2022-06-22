@@ -69,6 +69,12 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+
+const emit = defineEmits<{
+  (e: 'onClose', val: string): void
+  (e: 'submit', val: string): void
+  (e: 'onClear'): void
+}>()
 </script>
 
 <style lang="scss" scoped>

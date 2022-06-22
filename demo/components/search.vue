@@ -6,7 +6,6 @@ import { ref } from 'vue'
 import { SearchConfig } from '~/index'
 
 const config = ref<SearchConfig>({
-  search: '',
   keywords: ['斗罗大陆', '斗破苍穹', '吞噬星空', '凡人修仙传', '一念永恒'], // 搜索框关键字滚动
   hotSearchList: [
     '斗罗大陆',
@@ -24,6 +23,7 @@ const config = ref<SearchConfig>({
 
 const submit = (val: string) => {
   console.log(val)
+  window.open('/all?keyword=' + val)
 }
 </script>
 
