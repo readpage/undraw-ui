@@ -1,14 +1,6 @@
 <template>
-  <div class="comment-view" style="padding: 0px; font-size: 14px">
-    <u-comment
-      :user="user"
-      :comments="comments"
-      :emoji="emoji"
-      style="width: 820px; margin-left: 2rem"
-      @link="link"
-      @submit="submit"
-      @like="like"
-    >
+  <div class="comment-view" style="font-size: 12px; padding: 0px">
+    <u-comment :user="user" :comments="comments" :emoji="emoji" @link="link" @submit="submit" @like="like">
       <!-- <template #list-title>全部评论</template> -->
     </u-comment>
   </div>
