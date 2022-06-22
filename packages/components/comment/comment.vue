@@ -27,9 +27,7 @@
 import { provide } from 'vue'
 import CommentBox from './comment-box.vue'
 import CommentList from './comment-list.vue'
-
-import { ElAvatar } from 'element-plus'
-// import 'element-plus/es/components/avatar/style/css'
+import { ElAvatar } from '~/element'
 
 import {
   InjectionUserApi,

@@ -7,7 +7,12 @@ module.exports = {
     node: true
   },
   parser: 'vue-eslint-parser',
-  extends: ['plugin:vue/vue3-recommended', 'plugin:@typescript-eslint/recommended', 'prettier', 'plugin:prettier/recommended'],
+  extends: [
+    'plugin:vue/vue3-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'plugin:prettier/recommended'
+  ],
   parserOptions: {
     ecmaVersion: 12,
     parser: '@typescript-eslint/parser',
@@ -23,6 +28,7 @@ module.exports = {
     'prefer-const': 'off',
     '@typescript-eslint/ban-types': 'off',
     'vue/multi-word-component-names': 'off',
+    'vue/require-explicit-emits': 'off',
     'vue/require-default-prop': 'off' // props 需要设置默认值
   }
 }

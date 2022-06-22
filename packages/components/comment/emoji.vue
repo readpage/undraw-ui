@@ -1,16 +1,32 @@
 <template>
   <el-popover placement="bottom" :width="250" trigger="click" @before-enter="onBefore">
     <div class="face-tooltip-head user-select">
-      <label v-for="(item, index) in faceList" :key="index" :class="activeIndex == index ? 'active' : ''" @click="change(index)">
+      <label
+        v-for="(item, index) in faceList"
+        :key="index"
+        :class="activeIndex == index ? 'active' : ''"
+        @click="change(index)"
+      >
         <img :src="item" alt="" />
       </label>
     </div>
 
     <div class="emoji-body user-select">
       <div class="emjio-container" :style="{ transform: `translateX(${offsetX}%)` }">
-        <div v-for="(list, index) in emojis" :key="index" class="emoji-wrapper">
-          <span v-for="(value, key) in list" :key="key" class="emoji-item" @click="$emit('addEmoji', (key as unknown as string))">
-            <el-image :src="value" :title="String(key)" class="emoji" style="width: 24px; height: 24px; margin: 5px" lazy></el-image>
+        <div v-for="(list, index) in emojis" :key="index" class="u-scrollbar">
+          <span
+            v-for="(value, key) in list"
+            :key="key"
+            class="emoji-item"
+            @click="$emit('addEmoji', (key as unknown as string))"
+          >
+            <el-image
+              :src="value"
+              :title="String(key)"
+              class="emoji"
+              style="width: 24px; height: 24px; margin: 5px"
+              lazy
+            ></el-image>
           </span>
         </div>
       </div>
@@ -34,10 +50,7 @@
 <script setup lang="ts">
 import { inject, ref } from 'vue'
 import { InjectionEmojiApi, EmojiApi } from '~/components'
-
-import { ElPopover, ElImage } from 'element-plus'
-// import 'element-plus/es/components/image/style/css'
-// import 'element-plus/es/components/popover/style/css'
+import { ElPopover, ElImage } from '~/element'
 
 const activeIndex = ref(0)
 const offsetX = ref(0)

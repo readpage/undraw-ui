@@ -4,7 +4,12 @@
       <h3 class="toc-content-heading">目录</h3>
       <u-divider></u-divider>
       <ul class="toc-items">
-        <li v-for="(v, k) in navs" :key="k" :class="[{ active: active == k }, d1((v as HTMLDivElement).nodeName)]" @click="scrollTo(k as number)">
+        <li
+          v-for="(v, k) in navs"
+          :key="k"
+          :class="[{ active: active == k }, d1((v as HTMLDivElement).nodeName)]"
+          @click="scrollTo(k as number)"
+        >
           {{ (v as HTMLDivElement).innerText }}
         </li>
       </ul>
@@ -75,7 +80,9 @@ onMounted(() => {
     target.value = window
   }
   // 获取所有锚点元素
-  navs.value = document.querySelector(props.container)?.querySelectorAll('h1, h2, h3, h4, h5, h6') as NodeListOf<HTMLDivElement>
+  navs.value = document
+    .querySelector(props.container)
+    ?.querySelectorAll('h1, h2, h3, h4, h5, h6') as NodeListOf<HTMLDivElement>
   target.value.addEventListener('scroll', onScroll)
 })
 

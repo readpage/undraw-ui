@@ -12,7 +12,13 @@
     draggable
   >
     <div class="full-screen" @click="fullscreen = !fullscreen">
-      <svg v-if="fullscreen" width="16" height="16" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        v-if="fullscreen"
+        width="16"
+        height="16"
+        viewBox="0 0 1024 1024"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path fill="currentColor" d="M128 544h768a32 32 0 1 0 0-64H128a32 32 0 0 0 0 64z"></path>
       </svg>
       <svg v-else width="16" height="16" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +39,7 @@
 import { onUnmounted, ref, watch } from 'vue'
 
 import { ElDialog } from 'element-plus'
-// import 'element-plus/es/components/dialog/style/css'
+import 'element-plus/es/components/dialog/style/css'
 
 defineOptions({
   name: 'UDialog'
@@ -76,10 +82,9 @@ watch(
     emit('update:modelValue', val)
   }
 )
-
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .u-dialog {
   .full-screen {
     display: flex;

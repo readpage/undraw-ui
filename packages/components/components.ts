@@ -11,4 +11,16 @@ import NoticeBar from './notice-bar'
 import Anchor from './anchor'
 import Search from './search'
 
-export default [Comment, Dialog, Divider, Editor, Fold, Icon, Sign, Tags, NoticeBar, Anchor, Search] as Plugin[]
+export default [
+  Comment,
+  Dialog,
+  Divider,
+  Editor,
+  Fold,
+  Icon,
+  Sign,
+  Tags,
+  NoticeBar,
+  Anchor,
+  Search
+] as Plugin[]

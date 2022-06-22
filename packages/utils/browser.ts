@@ -14,7 +14,8 @@ export function browser() {
   // 平台标签
   let tag = ''
 
-  const isTocuh = 'ontouchstart' in window || ua.indexOf('touch') !== -1 || ua.indexOf('mobile') !== -1
+  const isTocuh =
+    'ontouchstart' in window || ua.indexOf('touch') !== -1 || ua.indexOf('mobile') !== -1
   if (isTocuh) {
     if (ua.indexOf('ipad') !== -1) {
       tag = 'pad'

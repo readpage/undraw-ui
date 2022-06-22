@@ -17,7 +17,9 @@
           @click="
             submit({
               clear: () => editorRef?.clear(),
-              content: replay ? `回复 <span style='color: blue;'>@${replay}:</span> ${content}` : content,
+              content: replay
+                ? `回复 <span style='color: blue;'>@${replay}:</span> ${content}`
+                : content,
               parentId
             })
           "
@@ -36,9 +38,7 @@ import { inject, nextTick, ref } from 'vue'
 import Emoji from './emoji.vue'
 import { EditorInstance } from '../editor'
 import { CommentSubmitParam, InjectionCommentFun } from './interface'
-
-import { ElButton } from 'element-plus'
-// import 'element-plus/es/components/button/style/css'
+import { ElButton } from '~/element'
 
 export interface CommentBoxApi {
   focus(): void

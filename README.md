@@ -36,7 +36,11 @@
 
 ![](https://s2.loli.net/2022/04/28/HtGWBxsJ5LljDEU.png)
 
-3. 锚点
+3. 搜索(关键词动态滚动)
+
+   ![](https://s2.loli.net/2022/06/22/juvX79t6OPcaWZs.png)
+
+4. 锚点
 
 ![](https://s2.loli.net/2022/04/30/r2XbGviK8FqUoRQ.png)
 
@@ -61,25 +65,18 @@ npm i undraw-ui
 
 ## 使用
 
-1. 因为本组件是基于 `element-plus` 开发。首先需要引入 `element-plus`。
-
-```bash
-npm i element-plus
-```
+1. 因为本组件是基于 `element-plus` 开发。注意**v0.5.5**后去除了element-plus导入,只引入需要使用的组件以及样式，不使用的组件不引入，**无需引入elment-plus即可以使用**; 但是如果引入elment-plus，如果版本不一致可能部分组件会出现样式问题，请注意版本兼容性。随着更新elment-plus版本稳定了样式问题基本不会出现!
 
 2. 在 `main.ts` 中引入组件
 
 ```ts
 import { createApp } from 'vue'
 import App from './App.vue'
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
 
 import UndrawUi from 'undraw-ui'
 import 'undraw-ui/dist/style.css'
 
 const app = createApp(App)
-app.use(ElementPlus)
 app.use(UndrawUi)
 app.mount('#app')
 ```

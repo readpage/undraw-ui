@@ -1,13 +1,28 @@
 <template>
   <el-form ref="ruleFormRef" :model="form" :rules="rules" class="user-select">
     <el-form-item prop="email">
-      <el-input v-model="form.email" placeholder="请输入邮箱" @focus="$emit('toggle', 1)" @blur="$emit('toggle', 0)"></el-input>
+      <el-input
+        v-model="form.email"
+        placeholder="请输入邮箱"
+        @focus="$emit('toggle', 1)"
+        @blur="$emit('toggle', 0)"
+      ></el-input>
     </el-form-item>
     <el-form-item prop="password">
-      <el-input v-model="form.password" placeholder="请输入密码" @focus="$emit('toggle', 2)" @blur="$emit('toggle', 0)"></el-input>
+      <el-input
+        v-model="form.password"
+        placeholder="请输入密码"
+        @focus="$emit('toggle', 2)"
+        @blur="$emit('toggle', 0)"
+      ></el-input>
     </el-form-item>
     <el-form-item v-show="modelValue == 'forget'" prop="checkPass">
-      <el-input v-model="form.checkPass" placeholder="请确认密码" @focus="$emit('toggle', 2)" @blur="$emit('toggle', 0)"></el-input>
+      <el-input
+        v-model="form.checkPass"
+        placeholder="请确认密码"
+        @focus="$emit('toggle', 2)"
+        @blur="$emit('toggle', 0)"
+      ></el-input>
     </el-form-item>
     <el-form-item>
       <el-button style="width: 100%" type="primary" @click="submit">{{ param.type }}</el-button>

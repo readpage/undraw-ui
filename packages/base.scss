@@ -1,3 +1,4 @@
+@import 'element-plus/theme-chalk/base.css';
 a {
   color: inherit;
   text-decoration: inherit;
@@ -26,18 +27,18 @@ svg {
 }
 
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
-.emoji-wrapper::-webkit-scrollbar {
+.u-scrollbar::-webkit-scrollbar {
   width: 6px; /*滚动条宽度*/
   height: 8px; /*滚动条高度*/
 }
 
 /*定义滑块 内阴影+圆角*/
-.emoji-wrapper::-webkit-scrollbar-track {
+.u-scrollbar::-webkit-scrollbar-track {
   background-color: rgba(73, 177, 245, 0.2);
   border-radius: 2em;
 }
 
-.emoji-wrapper::-webkit-scrollbar-thumb {
+.u-scrollbar::-webkit-scrollbar-thumb {
   background-color: #49b1f5;
   background-image: -webkit-linear-gradient(
     45deg,
@@ -52,6 +53,17 @@ svg {
   border-radius: 2em;
 }
 
-.emoji-wrapper::-webkit-scrollbar-corner {
+.u-scrollbar::-webkit-scrollbar-corner {
   background-color: transparent;
+}
+
+.u-ellipsis {
+   //象作为弹性伸缩盒子模型显示。
+   display: -webkit-box;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   //设置或检索伸缩盒对象的子元素的排列方式。
+   -webkit-box-orient: vertical;
+   //用来限制在一个块元素显示的文本的行数。
+   -webkit-line-clamp: 1;
 }

@@ -6,6 +6,7 @@
   <iconVue />
   <signVue />
   <editorVue /> -->
+  <!-- <commentVue />  -->
   <!-- <commentVue /> -->
   <!-- <tagsVue /> -->
   <!-- <noticeBarVue /> -->
@@ -25,6 +26,7 @@ import noticeBarVue from './components/notice-bar.vue'
 import searchVue from './components/search.vue'
 import tagsVue from './components/tags.vue'
 import testVue from './components/test.vue'
+import buttonVue from './components/button.vue'
 </script>
 
 <style lang="scss">

@@ -1,5 +1,12 @@
 <template>
-  <u-comment style="padding: 0" :user="user" :emoji="emoji" :comments="comments" @submit="submit" @like="like"></u-comment>
+  <u-comment
+    style="padding: 0"
+    :user="user"
+    :emoji="emoji"
+    :comments="comments"
+    @submit="submit"
+    @like="like"
+  ></u-comment>
 </template>
 
 <script setup lang="ts">
@@ -14,7 +21,8 @@ const comments = ref([] as CommentApi[])
 const user = reactive<UserApi>({
   id: 1,
   username: 'user',
-  avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
+  avatar:
+    'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
   // 评论id数组
   likes: [1, 2, 11]
 })
@@ -97,7 +105,8 @@ comments.value = [
     id: 1,
     parentId: null,
     username: '落🤍尘',
-    avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
+    avatar:
+      'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
     like: 2,
     level: 6,
     createTime: '1分钟前',
@@ -109,11 +118,13 @@ comments.value = [
     id: 2,
     parentId: null,
     username: '碎梦遗忘录',
-    avatar: 'https://static.juzicon.com/avatars/avatar-20210310192149-vkuj.jpeg?x-oss-process=image/resize,w_100',
+    avatar:
+      'https://static.juzicon.com/avatars/avatar-20210310192149-vkuj.jpeg?x-oss-process=image/resize,w_100',
     like: 4,
     level: 5,
     createTime: '2分钟前',
-    content: '说谎和沉默可以说是现在人类社会里日渐蔓延的两大罪恶。事实上，我们经常说谎，动不动就沉默不语',
+    content:
+      '说谎和沉默可以说是现在人类社会里日渐蔓延的两大罪恶。事实上，我们经常说谎，动不动就沉默不语',
     reply: {
       total: 3,
       list: [
@@ -121,7 +132,8 @@ comments.value = [
           id: 11,
           parentId: 2,
           username: '欲知欲忘',
-          avatar: 'https://static.juzicon.com/avatars/avatar-20220310090547-fxvx.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
+          avatar:
+            'https://static.juzicon.com/avatars/avatar-20220310090547-fxvx.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
           like: 7,
           level: 4,
           createTime: '1天前',
@@ -134,14 +146,16 @@ comments.value = [
           like: 3,
           level: 3,
           createTime: '2天前',
-          avatar: 'https://static.juzicon.com/avatars/avatar-20220302110828-1hm0.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
+          avatar:
+            'https://static.juzicon.com/avatars/avatar-20220302110828-1hm0.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
           content: '回复 <span style="color: blue;"">@欲知欲忘:</span> [吃瓜]果真是了'
         },
         {
           id: 13,
           parentId: 2,
           username: '每天至少八杯水',
-          avatar: 'https://static.juzicon.com/avatars/avatar-20220308235453-v09s.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
+          avatar:
+            'https://static.juzicon.com/avatars/avatar-20220308235453-v09s.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
           like: 3,
           level: 2,
           createTime: '5天前',
@@ -154,7 +168,8 @@ comments.value = [
     id: 3,
     parentId: null,
     username: '悟二空',
-    avatar: 'https://static.juzicon.com/user/avatar-bf22291e-ea5c-4280-850d-88bc288fcf5d-220408002256-ZBQQ.jpeg',
+    avatar:
+      'https://static.juzicon.com/user/avatar-bf22291e-ea5c-4280-850d-88bc288fcf5d-220408002256-ZBQQ.jpeg',
     like: 11,
     level: 1,
     createTime: '1天前',
@@ -177,7 +192,8 @@ comments.value = [
           id: 15,
           parentId: 3,
           username: '三分打铁',
-          avatar: 'https://static.juzicon.com/avatars/avatar-191031205903-I6EP.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
+          avatar:
+            'https://static.juzicon.com/avatars/avatar-191031205903-I6EP.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
           like: 3,
           level: 3,
           createTime: '1天前',
@@ -192,7 +208,8 @@ comments.value = [
           like: 9,
           level: 4,
           createTime: '7天前',
-          content: '回复 <span style="color: blue;"">@别扰我清梦*ぁ:</span> 看完打了一个哈切。。。会传染。。。[委屈]'
+          content:
+            '回复 <span style="color: blue;"">@别扰我清梦*ぁ:</span> 看完打了一个哈切。。。会传染。。。[委屈]'
         }
       ]
     }

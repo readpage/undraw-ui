@@ -1,7 +1,13 @@
 <template>
   <div class="u-notice-bar" :style="{ background, height: `${height}px` }">
     <div v-if="vertical">
-      <el-carousel height="40px" direction="vertical" :autoplay="true" indicator-position="none" :interval="interval">
+      <el-carousel
+        height="40px"
+        direction="vertical"
+        :autoplay="true"
+        indicator-position="none"
+        :interval="interval"
+      >
         <el-carousel-item v-for="v in data" :key="v">{{ v }}</el-carousel-item>
       </el-carousel>
     </div>
@@ -16,9 +22,7 @@
 </template>
 <script setup lang="ts">
 import { computed, nextTick, onMounted, reactive, ref } from 'vue'
-
-import { ElCarousel } from 'element-plus'
-// import 'element-plus/es/components/carousel/style/css'
+import { ElCarousel } from '~/element'
 
 defineOptions({
   name: 'UNoticeBar'
@@ -68,8 +72,12 @@ const initAnimation = () => {
   nextTick(() => {
     state.boxWidth = boxRef.value.offsetWidth
     state.textWidth = textRef.value.offsetWidth
-    document.styleSheets[0].insertRule(`@keyframes oneAnimation {0% {left: 0px;} 100% {left: -${state.textWidth}px;}}`)
-    document.styleSheets[0].insertRule(`@keyframes twoAnimation {0% {left: ${state.boxWidth}px;} 100% {left: -${state.textWidth}px;}}`)
+    document.styleSheets[0].insertRule(
+      `@keyframes oneAnimation {0% {left: 0px;} 100% {left: -${state.textWidth}px;}}`
+    )
+    document.styleSheets[0].insertRule(
+      `@keyframes twoAnimation {0% {left: ${state.boxWidth}px;} 100% {left: -${state.textWidth}px;}}`
+    )
     computeAnimationTime()
     setTimeout(() => {
       changeAnimation()
