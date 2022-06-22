@@ -36,7 +36,7 @@
 
 ![](https://s2.loli.net/2022/04/28/HtGWBxsJ5LljDEU.png)
 
-3. 搜索(关键词动态滚动)
+3. 搜索(input关键词动态滚动)
 
    ![](https://s2.loli.net/2022/06/22/juvX79t6OPcaWZs.png)
 
