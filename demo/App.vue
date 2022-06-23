@@ -6,7 +6,6 @@
   <iconVue />
   <signVue />
   <editorVue /> -->
-  <!-- <commentVue />  -->
   <!-- <commentVue /> -->
   <!-- <tagsVue /> -->
   <!-- <noticeBarVue /> -->

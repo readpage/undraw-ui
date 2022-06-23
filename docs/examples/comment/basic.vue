@@ -1,5 +1,5 @@
 <template>
-  <div class="comment-view" style="font-size: 12px; padding: 0px">
+  <div class="comment-view" style="padding: 0px">
     <u-comment :user="user" :comments="comments" :emoji="emoji" @link="link" @submit="submit" @like="like">
       <!-- <template #list-title>全部评论</template> -->
     </u-comment>

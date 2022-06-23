@@ -7,3 +7,9 @@ title: Anchor
 :::demo
 anchor/basic
 :::
+
+# 自定义滚动轴
+
+:::demo
+anchor/target
+:::

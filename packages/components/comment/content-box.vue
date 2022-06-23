@@ -14,7 +14,7 @@
           </span>
         </div>
         <!-- <span class="author-badge-text">（作者）</span> -->
-        <span class="address" style="color: #939393">&nbsp;&nbsp;{{ data.address }}</span>
+        <span class="address" style="color: #939393; font-size: 12px">&nbsp;&nbsp;{{ data.address }}</span>
         <time class="time">{{ data.createTime }}</time>
       </div>
       <u-fold unfold>

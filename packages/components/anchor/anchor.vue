@@ -75,7 +75,6 @@ const onScroll = () => {
 const scrollTo = (k: number) => {
   const tar = navs.value.item(k)
   if (props.target) {
-    document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
     target.value.scrollTo({
       top: tar.offsetTop - props.targetOffset,
       behavior: 'smooth'
