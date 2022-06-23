@@ -1,5 +1,5 @@
 <template>
-  <div class="view">
+  <div class="view" style="height: 500px">
     <el-scrollbar height="500px">
       <div id="article" class="article">
         <h2>人的大地</h2>
@@ -79,12 +79,21 @@
         </div>
       </div>
     </el-scrollbar>
-    <!-- container参数指定监听的容器 target触发滚动的对象 -->
+    <!-- container指定监听的容器 target滚动轴 target-offset距离窗口顶部达到指定偏移量 -->
     <div class="article-catalog">
-      <u-anchor container="#article" target=".el-scrollbar__wrap"></u-anchor>
+      <u-anchor
+        style="position: fixed"
+        container="#article"
+        :target-offset="50"
+        target=".el-scrollbar__wrap"
+      ></u-anchor>
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+import { ElScrollbar } from '~/index'
+</script>
 
 <style lang="scss" scoped>
 .article-catalog {

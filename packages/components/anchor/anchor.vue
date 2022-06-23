@@ -26,10 +26,14 @@ defineOptions({
 interface Props {
   // 指定监听的容器
   container: string
-  // 触发滚动的对象
+  // 滚动轴
   target?: string
+  // 距离窗口顶部达到指定偏移量
+  targetOffset?: number
 }
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  targetOffset: 0
+})
 
 const active = ref(0)
 const navs = ref({} as NodeListOf<HTMLDivElement>)
@@ -61,7 +65,7 @@ const onScroll = () => {
   const scrollTop = scroll || document.documentElement.scrollTop || document.body.scrollTop
   // 定义当前点亮的导航下标
   offsetTopArr.forEach((v, k) => {
-    if (scrollTop >= v - 10) {
+    if (scrollTop >= v - 10 - props.targetOffset) {
       active.value = k
     }
   })
@@ -69,8 +73,19 @@ const onScroll = () => {
 
 // 跳转到指定索引的元素
 const scrollTo = (k: number) => {
-  const target = navs.value.item(k)
-  target.scrollIntoView({ behavior: 'smooth' })
+  const tar = navs.value.item(k)
+  if (props.target) {
+    document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
+    target.value.scrollTo({
+      top: tar.offsetTop - props.targetOffset,
+      behavior: 'smooth'
+    })
+  } else {
+    document.documentElement.scrollTo({
+      top: tar.offsetTop - props.targetOffset,
+      behavior: 'smooth'
+    })
+  }
 }
 
 onMounted(() => {

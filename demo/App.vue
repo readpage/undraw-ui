@@ -6,11 +6,11 @@
   <iconVue />
   <signVue />
   <editorVue /> -->
-  <commentVue /> 
+  <!-- <commentVue />  -->
   <!-- <commentVue /> -->
   <!-- <tagsVue /> -->
   <!-- <noticeBarVue /> -->
-  <!-- <anchorVue /> -->
+  <anchorVue />
   <!-- <signVue /> -->
   <!-- <searchVue /> -->
 </template>
