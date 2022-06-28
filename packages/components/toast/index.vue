@@ -13,6 +13,7 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import { getToastType, getDefaultToastType } from './toastTypes'
 import iconVue from '../icon'
 
 export interface ToastApi {
@@ -31,37 +32,17 @@ const props = withDefaults(defineProps<ToastApi>(), {
   type: 'normal'
 })
 
-const alert = reactive({
-  color: '#fff',
-  bgColor: 'rgba(0, 0, 0, .5)',
-  icon: ''
-})
+const alert = reactive(getDefaultToastType().options)
 const visible = ref(false)
 
 watch(
   () => props.type,
   val => {
-    switch (val) {
-      case 'success':
-        alert.color = '#67c23a'
-        alert.bgColor = '#f0f9eb'
-        alert.icon = 'success'
-        break
-      case 'info':
-        alert.color = '#909399'
-        alert.bgColor = '#f4f4f5'
-        alert.icon = 'info'
-        break
-      case 'warning':
-        alert.color = '#fdf6ec'
-        alert.bgColor = '#e6a23c'
-        alert.icon = 'warning'
-        break
-      case 'error':
-        alert.color = '#f56c6c'
-        alert.bgColor = '#fef0f0'
-        alert.icon = 'error'
-        break
+    const toastType = getToastType(val)
+    if (toastType) {
+      alert.color = toastType.options.color
+      alert.bgColor = toastType.options.bgColor
+      alert.icon = toastType.options.icon
     }
   },
   { immediate: true }
