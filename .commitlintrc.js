@@ -1,13 +1,4 @@
 // .commitlintrc.js
-/** @type {import('cz-git').UserConfig} */
-const { execSync } = require('child_process');
-
-// @tip: git branch name = feature/issue_33   =>    auto get defaultIssues = #33
- const issue = execSync('git rev-parse --abbrev-ref HEAD')
-  .toString()
-  .trim()
-  .split("_")[1]
-
 module.exports = {
   rules: {
     // @see: https://commitlint.js.org/#/reference-rules

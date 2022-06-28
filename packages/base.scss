@@ -19,11 +19,15 @@ svg {
   vertical-align: middle;
 }
 
-.user-select {
+.select-none {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/

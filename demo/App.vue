@@ -9,9 +9,10 @@
   <!-- <commentVue /> -->
   <!-- <tagsVue /> -->
   <!-- <noticeBarVue /> -->
-  <anchorVue />
+  <!-- <anchorVue /> -->
   <!-- <signVue /> -->
   <!-- <searchVue /> -->
+  <chatVue />
 </template>
 <script setup lang="ts">
 import {} from 'vue'
@@ -26,6 +27,7 @@ import searchVue from './components/search.vue'
 import tagsVue from './components/tags.vue'
 import testVue from './components/test.vue'
 import buttonVue from './components/button.vue'
+import chatVue from './components/chat.vue'
 </script>
 
 <style lang="scss">

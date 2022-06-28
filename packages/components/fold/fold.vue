@@ -5,7 +5,7 @@
         <slot></slot>
       </div>
     </div>
-    <div class="action-box user-select">
+    <div class="action-box select-none">
       <div v-if="isOver && unfold" class="expand-btn" @click="fold = !fold">{{ fold ? '展开' : '收起' }}</div>
     </div>
   </div>

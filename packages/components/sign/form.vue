@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="ruleFormRef" :model="form" :rules="rules" class="user-select">
+  <el-form ref="ruleFormRef" :model="form" :rules="rules" class="select-none">
     <el-form-item prop="email">
       <el-input
         v-model="form.email"

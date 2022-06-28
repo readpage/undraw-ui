@@ -10,7 +10,7 @@
     ></u-editor>
     <Transition name="fade">
       <div v-if="action" class="action-box">
-        <Emoji @add-emoji="val => editorRef?.addText(val)" />
+        <u-emoji :emoji="emoji" @add-emoji="(val: string) => editorRef?.addText(val)"></u-emoji>
         <el-button
           type="primary"
           :disabled="disabled"
@@ -33,9 +33,8 @@
 import { isEmpty } from '~/utils/index'
 import { ClickOutside as vClickOutside } from 'element-plus'
 import { inject, nextTick, ref } from 'vue'
-import Emoji from './emoji.vue'
 import { EditorInstance } from '../editor'
-import { CommentSubmitParam, InjectionCommentFun } from './interface'
+import { CommentSubmitParam, InjectionCommentFun, InjectionEmojiApi } from './interface'
 import { ElButton } from '~/element'
 
 export interface CommentBoxApi {
@@ -62,6 +61,7 @@ const emit = defineEmits<{
 }>()
 
 const submit = inject(InjectionCommentFun) as (obj: CommentSubmitParam) => void
+const emoji = inject(InjectionEmojiApi)
 
 function onClickOutside(event: Event) {
   // const child = event.target as HTMLElement

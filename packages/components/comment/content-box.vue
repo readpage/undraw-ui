@@ -20,7 +20,7 @@
       <u-fold unfold>
         <div v-html="content"></div>
       </u-fold>
-      <div class="action-box user-select">
+      <div class="action-box select-none">
         <div class="item" @click="like(data.id)">
           <u-icon v-if="user.likes.indexOf(data.id) == -1">
             <svg
@@ -99,6 +99,7 @@ import {
 import type { CommentBoxApi } from './comment-box.vue'
 import { CommentApi } from './interface'
 import { ElAvatar } from '~/element'
+import { useEmojiParse } from '~/hooks'
 
 interface Props {
   small?: boolean
@@ -112,7 +113,7 @@ const active = ref(false)
 const commentRef = ref<CommentBoxApi>()
 const btnRef = ref<HTMLDivElement>()
 
-const emojiApi = inject(InjectionEmojiApi) as EmojiApi
+const { emojiList } = inject(InjectionEmojiApi) as EmojiApi
 const user = inject(InjectionUserApi) as UserApi
 const like = inject(InjectionLikeFun) as (id: number) => void
 const link = inject(InjectionLinkFun) as () => void
@@ -153,22 +154,7 @@ function hide(event: Event) {
   }
 }
 
-const content = computed(() => parse(props.data.content))
-
-function parse(val: string): string {
-  //解析表情
-  const reg = /\[.+?\]/g
-  val = val.replace(reg, (str: any) => {
-    let src = ''
-    emojiApi.emojiList.map((item: any) => {
-      if (item[str]) {
-        src = item[str]
-      }
-    })
-    return "<img src= '" + src + "' width='24' height='24' style='margin: 0 1px; vertical-align: text-bottom'/>"
-  })
-  return val
-}
+const content = computed(() => useEmojiParse(emojiList, props.data.content))
 </script>
 
 <style lang="scss" scoped>

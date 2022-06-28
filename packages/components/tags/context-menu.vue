@@ -7,7 +7,7 @@
     >
       <ul class="el-dropdown-menu">
         <template v-for="(v, k) in dropdownList" :key="k">
-          <li v-if="v.show" class="el-dropdown-menu__item user-select" @click="$emit('submit', k, tag)">
+          <li v-if="v.show" class="el-dropdown-menu__item select-none" @click="$emit('submit', k, tag)">
             <u-icon v-html="v.icon"></u-icon>
             <span>{{ v.title }}</span>
           </li>

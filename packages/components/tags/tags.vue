@@ -10,7 +10,7 @@
           @click="active = k"
           @contextmenu.prevent="onContextmenu(v, $event)"
         >
-          <span class="user-select">{{ v.title }}</span>
+          <span class="select-none">{{ v.title }}</span>
           <u-icon v-if="!v.isAffix" @click.stop="close(k)">
             <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
               <path

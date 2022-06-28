@@ -10,6 +10,8 @@ import Tags from './tags'
 import NoticeBar from './notice-bar'
 import Anchor from './anchor'
 import Search from './search'
+import Chat from './chat'
+import Emoji from './emoji'
 
 export default [
   Comment,
@@ -22,5 +24,7 @@ export default [
   Tags,
   NoticeBar,
   Anchor,
-  Search
+  Search,
+  Chat,
+  Emoji
 ] as Plugin[]
