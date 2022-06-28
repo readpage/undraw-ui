@@ -182,6 +182,7 @@ const content = computed(() => useEmojiParse(emojiList, props.data.content))
 .content-box {
   flex: 1;
   margin-left: 16px;
+  overflow: hidden;
   .user-box {
     display: flex;
     align-items: center;
