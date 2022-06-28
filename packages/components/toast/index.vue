@@ -1,7 +1,7 @@
 <template>
   <div class="v-toast">
     <transition name="v-toast">
-      <div class="inner" v-show="visible">
+      <div v-show="visible" class="inner">
         <div class="message">
           <iconVue v-if="alert.icon" :name="alert.icon" />
           <span :class="{ normal: type != 'normal' }">{{ message }}</span>
