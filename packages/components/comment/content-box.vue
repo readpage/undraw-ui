@@ -113,7 +113,7 @@ const active = ref(false)
 const commentRef = ref<CommentBoxApi>()
 const btnRef = ref<HTMLDivElement>()
 
-const { emojiList } = inject(InjectionEmojiApi) as EmojiApi
+const { allEmojiList } = inject(InjectionEmojiApi) as EmojiApi
 const user = inject(InjectionUserApi) as UserApi
 const like = inject(InjectionLikeFun) as (id: number) => void
 const link = inject(InjectionLinkFun) as () => void
@@ -154,7 +154,7 @@ function hide(event: Event) {
   }
 }
 
-const content = computed(() => useEmojiParse(emojiList, props.data.content))
+const content = computed(() => useEmojiParse(allEmojiList, props.data.content))
 </script>
 
 <style lang="scss" scoped>

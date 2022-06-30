@@ -1,14 +1,23 @@
-export const useEmojiParse = (emojiList: {}[], val: string): string => {
+import { Emoji } from '~/components/comment/interface'
+export const useEmojiParse = (allEmojiList: Emoji, val: string): string => {
   //解析表情
   const reg = /\[.+?\]/g
   val = val.replace(reg, (str: any) => {
-    let src = ''
-    emojiList.map((item: any) => {
-      if (item[str]) {
-        src = item[str]
-      }
-    })
-    return "<img src= '" + src + "' width='24' height='24' style='margin: 0 1px; vertical-align: text-bottom'/>"
+    const emojiPath = allEmojiList[str]
+    //表情库不存在的就默认返回原字符串
+    if (!emojiPath) {
+      return str
+    }
+    return [
+      '<img src="',
+      emojiPath,
+      '" width="20" height="20" alt="',
+      str,
+      '" title="',
+      str,
+      '" style="margin: 0 1px; vertical-align: text-bottom"',
+      '/>'
+    ].join('')
   })
   return val
 }
