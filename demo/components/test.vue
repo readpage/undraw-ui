@@ -20,6 +20,25 @@
 
 <script setup lang="ts">
 import {} from 'vue'
+
+// interface App {
+//   add: () => void
+// }
+// const app = {
+//   add: Function
+// }
+
+// function exec(app: Function) {
+  
+// }
+
+// const add = (app: App) => {
+//   console.log('hello')
+// }
+
+// exec(app => {
+//   app.
+// })
 </script>
 
 <style lang="scss" scoped></style>

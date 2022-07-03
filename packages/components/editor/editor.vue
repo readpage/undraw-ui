@@ -77,9 +77,6 @@ function addText(val: string) {
     }
     // 删除选中内容
     range.value.deleteContents()
-    // const imageNode = document.createElement('img');
-    // imageNode.src = "https://static.talkxj.com/emoji/goutou.jpg";
-    // range.value.insertNode(imageNode)
 
     // 添加内容
     range.value.insertNode(range.value.createContextualFragment(val))

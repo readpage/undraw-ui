@@ -36,7 +36,6 @@
     "element-plus": "^2.1.8",
     "sortablejs": "^1.15.0",
     "store": "^2.0.12",
-    "undraw-emoji": "^1.0.2",
     "vue": "^3.2.31"
   },
   "devDependencies": { 

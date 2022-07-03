@@ -94,6 +94,7 @@ defineExpose({
   overflow: hidden;
   .action-box {
     display: flex;
+    align-items: center;
     margin-top: 8px;
     .el-button {
       margin-left: auto;

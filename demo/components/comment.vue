@@ -27,7 +27,7 @@ const user = reactive<UserApi>({
   id: 1,
   username: 'user',
   avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
-  // 评论id数组
+  // 评论id数组 建议:存储方式用户id和文章id和评论id组成关系,根据用户id和文章id来获取对应点赞评论id,然后加入到数组中返回
   likes: [1, 2, 11]
 })
 
