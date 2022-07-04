@@ -16,7 +16,7 @@
         <div class="footer">
           <!-- 切换输入方式 -->
           <i v-show="!isVoice" style="margin-right: 8px" class="select-none cursor-pointer" @click="isVoice = !isVoice">
-            <svg width="22" height="22" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" data-v-78e17ca8="">
+            <svg width="30" height="30" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" data-v-78e17ca8="">
               <path
                 fill="currentColor"
                 d="M512 128a128 128 0 0 0-128 128v256a128 128 0 1 0 256 0V256a128 128 0 0 0-128-128zm0-64a192 192 0 0 1 192 192v256a192 192 0 1 1-384 0V256A192 192 0 0 1 512 64zm-32 832v-64a288 288 0 0 1-288-288v-32a32 32 0 0 1 64 0v32a224 224 0 0 0 224 224h64a224 224 0 0 0 224-224v-32a32 32 0 1 1 64 0v32a288 288 0 0 1-288 288v64h64a32 32 0 1 1 0 64H416a32 32 0 1 1 0-64h64z"
@@ -25,8 +25,8 @@
           </i>
           <i v-show="isVoice" style="margin-right: 8px" class="select-none cursor-pointer" @click="isVoice = !isVoice">
             <svg
-              width="22"
-              height="22"
+              width="30"
+              height="30"
               viewBox="0 0 1024 1024"
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
@@ -42,6 +42,9 @@
           <el-input
             v-show="!isVoice"
             id="emojiInput"
+            type="textarea"
+            resize="none"
+            :autosize="{ minRows: 1, maxRows: 4 }"
             v-model="content"
             placeholder="请输入内容"
             @keydown.enter="submit"
@@ -51,8 +54,8 @@
           <!-- 表情框 -->
           <u-emoji style="margin: 0 8px 0" :emoji="emoji" placement="top-end" @add-emoji="addEmoji">
             <svg
-              width="22"
-              height="22"
+              width="30"
+              height="30"
               viewBox="0 0 1024 1024"
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
@@ -67,8 +70,8 @@
           <!-- 发送按钮 -->
           <i style="padding-bottom: 5px" class="select-none cursor-pointer" @click="submit">
             <svg
-              width="18"
-              height="18"
+              width="24"
+              height="24"
               viewBox="0 0 1025 1024"
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
@@ -162,7 +165,7 @@ const addEmoji = (val: string) => {
         fill: #515767;
         border-radius: 0 0 1em 1em;
         display: flex;
-        align-items: center;
+        align-items: end;
 
         .voice-btn {
           font-size: 13px;
