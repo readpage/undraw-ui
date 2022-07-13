@@ -21,7 +21,7 @@
 </template>
 <script setup lang="ts">
 import { reactive, markRaw, computed } from 'vue'
-import signVue from '~/components/sign/sign.vue'
+import signVue from './components/sign.vue'
 import anchorVue from './components/anchor.vue'
 import commentVue from './components/comment.vue'
 import dialogVue from './components/dialog.vue'
@@ -125,6 +125,7 @@ body {
   }
   .container {
     padding: 10px;
+    width: 100%;
   }
 }
 .current-tab {

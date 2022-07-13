@@ -8,12 +8,13 @@
       @focus="onFocus"
       @input="onInput"
       @blur="onBlur"
+      @keydown.enter="keyDown"
       v-html="text"
     ></div>
   </div>
 </template>
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 
 defineOptions({
   name: 'UEditor'
@@ -22,9 +23,12 @@ defineOptions({
 interface Props {
   placeholder?: string
   modelValue: string
+  minHeight?: number
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  minHeight: 30
+})
 
 const range = ref<Range>()
 const editorRef = ref<HTMLDivElement>()
@@ -32,11 +36,16 @@ const text = ref()
 const isLocked = ref(false)
 const active = ref(false)
 
+const minHeight = computed(() => props.minHeight + 'px')
+
+const padding = computed(() => (props.minHeight == 30 ? '4px 10px' : '8px 12px'))
+
 const emit = defineEmits<{
   (e: 'update:modelValue', val: string): void
   (e: 'input', event: Event): void
   (e: 'focus', event: Event): void
   (e: 'blur', event: Event): void
+  (e: 'submit'): void
 }>()
 
 watch(
@@ -104,6 +113,17 @@ function focus() {
   })
 }
 
+const keyDown = (e: KeyboardEvent) => {
+  if (e.ctrlKey && e.key == 'Enter') {
+    //用户点击了ctrl+enter触发
+    // console.log('ctrl+enter')
+    emit('submit')
+  } else {
+    //用户点击了enter触发
+    // console.log('enter')
+  }
+}
+
 onMounted(() => {
   editorRef.value?.addEventListener('keyup', (event: Event) => {
     const el = event.target as HTMLDivElement
@@ -126,15 +146,17 @@ defineExpose({
   background: #f2f3f5;
   border: 1px solid #f2f3f5;
   border-radius: 4px;
+  font-size: 14px;
 
   .rich-input {
-    padding: 8px 12px;
+    min-height: v-bind(minHeight);
+    line-height: 22px;
+    padding: v-bind(padding);
     color: #252933;
     outline: none;
-    min-height: 64px;
+    display: inline-block;
+    width: 100%;
     box-sizing: border-box;
-    line-height: 22px;
-    font-size: 14px;
     resize: both;
     background-position: 120% -10px;
     transition: background 0.3s;

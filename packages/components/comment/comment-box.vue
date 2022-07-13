@@ -5,23 +5,15 @@
       v-model="content"
       :class="{ 'input-active': action }"
       :placeholder="props.placeholder"
+      :min-height="64"
       @focus="onFocus"
-      @input="isEmpty(content) ? (disabled = true) : (disabled = false)"
+      @input="isEmpty(content.replace(/&nbsp; |<br>/g, '')) ? (disabled = true) : (disabled = false)"
+      @submit="onSubmit"
     ></u-editor>
     <Transition name="fade">
       <div v-if="action" class="action-box">
         <u-emoji :emoji="emoji" @add-emoji="(val: string) => editorRef?.addText(val)"></u-emoji>
-        <el-button
-          type="primary"
-          :disabled="disabled"
-          @click="
-            submit({
-              clear: () => editorRef?.clear(),
-              content: replay ? `回复 <span style='color: blue;'>@${replay}:</span> ${content}` : content,
-              parentId
-            })
-          "
-        >
+        <el-button type="primary" :disabled="disabled" @click="onSubmit">
           {{ props.contentBtn }}
         </el-button>
       </div>
@@ -62,6 +54,14 @@ const emit = defineEmits<{
 
 const submit = inject(InjectionCommentFun) as (obj: CommentSubmitParam) => void
 const emoji = inject(InjectionEmojiApi)
+
+const onSubmit = () => {
+  submit({
+    clear: () => editorRef.value?.clear(),
+    content: props.replay ? `回复 <span style='color: blue;'>@${props.replay}:</span> ${content.value}` : content.value,
+    parentId: props.parentId
+  })
+}
 
 function onClickOutside(event: Event) {
   // const child = event.target as HTMLElement
