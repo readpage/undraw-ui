@@ -159,7 +159,6 @@ const addEmoji = (val: string) => {
       border-radius: 0 0 1em 1em;
       display: flex;
       align-items: center;
-
       .voice-btn {
         font-size: 13px;
         outline: none;
