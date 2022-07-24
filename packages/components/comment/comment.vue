@@ -39,7 +39,7 @@ import {
   InjectionEmojiApi,
   InjectionLikeFun,
   InjectionLinkFun
-} from './interface'
+} from '~/index'
 
 defineOptions({
   name: 'UComment'

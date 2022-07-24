@@ -1,4 +1,4 @@
-import { withInstall } from '~/utils'
+import { withInstall } from '~/util'
 import commentVue from './comment.vue'
 
 export * from './interface'

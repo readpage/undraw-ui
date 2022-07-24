@@ -31,17 +31,7 @@ export interface ReplyApi {
   list: CommentApi[]
 }
 
-export interface Emoji {
-  [key: string]: string
-}
-export interface EmojiApi {
-  faceList: string[]
-  emojiList: Emoji[]
-  allEmojiList: Emoji
-}
-
 export const InjectionCommentFun: InjectionKey<(obj: CommentSubmitParam) => void> = Symbol()
-export const InjectionEmojiApi: InjectionKey<EmojiApi> = Symbol()
 export const InjectionUserApi: InjectionKey<UserApi> = Symbol()
 export const InjectionLikeFun: InjectionKey<(id: number) => void> = Symbol()
 export const InjectionLinkFun: InjectionKey<() => void> = Symbol()

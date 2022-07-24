@@ -1,4 +1,4 @@
-import { withInstall } from '~/utils'
+import { withInstall } from '~/util'
 import dialogVue from './dialog.vue'
 
 export const UDialog = withInstall(dialogVue)

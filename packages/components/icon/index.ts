@@ -1,4 +1,4 @@
-import { withInstall } from '~/utils'
+import { withInstall } from '~/util'
 import iconVue from './icon.vue'
 
 export const UIcon = withInstall(iconVue)

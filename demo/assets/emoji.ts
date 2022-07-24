@@ -128,7 +128,7 @@ const emojiList: {}[] = [
 ]
 
 //把emojiList数组中的每一个对象，放到emojiMap中方便取用
-function allEmojiList(): {} {
+function allEmoji(): {} {
   let emojiMap = {}
   emojiList.map(emojis => (emojiMap = { ...emojiMap, ...emojis }))
   return emojiMap
@@ -137,5 +137,5 @@ function allEmojiList(): {} {
 export default {
   faceList,
   emojiList,
-  allEmojiList: allEmojiList()
+  allEmoji: allEmoji()
 }

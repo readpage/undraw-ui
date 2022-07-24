@@ -1,4 +1,4 @@
-import { withInstall } from '~/utils'
+import { withInstall } from '~/util'
 import tagsVue from './tags.vue'
 
 export interface TagApi {

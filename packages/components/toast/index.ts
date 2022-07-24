@@ -1,5 +1,5 @@
 import toast from './index.vue'
-import { createGlobalNode, removeGlobalNode } from '~/utils'
+import { createGlobalNode, removeGlobalNode } from '~/util'
 import type { ToastApi } from './index.vue'
 
 // 函数式调用

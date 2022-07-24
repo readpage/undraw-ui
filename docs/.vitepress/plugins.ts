@@ -4,7 +4,7 @@ import mdContainer from 'markdown-it-container'
 import type Renderer from 'markdown-it/lib/renderer'
 import { resolve } from 'path'
 import fs from 'fs'
-import { highlight } from './utils'
+import { highlight } from './util'
 
 interface ContainerApi {
   marker?: string | undefined

@@ -1,4 +1,4 @@
-import { withInstall } from '~/utils'
+import { withInstall } from '~/util'
 import editorVue from './editor.vue'
 
 export type EditorInstance = InstanceType<typeof editorVue>

@@ -1,12 +1,6 @@
-import { withInstall } from '~/utils'
+import { withInstall } from '~/util'
 import chatVue from './chat.vue'
 
-export interface ChatApi {
-  username: string
-  avatar: string
-  content: string
-  self?: boolean
-}
-
+export * from './interface'
 export const UChat = withInstall(chatVue)
 export default UChat

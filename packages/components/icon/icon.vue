@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { isNumber } from '~/utils'
+import { isNumber } from '~/util'
 
 defineOptions({
   name: 'UIcon'

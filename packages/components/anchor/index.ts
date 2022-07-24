@@ -1,4 +1,4 @@
-import { withInstall } from '~/utils'
+import { withInstall } from '~/util'
 import anchorVue from './anchor.vue'
 
 export const UAnchor = withInstall(anchorVue)

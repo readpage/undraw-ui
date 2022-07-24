@@ -29,7 +29,7 @@
 import { nextTick, onMounted, onUnmounted, reactive, ref, toRef, watch } from 'vue'
 import contextMenuVue from './context-menu.vue'
 import Sortable from 'sortablejs'
-import { browser } from '~/utils'
+import { browser } from '~/util'
 import { TagApi } from '.'
 
 defineOptions({

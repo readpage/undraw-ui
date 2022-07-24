@@ -1,4 +1,4 @@
-import { withInstall } from '~/utils'
+import { withInstall } from '~/util'
 import foldVue from './fold.vue'
 
 export const UFold = withInstall(foldVue)

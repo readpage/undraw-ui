@@ -1,25 +1,37 @@
 <template>
-  <u-chat :data="data"></u-chat>
+  <u-chat :user-id="userId" :emoji="emoji" :data="data" @submit="submit"></u-chat>
 </template>
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { ChatApi } from '~/index'
+import { ChatApi, ChatSubmitParam } from '~/index'
+// 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases
+// static文件放在public下,引入emoji.ts文件可以移动到自定义位置
+import emoji from '@/assets/emoji'
+
+const userId = ref(1)
 
 const data = reactive<ChatApi[]>([
-  { username: 'user', avatar: '', content: 'adfsdfa', self: true },
+  { id: 1, username: 'user', avatar: '', content: 'adfsdfa' },
   {
+    id: 2,
     username: 'admin',
     avatar: '',
     content:
       '每次出门都带本书，旅途中没事就拿出来晒晒，在火车上拿出来放窗边，住酒店拿出来放床头。旅行结束，在扉页写上：此书曾经到某地一游。买了书就要负责任，不看，难道还不带人家出门旅行吗？'
   },
   {
+    id: 2,
     username: 'admin',
     avatar: '',
     content:
       '每次出门都带本书，旅途中没事就拿出来晒晒，在火车上拿出来放窗边，住酒店拿出来放床头。旅行结束，在扉页写上：此书曾经到某地一游。买了书就要负责任，不看，难道还不带人家出门旅行吗？'
   }
 ])
+
+const submit = ({ clear, content }: ChatSubmitParam) => {
+  data.push({ id: 1, username: 'user', avatar: '', content: content })
+  clear()
+}
 
 const address = 'ws://localhost:7000/groupchat'
 

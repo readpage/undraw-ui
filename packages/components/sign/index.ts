@@ -1,4 +1,4 @@
-import { withInstall } from '~/utils'
+import { withInstall } from '~/util'
 import signVue from './sign.vue'
 
 export interface SignApi {

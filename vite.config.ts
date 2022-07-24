@@ -5,10 +5,7 @@ import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    DefineOptions(),
-    vue()
-  ],
+  plugins: [DefineOptions(), vue()],
   resolve: {
     alias: [
       {
@@ -17,8 +14,8 @@ export default defineConfig({
       },
       {
         find: '~',
-        replacement: resolve('packages') 
-      },
+        replacement: resolve('packages')
+      }
     ]
   },
   server: {
