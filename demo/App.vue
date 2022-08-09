@@ -1,23 +1,25 @@
 <template>
-  <div class="demo">
-    <div class="menu">
-      <div class="title"><h1>组件测试</h1></div>
-      <div class="content">
-        <div
-          v-for="(tab, index) in tabData"
-          :key="index"
-          class="menu-li"
-          :class="bindClass(tab)"
-          @click="switchTab(tab)"
-        >
-          {{ tab.name }}
+  <el-config-provider :locale="zhCn">
+    <div class="demo">
+      <div class="menu">
+        <div class="title"><h1>组件测试</h1></div>
+        <div class="content">
+          <div
+            v-for="(tab, index) in tabData"
+            :key="index"
+            class="menu-li"
+            :class="bindClass(tab)"
+            @click="switchTab(tab)"
+          >
+            {{ tab.name }}
+          </div>
         </div>
       </div>
+      <div class="container">
+        <component :is="currentTab.tabComp"></component>
+      </div>
     </div>
-    <div class="container">
-      <component :is="currentTab.tabComp"></component>
-    </div>
-  </div>
+  </el-config-provider>
 </template>
 <script setup lang="ts">
 import { reactive, markRaw, computed } from 'vue'
@@ -33,6 +35,8 @@ import tagsVue from './components/tags.vue'
 import testVue from './components/test.vue'
 import buttonVue from './components/button.vue'
 import chatVue from './components/chat.vue'
+import { ElConfigProvider } from 'element-plus'
+import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 
 type tabType = {
   name: string
