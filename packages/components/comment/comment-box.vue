@@ -57,7 +57,7 @@ const emoji = inject(InjectionEmojiApi)
 
 const onSubmit = () => {
   submit({
-    clear: () => editorRef.value?.clear(),
+    clear: () => (editorRef.value as any).clear(),
     content: props.replay ? `回复 <span style='color: blue;'>@${props.replay}:</span> ${content.value}` : content.value,
     parentId: props.parentId
   })

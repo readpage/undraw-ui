@@ -17,7 +17,7 @@
             </svg>
           </span>
         </div>
-        <el-pagination small layout="total, prev, pager, next" :total="50" />
+        <el-pagination small layout="total, prev, pager, next" :total="50"></el-pagination>
       </div>
     </div>
   </div>

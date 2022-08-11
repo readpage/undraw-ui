@@ -7,7 +7,7 @@ export function UToast(options: ToastApi) {
   let duration = options.duration
   if (!options.message) return
   options.duration = duration ? duration : 1000
-  const { vnode, div } = createGlobalNode(toast, options)
+  const { vnode, div } = createGlobalNode(toast as any, options)
 
   setTimeout(() => {
     removeGlobalNode(div)
