@@ -1,4 +1,5 @@
 import { InjectionKey } from 'vue'
+import { EmojiApi } from '~/index'
 
 export interface CommentSubmitParam {
   clear: () => void
@@ -31,7 +32,20 @@ export interface ReplyApi {
   list: CommentApi[]
 }
 
+export interface ConfigApi {
+  user: UserApi
+  emoji: EmojiApi
+  comments: CommentApi[]
+}
+
+export interface ReplyParam {
+  replyMore: (parentId: number, show: Function) => void
+  replyPage: (parentId: number, pageNum: number, pageSize: number) => void
+}
+
 export const InjectionCommentFun: InjectionKey<(obj: CommentSubmitParam) => void> = Symbol()
 export const InjectionUserApi: InjectionKey<UserApi> = Symbol()
 export const InjectionLikeFun: InjectionKey<(id: number) => void> = Symbol()
 export const InjectionLinkFun: InjectionKey<() => void> = Symbol()
+export const InjectionReplyMore: InjectionKey<(show: () => void) => void> = Symbol()
+export const InjectionReply: InjectionKey<ReplyParam> = Symbol()

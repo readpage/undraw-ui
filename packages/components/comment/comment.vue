@@ -6,7 +6,7 @@
       </div>
       <div class="content">
         <div class="avatar-box">
-          <el-avatar :size="40" :src="user.avatar">
+          <el-avatar :size="40" :src="props.config.user.avatar">
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
         </div>
@@ -18,7 +18,7 @@
       <slot name="list-title">
         <div class="title">全部评论</div>
       </slot>
-      <CommentList :data="comments" />
+      <CommentList :data="config.comments" />
     </div>
   </div>
 </template>
@@ -32,13 +32,14 @@ import { ElAvatar } from '~/element'
 import {
   InjectionUserApi,
   CommentSubmitParam,
-  UserApi,
-  EmojiApi,
-  CommentApi,
   InjectionCommentFun,
   InjectionEmojiApi,
   InjectionLikeFun,
-  InjectionLinkFun
+  InjectionLinkFun,
+  InjectionReplyMore,
+  ConfigApi,
+  InjectionReply,
+  ReplyParam
 } from '~/index'
 
 defineOptions({
@@ -46,9 +47,7 @@ defineOptions({
 })
 
 interface Props {
-  comments: CommentApi[]
-  emoji: EmojiApi
-  user: UserApi
+  config: ConfigApi
 }
 
 const props = defineProps<Props>()
@@ -57,6 +56,8 @@ const emit = defineEmits<{
   (e: 'submit', obj: CommentSubmitParam): void
   (e: 'like', id: number): void
   (e: 'link', url: string): void
+  (e: 'replyMore', parentId: number, show: Function): void
+  (e: 'replyPage', parentId: number, pageNum: number, pageSize: number): void
 }>()
 
 const submit = (obj: CommentSubmitParam) => {
@@ -67,11 +68,17 @@ const like = (id: number) => {
   emit('like', id)
 }
 
+const reply: ReplyParam = {
+  replyMore: (parentId, show) => emit('replyMore', parentId, show),
+  replyPage: (parentId, pageNum, pageSize) => emit('replyPage', parentId, pageNum, pageSize)
+}
+
 provide(InjectionCommentFun, submit)
-provide(InjectionEmojiApi, props.emoji)
-provide(InjectionUserApi, props.user)
+provide(InjectionEmojiApi, props.config.emoji)
+provide(InjectionUserApi, props.config.user)
 provide(InjectionLikeFun, like)
 provide(InjectionLinkFun, (url: string) => emit('link', url))
+provide(InjectionReply, reply)
 </script>
 
 <style lang="scss" scoped>
