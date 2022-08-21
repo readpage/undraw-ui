@@ -2,5 +2,9 @@
 title: Chat
 ---
 
-# 聊天框
-扩建中...
+# Chat 聊天室
+
+## 基础用法
+:::demo
+chat/basic
+:::
