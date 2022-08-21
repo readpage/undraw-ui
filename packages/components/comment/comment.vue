@@ -6,7 +6,7 @@
       </div>
       <div class="content">
         <div class="avatar-box">
-          <el-avatar :size="40" :src="props.config.user.avatar">
+          <el-avatar :size="40" :src="config.user.avatar">
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
         </div>
@@ -18,29 +18,30 @@
       <slot name="list-title">
         <div class="title">全部评论</div>
       </slot>
-      <CommentList :data="config.comments" />
+      <CommentList :data="config.comments">
+        <template #userInfo>
+          <slot name="userInfo"></slot>
+        </template>
+      </CommentList>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { provide } from 'vue'
+import { provide, useSlots } from 'vue'
 import CommentBox from './comment-box.vue'
 import CommentList from './comment-list.vue'
 import { ElAvatar } from '~/element'
-
 import {
-  InjectionUserApi,
   CommentSubmitParam,
-  InjectionCommentFun,
-  InjectionEmojiApi,
-  InjectionLikeFun,
-  InjectionLinkFun,
-  InjectionReplyMore,
   ConfigApi,
+  ContentBoxParam,
+  InjectionCommentFun,
+  InjectionContentBox,
   InjectionReply,
   ReplyParam
-} from '~/index'
+} from './interface'
+import { InjectionEmojiApi } from '../emoji/interface'
 
 defineOptions({
   name: 'UComment'
@@ -51,13 +52,14 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const slots = useSlots()
 
 const emit = defineEmits<{
   (e: 'submit', obj: CommentSubmitParam): void
   (e: 'like', id: number): void
-  (e: 'link', url: string): void
-  (e: 'replyMore', parentId: number, show: Function): void
+  (e: 'replyMore', parentId: number, closeLoad: Function): void
   (e: 'replyPage', parentId: number, pageNum: number, pageSize: number): void
+  (e: 'getUser', id: number, show: Function): void
 }>()
 
 const submit = (obj: CommentSubmitParam) => {
@@ -69,16 +71,21 @@ const like = (id: number) => {
 }
 
 const reply: ReplyParam = {
-  replyMore: (parentId, show) => emit('replyMore', parentId, show),
+  replyMore: (parentId, closeLoad) => emit('replyMore', parentId, closeLoad),
   replyPage: (parentId, pageNum, pageSize) => emit('replyPage', parentId, pageNum, pageSize)
+}
+
+const contentBox: ContentBoxParam = {
+  user: props.config.user,
+  like: like,
+  isUserInfo: slots.userInfo != undefined,
+  getUser: (id, show) => emit('getUser', id, show)
 }
 
 provide(InjectionCommentFun, submit)
 provide(InjectionEmojiApi, props.config.emoji)
-provide(InjectionUserApi, props.config.user)
-provide(InjectionLikeFun, like)
-provide(InjectionLinkFun, (url: string) => emit('link', url))
 provide(InjectionReply, reply)
+provide(InjectionContentBox, contentBox)
 </script>
 
 <style lang="scss" scoped>

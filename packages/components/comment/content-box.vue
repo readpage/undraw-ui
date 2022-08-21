@@ -1,18 +1,40 @@
 <template>
   <div class="comment" :class="{ small: small }">
-    <div style="cursor: pointer" @click="link">
-      <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.avatar">
-        <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
-      </el-avatar>
-    </div>
+    <UserInfo :is-user-info="contentBox.isUserInfo && state.visible">
+      <a
+        :href="data.link"
+        target="_blank"
+        style="display: block"
+        @mouseenter="contentBox.getUser(data.id, () => (state.visible = true))"
+      >
+        <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.avatar">
+          <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+        </el-avatar>
+      </a>
+      <template #userInfo>
+        <slot name="userInfo"></slot>
+      </template>
+    </UserInfo>
     <div class="content-box">
       <div class="user-box">
-        <div class="username" style="cursor: pointer" @click="link">
-          <span class="name" style="max-width: 10em">{{ data.username }}</span>
-          <span blank="true" class="rank">
-            <u-icon size="24" v-html="level(data.level)"></u-icon>
-          </span>
-        </div>
+        <UserInfo :is-user-info="contentBox.isUserInfo && state.visible">
+          <a
+            :href="data.link"
+            target="_blank"
+            style="display: block"
+            @mouseenter="contentBox.getUser(data.id, () => (state.visible = true))"
+          >
+            <div class="username">
+              <span class="name" style="max-width: 10em">{{ data.username }}</span>
+              <span blank="true" class="rank">
+                <u-icon size="24" v-html="level(data.level)"></u-icon>
+              </span>
+            </div>
+          </a>
+          <template #userInfo>
+            <slot name="userInfo"></slot>
+          </template>
+        </UserInfo>
         <!-- <span class="author-badge-text">（作者）</span> -->
         <span class="address" style="color: #939393; font-size: 12px">&nbsp;&nbsp;{{ data.address }}</span>
         <time class="time">{{ data.createTime }}</time>
@@ -21,8 +43,8 @@
         <div v-html="content"></div>
       </u-fold>
       <div class="action-box select-none">
-        <div class="item" @click="like(data.id)">
-          <u-icon v-if="user.likes.indexOf(data.id) == -1">
+        <div class="item" @click="contentBox.like(data.id)">
+          <u-icon v-if="contentBox.user.likes.indexOf(data.id) == -1">
             <svg
               t="1650360973068"
               viewBox="0 0 1024 1024"
@@ -48,7 +70,7 @@
           </u-icon>
           <span v-if="data.like != 0">{{ data.like }}</span>
         </div>
-        <div ref="btnRef" class="item" :class="{ active: active }" @click="reply">
+        <div ref="btnRef" class="item" :class="{ active: state.active }" @click="reply">
           <u-icon>
             <svg
               viewBox="0 0 1024 1024"
@@ -64,10 +86,10 @@
               ></path>
             </svg>
           </u-icon>
-          <span>{{ active ? '取消回复' : '回复' }}</span>
+          <span>{{ state.active ? '取消回复' : '回复' }}</span>
         </div>
       </div>
-      <div v-if="active">
+      <div v-if="state.active">
         <CommentBox
           ref="commentRef"
           :parent-id="parentId"
@@ -84,22 +106,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, nextTick, ref } from 'vue'
+import { computed, inject, nextTick, ref, reactive } from 'vue'
 import CommentBox from './comment-box.vue'
-import {
-  EmojiApi,
-  InjectionEmojiApi,
-  InjectionLikeFun,
-  InjectionLinkFun,
-  InjectionUserApi,
-  UFold,
-  UIcon,
-  UserApi
-} from '~/index'
+import { EmojiApi, InjectionEmojiApi, UFold, UIcon } from '~/components'
 import type { CommentBoxApi } from './comment-box.vue'
-import { CommentApi } from './interface'
+import { CommentApi, ContentBoxParam, InjectionContentBox } from './interface'
 import { ElAvatar } from '~/element'
 import { useEmojiParse } from '~/hooks'
+import UserInfo from './user-info.vue'
 
 interface Props {
   small?: boolean
@@ -109,14 +123,16 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const active = ref(false)
+const state = reactive({
+  active: false,
+  visible: false
+})
+
 const commentRef = ref<CommentBoxApi>()
 const btnRef = ref<HTMLDivElement>()
 
 const { allEmoji } = inject(InjectionEmojiApi) as EmojiApi
-const user = inject(InjectionUserApi) as UserApi
-const like = inject(InjectionLikeFun) as (id: number) => void
-const link = inject(InjectionLinkFun) as () => void
+const contentBox = inject(InjectionContentBox) as ContentBoxParam
 
 const level = (v: number) => {
   switch (v) {
@@ -138,8 +154,8 @@ const level = (v: number) => {
 }
 
 function reply() {
-  active.value = !active.value
-  if (active.value) {
+  state.active = !state.active
+  if (state.active) {
     nextTick(() => {
       commentRef.value?.focus()
     })
@@ -150,7 +166,7 @@ function hide(event: Event) {
   const target = event.target as HTMLElement
 
   if (!btnRef.value?.contains(target)) {
-    active.value = false
+    state.active = false
   }
 }
 

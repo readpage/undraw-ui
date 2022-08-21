@@ -1,7 +1,11 @@
 <template>
   <div v-if="data.total > 0" class="reply-box">
     <div class="comment-list">
-      <ContentBox v-for="(reply, index) in data.list" :key="index" :parent-id="parentId" :data="reply" small />
+      <ContentBox v-for="(reply, index) in data.list" :key="index" :parent-id="parentId" :data="reply" small>
+        <template #userInfo>
+          <slot name="userInfo"></slot>
+        </template>
+      </ContentBox>
       <div v-if="data.total > 2" class="fetch-more">
         <span v-if="state.loading">加载中...</span>
         <div v-else>
@@ -26,8 +30,8 @@
             layout="total, prev, pager, next"
             :total="data.total"
             :page-size="state.pageSize"
-            @current-change="CurrentChange"
-            @size-change="SizeChange"
+            @current-change="currentChange"
+            @size-change="sizeChange"
           ></el-pagination>
         </div>
       </div>
@@ -38,7 +42,7 @@
 <script setup lang="ts">
 import { computed, inject, reactive } from 'vue'
 import ContentBox from './content-box.vue'
-import { ReplyApi, ElPagination, InjectionReplyMore, InjectionReply } from '~/index'
+import { ReplyApi, ElPagination, InjectionReply, ReplyParam } from '~/index'
 
 interface Props {
   data?: ReplyApi | null
@@ -63,22 +67,22 @@ const data = computed(() => {
   return props.data
 })
 
-const replyInject = inject(InjectionReply)
+const replyInject = inject(InjectionReply) as ReplyParam
 
 const replyMore = () => {
   state.loading = true
   state.over = true
-  replyInject?.replyMore(props.parentId, () => (state.loading = false))
+  replyInject.replyMore(props.parentId, () => (state.loading = false))
 }
 
-const CurrentChange = (val: number) => {
+const currentChange = (val: number) => {
   state.pageNum = val
-  replyInject?.replyPage(props.parentId, val, state.pageSize)
+  replyInject.replyPage(props.parentId, val, state.pageSize)
 }
 
-const SizeChange = (val: number) => {
+const sizeChange = (val: number) => {
   state.pageSize = val
-  replyInject?.replyPage(props.parentId, state.pageNum, val)
+  replyInject.replyPage(props.parentId, state.pageNum, val)
 }
 </script>
 

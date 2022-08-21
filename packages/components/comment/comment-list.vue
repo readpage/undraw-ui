@@ -1,7 +1,14 @@
 <template>
   <div class="comment-list">
     <ContentBox v-for="(comment, index) in data" :key="index" :parent-id="comment.id" :data="comment">
-      <ReplyBox :parent-id="comment.id" :data="comment.reply" />
+      <template #userInfo>
+        <slot name="userInfo"></slot>
+      </template>
+      <ReplyBox :parent-id="comment.id" :data="comment.reply">
+        <template #userInfo>
+          <slot name="userInfo"></slot>
+        </template>
+      </ReplyBox>
     </ContentBox>
   </div>
 </template>

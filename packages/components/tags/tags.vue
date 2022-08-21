@@ -22,14 +22,15 @@
         </li>
       </ul>
     </el-scrollbar>
-    <contextMenuVue ref="contextmenuRef" :dropdown="dropdown" @submit="onSubmit" />
+    <ContextMenu ref="contextmenuRef" :dropdown="dropdown" @submit="onSubmit" />
   </div>
 </template>
 <script setup lang="ts">
 import { nextTick, onMounted, onUnmounted, reactive, ref, toRef, watch } from 'vue'
-import contextMenuVue from './context-menu.vue'
+import ContextMenu from './context-menu.vue'
 import Sortable from 'sortablejs'
 import { browser } from '~/util'
+import { ElScrollbar } from '~/element'
 import { TagApi } from '.'
 
 defineOptions({
@@ -139,7 +140,7 @@ const onContextmenu = (v: TagApi, e: MouseEvent) => {
 let sortable: Sortable | null = null
 
 const initSortable = () => {
-  const el = <HTMLElement>document.querySelector('.u-tabs-ul')
+  const el = document.querySelector('.u-tabs-ul') as HTMLElement
   sortable = Sortable.create(el, {
     animation: 300
   })

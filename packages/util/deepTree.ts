@@ -1,6 +1,13 @@
 import { isArray } from '.'
 
-export function deepTree(list: Array<any>) {
+// const obj = {
+//   name: '张三'
+// } as any
+// const str = 'username'
+// obj[str] = '李明'
+// console.log(obj[str])
+
+export function deepTree(list: Array<any>, children = 'children') {
   list = JSON.parse(JSON.stringify(list))
   const newList: Array<any> = []
   const map: any = {}
@@ -11,7 +18,7 @@ export function deepTree(list: Array<any>) {
     const parent = map[e.parentId]
 
     if (parent) {
-      ;(parent.children || (parent.children = [])).push(e)
+      ;(parent[children] || (parent[children] = [])).push(e)
     } else {
       newList.push(e)
     }
@@ -20,7 +27,7 @@ export function deepTree(list: Array<any>) {
   return newList
 }
 
-export function revDeepTree(list: Array<any> = []) {
+export function revDeepTree(list: Array<any> = [], children = 'children') {
   const d: Array<any> = []
   let id = 0
 
@@ -34,8 +41,8 @@ export function revDeepTree(list: Array<any> = []) {
 
       d.push(e)
 
-      if (e.children && isArray(e.children)) {
-        deep(e.children, e.id)
+      if (e[children] && isArray(e[children])) {
+        deep(e[children], e.id)
       }
     })
   }

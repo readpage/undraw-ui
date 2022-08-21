@@ -1,7 +1,7 @@
 {
   "name": "undraw-ui",
   "private": false,
-  "version": "0.5.8",
+  "version": "0.5.9",
   "author": "readpage <f1dao@qq.com>",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "build:package": "vue-tsc --noEmit && vite build -c build/vite.config.ts",
+    "build:packages": "vue-tsc --noEmit && vite build -c build/vite.config.ts",
     "format": "prettier --write **/*.{ts,js,json,vue}",
     "commit": "git add . && git-cz && git push"
   },
