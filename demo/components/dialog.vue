@@ -1,6 +1,6 @@
 <template>
   <el-button type="text" @click="visible = true">Click to open Dialog</el-button>
-  <u-dialog v-model="visible" center title="title" width="30%">
+  <u-dialog v-model="visible" center title="title" width="40%">
     <span>content</span>
     <template #footer>
       <el-button @click="visible = false">Cancel</el-button>

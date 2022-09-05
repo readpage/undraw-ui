@@ -12,13 +12,7 @@
     draggable
   >
     <div class="full-screen" @click="fullscreen = !fullscreen">
-      <svg
-        v-if="fullscreen"
-        width="16"
-        height="16"
-        viewBox="0 0 1024 1024"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <svg v-if="fullscreen" width="16" height="16" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
         <path fill="currentColor" d="M128 544h768a32 32 0 1 0 0-64H128a32 32 0 0 0 0 64z"></path>
       </svg>
       <svg v-else width="16" height="16" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
@@ -84,6 +78,15 @@ watch(
 )
 </script>
 
+<style lang="scss">
+.u-dialog {
+  .el-dialog__header {
+    margin-right: 0;
+    border-bottom: 1px solid #f5f7fa;
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 .u-dialog {
   .full-screen {
@@ -100,13 +103,6 @@ watch(
   }
   .full-screen:hover {
     color: var(--el-color-primary);
-  }
-  .el-dialog__header {
-    margin-right: 0;
-    border-bottom: 1px solid #f7f7f7;
-  }
-  .el-dialog__body {
-    padding: calc(var(--el-dialog-padding-primary)) var(--el-dialog-padding-primary);
   }
 }
 </style>
