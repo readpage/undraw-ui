@@ -63,12 +63,13 @@ defineExpose({
       display: flex;
       margin-bottom: 20px;
       .content {
-        margin: 0 10px;
+        margin: 0 50px 0 10px;
         .card-box {
           margin-top: 5px;
           background: #ffffff;
           padding: 5px 10px;
           border-radius: 4px;
+          word-break: break-all;
         }
       }
     }
@@ -79,6 +80,12 @@ defineExpose({
   flex-direction: row-reverse;
   .username {
     text-align: right;
+  }
+  .content {
+    margin: 0 10px 0 50px !important;
+    .card-box {
+      background-color: #95ec69 !important;
+    }
   }
 }
 </style>
