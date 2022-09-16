@@ -24,7 +24,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   size: 16
 })
-const name = computed(() => '#icon' + props.name)
+const name = computed(() => '#' + props.name)
 const style = computed(() => {
   return {
     fontSize: isNumber(props.size) ? props.size + 'px' : props.size,

@@ -1,4 +1,8 @@
 @import 'element-plus/theme-chalk/base.css';
+
+:root {
+  --u-border-color-light: #f0f0f0;
+}
 a {
   color: inherit;
   text-decoration: inherit;

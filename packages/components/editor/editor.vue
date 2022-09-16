@@ -172,7 +172,7 @@ defineExpose({
   background: #fff;
 }
 
-.active .rich-input {
-  background: url('/static/img/commentBack.webp') no-repeat 95% -10px/19%;
-}
+// .active .rich-input {
+//   background: url('/static/img/commentBack.webp') no-repeat 95% -10px/19%;
+// }
 </style>

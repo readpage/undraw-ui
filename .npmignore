@@ -12,11 +12,9 @@ public/
 
 # 忽略指定文件
 favicon.ico
-.eslintignore
 .eslintrc.js
 .gitignore
 .npmignore
-.prettierignore
 .prettierrc.js
 env.d.ts
 index.html

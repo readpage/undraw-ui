@@ -29,7 +29,7 @@
 import { nextTick, onMounted, onUnmounted, reactive, ref, toRef, watch } from 'vue'
 import ContextMenu from './context-menu.vue'
 import Sortable from 'sortablejs'
-import { browser } from '~/util'
+import { getBrowser } from '~/util'
 import { ElScrollbar } from '~/element'
 import { TagApi } from '.'
 
@@ -147,7 +147,7 @@ const initSortable = () => {
 }
 
 const onSortableResize = () => {
-  if (browser().isMobile) {
+  if (getBrowser().isMobile) {
     if (sortable) {
       sortable.destroy()
     }

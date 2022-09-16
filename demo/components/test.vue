@@ -17,7 +17,6 @@
   <u-divider position="left">我是左分割线</u-divider>
   <u-divider position="right">我是右分割线</u-divider>
   <el-input></el-input>
-  <el-input></el-input>
 </template>
 
 <script setup lang="ts">

@@ -1,7 +1,6 @@
 <template>
   <el-dialog
     v-model="visible"
-    custom-class="u-dialog"
     :close-on-click-modal="closeOnClickModal"
     :title="title"
     :width="width"
@@ -79,16 +78,23 @@ watch(
 </script>
 
 <style lang="scss">
-.u-dialog {
+.el-dialog {
   .el-dialog__header {
+    text-align: left;
     margin-right: 0;
-    border-bottom: 1px solid #f5f7fa;
+    border-bottom: 1px solid var(--u-border-color-light);
+  }
+  .el-dialog__body {
+    padding: 20px !important;
+  }
+  .el-dialog__footer {
+    padding: 10px 20px;
   }
 }
 </style>
 
 <style lang="scss" scoped>
-.u-dialog {
+.el-dialog {
   .full-screen {
     display: flex;
     align-items: center;
