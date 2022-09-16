@@ -1,8 +1,8 @@
 <template>
-  <u-icon name="comment" color="#67c23a" size="24"></u-icon>
-  <u-icon name="comment2" color="#67c23a" size="24"></u-icon>
-  <u-icon name="dianzan" color="#67c23a" size="24"></u-icon>
-  <u-icon name="dianzan2" color="#67c23a" size="24"></u-icon>
+  <u-icon name="iconcomment" class="icon-comment" color="#67c23a"></u-icon>
+  <u-icon name="iconcomment2" color="#67c23a"></u-icon>
+  <u-icon name="icondianzan" color="#67c23a" size="24"></u-icon>
+  <u-icon name="icondianzan2" color="#67c23a" size="24"></u-icon>
   <div class="test">
     <u-icon>
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
@@ -26,6 +26,12 @@ import {} from 'vue'
 </script>
 
 <style lang="scss" scoped>
+.u-icon {
+  font-size: 16px;
+}
+.icon-comment {
+  font-size: 20px;
+}
 .test {
   color: skyblue;
   display: inline-block;

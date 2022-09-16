@@ -11,19 +11,19 @@ interface toastTypeOptions {
 const toastTypes: toastType[] = [
   {
     type: 'success',
-    options: { color: '#67c23a', bgColor: '#f0f9eb', icon: 'success' }
+    options: { color: '#67c23a', bgColor: '#f0f9eb', icon: 'iconsuccess' }
   },
   {
     type: 'info',
-    options: { color: '#909399', bgColor: '#f4f4f5', icon: 'info' }
+    options: { color: '#909399', bgColor: '#f4f4f5', icon: 'iconinfo' }
   },
   {
     type: 'warning',
-    options: { color: '#fdf6ec', bgColor: '#e6a23c', icon: 'warning' }
+    options: { color: '#fdf6ec', bgColor: '#e6a23c', icon: 'iconwarning' }
   },
   {
     type: 'error',
-    options: { color: '#f56c6c', bgColor: '#fef0f0', icon: 'error' }
+    options: { color: '#f56c6c', bgColor: '#fef0f0', icon: 'iconerror' }
   }
 ]
 

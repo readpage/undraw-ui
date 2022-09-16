@@ -21,9 +21,7 @@ interface Props {
   color?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  size: 16
-})
+const props = defineProps<Props>()
 const name = computed(() => '#' + props.name)
 const style = computed(() => {
   return {

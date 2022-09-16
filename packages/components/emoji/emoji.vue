@@ -1,6 +1,12 @@
 <template>
   <div class="u-emoji">
-    <el-popover :placement="placement" style="padding: 0" :width="245" trigger="click" @before-enter="onBefore">
+    <el-popover
+      :placement="placement"
+      popper-class="emoji-popover"
+      :width="250"
+      trigger="click"
+      @before-enter="onBefore"
+    >
       <div class="face-tooltip-head select-none">
         <label
           v-for="(item, index) in faceList"
@@ -16,20 +22,22 @@
         <div class="emjio-container" :style="{ transform: `translateX(${offsetX}%)` }">
           <div v-for="(list, index) in emojis" :key="index" class="emoji-wrapper">
             <el-scrollbar>
-              <span
-                v-for="(value, key) in list"
-                :key="key"
-                class="emoji-item"
-                @click="$emit('addEmoji', (key as unknown as string))"
-              >
-                <el-image
-                  :src="value"
-                  :title="String(key)"
-                  class="emoji"
-                  style="width: 24px; height: 24px; margin: 5px"
-                  lazy
-                ></el-image>
-              </span>
+              <div style="padding: 0 5px">
+                <span
+                  v-for="(value, key) in list"
+                  :key="key"
+                  class="emoji-item"
+                  @click="$emit('addEmoji', (key as unknown as string))"
+                >
+                  <el-image
+                    :src="value"
+                    :title="String(key)"
+                    class="emoji"
+                    style="width: 24px; height: 24px; margin: 5px"
+                    lazy
+                  ></el-image>
+                </span>
+              </div>
             </el-scrollbar>
           </div>
         </div>
@@ -98,9 +106,13 @@ function onBefore() {
 }
 </script>
 
-<style lang="scss" scoped>
-.u-emoji {
+<style lang="scss">
+.emoji-popover {
+  padding: 12px 0 !important;
 }
+</style>
+
+<style lang="scss" scoped>
 .face-tooltip-head {
   display: flex;
 

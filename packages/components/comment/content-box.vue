@@ -180,6 +180,9 @@ const content = computed(() => useEmojiParse(allEmoji, props.data.content))
   a:hover {
     text-decoration: none;
   }
+  .u-icon {
+    font-size: 16px;
+  }
 }
 
 .small {
