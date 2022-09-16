@@ -38,7 +38,7 @@ export default defineConfig({
       entry: resolve(input, 'index.ts'),
       name: 'UndrawUi',
       fileName: () => 'index.js',
-      formats: ['es'],
+      formats: ['es']
     },
     rollupOptions: {
       output: {
