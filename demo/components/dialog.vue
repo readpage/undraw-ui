@@ -1,5 +1,5 @@
 <template>
-  <el-button type="text" @click="visible = true">Click to open Dialog</el-button>
+  <el-button type="primary" link @click="visible = true">Click to open Dialog</el-button>
   <u-dialog v-model="visible" center title="title" width="40%">
     <div style="height: 150px">
       <span>content</span>

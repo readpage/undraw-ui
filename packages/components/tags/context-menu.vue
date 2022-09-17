@@ -1,13 +1,9 @@
 <template>
   <transition name="el-zoom-in-center">
-    <div
-      v-show="isShow"
-      :style="`top: ${dropdown.y + 5}px; left: ${dropdown.x}px;`"
-      class="el-popper is-pure is-light el-dropdown__popper custom-contextmenu"
-    >
-      <ul class="el-dropdown-menu">
+    <div v-show="isShow" :style="`top: ${dropdown.y + 5}px; left: ${dropdown.x}px;`" class="custom-contextmenu">
+      <ul class="custom-contextmenu__menu">
         <template v-for="(v, k) in dropdownList" :key="k">
-          <li v-if="v.show" class="el-dropdown-menu__item select-none" @click="$emit('submit', k, tag)">
+          <li v-if="v.show" class="item select-none" @click="$emit('submit', k, tag)">
             <u-icon v-html="v.icon"></u-icon>
             <span>{{ v.title }}</span>
           </li>
@@ -55,7 +51,7 @@ const state = reactive({
       icon: '<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="889"><path d="M192 640v32H128a32 32 0 0 1-32-32V128a32 32 0 0 1 32-32h512a32 32 0 0 1 32 32v64h-32V128H128v512h64z m128 128v32H256a32 32 0 0 1-32-32V256a32 32 0 0 1 32-32h512a32 32 0 0 1 32 32v64h-32V256H256v512h64z m288 128v32h-224a32 32 0 0 1-32-32V384a32 32 0 0 1 32-32h512a32 32 0 0 1 32 32v224h-32v-224H384v512h224z m96-224h224a32 32 0 0 1 32 32v224a32 32 0 0 1-32 32h-224a32 32 0 0 1-32-32v-224a32 32 0 0 1 32-32z m162.272 149.024l67.872-67.872-45.248-45.28-67.872 67.904-67.872-67.904-45.28 45.28 67.904 67.84-67.904 67.904 45.28 45.248 67.84-67.84 67.904 67.84 45.248-45.248-67.84-67.872z"></path></svg>'
     },
     {
-      title: '全屏',
+      title: '当前页全屏',
       show: true,
       icon: '<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="859"><path d="M160 96h192q14.016 0.992 23.008 10.016t8.992 22.496-8.992 22.496T352 160H160v192q0 14.016-8.992 23.008T128 384t-23.008-8.992T96 352V96h64z m0 832H96v-256q0-14.016 8.992-23.008T128 640t23.008 8.992T160 672v192h192q14.016 0 23.008 8.992t8.992 22.496-8.992 22.496T352 928H160zM864 96h64v256q0 14.016-8.992 23.008T896 384t-23.008-8.992T864 352V160h-192q-14.016 0-23.008-8.992T640 128.512t8.992-22.496T672 96h192z m0 832h-192q-14.016-0.992-23.008-10.016T640 895.488t8.992-22.496T672 864h192v-192q0-14.016 8.992-23.008T896 640t23.008 8.992T928 672v256h-64z"></path></svg>'
     }
@@ -99,18 +95,40 @@ defineExpose({
   transform-origin: center top;
   z-index: 2190;
   position: fixed;
+
   background: #fff;
+  box-shadow: var(--el-box-shadow-light);
   border: 1px solid var(--el-border-color-light);
-  box-shadow: var(--el-dropdown-menu-box-shadow);
-  .el-dropdown-menu__item {
-    font-size: 12px !important;
-    white-space: nowrap;
-    i {
-      font-size: 12px !important;
+  background: var(--el-bg-color-overlay);
+  border-radius: var(--el-border-radius-base);
+  &__menu {
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: var(--el-dropdown-menu-index);
+    padding: 5px 0;
+    margin: 0;
+    background-color: var(--el-bg-color-overlay);
+    border-radius: var(--el-border-radius-base);
+    .item {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      list-style: none;
+      line-height: 22px;
+      padding: 5px 16px;
+      margin: 0;
+      color: var(--el-text-color-regular);
+      cursor: pointer;
+      outline: 0;
+      .u-icon {
+        margin-right: 5px;
+      }
     }
-  }
-  .el-dropdown-menu__item:hover {
-    background: var(--el-color-primary-light-9);
+    .item:hover {
+      background: var(--el-color-primary-light-9);
+      color: var(--el-color-primary);
+    }
   }
 
   .arrow {

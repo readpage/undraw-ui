@@ -54,7 +54,9 @@ const dropdown = reactive({
 })
 
 const emit = defineEmits<{
-  (e: 'change', val: TagApi | undefined): void
+  (e: 'select', val: TagApi | undefined): void
+  (e: 'refresh'): void
+  (e: 'fullScreen'): void
 }>()
 
 watch(
@@ -74,7 +76,7 @@ watch(
   () => active.value,
   val => {
     emit(
-      'change',
+      'select',
       tagsList.value.find((v, k) => k == val)
     )
   }
@@ -97,7 +99,7 @@ const close = (val: number) => {
 
 const closeOther = (val?: TagApi) => {
   let newList = tagsList.value.filter(v => v.isAffix)
-  if (val) {
+  if (val && !val.isAffix) {
     newList.push(val)
   }
   tagsList.value.length = 0
@@ -110,6 +112,7 @@ const onSubmit = (val: number, tag: TagApi) => {
   switch (val) {
     case 0:
       // 刷新当前
+      emit('refresh')
       break
     case 1:
       // 关闭当前
@@ -126,6 +129,7 @@ const onSubmit = (val: number, tag: TagApi) => {
       break
     case 4:
       // 全屏
+      emit('fullScreen')
       break
   }
 }

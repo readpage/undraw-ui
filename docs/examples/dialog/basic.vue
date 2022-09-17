@@ -1,5 +1,5 @@
 <template>
-  <el-button type="text" @click="visible = true">Click to open Dialog</el-button>
+  <el-button text @click="visible = true">Click to open Dialog</el-button>
   <u-dialog v-model="visible" center title="title" width="30%">
     <span>content</span>
     <template #footer>

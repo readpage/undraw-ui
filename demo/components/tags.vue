@@ -1,6 +1,6 @@
 <template>
-  <u-tags v-model="tagsList" classic @change="onChange"></u-tags>
-  <!-- <el-button @click="add('b')">add</el-button> -->
+  <u-tags v-model="tagsList" classic @select="onSelect" @refresh="refresh" @full-screen="fullScreen"></u-tags>
+  <el-button @click="add('b')">add</el-button>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -29,12 +29,20 @@ const tagsList = ref<TagApi[]>([
   }
 ])
 
-const onChange = (val: TagApi) => {
+const onSelect = (val: TagApi) => {
   console.log(val)
 }
 
 const add = (val: string) => {
   tagsList.value.push({ title: val, path: val, isAffix: false })
+}
+
+const refresh = () => {
+  console.log('refresh')
+}
+
+const fullScreen = () => {
+  console.log('fullScreen')
 }
 </script>
 

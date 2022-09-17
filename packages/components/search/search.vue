@@ -41,7 +41,7 @@
             ></path>
           </svg>
         </u-icon>
-        <el-button type="text" circle @click="searchHandler(data.search)">
+        <el-button text circle @click="searchHandler(data.search)">
           <u-icon>
             <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="738">
               <path
