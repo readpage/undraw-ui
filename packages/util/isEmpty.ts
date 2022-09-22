@@ -37,3 +37,8 @@ export function isEmpty(value: any) {
 
   return value === '' || value === undefined || value === null
 }
+
+//判断参数1是否为NULL，如果是，返回参数2，否则返回参数1。
+export const isNull = <T = any>(val1: any, val2: any) => {
+  return isEmpty(val1) ? (val2 as T) : (val1 as T)
+}

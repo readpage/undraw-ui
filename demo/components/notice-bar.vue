@@ -12,6 +12,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+defineOptions({
+  name: 'notice-bar'
+})
+
 const noticeList = ref([
   '🎉🎉🔥基于vue3.x 、Typescript、vite、Element plus等',
   '适配手机、平板、pc的后台开源免费模板库（vue2.x请切换vue-prev-admin分支）',

@@ -4,6 +4,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+defineOptions({
+  name: 'editor'
+})
+
 const content = ref('')
 </script>
 

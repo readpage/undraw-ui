@@ -34,13 +34,11 @@
   },
   "dependencies": {
     "element-plus": "^2.1.8",
-    "sortablejs": "^1.15.0",
     "store": "^2.0.12",
     "vue": "^3.2.31"
   },
   "devDependencies": {
     "@types/node": "^16.4.7",
-    "@types/sortablejs": "^1.10.7",
     "@types/store": "^2.0.2",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",

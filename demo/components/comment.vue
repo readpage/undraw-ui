@@ -8,6 +8,8 @@
       @reply-more="replyMore"
       @reply-page="replyPage"
       @get-user="getUser"
+      @remove="remove"
+      @report="report"
     >
       <!-- <template #list-title>全部评论</template> -->
       <template #userInfo>
@@ -59,6 +61,10 @@ import { UToast, ConfigApi, CommentSubmitParam, CommentApi, useLevel } from '~/i
 import emoji from '@/assets/emoji'
 import { ElAvatar, ElButton } from '~/element'
 
+defineOptions({
+  name: 'comment'
+})
+
 const config = reactive<ConfigApi>({
   user: {
     id: 1,
@@ -74,14 +80,14 @@ const config = reactive<ConfigApi>({
 const userInfo = ref({} as any)
 
 // 请求获取用户详细信息
-const getUser = (id: number, show: Function) => {
+const getUser = (uid: number, show: Function) => {
   setTimeout(() => {
     userInfo.value = {
-      id: id,
+      id: uid,
       username: '落🤍尘',
       avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
       level: 6,
-      like: 360118,
+      like: 36011,
       attention: 15,
       follower: 6878
     }
@@ -89,55 +95,16 @@ const getUser = (id: number, show: Function) => {
   }, 500)
 }
 
-// 提交评论事件
-const submit = ({ clear, content, parentId }: CommentSubmitParam) => {
-  console.log(content, parentId)
-  UToast({ message: '评论成功!', type: 'info' })
-  // 提交评论 --后端接口处理
-  editSubmit(content, parentId as number)
-  clear()
-}
-
-// 点赞按钮事件
-const like = (id: number) => {
-  const likes = config.user.likes
-  if (likes.indexOf(id) == -1) {
-    // 点赞 --后端接口处理
-    likes.push(id)
-    editLike(id, 1)
-  } else {
-    // 取消点赞 --后端接口
-    likes.splice(
-      likes.findIndex(item => item == id),
-      1
-    )
-    editLike(id, -1)
-  }
-}
-
-// 模拟后端处理
-const editLike = (id: number, count: number) => {
-  let tar = null
-  config.comments.forEach(v => {
-    if (v.id != id) {
-      tar = v.reply?.list.find(v => v.id == id)
-    } else {
-      tar = v
-    }
-    if (tar) {
-      tar.like += count
-    }
-  })
-}
-
 let temp_id = 100
-// 模拟后端处理
-const editSubmit = (content: string, parentId: number) => {
+// 提交评论事件
+const submit = (content: string, parentId: number, finish: (comment: CommentApi) => void) => {
+  console.log(content, parentId)
   let comment: CommentApi = {
     id: (temp_id += 1),
     parentId: parentId,
-    avatar: config.user.avatar,
+    uid: config.user.id,
     username: config.user.username,
+    avatar: config.user.avatar,
     level: 6,
     link: `/${(temp_id += 1)}`,
     address: '来自江苏',
@@ -146,19 +113,32 @@ const editSubmit = (content: string, parentId: number) => {
     createTime: '1分钟前',
     reply: null
   }
-  if (parentId == undefined) {
-    config.comments.push(comment)
-  } else {
-    let raw_comment = config.comments.find(v => v.id == parentId)
-    let reply = raw_comment?.reply
-    if (reply) {
-      reply.list.push(comment)
-    } else if (raw_comment) {
-      raw_comment.reply = { total: 1, list: [comment] }
-    } else {
-      config.comments.push(comment)
-    }
-  }
+  setTimeout(() => {
+    finish(comment)
+    UToast({ message: '评论成功!', type: 'info' })
+  }, 200)
+}
+
+// 删除评论
+const remove = (id: number, finish: () => void) => {
+  setTimeout(() => {
+    finish()
+    alert(`删除成功-${id}`)
+  }, 200)
+}
+
+//举报用户
+const report = (id: number, finish: () => void) => {
+  console.log(id)
+  setTimeout(() => {
+    finish()
+    alert(`举报成功-${id}`)
+  }, 500)
+}
+
+// 点赞按钮事件
+const like = (id: number) => {
+  console.log(id)
 }
 
 //加载更多回复
@@ -174,9 +154,10 @@ const replyList = [
   {
     id: 31,
     parentId: 3,
+    uid: 6,
+    username: '陆呈洋',
     avatar:
       'https://static.juzicon.com/avatars/avatar-20220310090547-fxvx.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
-    username: '陆呈洋',
     level: 4,
     link: '/31',
     address: '来自成都',
@@ -187,9 +168,10 @@ const replyList = [
   {
     id: 32,
     parentId: 3,
+    uid: 7,
+    username: '哑谜',
     avatar:
       'https://static.juzicon.com/avatars/avatar-190919180152-2VDE.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-    username: '哑谜',
     level: 3,
     link: '/32',
     address: '来自杭州',
@@ -200,6 +182,7 @@ const replyList = [
   {
     id: 33,
     parentId: 3,
+    uid: 8,
     username: 'Mia',
     avatar:
       'https://static.juzicon.com/avatars/avatar-190919181554-L2ZO.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -213,6 +196,7 @@ const replyList = [
   {
     id: 34,
     parentId: 3,
+    uid: 9,
     username: 'poli301',
     avatar:
       'https://static.juzicon.com/avatars/avatar-190919180043-XPLP.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -226,6 +210,7 @@ const replyList = [
   {
     id: 35,
     parentId: 3,
+    uid: 10,
     username: 'fish_eno',
     avatar:
       'https://static.juzicon.com/avatars/avatar-190919180320-NAQJ.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -239,6 +224,7 @@ const replyList = [
   {
     id: 36,
     parentId: 3,
+    uid: 11,
     username: '十三',
     avatar:
       'https://static.juzicon.com/user/avatar-f103e42d-a5c9-4837-84e3-d10fad0bcb36-210108053135-E90E.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -252,6 +238,7 @@ const replyList = [
   {
     id: 37,
     parentId: 3,
+    uid: 12,
     username: 'D.z.H****',
     avatar:
       'https://static.juzicon.com/avatars/avatar-190919181051-M3HK.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -265,6 +252,7 @@ const replyList = [
   {
     id: 38,
     parentId: 3,
+    uid: 13,
     username: '繁星Cong2',
     avatar:
       'https://static.juzicon.com/user/avatar-f81b3655-03fd-485c-811b-4b5ceaca52b6-210817180051-YTO4.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -300,8 +288,9 @@ config.comments = [
   {
     id: 1,
     parentId: null,
-    avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
+    uid: 1,
     username: '落🤍尘',
+    avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
     level: 6,
     link: '/1',
     address: '来自上海',
@@ -314,6 +303,7 @@ config.comments = [
   {
     id: 2,
     parentId: null,
+    uid: 2,
     username: '悟二空',
     avatar: 'https://static.juzicon.com/user/avatar-bf22291e-ea5c-4280-850d-88bc288fcf5d-220408002256-ZBQQ.jpeg',
     level: 1,
@@ -327,10 +317,11 @@ config.comments = [
       list: [
         {
           id: 21,
-          parentId: 3,
+          parentId: 2,
+          uid: 3,
+          username: '别扰我清梦*ぁ',
           avatar:
             'https://static.juzicon.com/user/avatar-8b6206c1-b28f-4636-8952-d8d9edec975d-191001105631-MDTM.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          username: '别扰我清梦*ぁ',
           level: 5,
           link: '/21',
           address: '来自重庆',
@@ -340,10 +331,11 @@ config.comments = [
         },
         {
           id: 22,
+          parentId: 2,
+          uid: 4,
+          username: 'Blizzard',
           avatar:
             'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          parentId: 3,
-          username: 'Blizzard',
           level: 3,
           link: '/22',
           content: '回复 <span style="color: blue;"">@别扰我清梦*ぁ:</span> 看完打了一个哈切。。。会传染。。。[委屈]',
@@ -357,9 +349,10 @@ config.comments = [
   {
     id: 3,
     parentId: null,
+    uid: 5,
+    username: '半个句号',
     avatar:
       'https://static.juzicon.com/user/avatar-0d70406e-5d4a-4107-a689-652ffd063f99-200425180341-1QK6.jpg?x-oss-process=image/resize,m_fill,w_100,h_1000',
-    username: '半个句号',
     level: 5,
     link: '/3',
     address: '来自北京',
@@ -372,10 +365,11 @@ config.comments = [
       list: [
         {
           id: 31,
+          uid: 6,
+          username: '陆呈洋',
           parentId: 3,
           avatar:
             'https://static.juzicon.com/avatars/avatar-20220310090547-fxvx.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          username: '陆呈洋',
           level: 4,
           link: '/31',
           address: '来自成都',
@@ -386,9 +380,10 @@ config.comments = [
         {
           id: 32,
           parentId: 3,
+          uid: 7,
+          username: '哑谜',
           avatar:
             'https://static.juzicon.com/avatars/avatar-190919180152-2VDE.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          username: '哑谜',
           level: 3,
           link: '/32',
           address: '来自杭州',
@@ -402,6 +397,7 @@ config.comments = [
   {
     id: 4,
     parentId: null,
+    uid: 14,
     username: 'Blizzard1',
     avatar:
       'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -418,9 +414,10 @@ config.comments = [
         {
           id: 41,
           parentId: 4,
+          uid: 15,
+          username: '过往~',
           avatar:
             'https://static.juzicon.com/avatars/avatar-20210308112705-zqf0.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          username: '过往~',
           level: 4,
           link: '/41',
           address: '来自北京',
@@ -431,9 +428,10 @@ config.comments = [
         {
           id: 42,
           parentId: 4,
+          uid: 16,
+          username: 'Blizzard1',
           avatar:
             'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          username: 'Blizzard1',
           level: 3,
           link: '/42',
           address: '来自杭州',

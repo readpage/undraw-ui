@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { isEmpty } from '~/util'
+import { isEmpty, isNull } from '~/util'
 import { ClickOutside as vClickOutside } from 'element-plus'
 import { inject, nextTick, ref } from 'vue'
 import { EditorInstance } from '../editor'
@@ -50,25 +50,35 @@ const popperRef = ref()
 
 const emit = defineEmits<{
   (e: 'hide', event: Event): void
+  (e: 'close'): void
 }>()
 
 const submit = inject(InjectionCommentFun) as (obj: CommentSubmitParam) => void
 const emoji = inject(InjectionEmojiApi)
 
+// 提交评论的数据
 const onSubmit = () => {
   submit({
-    clear: () => (editorRef.value as any).clear(),
     content: props.replay ? `回复 <span style='color: blue;'>@${props.replay}:</span> ${content.value}` : content.value,
-    parentId: props.parentId
+    parentId: isNull(props.parentId, null),
+    finish: () => {
+      // 清空评论框内容
+      ;(editorRef.value as any).clear()
+      // 关闭评论框事件
+      emit('close')
+    }
   })
 }
 
+// 点击评论框外关闭操作栏和失去评论框焦点
 function onClickOutside(event: Event) {
   // const child = event.target as HTMLElement
   // const target = document.querySelector(".el-popper")
   // if (!target?.contains(child) && isEmpty(content.value)) {
   //   action.value = false
   // }
+
+  // 评论框有内容情况下不执行炒作
   if (isEmpty(content.value)) {
     action.value = false
     emit('hide', event)
@@ -76,8 +86,10 @@ function onClickOutside(event: Event) {
 }
 
 function onFocus() {
+  // 显示操作栏
   action.value = true
   nextTick(() => {
+    // 所有以'el-popper-container'开头的id且被选中的元素
     popperRef.value = document.querySelector("div[id^='el-popper-container']")
   })
 }

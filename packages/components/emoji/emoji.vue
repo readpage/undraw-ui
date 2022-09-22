@@ -27,7 +27,7 @@
                   v-for="(value, key) in list"
                   :key="key"
                   class="emoji-item"
-                  @click="$emit('addEmoji', (key as unknown as string))"
+                  @click="$emit('addEmoji', key as unknown as string)"
                 >
                   <el-image
                     :src="value"

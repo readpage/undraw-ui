@@ -16,8 +16,7 @@
     // 设置模块名到基于baseUrl的路径映射,可以设置路径别名的语法提示
     "paths": {
       "@/*": ["demo/*"],
-      "~/*": ["packages/*"],
-      "^/*": ["dist"]
+      "~/*": ["packages/*"]
     },
     "skipLibCheck": true
   },

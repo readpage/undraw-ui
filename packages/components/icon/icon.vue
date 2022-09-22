@@ -36,6 +36,7 @@ const style = computed(() => {
   display: inline-flex;
   fill: currentColor;
   font-size: inherit;
+  color: inherit;
   vertical-align: -0.15em;
   :deep(svg) {
     width: 1em;

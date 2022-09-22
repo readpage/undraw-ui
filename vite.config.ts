@@ -17,10 +17,6 @@ export default defineConfig({
         find: '~',
         replacement: resolve('packages')
       },
-      {
-        find: '^',
-        replacement: resolve('dist')
-      }
     ]
   },
   server: {

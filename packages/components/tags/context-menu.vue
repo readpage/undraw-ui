@@ -96,6 +96,7 @@ defineExpose({
   z-index: 2190;
   position: fixed;
 
+  font-size: 12px;
   background: #fff;
   box-shadow: var(--el-box-shadow-light);
   border: 1px solid var(--el-border-color-light);

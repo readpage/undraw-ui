@@ -17,6 +17,10 @@
 import { ref } from 'vue'
 import { ElButton } from '~/index'
 
+defineOptions({
+  name: 'dialog'
+})
+
 const visible = ref(false)
 </script>
 

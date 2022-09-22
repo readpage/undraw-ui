@@ -5,6 +5,10 @@
 import { ref } from 'vue'
 import { SearchConfig } from '~/index'
 
+defineOptions({
+  name: 'search'
+})
+
 const config = ref<SearchConfig>({
   keywords: ['斗罗大陆', '斗破苍穹', '吞噬星空', '凡人修仙传', '一念永恒'], // 搜索框关键字滚动
   hotSearchList: [

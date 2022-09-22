@@ -8,6 +8,10 @@ import { ChatApi, ChatSubmitParam } from '~/index'
 // static文件放在public下,引入emoji.ts文件可以移动到自定义位置
 import emoji from '@/assets/emoji'
 
+defineOptions({
+  name: 'chat'
+})
+
 const userId = ref(1)
 
 const data = reactive<ChatApi[]>([

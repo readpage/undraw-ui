@@ -6,6 +6,10 @@
 import { ref } from 'vue'
 import { TagApi } from '~/components'
 
+defineOptions({
+  name: 'tags'
+})
+
 const tagsList = ref<TagApi[]>([
   {
     title: '首页',

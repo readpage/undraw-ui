@@ -1,4 +1,4 @@
-export function getBrowser() {
+export function useBrowser() {
   const { clientWidth } = document.documentElement
 
   // 浏览器信息

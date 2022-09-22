@@ -2,7 +2,6 @@ lockfileVersion: 5.4
 
 specifiers:
   '@types/node': ^16.4.7
-  '@types/sortablejs': ^1.10.7
   '@types/store': ^2.0.2
   '@typescript-eslint/eslint-plugin': ^5.18.0
   '@typescript-eslint/parser': ^5.18.0
@@ -16,7 +15,6 @@ specifiers:
   eslint-plugin-vue: ^8.6.0
   prettier: ^2.6.2
   sass: ^1.49.7
-  sortablejs: ^1.15.0
   store: ^2.0.12
   typescript: ^4.5.4
   unplugin-vue-define-options: ^0.6.0
@@ -27,13 +25,11 @@ specifiers:
 
 dependencies:
   element-plus: 2.2.17_vue@3.2.39
-  sortablejs: 1.15.0
   store: 2.0.12
   vue: 3.2.39
 
 devDependencies:
   '@types/node': 16.11.59
-  '@types/sortablejs': 1.13.0
   '@types/store': 2.0.2
   '@typescript-eslint/eslint-plugin': 5.37.0_22c5fnooleyfkzrkkgdmel5kmi
   '@typescript-eslint/parser': 5.37.0_irgkl5vooow2ydyo6aokmferha
@@ -423,10 +419,6 @@ packages:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
     dev: true
     optional: true
-
-  /@types/sortablejs/1.13.0:
-    resolution: {integrity: sha512-C3064MH72iEfeGCYEGCt7FCxXoAXaMPG0QPnstcxvPmbl54erpISu06d++FY37Smja64iWy5L8wOyHHBghWbJQ==}
-    dev: true
 
   /@types/store/2.0.2:
     resolution: {integrity: sha512-ZPHnXkzmGMfk+pHqAGzTSpA9CbsHmJLgkvOl5w52LZ0XTxB1ZIHWZzQ7lEtjTNWScBbsQekg8TjApMXkMe4nkw==}
@@ -2515,10 +2507,6 @@ packages:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
     dev: true
-
-  /sortablejs/1.15.0:
-    resolution: {integrity: sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==}
-    dev: false
 
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}

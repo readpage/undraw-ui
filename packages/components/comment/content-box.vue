@@ -1,11 +1,11 @@
 <template>
   <div class="comment" :class="{ small: small }">
-    <UserInfo :is-user-info="contentBox.isUserInfo && state.visible">
+    <UserInfo :is-user-info="isUserInfo && state.visible">
       <a
         :href="data.link"
         target="_blank"
         style="display: block"
-        @mouseenter="contentBox.getUser(data.id, () => (state.visible = true))"
+        @mouseenter="getUser(user.id, () => (state.visible = true))"
       >
         <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.avatar">
           <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
@@ -17,12 +17,12 @@
     </UserInfo>
     <div class="content-box">
       <div class="user-box">
-        <UserInfo :is-user-info="contentBox.isUserInfo && state.visible">
+        <UserInfo :is-user-info="isUserInfo && state.visible">
           <a
             :href="data.link"
             target="_blank"
             style="display: block"
-            @mouseenter="contentBox.getUser(data.id, () => (state.visible = true))"
+            @mouseenter="getUser(user.id, () => (state.visible = true))"
           >
             <div class="username">
               <span class="name" style="max-width: 10em">{{ data.username }}</span>
@@ -43,8 +43,8 @@
         <div v-html="content"></div>
       </u-fold>
       <div class="action-box select-none">
-        <div class="item" @click="contentBox.like(data.id)">
-          <u-icon v-if="contentBox.user.likes.indexOf(data.id) == -1">
+        <div class="item" @click="like(data.id)">
+          <u-icon v-if="user.likes.indexOf(data.id) == -1">
             <svg
               t="1650360973068"
               viewBox="0 0 1024 1024"
@@ -88,6 +88,7 @@
           </u-icon>
           <span>{{ state.active ? '取消回复' : '回复' }}</span>
         </div>
+        <Operation :id="data.id" :parent-id="data.parentId" :uid="data.uid" />
       </div>
       <div v-if="state.active">
         <CommentBox
@@ -98,6 +99,7 @@
           content-btn="发布"
           style="margin-top: 12px"
           @hide="hide"
+          @close="state.active = false"
         />
       </div>
       <slot></slot>
@@ -114,6 +116,7 @@ import { CommentApi, ContentBoxParam, InjectionContentBox } from './interface'
 import { ElAvatar } from '~/element'
 import { useEmojiParse } from '~/hooks'
 import UserInfo from './user-info.vue'
+import Operation from './operation.vue'
 
 interface Props {
   small?: boolean
@@ -125,6 +128,7 @@ const props = defineProps<Props>()
 
 const state = reactive({
   active: false,
+  // 更多个人信息显示状态
   visible: false
 })
 
@@ -132,7 +136,7 @@ const commentRef = ref<CommentBoxApi>()
 const btnRef = ref<HTMLDivElement>()
 
 const { allEmoji } = inject(InjectionEmojiApi) as EmojiApi
-const contentBox = inject(InjectionContentBox) as ContentBoxParam
+const { like, user, isUserInfo, getUser } = inject(InjectionContentBox) as ContentBoxParam
 
 const level = (v: number) => {
   switch (v) {
@@ -176,7 +180,7 @@ const content = computed(() => useEmojiParse(allEmoji, props.data.content))
 <style lang="scss" scoped>
 .comment {
   display: flex;
-  padding: 16px 0;
+  margin: 32px 0;
   a:hover {
     text-decoration: none;
   }
@@ -192,10 +196,10 @@ const content = computed(() => useEmojiParse(allEmoji, props.data.content))
   .el-avatar {
     --el-avatar-size: 24px !important;
   }
-  padding: 0 !important;
+  margin: 0;
 }
 .small:not(:first-child) {
-  margin-top: 2rem;
+  margin-top: 32px;
 }
 
 .content-box {
@@ -230,6 +234,7 @@ const content = computed(() => useEmojiParse(allEmoji, props.data.content))
 .action-box {
   display: flex;
   align-items: center;
+  position: relative;
 
   .item {
     margin-right: 16px;

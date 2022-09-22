@@ -26,10 +26,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, reactive, ref, toRef, watch } from 'vue'
+import { nextTick, onMounted, reactive, ref, toRef, watch } from 'vue'
 import ContextMenu from './context-menu.vue'
-import Sortable from 'sortablejs'
-import { getBrowser } from '~/util'
 import { ElScrollbar } from '~/element'
 import { TagApi } from '.'
 
@@ -46,6 +44,7 @@ const props = defineProps<Props>()
 
 const scrollbarRef = ref()
 const contextmenuRef = ref()
+// 将这个属性转换为响应式数据。
 const tagsList = toRef(props, 'modelValue')
 const active = ref(0)
 const dropdown = reactive({
@@ -62,13 +61,37 @@ const emit = defineEmits<{
 watch(
   () => [...tagsList.value],
   (val, oldVal) => {
-    let index = val.findIndex(v => !oldVal.includes(v))
-    if (index != -1) {
-      active.value = index
+    if (oldVal) {
+      if (val.length > oldVal.length) {
+        //新增目标元素id
+        let tag = val.find(v => !oldVal?.includes(v))
+        // 删除相同的元素
+        tagsList.value.forEach((item, index, self) => {
+          if (self.findIndex(v => v.title == item.title) != index) {
+            self.splice(index, 1)
+          }
+        })
+        active.value = tagsList.value.findIndex(v => v.title == tag?.title)
+      }
+    } else {
+      let flag = 1
+      // 删除相同的元素
+      tagsList.value.forEach((item, index, self) => {
+        if (self.findIndex(v => v.title == item.title) != index) {
+          self.splice(index, 1)
+          active.value = self.findIndex(v => v.title == item.title)
+          flag = 0
+        }
+      })
+      if (flag) active.value = tagsList.value.length - 1
     }
+
     nextTick(() => {
       scrollbarRef.value.update()
     })
+  },
+  {
+    immediate: true
   }
 )
 
@@ -140,35 +163,6 @@ const onContextmenu = (v: TagApi, e: MouseEvent) => {
   dropdown.y = clientY
   contextmenuRef.value.openContextmenu(v)
 }
-
-let sortable: Sortable | null = null
-
-const initSortable = () => {
-  const el = document.querySelector('.u-tabs-ul') as HTMLElement
-  sortable = Sortable.create(el, {
-    animation: 300
-  })
-}
-
-const onSortableResize = () => {
-  if (getBrowser().isMobile) {
-    if (sortable) {
-      sortable.destroy()
-    }
-  } else {
-    initSortable()
-  }
-}
-
-onMounted(() => {
-  initSortable()
-  onSortableResize()
-  window.addEventListener('resize', onSortableResize)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', onSortableResize)
-})
 </script>
 
 <style lang="scss" scoped>
