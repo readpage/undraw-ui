@@ -1,6 +1,6 @@
 <template>
   <div class="comment-view">
-    <u-comment :config="config" @submit="submit" @like="like" @get-user="getUser">
+    <u-comment :config="config" @submit="submit" @like="like" @remove="remove" @report="report" @get-user="getUser">
       <!-- <template #list-title>全部评论</template> -->
       <template #userInfo>
         <div class="user-card">
@@ -45,7 +45,7 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { UToast, ConfigApi, CommentSubmitParam, CommentApi, useLevel, ElAvatar, ElButton } from 'undraw-ui'
+import { UToast, ConfigApi, CommentApi, useLevel, ElAvatar, ElButton } from 'undraw-ui'
 // 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases
 // static文件放在public下,引入emoji.ts文件可以移动到自定义位置
 import emoji from './emoji'
@@ -80,55 +80,16 @@ const getUser = (id: number, show: Function) => {
   }, 500)
 }
 
-// 提交评论事件
-const submit = ({ clear, content, parentId }: CommentSubmitParam) => {
-  console.log(content, parentId)
-  UToast({ message: '评论成功!', type: 'info' })
-  // 提交评论 --后端接口处理
-  editSubmit(content, parentId as number)
-  clear()
-}
-
-// 点赞按钮事件
-const like = (id: number) => {
-  const likes = config.user.likes
-  if (likes.indexOf(id) == -1) {
-    // 点赞 --后端接口处理
-    likes.push(id)
-    editLike(id, 1)
-  } else {
-    // 取消点赞 --后端接口
-    likes.splice(
-      likes.findIndex(item => item == id),
-      1
-    )
-    editLike(id, -1)
-  }
-}
-
-// 模拟后端处理
-const editLike = (id: number, count: number) => {
-  let tar = null
-  config.comments.forEach(v => {
-    if (v.id != id) {
-      tar = v.reply?.list.find(v => v.id == id)
-    } else {
-      tar = v
-    }
-    if (tar) {
-      tar.like += count
-    }
-  })
-}
-
 let temp_id = 100
-// 模拟后端处理
-const editSubmit = (content: string, parentId: number) => {
+// 提交评论事件
+const submit = (content: string, parentId: number, finish: (comment: CommentApi) => void) => {
+  console.log(content, parentId)
   let comment: CommentApi = {
     id: (temp_id += 1),
     parentId: parentId,
-    avatar: config.user.avatar,
+    uid: config.user.id,
     username: config.user.username,
+    avatar: config.user.avatar,
     level: 6,
     link: `/${(temp_id += 1)}`,
     address: '来自江苏',
@@ -137,19 +98,35 @@ const editSubmit = (content: string, parentId: number) => {
     createTime: '1分钟前',
     reply: null
   }
-  if (parentId == undefined) {
-    config.comments.push(comment)
-  } else {
-    let raw_comment = config.comments.find(v => v.id == parentId)
-    let reply = raw_comment?.reply
-    if (reply) {
-      reply.list.push(comment)
-    } else if (raw_comment) {
-      raw_comment.reply = { total: 1, list: [comment] }
-    } else {
-      config.comments.push(comment)
-    }
-  }
+  setTimeout(() => {
+    finish(comment)
+    UToast({ message: '评论成功!', type: 'info' })
+  }, 200)
+}
+
+// 删除评论
+const remove = (id: number, finish: () => void) => {
+  setTimeout(() => {
+    finish()
+    alert(`删除成功-${id}`)
+  }, 200)
+}
+
+//举报用户
+const report = (id: number, finish: () => void) => {
+  console.log(id)
+  setTimeout(() => {
+    finish()
+    alert(`举报成功-${id}`)
+  }, 200)
+}
+
+// 点赞按钮事件
+const like = (id: number, finish: () => void) => {
+  console.log(id)
+  setTimeout(() => {
+    finish()
+  }, 200)
 }
 
 config.comments = [

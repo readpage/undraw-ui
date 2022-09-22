@@ -59,7 +59,7 @@ const comments = toRef(props.config, 'comments')
 
 const emit = defineEmits<{
   (e: 'submit', content: string, parentId: number | null, finish: (comment: CommentApi) => void): void
-  (e: 'like', id: number): void
+  (e: 'like', id: number, finish: () => void): void
   (e: 'replyMore', parentId: number, closeLoad: Function): void
   (e: 'replyPage', parentId: number, pageNum: number, pageSize: number): void
   (e: 'getUser', id: number, show: Function): void
@@ -106,18 +106,21 @@ const like = (id: number) => {
       }
     })
   }
+
+  // 点赞事件处理
   let likes = props.config.user.likes
-  if (likes.indexOf(id) == -1) {
-    // 点赞
-    likes.push(id)
-    editLike(id, 1)
-  } else {
-    // 取消点赞
-    let index = likes.findIndex(item => item == id)
-    if (index != -1) likes.splice(index, 1)
-    editLike(id, -1)
-  }
-  emit('like', id)
+  emit('like', id, () => {
+    if (likes.indexOf(id) == -1) {
+      // 点赞
+      likes.push(id)
+      editLike(id, 1)
+    } else {
+      // 取消点赞
+      let index = likes.findIndex(item => item == id)
+      if (index != -1) likes.splice(index, 1)
+      editLike(id, -1)
+    }
+  })
 }
 
 const reply: ReplyParam = {

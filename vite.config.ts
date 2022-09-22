@@ -16,7 +16,7 @@ export default defineConfig({
       {
         find: '~',
         replacement: resolve('packages')
-      },
+      }
     ]
   },
   server: {

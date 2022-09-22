@@ -133,12 +133,15 @@ const report = (id: number, finish: () => void) => {
   setTimeout(() => {
     finish()
     alert(`举报成功-${id}`)
-  }, 500)
+  }, 200)
 }
 
 // 点赞按钮事件
-const like = (id: number) => {
+const like = (id: number, finish: () => void) => {
   console.log(id)
+  setTimeout(() => {
+    finish()
+  }, 200)
 }
 
 //加载更多回复
