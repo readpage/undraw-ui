@@ -123,7 +123,7 @@ const submit = (content: string, parentId: number, finish: (comment: CommentApi)
 const remove = (id: number, finish: () => void) => {
   setTimeout(() => {
     finish()
-    alert(`删除成功-${id}`)
+    alert(`删除成功: ${id}`)
   }, 200)
 }
 
@@ -132,7 +132,7 @@ const report = (id: number, finish: () => void) => {
   console.log(id)
   setTimeout(() => {
     finish()
-    alert(`举报成功-${id}`)
+    alert(`举报成功: ${id}`)
   }, 200)
 }
 

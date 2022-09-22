@@ -2,9 +2,11 @@
 logs
 *.log
 
+
 node_modules/
 dist/
 !docs/.vitepress/**/dist/
+!docs/src/public/shiki/dist/
 demo-dist/
 
 # Editor directories and files

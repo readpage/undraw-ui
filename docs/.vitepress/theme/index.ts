@@ -13,6 +13,8 @@ export default {
       import('undraw-ui').then(module => {
         app.use(module.default)
       })
+      // @ts-ignore
+      import('undraw-ui/dist/iconfont')
     }
     globals.forEach(([name, Comp]) => {
       app.component(name, Comp)

@@ -6,10 +6,10 @@
       <u-divider style="margin: 0;" />
       <div class="op-btns">
         <el-tooltip content="复制代码">
-          <u-icon class="op-btn" name="copy" @click="copyCode"></u-icon>
+          <u-icon class="op-btn" name="iconcopy" @click="copyCode"></u-icon>
         </el-tooltip>
         <el-tooltip content="显示源代码">
-          <u-icon class="op-btn" name="code" @click="sourceVisible = !sourceVisible"></u-icon>
+          <u-icon class="op-btn" name="iconcode" @click="sourceVisible = !sourceVisible"></u-icon>
         </el-tooltip>
       </div>
       <el-collapse-transition v-show="sourceVisible">

@@ -53,7 +53,7 @@ const submit = (content: string, parentId: number, finish: (comment: CommentApi)
 const remove = (id: number, finish: () => void) => {
   setTimeout(() => {
     finish()
-    alert(`删除成功-${id}`)
+    alert(`删除成功: ${id}`)
   }, 200)
 }
 
@@ -62,7 +62,7 @@ const report = (id: number, finish: () => void) => {
   console.log(id)
   setTimeout(() => {
     finish()
-    alert(`举报成功-${id}`)
+    alert(`举报成功: ${id}`)
   }, 200)
 }
 
@@ -131,102 +131,6 @@ config.comments = [
           content: '回复 <span style="color: blue;"">@别扰我清梦*ぁ:</span> 看完打了一个哈切。。。会传染。。。[委屈]',
           address: '来自广州',
           like: 9,
-          createTime: '1天前'
-        }
-      ]
-    }
-  },
-  {
-    id: 3,
-    parentId: null,
-    uid: 5,
-    username: '半个句号',
-    avatar:
-      'https://static.juzicon.com/user/avatar-0d70406e-5d4a-4107-a689-652ffd063f99-200425180341-1QK6.jpg?x-oss-process=image/resize,m_fill,w_100,h_1000',
-    level: 5,
-    link: '/3',
-    address: '来自北京',
-    content: '人的一切痛苦，本质上都是对自己的无能的愤怒。',
-    like: 34116,
-    createTime: '2分钟前',
-    reply: {
-      total: 8,
-      // https://www.juzikong.com/posts/122a7f89-6b8f-4843-b90e-58b9b7808930#comments
-      list: [
-        {
-          id: 31,
-          uid: 6,
-          username: '陆呈洋',
-          parentId: 3,
-          avatar:
-            'https://static.juzicon.com/avatars/avatar-20220310090547-fxvx.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          level: 4,
-          link: '/31',
-          address: '来自成都',
-          content: '人生就像愤怒的小鸟，当你失败时，总有几只猪在笑。',
-          like: 7,
-          createTime: '1天前'
-        },
-        {
-          id: 32,
-          parentId: 3,
-          uid: 7,
-          username: '哑谜',
-          avatar:
-            'https://static.juzicon.com/avatars/avatar-190919180152-2VDE.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          level: 3,
-          link: '/32',
-          address: '来自杭州',
-          content: '深思熟虑的结果往往就是说不清楚。',
-          like: 3,
-          createTime: '2天前'
-        }
-      ]
-    }
-  },
-  {
-    id: 4,
-    parentId: null,
-    uid: 14,
-    username: 'Blizzard1',
-    avatar:
-      'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-    level: 3,
-    link: '/4',
-    address: '来自杭州',
-    content:
-      '鱼说：我时时刻刻睁开眼睛，就是为了能让你永远在我眼中！<br>水说：我时时刻刻流淌不息，就是为了能永远把你拥抱！！<br>锅说：都快熟了，还这么贫。',
-    like: 13,
-    createTime: '2天前',
-    reply: {
-      total: 2,
-      list: [
-        {
-          id: 41,
-          parentId: 4,
-          uid: 15,
-          username: '过往~',
-          avatar:
-            'https://static.juzicon.com/avatars/avatar-20210308112705-zqf0.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          level: 4,
-          link: '/41',
-          address: '来自北京',
-          content: '鱼对水说，你看不到我流泪，因为我在水中。水对鱼说，我看到你悲伤，因为你在我心中。[呲牙]',
-          like: 36,
-          createTime: '1分钟前'
-        },
-        {
-          id: 42,
-          parentId: 4,
-          uid: 16,
-          username: 'Blizzard1',
-          avatar:
-            'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          level: 3,
-          link: '/42',
-          address: '来自杭州',
-          content: ' 约束条件变了，原来的收益，一下子都变为成本。生命如果架在锅上，成本自然也就很高了[tv_微笑]',
-          like: 16,
           createTime: '1天前'
         }
       ]
