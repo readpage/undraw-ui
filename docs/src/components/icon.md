@@ -5,13 +5,14 @@ title: Icon
 undraw-ui推荐使用[iconfont](https://www.iconfont.cn/)作为图标库
 
 ## 基础用法
-
-## iconfont 引入
-iconfont引用 详细介绍:[https://www.iconfont.cn/](https://www.iconfont.cn/)
+可以通过size和color定义样式大小和颜色,默认继承父类。
 
 ::: demo
 icon/basic
 :::
+
+## iconfont 引入
+iconfont引用 详细介绍:[https://www.iconfont.cn/](https://www.iconfont.cn/)
 
 ## 自定义图标
 将自定义 SVG 放入图标。（确保设定了 SVG 的 viewBox 属性）
