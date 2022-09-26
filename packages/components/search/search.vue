@@ -69,9 +69,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, ref, reactive } from 'vue'
+import { computed, ref, reactive, toRef, watch } from 'vue'
 import { ClickOutside as vClickOutside } from 'element-plus'
-import { ElButton } from '~/element'
 import store from 'store'
 import CardBox from './card-box.vue'
 import { SearchConfig } from './interface'
@@ -98,11 +97,9 @@ defineOptions({
   name: 'USearch'
 })
 
-const active = ref(false)
-const cardVisible = ref(false)
 const inputRef = ref({} as HTMLInputElement)
 
-const keywords = ref(props.config.keywords)
+const keywords = toRef(props.config, 'keywords')
 const isFocus = ref(false)
 const currentIndex = ref(0)
 const animationTriggerFlag = ref(true)
@@ -118,6 +115,13 @@ const data = reactive<DataApi>({
   historySearchList: store.get('searchHistory') || [], // 历史搜索数据
   hotSearchList: props.config.hotSearchList
 })
+
+watch(
+  () => props.config.hotSearchList,
+  val => {
+    data.hotSearchList = val
+  }
+)
 
 const emit = defineEmits<{
   (e: 'submit', val: string): void
