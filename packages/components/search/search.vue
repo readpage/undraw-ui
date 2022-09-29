@@ -71,7 +71,7 @@
 <script setup lang="ts">
 import { computed, ref, reactive, toRef, watch } from 'vue'
 import { ClickOutside as vClickOutside } from 'element-plus'
-import store from 'store'
+import store from '~/util/store'
 import CardBox from './card-box.vue'
 import { SearchConfig } from './interface'
 

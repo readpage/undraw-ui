@@ -10,8 +10,8 @@
           @click="active = k"
           @contextmenu.prevent="onContextmenu(v, $event)"
         >
-          <span class="select-none">{{ v.title }}</span>
-          <u-icon v-if="!v.isAffix" @click.stop="close(k)">
+          <span class="select-none">{{ v.meta.title }}</span>
+          <u-icon v-if="!v.meta.isAffix" @click.stop="close(k)">
             <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
               <path
                 fill="currentColor"
@@ -55,6 +55,9 @@ const dropdown = reactive({
 const emit = defineEmits<{
   (e: 'select', val: TagApi | undefined): void
   (e: 'refresh'): void
+  (e: 'close', tag: TagApi): void
+  (e: 'closeOther', tag: TagApi): void
+  (e: 'closeAll'): void
   (e: 'fullScreen'): void
 }>()
 
@@ -67,19 +70,19 @@ watch(
         let tag = val.find(v => !oldVal?.includes(v))
         // 删除相同的元素
         tagsList.value.forEach((item, index, self) => {
-          if (self.findIndex(v => v.title == item.title) != index) {
+          if (self.findIndex(v => v.meta.title == item.meta.title) != index) {
             self.splice(index, 1)
           }
         })
-        active.value = tagsList.value.findIndex(v => v.title == tag?.title)
+        active.value = tagsList.value.findIndex(v => v.meta.title == tag?.meta.title)
       }
     } else {
       let flag = 1
       // 删除相同的元素
       tagsList.value.forEach((item, index, self) => {
-        if (self.findIndex(v => v.title == item.title) != index) {
+        if (self.findIndex(v => v.meta.title == item.meta.title) != index) {
           self.splice(index, 1)
-          active.value = self.findIndex(v => v.title == item.title)
+          active.value = self.findIndex(v => v.meta.title == item.meta.title)
           flag = 0
         }
       })
@@ -107,7 +110,7 @@ watch(
 
 const close = (val: number) => {
   tagsList.value.map((v, k) => {
-    if (!v.isAffix && val == k) {
+    if (!v.meta.isAffix && val == k) {
       tagsList.value.splice(k, 1)
       if (k == active.value) {
         let arr = [k, k - 1]
@@ -121,8 +124,8 @@ const close = (val: number) => {
 }
 
 const closeOther = (val?: TagApi) => {
-  let newList = tagsList.value.filter(v => v.isAffix)
-  if (val && !val.isAffix) {
+  let newList = tagsList.value.filter(v => v.meta.isAffix)
+  if (val && !val.meta.isAffix) {
     newList.push(val)
   }
   tagsList.value.length = 0
@@ -141,14 +144,17 @@ const onSubmit = (val: number, tag: TagApi) => {
       // 关闭当前
       let index = tagsList.value.findIndex(v => v.path == tag.path)
       close(index)
+      emit('close', tag)
       break
     case 2:
       // 关闭其他
       closeOther(tag)
+      emit('closeOther', tag)
       break
     case 3:
       // 全部关闭
       closeOther()
+      emit('closeAll')
       break
     case 4:
       // 全屏

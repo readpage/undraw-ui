@@ -1,5 +1,14 @@
 <template>
-  <u-tags v-model="tagsList" classic @select="onSelect" @refresh="refresh" @full-screen="fullScreen"></u-tags>
+  <u-tags
+    v-model="tagsList"
+    classic
+    @select="onSelect"
+    @refresh="refresh"
+    @close="close"
+    @close-other="closeOther"
+    @close-all="closeAll"
+    @full-screen="fullScreen"
+  ></u-tags>
   <el-button @click="add('b')">add</el-button>
 </template>
 <script setup lang="ts">
@@ -12,24 +21,32 @@ defineOptions({
 
 const tagsList = ref<TagApi[]>([
   {
-    title: '首页',
     path: '/home',
-    isAffix: true
+    meta: {
+      title: '首页',
+      isAffix: true
+    }
   },
   {
-    title: '用户管理',
     path: '/user',
-    isAffix: false
+    meta: {
+      title: '用户管理',
+      isAffix: false
+    }
   },
   {
-    title: '角色管理',
     path: '/role',
-    isAffix: false
+    meta: {
+      title: '角色管理',
+      isAffix: false
+    }
   },
   {
-    title: '其 他xxxxxxxxxxxx',
     path: '/other',
-    isAffix: false
+    meta: {
+      title: '其 他xxxxxxxxxxxx',
+      isAffix: false
+    }
   }
 ])
 
@@ -38,11 +55,23 @@ const onSelect = (val: TagApi) => {
 }
 
 const add = (val: string) => {
-  tagsList.value.push({ title: val, path: val, isAffix: false })
+  tagsList.value.push({ path: val, meta: { title: val, isAffix: false } })
 }
 
 const refresh = () => {
   console.log('refresh')
+}
+
+const close = (tag: TagApi) => {
+  console.log(tag)
+}
+
+const closeOther = (tag: TagApi) => {
+  console.log(tag)
+}
+
+const closeAll = () => {
+  console.log('closeAll')
 }
 
 const fullScreen = () => {
