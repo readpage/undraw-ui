@@ -65,7 +65,7 @@ const emit = defineEmits<{
 // 打开右键菜单：判断是否固定，固定则不显示关闭按钮
 const openContextmenu = (v: TagApi) => {
   state.tag = v
-  state.dropdownList[1].show = !v.isAffix
+  state.dropdownList[1].show = !v.meta.isAffix
   closeContextmenu()
   setTimeout(() => {
     state.isShow = true

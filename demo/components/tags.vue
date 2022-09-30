@@ -51,11 +51,12 @@ const tagsList = ref<TagApi[]>([
 ])
 
 const onSelect = (val: TagApi) => {
-  console.log(val)
+  console.log('select')
 }
 
+let n = 0
 const add = (val: string) => {
-  tagsList.value.push({ path: val, meta: { title: val, isAffix: false } })
+  tagsList.value.push({ path: `${n++}`, meta: { title: `val-${n++}`, isAffix: false } })
 }
 
 const refresh = () => {
@@ -63,11 +64,11 @@ const refresh = () => {
 }
 
 const close = (tag: TagApi) => {
-  console.log(tag)
+  console.log('close')
 }
 
 const closeOther = (tag: TagApi) => {
-  console.log(tag)
+  console.log('closeOther')
 }
 
 const closeAll = () => {

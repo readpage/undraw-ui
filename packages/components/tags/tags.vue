@@ -11,7 +11,7 @@
           @contextmenu.prevent="onContextmenu(v, $event)"
         >
           <span class="select-none">{{ v.meta.title }}</span>
-          <u-icon v-if="!v.meta.isAffix" @click.stop="close(k)">
+          <u-icon v-if="!v.meta.isAffix" @click.stop="onSubmit(1, v)">
             <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
               <path
                 fill="currentColor"
@@ -54,11 +54,11 @@ const dropdown = reactive({
 
 const emit = defineEmits<{
   (e: 'select', val: TagApi | undefined): void
-  (e: 'refresh'): void
+  (e: 'refresh', val: TagApi): void
   (e: 'close', tag: TagApi): void
   (e: 'closeOther', tag: TagApi): void
   (e: 'closeAll'): void
-  (e: 'fullScreen'): void
+  (e: 'fullScreen', tag: TagApi): void
 }>()
 
 watch(
@@ -116,6 +116,12 @@ const close = (val: number) => {
         let arr = [k, k - 1]
         let indexs = arr.filter(v => v >= 0 && v < tagsList.value.length)
         active.value = indexs[0]
+        if (active.value == k) {
+          emit(
+            'select',
+            tagsList.value.find((v, k) => k == val)
+          )
+        }
       } else if (val < active.value) {
         active.value -= 1
       }
@@ -138,7 +144,7 @@ const onSubmit = (val: number, tag: TagApi) => {
   switch (val) {
     case 0:
       // 刷新当前
-      emit('refresh')
+      emit('refresh', tag)
       break
     case 1:
       // 关闭当前
@@ -158,7 +164,7 @@ const onSubmit = (val: number, tag: TagApi) => {
       break
     case 4:
       // 全屏
-      emit('fullScreen')
+      emit('fullScreen', tag)
       break
   }
 }

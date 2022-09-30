@@ -71,7 +71,7 @@
 <script setup lang="ts">
 import { computed, ref, reactive, toRef, watch } from 'vue'
 import { ClickOutside as vClickOutside } from 'element-plus'
-import store from '~/util/store'
+import { storage } from '~/util'
 import CardBox from './card-box.vue'
 import { SearchConfig } from './interface'
 
@@ -112,7 +112,7 @@ const state = reactive({
 const data = reactive<DataApi>({
   search: '',
   cardVisible: false,
-  historySearchList: store.get('searchHistory') || [], // 历史搜索数据
+  historySearchList: storage.get('searchHistory') || [], // 历史搜索数据
   hotSearchList: props.config.hotSearchList
 })
 
