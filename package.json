@@ -34,12 +34,10 @@
   },
   "dependencies": {
     "element-plus": "^2.1.8",
-    "lodash": "^4.17.21",
     "store": "^2.0.12",
     "vue": "^3.2.31"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.186",
     "@types/node": "^16.4.7",
     "@types/store": "^2.0.2",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
