@@ -161,7 +161,7 @@ const searchHandler = (keyword: string) => {
     if (!exist(t.value)) data.historySearchList.push({ name: t.value, type: state.types[n(0, 3)] })
   }
   // 存储历史搜索记录
-  store.set('searchHistory', data.historySearchList)
+  storage.set('searchHistory', data.historySearchList)
   data.search = keyword
   inputRef.value.focus()
   // 提交关键词搜索
@@ -175,13 +175,13 @@ const closeHander = (val: string) => {
     data.historySearchList.findIndex(v => v.name == val),
     1
   )
-  store.set('searchHistory', data.historySearchList)
+  storage.set('searchHistory', data.historySearchList)
 }
 
 // 清除历史标签
 const removeAllHistory = () => {
   data.historySearchList.length = 0
-  store.remove('searchHistory')
+  storage.remove('searchHistory')
 }
 
 // 关键词动画
