@@ -3,7 +3,7 @@
     <div v-if="data.historySearchList.length != 0" class="history">
       <div class="header">
         <div class="title">历史搜索</div>
-        <el-button class="clear" text @click="$emit('onClear')">
+        <el-button class="clear" link @click="$emit('onClear')">
           <u-icon>
             <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
               <path

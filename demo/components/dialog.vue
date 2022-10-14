@@ -18,7 +18,7 @@ import { ref } from 'vue'
 import { ElButton } from '~/index'
 
 defineOptions({
-  name: 'dialog'
+  name: 'dialogVue'
 })
 
 const visible = ref(false)

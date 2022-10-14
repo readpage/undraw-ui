@@ -143,11 +143,16 @@ const contentBox: ContentBoxParam = {
         let reply = comment?.reply
         if (reply) {
           let index = reply.list.findIndex(item => item.id == id)
-          if (index != -1) reply.list.splice(index, 1)
+          if (index != -1) {
+            reply.list.splice(index, 1)
+            reply.total--
+          }
         }
       } else {
         let index = comments.value.findIndex(item => item.id == id)
-        if (index != -1) comments.value.splice(index, 1)
+        if (index != -1) {
+          comments.value.splice(index, 1)
+        }
       }
     })
 }

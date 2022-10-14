@@ -2,7 +2,12 @@
 title: Icon
 ---
 # Icon 图标
-undraw-ui推荐使用[iconfont](https://www.iconfont.cn/)作为图标库
+undraw-ui推荐使用[iconPark](https://iconpark.oceanengine.com/)作为图标库
+
+## iconPark 引入
+iconfont引用
+
+详细介绍:[iconPark创建项目](https://bytedance.feishu.cn/wiki/wikcnrOVHCJQ4V3a7mDvmLjrePf#RI6q69)
 
 ## 基础用法
 可以通过size和color定义样式大小和颜色,默认继承父类。
@@ -11,8 +16,7 @@ undraw-ui推荐使用[iconfont](https://www.iconfont.cn/)作为图标库
 icon/basic
 :::
 
-## iconfont 引入
-iconfont引用 详细介绍:[https://www.iconfont.cn/](https://www.iconfont.cn/)
+然后添加图标到项目里下载SVG Symbol的js文件,组件标识的名称如home,使用`<u-icon name="home"></u-icon>`
 
 ## 自定义图标
 将自定义 SVG 放入图标。（确保设定了 SVG 的 viewBox 属性）

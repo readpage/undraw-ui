@@ -29,10 +29,8 @@
 </template>
 
 <script setup lang="ts">
-import { onUnmounted, ref, watch } from 'vue'
-
-import { ElDialog } from 'element-plus'
-import 'element-plus/es/components/dialog/style/css'
+import { ref, watch } from 'vue'
+import { ElDialog } from '~/element'
 
 defineOptions({
   name: 'UDialog'

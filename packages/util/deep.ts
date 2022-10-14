@@ -45,8 +45,13 @@ export function cloneDeep(data: any) {
 // obj[str] = '李明'
 // console.log(obj[str])
 
-// 数组结构转换树型结构
-export function deepTree(list: any[], children = 'children') {
+/**
+ * 数组结构转换树型结构
+ * @param list
+ * @param param: { parentId: string, children: string } //parentId 判断条件属性名， children转换树型结构合并成数组的属性名
+ * @returns
+ */
+export function deepTree(list: any[], { parentId = 'parentId', children = 'children' }) {
   list = cloneDeep(list)
   const newList: any[] = []
   const map: any = {}
@@ -54,7 +59,7 @@ export function deepTree(list: any[], children = 'children') {
   list.forEach(e => (map[e.id] = e))
 
   list.forEach(e => {
-    const parent = map[e.parentId]
+    const parent = map[e[parentId]]
 
     if (parent) {
       ;(parent[children] || (parent[children] = [])).push(e)
@@ -66,18 +71,23 @@ export function deepTree(list: any[], children = 'children') {
   return newList
 }
 
-//树型结构转换为数组结构
-export function revDeepTree(list: Array<any> = [], children = 'children') {
-  const d: Array<any> = []
+/**
+ * 树型结构转换为数组结构
+ * @param list
+ * @param param: { parentId: string, children: string} //parentId 判断条件属性名， children转换数据结构拆分对象的属性名
+ * @returns
+ */
+export function revDeepTree(list: any[] = [], { parentId = 'parentId', children = 'children' }) {
+  const d: any[] = []
   let id = 0
 
-  const deep = (list: Array<any>, parentId: any) => {
+  const deep = (list: any[], id: any) => {
     list.forEach(e => {
       if (!e.id) {
         e.id = id++
       }
 
-      e.parentId = parentId
+      e[parentId] = id
 
       d.push(e)
 

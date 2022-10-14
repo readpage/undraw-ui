@@ -3,7 +3,7 @@
     <transition name="v-toast">
       <div v-show="visible" class="inner">
         <div class="message">
-          <iconVue v-if="alert.icon" :name="alert.icon" />
+          <iconVue v-if="alert.icon" v-html="alert.icon" />
           <span :class="{ normal: type != 'normal' }">{{ message }}</span>
         </div>
       </div>

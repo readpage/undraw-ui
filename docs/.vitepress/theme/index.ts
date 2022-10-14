@@ -5,6 +5,7 @@ import 'element-plus/dist/index.css'
 import 'undraw-ui/dist/style.css'
 import './base.scss'
 
+
 export default {
   ...DefaultTheme,
   enhanceApp: ({ app }: any) => {
@@ -13,6 +14,8 @@ export default {
       import('undraw-ui').then(module => {
         app.use(module.default)
       })
+      //@ts-ignore
+      import('./iconpark.js')
     }
     globals.forEach(([name, Comp]) => {
       app.component(name, Comp)

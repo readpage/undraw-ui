@@ -1,6 +1,6 @@
 <template>
   <div v-if="data.total > 0" class="reply-box">
-    <div class="comment-list">
+    <div class="reply-list">
       <ContentBox v-for="(reply, index) in data.list" :key="index" :parent-id="parentId" :data="reply" small>
         <template #userInfo>
           <slot name="userInfo"></slot>
@@ -95,7 +95,7 @@ const sizeChange = (val: number) => {
 .reply-box {
   margin-top: 16px;
 
-  .comment-list {
+  .reply-list {
     padding: 16px;
     background: rgba(247, 248, 250, 0.7);
     border-radius: 4px;

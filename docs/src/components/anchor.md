@@ -19,3 +19,10 @@ anchor/basic
 :::demo
 anchor/target
 :::
+
+## Anchor 属性
+
+| 属性    |  说明  | 类型 | 默认值 |
+|---------|-------|------|--------|
+| container| 指定监听的容器，标题元素集合，如h1、h2、h3 | stirng(.test、#test) |  |
+| target | 滚动轴 | string | window |

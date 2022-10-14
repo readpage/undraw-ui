@@ -1,9 +1,16 @@
 <template>
-  <u-icon name="icondianzan"></u-icon>
-  <u-icon name="icondianzan" size="20"></u-icon>
-  <u-icon name="icondianzan" size="20" color="red"></u-icon>
+  <div class="icon-box">
+    <u-icon name="home"></u-icon>
+    <u-icon name="lightning" color="purple"></u-icon>
+    <u-icon name="whale" color="blue" size="35"></u-icon>
+  </div>
 </template>
 <script setup>
-// 引入自己的iconfont官网生成的js文件
-// import 'undraw-ui/dist/iconfont'
+// 引入自己的iconPack官网生成的js文件
+// import '../assets/js/iconpack.js'
 </script>
+<style lang="scss" scoped>
+.icon-box i {
+  margin-right: 10px;
+}
+</style>

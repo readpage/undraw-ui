@@ -1,5 +1,5 @@
 <template>
-  <div class="comment-list">
+  <div v-if="data" class="comment-list">
     <ContentBox v-for="(comment, index) in data" :key="index" :parent-id="comment.id" :data="comment">
       <template #userInfo>
         <slot name="userInfo"></slot>
