@@ -1,5 +1,7 @@
 <template>
   <u-search :config="config" style="margin-left: 20px" @submit="submit"></u-search>
+  <div>abdds</div>
+  <div>dafdas</div>
 </template>
 <script setup lang="ts">
 import { onMounted, reactive } from 'vue'
