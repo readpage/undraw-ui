@@ -19,6 +19,7 @@ import chatVue from './components/chat.vue'
 import { ElConfigProvider } from 'element-plus'
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import Page from './components/Page.vue'
+import counterVue from './components/counter.vue'
 
 const components = [
   commentVue,
@@ -31,7 +32,8 @@ const components = [
   iconVue,
   tagsVue,
   testVue,
-  signVue
+  signVue,
+  counterVue
 ]
 </script>
 

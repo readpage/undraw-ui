@@ -12,6 +12,7 @@ import Anchor from './anchor'
 import Search from './search'
 import Chat from './chat'
 import Emoji from './emoji'
+import Counter from './Counter'
 
 export default [
   Comment,
@@ -26,5 +27,6 @@ export default [
   Anchor,
   Search,
   Chat,
-  Emoji
+  Emoji,
+  Counter
 ] as Plugin[]
