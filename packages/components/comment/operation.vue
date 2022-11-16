@@ -46,11 +46,11 @@ import { PopoverInstance } from 'element-plus'
 
 interface Props {
   //评论id
-  id: number
+  id: string
   //父id
-  parentId: number | null
+  parentId: string | null
   //用户id
-  uid: number
+  uid: string
 }
 
 const visible = ref(false)

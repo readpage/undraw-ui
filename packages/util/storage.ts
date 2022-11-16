@@ -1,8 +1,8 @@
 import store from 'store'
 
-export const storage: StoreJsAPI = store
+export const storage: StoreAPI = store
 
-export interface StoreJsAPI {
+export interface StoreAPI {
   readonly version: string
   readonly enabled: boolean
   get(key: string, optionalDefaultValue?: any): any

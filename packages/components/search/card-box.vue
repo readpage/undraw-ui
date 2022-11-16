@@ -80,6 +80,7 @@ const emit = defineEmits<{
 <style lang="scss" scoped>
 .card-box {
   position: absolute;
+  z-index: 1000;
   background-color: white;
   width: 350px;
   max-height: 340px;

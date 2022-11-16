@@ -40,9 +40,11 @@ import {
   InjectionCommentFun,
   InjectionContentBox,
   InjectionReply,
-  ReplyParam
+  ReplyParam,
+  ReplyPageParam
 } from './interface'
 import { InjectionEmojiApi } from '../emoji/interface'
+import { bottom } from '@popperjs/core'
 
 defineOptions({
   name: 'UComment'
@@ -50,21 +52,26 @@ defineOptions({
 
 interface Props {
   config: ConfigApi
+  // 显示评论的数量
+  showSize?: number
+  page?: boolean
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  showSize: 3,
+  page: false
+})
 const slots = useSlots()
 // 将这个属性转换为响应式数据。
 const comments = toRef(props.config, 'comments')
 
 const emit = defineEmits<{
-  (e: 'submit', content: string, parentId: number | null, finish: (comment: CommentApi) => void): void
-  (e: 'like', id: number, finish: () => void): void
-  (e: 'replyMore', parentId: number, closeLoad: Function): void
-  (e: 'replyPage', parentId: number, pageNum: number, pageSize: number): void
-  (e: 'getUser', id: number, show: Function): void
-  (e: 'report', id: number, finish: () => void): void
-  (e: 'remove', id: number, finish: () => void): void
+  (e: 'submit', content: string, parentId: string | null, finish: (comment: CommentApi) => void): void
+  (e: 'like', id: string, finish: () => void): void
+  (e: 'replyPage', { parentId, pageNum, pageSize, finish }: ReplyPageParam): void
+  (e: 'getUser', id: string, show: Function): void
+  (e: 'report', id: string, finish: () => void): void
+  (e: 'remove', id: string, finish: () => void): void
 }>()
 
 const submit = (obj: CommentSubmitParam) => {
@@ -91,9 +98,9 @@ const submit = (obj: CommentSubmitParam) => {
   })
 }
 
-const like = (id: number) => {
+const like = (id: string) => {
   // 点赞评论数组处理
-  const editLike = (id: number, count: number) => {
+  const editLike = (id: string, count: number) => {
     let tar = null
     comments.value.forEach(v => {
       if (v.id != id) {
@@ -108,24 +115,28 @@ const like = (id: number) => {
   }
 
   // 点赞事件处理
-  let likes = props.config.user.likes
+  let likeIds = props.config.user.likeIds
   emit('like', id, () => {
-    if (likes.indexOf(id) == -1) {
+    if (likeIds.indexOf(id) == -1) {
       // 点赞
-      likes.push(id)
+      likeIds.push(id)
       editLike(id, 1)
     } else {
       // 取消点赞
-      let index = likes.findIndex(item => item == id)
-      if (index != -1) likes.splice(index, 1)
+      let index = likeIds.findIndex(item => item == id)
+      if (index != -1) likeIds.splice(index, 1)
       editLike(id, -1)
     }
   })
 }
 
-const reply: ReplyParam = {
-  replyMore: (parentId, closeLoad) => emit('replyMore', parentId, closeLoad),
-  replyPage: (parentId, pageNum, pageSize) => emit('replyPage', parentId, pageNum, pageSize)
+const replyBox: ReplyParam = {
+  replyPage: (parentId, pageNum, pageSize, finish) => {
+    emit('replyPage', { parentId, pageNum, pageSize, finish })
+  },
+  showSize: props.showSize,
+  page: props.page,
+  comments: comments
 }
 
 const contentBox: ContentBoxParam = {
@@ -159,7 +170,7 @@ const contentBox: ContentBoxParam = {
 
 provide(InjectionCommentFun, submit)
 provide(InjectionEmojiApi, props.config.emoji)
-provide(InjectionReply, reply)
+provide(InjectionReply, replyBox)
 provide(InjectionContentBox, contentBox)
 </script>
 

@@ -1,12 +1,12 @@
 <template>
-  <div v-if="data.total > 0" class="reply-box">
+  <div v-if="data.length > 0" class="reply-box">
     <div class="reply-list">
       <ContentBox v-for="(reply, index) in data.list" :key="index" :parent-id="parentId" :data="reply" small>
         <template #userInfo>
           <slot name="userInfo"></slot>
         </template>
       </ContentBox>
-      <div v-if="data.total > 2" class="fetch-more">
+      <div v-if="data.length > showSize" class="fetch-more">
         <span v-if="state.loading">加载中...</span>
         <div v-else>
           <div v-if="!state.over">
@@ -23,17 +23,19 @@
               </svg>
             </span>
           </div>
-          <el-pagination
-            v-else
-            small
-            hide-on-single-page
-            layout="total, prev, pager, next"
-            :total="data.total"
-            :page-size="state.pageSize"
-            @current-change="currentChange"
-            @size-change="sizeChange"
-          ></el-pagination>
         </div>
+      </div>
+      <div v-if="state.over" class="fetch-more">
+        <el-pagination
+          v-if="page"
+          small
+          hide-on-single-page
+          layout="total, prev, pager, next"
+          :total="data.total"
+          :page-size="state.pageSize"
+          @current-change="currentChange"
+          @size-change="sizeChange"
+        ></el-pagination>
       </div>
     </div>
   </div>
@@ -43,10 +45,11 @@
 import { computed, inject, reactive } from 'vue'
 import ContentBox from './content-box.vue'
 import { ReplyApi, ElPagination, InjectionReply, ReplyParam } from '~/index'
+import { comment } from 'postcss'
 
 interface Props {
   data?: ReplyApi | null
-  parentId: number
+  parentId: string
 }
 
 const props = defineProps<Props>()
@@ -54,35 +57,57 @@ const state = reactive({
   loading: false,
   over: false,
   pageNum: 1,
-  pageSize: 4
+  pageSize: 5
 })
+
+const { replyPage, showSize, page, comments } = inject(InjectionReply) as ReplyParam
 
 const data = computed(() => {
-  if (!props.data) {
-    return {
-      total: 0,
-      list: []
+  let data = {
+    total: 0,
+    length: 0,
+    list: [] as any[]
+  }
+  if (props.data) {
+    data = {
+      total: props.data.total,
+      length: props.data.list.length,
+      list: props.data.list
     }
   }
-  return props.data
+  // 开启分页
+  if (page) {
+    data.list = data.list.slice(0, state.pageSize)
+  }
+  if (!state.over) {
+    let tmp = data.list.slice(0, showSize)
+    data.list = tmp
+  }
+  return data
 })
 
-const replyInject = inject(InjectionReply) as ReplyParam
-
 const replyMore = () => {
-  state.loading = true
   state.over = true
-  replyInject.replyMore(props.parentId, () => (state.loading = false))
+}
+
+const replyFinish = (val: any) => {
+  comments.value.forEach(e => {
+    if (e.id == props.parentId) {
+      if (e.reply) {
+        e.reply.list = val
+      }
+    }
+  })
 }
 
 const currentChange = (val: number) => {
   state.pageNum = val
-  replyInject.replyPage(props.parentId, val, state.pageSize)
+  replyPage(props.parentId, val, state.pageSize, val => replyFinish(val))
 }
 
 const sizeChange = (val: number) => {
   state.pageSize = val
-  replyInject.replyPage(props.parentId, state.pageNum, val)
+  replyPage(props.parentId, state.pageNum, val, val => replyFinish(val))
 }
 </script>
 

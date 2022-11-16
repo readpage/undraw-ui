@@ -44,7 +44,7 @@
       </u-fold>
       <div class="action-box select-none">
         <div class="item" @click="like(data.id)">
-          <u-icon v-if="user.likes.indexOf(data.id) == -1">
+          <u-icon v-if="user.likeIds.indexOf(data.id) == -1">
             <svg
               t="1650360973068"
               viewBox="0 0 1024 1024"
@@ -121,7 +121,7 @@ import Operation from './operation.vue'
 interface Props {
   small?: boolean
   data: CommentApi
-  parentId: number
+  parentId: string
 }
 
 const props = defineProps<Props>()

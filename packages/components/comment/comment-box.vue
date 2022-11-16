@@ -36,7 +36,7 @@ export interface CommentBoxApi {
 interface Props {
   placeholder: string
   contentBtn: string
-  parentId?: number
+  parentId?: string
   replay?: string
 }
 

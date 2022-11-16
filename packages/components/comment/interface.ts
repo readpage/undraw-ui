@@ -1,16 +1,16 @@
-import { InjectionKey } from 'vue'
+import { InjectionKey, Ref } from 'vue'
 import { EmojiApi } from '../emoji/interface'
 
 export interface CommentSubmitParam {
   content: string
-  parentId: number | null
+  parentId: string | null
   finish: () => void
 }
 
 export interface CommentApi {
-  id: number
-  parentId: number | null
-  uid: number
+  id: string
+  parentId: string | null
+  uid: string
   username: string
   avatar: string
   level: number
@@ -23,10 +23,10 @@ export interface CommentApi {
 }
 
 export interface UserApi {
-  id: number
+  id: string
   username: string
   avatar: string
-  likes: number[]
+  likeIds: string[]
 }
 
 export interface ReplyApi {
@@ -40,18 +40,27 @@ export interface ConfigApi {
   comments: CommentApi[]
 }
 
+export interface ReplyPageParam {
+  parentId: string
+  pageNum: number
+  pageSize: number
+  finish: (comments: CommentApi[]) => void
+}
+
 export interface ReplyParam {
-  replyMore: (parentId: number, closeLoad: Function) => void
-  replyPage: (parentId: number, pageNum: number, pageSize: number) => void
+  replyPage: (parentId: string, pageNum: number, pageSize: number, finish: (comments: CommentApi[]) => void) => void
+  page: boolean
+  showSize: number
+  comments: Ref<CommentApi[]>
 }
 
 export interface ContentBoxParam {
   isUserInfo: boolean
   user: UserApi
-  like: (id: number) => void
-  getUser: (uid: number, show: Function) => void
-  report: (id: number, finish: () => void) => void
-  remove: (id: number, parentId: number | null, finish: () => void) => void
+  like: (id: string) => void
+  getUser: (uid: string, show: Function) => void
+  report: (id: string, finish: () => void) => void
+  remove: (id: string, parentId: string | null, finish: () => void) => void
 }
 
 export const InjectionCommentFun: InjectionKey<(obj: CommentSubmitParam) => void> = Symbol()

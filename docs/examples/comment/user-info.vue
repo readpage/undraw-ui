@@ -1,6 +1,14 @@
 <template>
   <div class="comment-view">
-    <u-comment :config="config" @submit="submit" @like="like" @remove="remove" @report="report" @get-user="getUser">
+    <u-comment
+      :config="config"
+      :show-size="10"
+      @submit="submit"
+      @like="like"
+      @remove="remove"
+      @report="report"
+      @get-user="getUser"
+    >
       <!-- <template #list-title>全部评论</template> -->
       <template #userInfo>
         <div class="user-card">
@@ -52,11 +60,11 @@ import emoji from './emoji'
 
 const config = reactive<ConfigApi>({
   user: {
-    id: 1,
+    id: '1',
     username: 'user',
     avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
     // 评论id数组 建议:存储方式用户id和文章id和评论id组成关系,根据用户id和文章id来获取对应点赞评论id,然后加入到数组中返回
-    likes: [1, 2, 11]
+    likeIds: ['1', '2', '11']
   },
   emoji: emoji,
   comments: []
@@ -82,10 +90,11 @@ const getUser = (id: number, show: Function) => {
 
 let temp_id = 100
 // 提交评论事件
-const submit = (content: string, parentId: number, finish: (comment: CommentApi) => void) => {
+// 提交评论事件
+const submit = (content: string, parentId: string, finish: (comment: CommentApi) => void) => {
   console.log(content, parentId)
   let comment: CommentApi = {
-    id: (temp_id += 1),
+    id: String((temp_id += 1)),
     parentId: parentId,
     uid: config.user.id,
     username: config.user.username,
@@ -131,8 +140,9 @@ const like = (id: number, finish: () => void) => {
 
 config.comments = [
   {
-    id: 4,
+    id: '4',
     parentId: null,
+    uid: '14',
     username: 'Blizzard1',
     avatar:
       'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -147,11 +157,12 @@ config.comments = [
       total: 2,
       list: [
         {
-          id: 41,
-          parentId: 4,
+          id: '41',
+          parentId: '4',
+          uid: '15',
+          username: '过往~',
           avatar:
             'https://static.juzicon.com/avatars/avatar-20210308112705-zqf0.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          username: '过往~',
           level: 4,
           link: '/41',
           address: '来自北京',
@@ -160,11 +171,12 @@ config.comments = [
           createTime: '1分钟前'
         },
         {
-          id: 42,
-          parentId: 4,
+          id: '42',
+          parentId: '4',
+          uid: '16',
+          username: 'Blizzard1',
           avatar:
             'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          username: 'Blizzard1',
           level: 3,
           link: '/42',
           address: '来自杭州',

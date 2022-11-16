@@ -2,11 +2,11 @@
   <div class="comment-view">
     <u-comment
       :config="config"
+      page
       @submit="submit"
       @like="like"
       @remove="remove"
       @report="report"
-      @reply-more="replyMore"
       @reply-page="replyPage"
     ></u-comment>
   </div>
@@ -14,18 +14,18 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { UToast, ConfigApi, CommentSubmitParam, CommentApi, useLevel } from 'undraw-ui'
+import { UToast, ConfigApi, CommentApi, ReplyPageParam } from 'undraw-ui'
 // 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases
 // static文件放在public下,引入emoji.ts文件可以移动到自定义位置
 import emoji from './emoji'
 
 const config = reactive<ConfigApi>({
   user: {
-    id: 1,
+    id: '1',
     username: 'user',
     avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
     // 评论id数组 建议:存储方式用户id和文章id和评论id组成关系,根据用户id和文章id来获取对应点赞评论id,然后加入到数组中返回
-    likes: [1, 2, 11]
+    likeIds: ['1', '2', '11']
   },
   emoji: emoji,
   comments: []
@@ -33,10 +33,10 @@ const config = reactive<ConfigApi>({
 
 let temp_id = 100
 // 提交评论事件
-const submit = (content: string, parentId: number, finish: (comment: CommentApi) => void) => {
+const submit = (content: string, parentId: string, finish: (comment: CommentApi) => void) => {
   console.log(content, parentId)
   let comment: CommentApi = {
-    id: (temp_id += 1),
+    id: String((temp_id += 1)),
     parentId: parentId,
     uid: config.user.id,
     username: config.user.username,
@@ -80,20 +80,12 @@ const like = (id: number, finish: () => void) => {
   }, 200)
 }
 
-//加载更多回复
-const replyMore = (parentId: number, closeLoad: Function) => {
-  setTimeout(() => {
-    closeLoad()
-    replyPage(parentId, 1, 4)
-  }, 1000)
-}
-
 //模拟数据
 const replyList = [
   {
-    id: 31,
-    parentId: 3,
-    uid: 6,
+    id: '31',
+    parentId: '3',
+    uid: '6',
     username: '陆呈洋',
     avatar:
       'https://static.juzicon.com/avatars/avatar-20220310090547-fxvx.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -105,9 +97,9 @@ const replyList = [
     createTime: '1天前'
   },
   {
-    id: 32,
-    parentId: 3,
-    uid: 7,
+    id: '32',
+    parentId: '3',
+    uid: '7',
     username: '哑谜',
     avatar:
       'https://static.juzicon.com/avatars/avatar-190919180152-2VDE.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -119,9 +111,9 @@ const replyList = [
     createTime: '2天前'
   },
   {
-    id: 33,
-    parentId: 3,
-    uid: 8,
+    id: '33',
+    parentId: '3',
+    uid: '8',
     username: 'Mia',
     avatar:
       'https://static.juzicon.com/avatars/avatar-190919181554-L2ZO.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -133,9 +125,9 @@ const replyList = [
     createTime: '5天前'
   },
   {
-    id: 34,
-    parentId: 3,
-    uid: 9,
+    id: '34',
+    parentId: '3',
+    uid: '9',
     username: 'poli301',
     avatar:
       'https://static.juzicon.com/avatars/avatar-190919180043-XPLP.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -147,9 +139,9 @@ const replyList = [
     createTime: '1天前'
   },
   {
-    id: 35,
-    parentId: 3,
-    uid: 10,
+    id: '35',
+    parentId: '3',
+    uid: '10',
     username: 'fish_eno',
     avatar:
       'https://static.juzicon.com/avatars/avatar-190919180320-NAQJ.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -161,9 +153,9 @@ const replyList = [
     createTime: '11小时前'
   },
   {
-    id: 36,
-    parentId: 3,
-    uid: 11,
+    id: '36',
+    parentId: '3',
+    uid: '11',
     username: '十三',
     avatar:
       'https://static.juzicon.com/user/avatar-f103e42d-a5c9-4837-84e3-d10fad0bcb36-210108053135-E90E.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -175,9 +167,9 @@ const replyList = [
     createTime: '10小时前'
   },
   {
-    id: 37,
-    parentId: 3,
-    uid: 12,
+    id: '37',
+    parentId: '3',
+    uid: '12',
     username: 'D.z.H****',
     avatar:
       'https://static.juzicon.com/avatars/avatar-190919181051-M3HK.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -189,9 +181,9 @@ const replyList = [
     createTime: '9小时前'
   },
   {
-    id: 38,
-    parentId: 3,
-    uid: 13,
+    id: '38',
+    parentId: '3',
+    uid: '13',
     username: '繁星Cong2',
     avatar:
       'https://static.juzicon.com/user/avatar-f81b3655-03fd-485c-811b-4b5ceaca52b6-210817180051-YTO4.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -202,7 +194,7 @@ const replyList = [
     content: ' 无论这个世界对你怎样，都请你一如既往的努力，勇敢，充满希望。',
     createTime: '8小时前'
   }
-] as any[]
+] as CommentApi[]
 
 const page = (pageNum: number, pageSize: number, arr: any[]) => {
   var skipNum = (pageNum - 1) * pageSize
@@ -212,22 +204,19 @@ const page = (pageNum: number, pageSize: number, arr: any[]) => {
 }
 
 //回复分页
-const replyPage = (parentId: number, pageNum: number, pageSize: number) => {
-  config.comments.forEach(e => {
-    if (e.id == parentId) {
-      if (e.reply) {
-        let page1 = page(pageNum, pageSize, replyList)
-        e.reply.list = page1
-      }
-    }
-  })
+const replyPage = ({ parentId, pageNum, pageSize, finish }: ReplyPageParam) => {
+  let tmp = page(pageNum, pageSize, replyList)
+  console.log(parentId)
+  setTimeout(() => {
+    finish(tmp)
+  }, 200)
 }
 
 config.comments = [
   {
-    id: 3,
+    id: '3',
     parentId: null,
-    uid: 5,
+    uid: '5',
     username: '半个句号',
     avatar:
       'https://static.juzicon.com/user/avatar-0d70406e-5d4a-4107-a689-652ffd063f99-200425180341-1QK6.jpg?x-oss-process=image/resize,m_fill,w_100,h_1000',
@@ -239,13 +228,12 @@ config.comments = [
     createTime: '2分钟前',
     reply: {
       total: 8,
-      // https://www.juzikong.com/posts/122a7f89-6b8f-4843-b90e-58b9b7808930#comments
       list: [
         {
-          id: 31,
-          uid: 6,
+          id: '31',
+          uid: '6',
           username: '陆呈洋',
-          parentId: 3,
+          parentId: '3',
           avatar:
             'https://static.juzicon.com/avatars/avatar-20220310090547-fxvx.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
           level: 4,
@@ -256,9 +244,9 @@ config.comments = [
           createTime: '1天前'
         },
         {
-          id: 32,
-          parentId: 3,
-          uid: 7,
+          id: '32',
+          parentId: '3',
+          uid: '7',
           username: '哑谜',
           avatar:
             'https://static.juzicon.com/avatars/avatar-190919180152-2VDE.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
@@ -268,6 +256,34 @@ config.comments = [
           content: '深思熟虑的结果往往就是说不清楚。',
           like: 3,
           createTime: '2天前'
+        },
+        {
+          id: '33',
+          parentId: '3',
+          uid: '15',
+          username: '过往~',
+          avatar:
+            'https://static.juzicon.com/avatars/avatar-20210308112705-zqf0.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
+          level: 4,
+          link: '/41',
+          address: '来自北京',
+          content: '鱼对水说，你看不到我流泪，因为我在水中。水对鱼说，我看到你悲伤，因为你在我心中。[呲牙]',
+          like: 36,
+          createTime: '1分钟前'
+        },
+        {
+          id: '34',
+          parentId: '3',
+          uid: '16',
+          username: 'Blizzard1',
+          avatar:
+            'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+          level: 3,
+          link: '/42',
+          address: '来自杭州',
+          content: ' 约束条件变了，原来的收益，一下子都变为成本。生命如果架在锅上，成本自然也就很高了[tv_微笑]',
+          like: 16,
+          createTime: '1天前'
         }
       ]
     }
