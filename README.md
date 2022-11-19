@@ -36,6 +36,10 @@
 
 ![](https://s2.loli.net/2022/04/28/HtGWBxsJ5LljDEU.png)
 
+<p style="text-align: center">暗黑主题<p>
+
+![img](https://gitee.com/undraw/undraw-ui/raw/master/public/docs/comment-2.png)
+
 3. 搜索(input关键词动态滚动)
 
    ![](https://s2.loli.net/2022/06/22/juvX79t6OPcaWZs.png)
