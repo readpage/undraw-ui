@@ -1,5 +1,5 @@
 import { withInstall } from '~/util'
-import commentVue from './comment.vue'
+import commentVue from './src/comment.vue'
 
 export * from './interface'
 export type CommentInstance = InstanceType<typeof commentVue>

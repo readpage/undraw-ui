@@ -141,38 +141,8 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-.u-editor {
-  transition: all 0.3s;
-  background: #f2f3f5;
-  border: 1px solid #f2f3f5;
-  border-radius: 4px;
-  font-size: 14px;
-
-  .rich-input {
-    min-height: v-bind(minHeight);
-    line-height: 22px;
-    padding: v-bind(padding);
-    color: #252933;
-    outline: none;
-    display: inline-block;
-    width: 100%;
-    box-sizing: border-box;
-    resize: both;
-    background-position: 120% -10px;
-    transition: background 0.3s;
-  }
-  .rich-input:empty::before {
-    cursor: text;
-    content: attr(placeholder);
-    color: #999;
-  }
-}
-.active {
-  border-color: #1e80ff;
-  background: #fff;
-}
-
-// .active .rich-input {
-//   background: url('/static/img/commentBack.webp') no-repeat 95% -10px/19%;
-// }
+@use './style/index.scss' with (
+  $minHeight: v-bind(minHeight),
+  $padding: v-bind(padding)
+);
 </style>

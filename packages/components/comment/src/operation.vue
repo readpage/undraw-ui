@@ -39,9 +39,9 @@
   </el-popover>
 </template>
 <script setup lang="ts">
-import { inject, nextTick, ref, unref } from 'vue'
+import { inject, ref, unref } from 'vue'
 import { ElPopover } from '~/element/popover'
-import { ContentBoxParam, InjectionContentBox } from './interface'
+import { ContentBoxParam, InjectionContentBox } from '~/components'
 import { PopoverInstance } from 'element-plus'
 
 interface Props {

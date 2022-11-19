@@ -1,0 +1,51 @@
+.u-comment {
+  background-color: var(--u-bg-color);
+  color: var(--u-text-color);
+  border-radius: 4px;
+  // 设置的边框和内边距的值是包含在width内
+  box-sizing: border-box;
+  padding: 0 2.5rem;
+  padding-bottom: 2rem;
+  margin-top: 1.5rem;
+
+  .comment-form {
+    padding-top: 2rem;
+    .header {
+      .header-title {
+        font-size: 18px;
+        //多行元素的空间量，如多行文本的间距。
+        line-height: 30px;
+        font-weight: 600;
+      }
+    }
+
+    .content {
+      margin-top: 2rem;
+      display: flex;
+      .el-avatar {
+        margin-right: 16px;
+      }
+    }
+  }
+
+  .comment-list-wrapper {
+    padding: 40px 0 16px;
+    .title {
+      display: flex;
+      align-items: center;
+      position: relative;
+      line-height: 30px;
+      font-weight: 600;
+      font-size: 18px;
+      width: 100%;
+      justify-content: space-between;
+      padding-bottom: 8px;
+    }
+  }
+}
+
+html.dark {
+  .u-comment {
+    color: var(--u-color-white);
+  }
+}

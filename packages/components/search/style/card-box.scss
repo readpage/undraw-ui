@@ -1,0 +1,88 @@
+.card-box {
+  position: absolute;
+  z-index: 1000;
+  background-color: var(--u-bg-color);
+  width: 350px;
+  max-height: 340px;
+  box-shadow: var(--u-box-shadow);
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 10px 0 10px 0;
+  .history {
+    padding: 0 10px 0;
+    .el-tag {
+      margin: 0 10px 10px 0;
+      cursor: pointer;
+    }
+    .el-tag:hover {
+      --el-tag-bg-color: var(--el-color-primary-light-9);
+      --el-tag-border-color: var(--el-color-primary-light-8);
+      --el-tag-hover-color: var(--el-color-primary);
+      --el-tag-text-color: var(--el-color-primary);
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      line-height: 20px;
+      height: 25px;
+      font-family: PingFang SC, HarmonyOS_Medium, Helvetica Neue, Microsoft YaHei, sans-serif;
+      font-weight: 500;
+      margin-bottom: 5px;
+      .title {
+        font-size: 16px;
+      }
+      .clear {
+        font-size: 12px;
+        .u-icon {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  .trending {
+    .title {
+      padding: 0 10px 0;
+      height: 24px;
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    .hot-list {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-rows: repeat(5, 1fr);
+      .hot-item {
+        padding: 0 10px 0;
+        box-sizing: border-box;
+        overflow: hidden;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        .trending-rank {
+          width: 15px;
+          min-width: 15px;
+          height: 17px;
+          line-height: 17px;
+          text-align: center;
+          font-size: 14px;
+          margin-right: 7px;
+          color: var(--u-text-color-secondary);
+        }
+        .trending-rank.trending-rank-top {
+          color: var(--u-text-color);
+        }
+        .trending-text {
+          font-size: 14px;
+          line-height: 17px;
+          height: 17px;
+          margin-right: 6px;
+        }
+      }
+      .hot-item:hover {
+        background: var(--u-bg-color-secondary);
+      }
+    }
+  }
+}

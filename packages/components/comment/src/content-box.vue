@@ -15,7 +15,7 @@
         <slot name="userInfo"></slot>
       </template>
     </UserInfo>
-    <div class="content-box">
+    <div class="content">
       <div class="user-box">
         <UserInfo :is-user-info="isUserInfo && state.visible">
           <a
@@ -112,7 +112,7 @@ import { computed, inject, nextTick, ref, reactive } from 'vue'
 import CommentBox from './comment-box.vue'
 import { EmojiApi, InjectionEmojiApi, UFold, UIcon } from '~/components'
 import type { CommentBoxApi } from './comment-box.vue'
-import { CommentApi, ContentBoxParam, InjectionContentBox } from './interface'
+import { CommentApi, ContentBoxParam, InjectionContentBox } from '~/components'
 import { ElAvatar } from '~/element'
 import { useEmojiParse } from '~/hooks'
 import UserInfo from './user-info.vue'
@@ -178,84 +178,5 @@ const content = computed(() => useEmojiParse(allEmoji, props.data.content))
 </script>
 
 <style lang="scss" scoped>
-.comment {
-  display: flex;
-  margin: 32px 0;
-  a:hover {
-    text-decoration: none;
-  }
-  .u-icon {
-    font-size: 16px;
-  }
-}
-
-.small {
-  .content-box {
-    margin-left: 12px;
-  }
-  .el-avatar {
-    --el-avatar-size: 24px !important;
-  }
-  margin: 0;
-}
-.small:not(:first-child) {
-  margin-top: 32px;
-}
-
-.content-box {
-  flex: 1;
-  margin-left: 16px;
-  overflow: hidden;
-  .user-box {
-    display: flex;
-    align-items: center;
-    .username {
-      display: flex;
-      align-items: center;
-      .name {
-        max-width: 10rem;
-        font-weight: 500;
-        font-size: 15px;
-        color: #252933;
-        line-height: 32px;
-        margin-right: 4px;
-      }
-    }
-
-    .time {
-      margin-left: auto;
-      font-size: 14px;
-      line-height: 22px;
-      color: #8a919f;
-    }
-  }
-}
-
-.action-box {
-  display: flex;
-  align-items: center;
-  position: relative;
-
-  .item {
-    margin-right: 16px;
-    line-height: 20px;
-    line-height: 22px;
-    font-size: 14px;
-    cursor: pointer;
-    color: #8a919f;
-    .u-icon {
-      margin-right: 4px;
-    }
-  }
-  .item:hover {
-    color: #1171ee;
-  }
-  .active {
-    color: #1e80ff;
-  }
-}
-
-.u-fold {
-  margin-top: 8px;
-}
+@use '../style/content-box.scss';
 </style>

@@ -41,10 +41,9 @@ import {
   InjectionContentBox,
   InjectionReply,
   ReplyParam,
-  ReplyPageParam
-} from './interface'
-import { InjectionEmojiApi } from '../emoji/interface'
-import { bottom } from '@popperjs/core'
+  ReplyPageParam,
+  InjectionEmojiApi
+} from '~/index'
 
 defineOptions({
   name: 'UComment'
@@ -175,50 +174,5 @@ provide(InjectionContentBox, contentBox)
 </script>
 
 <style lang="scss" scoped>
-.u-comment {
-  background-color: #fff;
-  border-radius: 4px;
-  // 设置的边框和内边距的值是包含在width内
-  box-sizing: border-box;
-  padding: 0 2.5rem;
-  padding-bottom: 2rem;
-  margin-top: 1.5rem;
-
-  .comment-form {
-    padding-top: 2rem;
-    .header {
-      .header-title {
-        font-size: 18px;
-        //多行元素的空间量，如多行文本的间距。
-        line-height: 30px;
-        font-weight: 600;
-        color: #000;
-      }
-    }
-
-    .content {
-      margin-top: 2rem;
-      display: flex;
-      .el-avatar {
-        margin-right: 16px;
-      }
-    }
-  }
-
-  .comment-list-wrapper {
-    padding: 40px 0 16px;
-    .title {
-      display: flex;
-      align-items: center;
-      position: relative;
-      line-height: 30px;
-      font-weight: 600;
-      font-size: 18px;
-      color: #252933;
-      width: 100%;
-      justify-content: space-between;
-      padding-bottom: 8px;
-    }
-  }
-}
+@use '../style/comment.scss';
 </style>

@@ -112,36 +112,5 @@ const sizeChange = (val: number) => {
 </script>
 
 <style lang="scss" scoped>
-.el-pagination {
-  --el-pagination-button-disabled-bg-color: none;
-  --el-pagination-bg-color: none;
-  padding: 0;
-}
-.reply-box {
-  margin-top: 16px;
-
-  .reply-list {
-    padding: 16px;
-    background: rgba(247, 248, 250, 0.7);
-    border-radius: 4px;
-  }
-
-  .fetch-more {
-    margin-left: 36px;
-    margin-top: 10px;
-    color: #6d757a;
-    font-size: 12px;
-    line-height: 22px;
-    .fetch-more-comment {
-      color: #00a1d6;
-      box-sizing: border-box;
-      cursor: pointer;
-      svg {
-        fill: currentColor;
-        margin-left: 2px;
-        margin-bottom: 3px;
-      }
-    }
-  }
-}
+@use '../style/reply-box.scss';
 </style>

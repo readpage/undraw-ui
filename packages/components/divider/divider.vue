@@ -50,7 +50,7 @@ watch(
     border: 0;
     padding: 0;
     margin: 0;
-    border-top: 1px v-bind('props.borderStyle') #dcdfe6;
+    border-top: 1px v-bind('props.borderStyle') var(--u-fill-color-light);
 
     .inner {
       margin: 0 auto;
@@ -80,7 +80,7 @@ watch(
 
     .inner::before {
       content: '';
-      border-left: 1px v-bind('props.borderStyle') #dcdfe6;
+      border-left: 1px v-bind('props.borderStyle') var(--u-fill-color-light);
       margin: 0 8px;
     }
   }

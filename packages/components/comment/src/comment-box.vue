@@ -1,5 +1,5 @@
 <template>
-  <div v-click-outside:[popperRef]="onClickOutside" class="form-box">
+  <div v-click-outside:[popperRef]="onClickOutside" class="comment-box">
     <u-editor
       ref="editorRef"
       v-model="content"
@@ -25,8 +25,7 @@
 import { isEmpty, isNull } from '~/util'
 import { ClickOutside as vClickOutside } from 'element-plus'
 import { inject, nextTick, ref } from 'vue'
-import { EditorInstance } from '../editor'
-import { CommentSubmitParam, InjectionCommentFun, InjectionEmojiApi } from '~/index'
+import { CommentSubmitParam, InjectionCommentFun, InjectionEmojiApi, EditorInstance } from '~/index'
 import { ElButton } from '~/element'
 
 export interface CommentBoxApi {
@@ -59,7 +58,9 @@ const emoji = inject(InjectionEmojiApi)
 // 提交评论的数据
 const onSubmit = () => {
   submit({
-    content: props.replay ? `回复 <span style='color: blue;'>@${props.replay}:</span> ${content.value}` : content.value,
+    content: props.replay
+      ? `回复 <span style="color: var(--u-color-success-dark-2);">@${props.replay}:</span> ${content.value}`
+      : content.value,
     parentId: isNull(props.parentId, null),
     finish: () => {
       // 清空评论框内容
@@ -100,7 +101,7 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-.form-box {
+.comment-box {
   width: 100%;
   position: relative;
   overflow: hidden;

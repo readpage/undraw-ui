@@ -3,7 +3,7 @@
     <div v-if="data.historySearchList.length != 0" class="history">
       <div class="header">
         <div class="title">历史搜索</div>
-        <el-button class="clear" link @click="$emit('onClear')">
+        <el-button class="clear" link type="primary" @click="$emit('onClear')">
           <u-icon>
             <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -78,92 +78,5 @@ const emit = defineEmits<{
 </script>
 
 <style lang="scss" scoped>
-.card-box {
-  position: absolute;
-  z-index: 1000;
-  background-color: white;
-  width: 350px;
-  max-height: 340px;
-  box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.12);
-  overflow-y: auto;
-  box-sizing: border-box;
-  padding: 10px 0 10px 0;
-  .history {
-    padding: 0 10px 0;
-    .el-tag {
-      margin: 0 10px 10px 0;
-      cursor: pointer;
-    }
-    .el-tag:hover {
-      --el-tag-bg-color: var(--el-color-primary-light-9);
-      --el-tag-border-color: var(--el-color-primary-light-8);
-      --el-tag-hover-color: var(--el-color-primary);
-      --el-tag-text-color: var(--el-color-primary);
-    }
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      line-height: 20px;
-      height: 25px;
-      font-family: PingFang SC, HarmonyOS_Medium, Helvetica Neue, Microsoft YaHei, sans-serif;
-      font-weight: 500;
-      margin-bottom: 5px;
-      .title {
-        font-size: 16px;
-      }
-      .clear {
-        font-size: 12px;
-        .u-icon {
-          font-size: 14px;
-        }
-      }
-    }
-  }
-  .trending {
-    .title {
-      padding: 0 10px 0;
-      height: 24px;
-      font-size: 16px;
-      line-height: 24px;
-    }
-
-    .hot-list {
-      display: grid;
-      grid-auto-flow: column;
-      grid-template-rows: repeat(5, 1fr);
-      .hot-item {
-        padding: 0 10px 0;
-        box-sizing: border-box;
-        overflow: hidden;
-        height: 38px;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        .trending-rank {
-          width: 15px;
-          min-width: 15px;
-          height: 17px;
-          line-height: 17px;
-          text-align: center;
-          font-size: 14px;
-          margin-right: 7px;
-          color: #9499a0;
-        }
-        .trending-rank.trending-rank-top {
-          color: #18191c;
-        }
-        .trending-text {
-          font-size: 14px;
-          line-height: 17px;
-          height: 17px;
-          margin-right: 6px;
-        }
-      }
-      .hot-item:hover {
-        background: #e3e5e7;
-      }
-    }
-  }
-}
+@use '../style/card-box.scss';
 </style>

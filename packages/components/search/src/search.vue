@@ -73,7 +73,7 @@ import { computed, ref, reactive, toRef, watch } from 'vue'
 import { ClickOutside as vClickOutside } from 'element-plus'
 import { storage } from '~/util'
 import CardBox from './card-box.vue'
-import { SearchConfig } from './interface'
+import { SearchConfig } from '../interface'
 
 export interface HistoryApi {
   name: string
@@ -199,122 +199,5 @@ const animationend = (e: AnimationEvent) => {
 </script>
 
 <style lang="scss" scoped>
-.u-search {
-  width: 350px;
-  .search {
-    transition: all 0.3s;
-    background: #f2f3f5;
-    border: 1px solid #f2f3f5;
-    border-radius: 4px;
-    display: flex;
-
-    input[type='text'] {
-      padding: 4px 10px;
-      border-radius: 4px;
-      width: 100%;
-      color: #252933;
-      outline: none;
-      border: none;
-      overflow: hidden;
-      font-size: 14px;
-      font-family: inherit;
-      box-sizing: border-box;
-      line-height: 24px;
-      background: transparent;
-    }
-
-    .btn {
-      display: flex;
-      align-items: center;
-      .close {
-        color: #73767a;
-        cursor: pointer;
-      }
-      .close:hover {
-        color: #000000;
-      }
-
-      .search-btn {
-        display: flex;
-        justify-content: center;
-        color: var(--el-text-color-primary);
-        cursor: pointer;
-        width: 30px;
-        font-size: 14px;
-      }
-    }
-  }
-  .active {
-    border-color: #1e80ff;
-    background: #fff;
-  }
-
-  label {
-    display: block;
-    position: relative;
-    overflow: hidden;
-    font-size: 14px;
-    flex: 1;
-  }
-
-  label:hover {
-    cursor: text;
-  }
-
-  label::before {
-    content: attr(data-before);
-  }
-
-  label::after {
-    content: attr(data-after);
-  }
-
-  label::before,
-  label::after {
-    display: block;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    padding: 4px 10px;
-    line-height: 24px;
-    font-family: inherit;
-    box-sizing: border-box;
-    color: #999;
-  }
-
-  @keyframes placeholder-before {
-    0% {
-      transform: translateY(0%);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-  }
-
-  @keyframes placeholder-after {
-    0% {
-      transform: translateY(0%);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(-100%);
-      opacity: 1;
-    }
-  }
-
-  .animate::before {
-    animation: 0.4s placeholder-before ease-out;
-  }
-
-  .animate::after {
-    animation: 0.4s placeholder-after ease-out;
-  }
-
-  .animate::before,
-  .animate::after {
-    animation-fill-mode: forwards;
-  }
-}
+@use '../style/search.scss';
 </style>

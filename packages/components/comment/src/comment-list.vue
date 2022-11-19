@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { CommentApi } from './interface'
+import { CommentApi } from '../interface'
 import ContentBox from './content-box.vue'
 import ReplyBox from './reply-box.vue'
 

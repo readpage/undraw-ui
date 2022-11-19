@@ -80,7 +80,7 @@ watch(
   .el-dialog__header {
     text-align: left;
     margin-right: 0;
-    border-bottom: 1px solid var(--u-border-color-light);
+    border-bottom: 1px solid var(--u-border-color);
   }
   .el-dialog__body {
     padding: 20px !important;

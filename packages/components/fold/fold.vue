@@ -13,6 +13,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+import './style/index.scss'
 
 defineOptions({
   name: 'UFold'
@@ -59,36 +60,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.u-fold {
-  font-size: 14px;
-  line-height: 2rem;
-  color: #515767;
-
-  .txt-box {
-    margin-top: 0.5rem;
-    // 会对过长的单词做词内断词处理，这样单词始终会在容器中，不会溢出容器
-    word-wrap: break-word;
-  }
-
-  .action-box {
-    margin-bottom: 0.5rem;
-    .expand-btn {
-      display: inline-block;
-      line-height: 22px;
-      cursor: pointer;
-      color: #1171ee;
-    }
-  }
-
-  .over-hidden {
-    //象作为弹性伸缩盒子模型显示。
-    display: -webkit-box;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    //设置或检索伸缩盒对象的子元素的排列方式。
-    -webkit-box-orient: vertical;
-    //用来限制在一个块元素显示的文本的行数。
-    -webkit-line-clamp: v-bind(line);
-  }
-}
+@use './style/index.scss' with (
+  $line: v-bind(line)
+);
 </style>
