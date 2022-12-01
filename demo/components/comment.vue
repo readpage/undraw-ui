@@ -56,7 +56,7 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { UToast, ConfigApi, CommentApi, useLevel, deepTree, ReplyPageParam } from '~/index'
+import { UToast, ConfigApi, CommentApi, useLevel, ReplyPageParam } from '~/index'
 // 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases
 // static文件放在public下,引入emoji.ts文件可以移动到自定义位置
 import emoji from '@/assets/emoji'
@@ -68,7 +68,7 @@ defineOptions({
 
 const config = reactive<ConfigApi>({
   user: {
-    id: '1',
+    id: 1,
     username: 'user',
     avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
     // 评论id数组 建议:存储方式用户id和文章id和评论id组成关系,根据用户id和文章id来获取对应点赞评论id,然后加入到数组中返回
@@ -77,6 +77,10 @@ const config = reactive<ConfigApi>({
   emoji: emoji,
   comments: []
 })
+
+setTimeout(() => {
+  config.user.likeIds = ['2', '3']
+}, 5000)
 
 const userInfo = ref({} as any)
 

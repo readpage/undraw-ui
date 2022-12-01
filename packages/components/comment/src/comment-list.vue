@@ -1,10 +1,10 @@
 <template>
   <div v-if="data" class="comment-list">
-    <ContentBox v-for="(comment, index) in data" :key="index" :parent-id="comment.id" :data="comment">
+    <ContentBox v-for="(comment, index) in data" :key="index" :parent-id="String(comment.id)" :data="comment">
       <template #userInfo>
         <slot name="userInfo"></slot>
       </template>
-      <ReplyBox :parent-id="comment.id" :data="comment.reply">
+      <ReplyBox :parent-id="String(comment.id)" :data="comment.reply">
         <template #userInfo>
           <slot name="userInfo"></slot>
         </template>

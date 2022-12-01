@@ -97,6 +97,7 @@ const submit = (obj: CommentSubmitParam) => {
   })
 }
 
+// contentBox点赞事件提供
 const like = (id: string) => {
   // 点赞评论数组处理
   const editLike = (id: string, count: number) => {
@@ -114,7 +115,7 @@ const like = (id: string) => {
   }
 
   // 点赞事件处理
-  let likeIds = props.config.user.likeIds
+  let likeIds = props.config.user.likeIds as string[]
   emit('like', id, () => {
     if (likeIds.indexOf(id) == -1) {
       // 点赞

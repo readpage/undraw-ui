@@ -8,9 +8,9 @@ export interface CommentSubmitParam {
 }
 
 export interface CommentApi {
-  id: string
-  parentId: string | null
-  uid: string
+  id: string | number
+  parentId: string | number | null
+  uid: string | number
   username: string
   avatar: string
   level: number
@@ -23,10 +23,10 @@ export interface CommentApi {
 }
 
 export interface UserApi {
-  id: string
+  id: string | number
   username: string
   avatar: string
-  likeIds: string[]
+  likeIds: string[] | number[]
 }
 
 export interface ReplyApi {
@@ -41,7 +41,7 @@ export interface ConfigApi {
 }
 
 export interface ReplyPageParam {
-  parentId: string
+  parentId: string | number
   pageNum: number
   pageSize: number
   finish: (comments: CommentApi[]) => void
