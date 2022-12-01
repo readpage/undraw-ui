@@ -82,6 +82,7 @@ const userInfo = ref({} as any)
 
 // 请求获取用户详细信息
 const getUser = (uid: string, show: Function) => {
+  console.log(uid)
   setTimeout(() => {
     userInfo.value = {
       id: String(uid),

@@ -5,7 +5,7 @@
         :href="data.link"
         target="_blank"
         style="display: block"
-        @mouseenter="getUser(user.id, () => (state.visible = true))"
+        @mouseenter="getUser(data.uid, () => (state.visible = true))"
       >
         <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.avatar">
           <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
@@ -22,7 +22,7 @@
             :href="data.link"
             target="_blank"
             style="display: block"
-            @mouseenter="getUser(user.id, () => (state.visible = true))"
+            @mouseenter="getUser(data.uid, () => (state.visible = true))"
           >
             <div class="username">
               <span class="name" style="max-width: 10em">{{ data.username }}</span>
