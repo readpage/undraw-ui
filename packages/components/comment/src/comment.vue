@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { provide, toRef, useSlots } from 'vue'
+import { provide, toRef, toRefs, useSlots } from 'vue'
 import CommentBox from './comment-box.vue'
 import CommentList from './comment-list.vue'
 import { ElAvatar } from '~/element'
@@ -62,7 +62,8 @@ const props = withDefaults(defineProps<Props>(), {
 })
 const slots = useSlots()
 // 将这个属性转换为响应式数据。
-const comments = toRef(props.config, 'comments')
+// const comments = toRef(props.config, 'comments')
+const { user, comments } = toRefs(props.config)
 
 const emit = defineEmits<{
   (e: 'submit', content: string, parentId: string | null, finish: (comment: CommentApi) => void): void
@@ -115,15 +116,16 @@ const like = (id: string) => {
   }
 
   // 点赞事件处理
-  let likeIds = props.config.user.likeIds as string[]
+  const likeIds = props.config.user.likeIds
+  let temp = likeIds.map(String)
   emit('like', id, () => {
-    if (likeIds.indexOf(id) == -1) {
+    if (temp.indexOf(id) == -1) {
       // 点赞
-      likeIds.push(id)
+      likeIds.push(id as never)
       editLike(id, 1)
     } else {
       // 取消点赞
-      let index = likeIds.findIndex(item => item == id)
+      let index = temp.findIndex(item => item == id)
       if (index != -1) likeIds.splice(index, 1)
       editLike(id, -1)
     }
@@ -140,15 +142,15 @@ const replyBox: ReplyParam = {
 }
 
 const contentBox: ContentBoxParam = {
-  user: props.config.user,
+  user: user,
   like: like,
   isUserInfo: slots.userInfo != undefined,
   getUser: (uid, show) => emit('getUser', uid, show),
-  report: (id, finish) => emit('report', id, finish),
-  remove: (id, parentId, finish) =>
+  report: (id, close) => emit('report', id, close),
+  remove: (id, parentId, close) =>
     emit('remove', id, () => {
       // 删除操作回调处理
-      finish()
+      close()
       if (parentId) {
         let comment = comments.value.find(item => item.id == parentId)
         let reply = comment?.reply

@@ -56,7 +56,7 @@ export interface ReplyParam {
 
 export interface ContentBoxParam {
   isUserInfo: boolean
-  user: UserApi
+  user: Ref<UserApi>
   like: (id: string) => void
   getUser: (uid: string, show: Function) => void
   report: (id: string, finish: () => void) => void

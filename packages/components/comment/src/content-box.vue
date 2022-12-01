@@ -5,7 +5,7 @@
         :href="data.link"
         target="_blank"
         style="display: block"
-        @mouseenter="getUser(String(data.uid), () => (state.visible = true))"
+        @mouseenter="getUser(str(data.uid), () => (state.visible = true))"
       >
         <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.avatar">
           <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
@@ -22,7 +22,7 @@
             :href="data.link"
             target="_blank"
             style="display: block"
-            @mouseenter="getUser(String(data.uid), () => (state.visible = true))"
+            @mouseenter="getUser(str(data.uid), () => (state.visible = true))"
           >
             <div class="username">
               <span class="name" style="max-width: 10em">{{ data.username }}</span>
@@ -43,8 +43,8 @@
         <div v-html="content"></div>
       </u-fold>
       <div class="action-box select-none">
-        <div class="item" @click="like(String(data.id))">
-          <u-icon v-if="user.likeIds.map(String).indexOf(String(data.id)) == -1">
+        <div class="item" @click="like(str(data.id))">
+          <u-icon v-if="user.likeIds.map(String).indexOf(str(data.id)) == -1">
             <svg
               t="1650360973068"
               viewBox="0 0 1024 1024"
@@ -88,7 +88,7 @@
           </u-icon>
           <span>{{ state.active ? '取消回复' : '回复' }}</span>
         </div>
-        <Operation :id="String(data.id)" :parent-id="String(data.parentId)" :uid="String(data.uid)" />
+        <Operation :id="str(data.id)" :parent-id="str(data.parentId)" :uid="str(data.uid)" />
       </div>
       <div v-if="state.active">
         <CommentBox
@@ -117,6 +117,7 @@ import { ElAvatar } from '~/element'
 import { useEmojiParse } from '~/hooks'
 import UserInfo from './user-info.vue'
 import Operation from './operation.vue'
+import { str } from '~/index'
 
 interface Props {
   small?: boolean

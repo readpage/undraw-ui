@@ -45,7 +45,6 @@
 import { computed, inject, reactive } from 'vue'
 import ContentBox from './content-box.vue'
 import { ReplyApi, ElPagination, InjectionReply, ReplyParam } from '~/index'
-import { comment } from 'postcss'
 
 interface Props {
   data?: ReplyApi | null

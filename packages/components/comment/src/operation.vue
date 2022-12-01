@@ -1,7 +1,7 @@
 <template>
   <el-popover ref="popoverRef" placement="bottom-end" popper-class="operatoin-popover" trigger="click">
     <ul class="operation-list select-none">
-      <li v-if="String(user.id) != uid" :class="{ active: active }" class="operation-option" @click="rawReport">
+      <li v-if="str(user.id) != uid" :class="{ active: active }" class="operation-option" @click="rawReport">
         <u-icon>
           <svg viewBox="0 0 1127 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1612">
             <path
@@ -43,6 +43,7 @@ import { inject, ref } from 'vue'
 import { ElPopover } from '~/element/popover'
 import { ContentBoxParam, InjectionContentBox } from '~/components'
 import { PopoverInstance } from 'element-plus'
+import { str } from '~/util'
 
 interface Props {
   //评论id
