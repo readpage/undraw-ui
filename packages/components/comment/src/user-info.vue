@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-popover v-if="isUserInfo" placement="top" :width="300">
+    <el-popover v-if="isUserInfo" :visible="visible" placement="top" :width="300">
       <slot name="userInfo"></slot>
       <template #reference>
         <slot></slot>
@@ -15,6 +15,7 @@ import { ElPopover } from '~/element'
 
 interface Props {
   isUserInfo: boolean
+  visible: boolean
 }
 
 const props = defineProps<Props>()

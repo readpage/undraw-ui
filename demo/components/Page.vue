@@ -19,11 +19,22 @@
     <el-scrollbar class="container">
       <component :is="currentTab.components"></component>
     </el-scrollbar>
+    <el-switch
+      v-model="isDark"
+      inline-prompt
+      :active-icon="Moon"
+      :inactive-icon="Sunny"
+      style="position: absolute; right: 20px; top: 5px"
+    />
   </div>
 </template>
 <script setup lang="ts">
 import { markRaw, reactive, ref } from 'vue'
 import { ElScrollbar } from '~/element'
+import { isDark } from '@/util'
+import { Moon, Sunny } from '@element-plus/icons-vue'
+import { ElSwitch } from 'element-plus'
+import 'element-plus/es/components/switch/style/css'
 
 interface Props {
   title?: string

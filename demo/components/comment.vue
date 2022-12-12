@@ -51,13 +51,12 @@
         </div>
       </template>
     </u-comment>
-    {{ config.comments }}
   </div>
 </template>
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { UToast, ConfigApi, CommentApi, useLevel, ReplyPageParam } from '~/index'
+import { UToast, ConfigApi, CommentApi, useLevel, ReplyPageParam, debounce } from '~/index'
 // 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases
 // static文件放在public下,引入emoji.ts文件可以移动到自定义位置
 import emoji from '@/assets/emoji'
@@ -109,7 +108,7 @@ const getUser = (uid: string, show: Function) => {
       follower: 6878
     }
     show()
-  }, 500)
+  }, 0)
 }
 
 let temp_id = 100

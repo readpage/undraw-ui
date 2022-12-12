@@ -28,6 +28,7 @@ module.exports = {
     'prefer-const': 'off',
     '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
     'vue/multi-word-component-names': 'off',
     'vue/require-default-prop': 'off' // props 需要设置默认值
   }

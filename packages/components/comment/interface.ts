@@ -58,6 +58,9 @@ export interface ContentBoxParam {
   isUserInfo: boolean
   user: Ref<UserApi>
   like: (id: string) => void
+  /**
+   * 返回用户id，show回调是否显示用户信息卡片
+   */
   getUser: (uid: string, show: Function) => void
   report: (id: string, finish: () => void) => void
   remove: (id: string, parentId: string | null, finish: () => void) => void
