@@ -44,49 +44,63 @@ comment/user-info
 
 ## 接口类型
 ```ts
-export interface ConfigApi {
-    user: UserApi
-    emoji: EmojiApi
-    comments: CommentApi[]
-}
-
 export interface CommentApi {
-    id: number
-    parentId: number | null
-    uid: number
-    username: string
-    avatar: string
-    level: number
-    link: string
-    address: string
-    content: string
-    like: number
-    createTime: string
-    reply?: ReplyApi | null
+  id: string | number
+  parentId: string | number | null
+  uid: string | number
+  username: string
+  avatar: string
+  level: number
+  link: string
+  address: string
+  content: string
+  like: number
+  createTime: string
+  reply?: ReplyApi | null
 }
 
 export interface UserApi {
-    id: number
-    username: string
-    avatar: string
-    likes: number[]
+  id: string | number
+  username: string
+  avatar: string
+  likeIds: string[] | number[]
 }
 
 export interface ReplyApi {
-    total: number;
-    list: CommentApi[]
+  total: number
+  list: CommentApi[]
+}
+
+export interface ConfigApi {
+  user: UserApi
+  emoji: EmojiApi
+  comments: CommentApi[]
 }
 
 export interface ReplyPageParam {
-  parentId: string
+  parentId: string | number
   pageNum: number
   pageSize: number
   finish: (comments: CommentApi[]) => void
 }
 
 export interface ReplyParam {
-    replyMore: (parentId: number, closeLoad: Function) => void
-    replyPage: (parentId: string, pageNum: number, pageSize: number, finish: (comments: CommentApi[]) => void) => void
+  replyPage: (parentId: string, pageNum: number, pageSize: number, finish: (comments: CommentApi[]) => void) => void
+  page: boolean
+  showSize: number
+  comments: Ref<CommentApi[]>
+}
+
+export interface ContentBoxParam {
+  isUserInfo: boolean
+  user: Ref<UserApi>
+  like: (id: string) => void
+  /**
+   * 返回用户id，show回调是否显示用户信息卡片
+   */
+  getUser: (uid: string, show: Function) => void
+  report: (id: string, finish: () => void) => void
+  remove: (id: string, parentId: string | null, finish: () => void) => void
 }
 
 ```

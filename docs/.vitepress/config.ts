@@ -65,6 +65,10 @@ export const sidebar = {
           link: '/components/chat'
         },
         {
+          text: 'Counter 滚动数字',
+          link: '/components/counter'
+        },
+        {
           text: 'NoticeBar 通知栏',
           link: '/components/notice-bar'
         },

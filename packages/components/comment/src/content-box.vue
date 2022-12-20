@@ -187,6 +187,9 @@ const getInfo = (val?: number) => {
   }, hoverTime)
 }
 
+/**
+ * user-info卡片hover离开事件
+ */
 const leave = () => {
   clearTimeout(timer)
   timer = null
