@@ -74,7 +74,7 @@ export function deepTree(list: any[], { parentId = 'parentId', children = 'child
 /**
  * 树型结构转换为数组结构
  * @param list
- * @param param: { parentId: string, children: string} //parentId 判断条件属性名， children转换数据结构拆分对象的属性名
+ * @param param: { parentId: string, children: string} //parentId 判断条件属性名, 默认值parentId， children转换数据结构拆分对象的属性名 默认值: children
  * @returns
  */
 export function revDeepTree(list: any[] = [], { parentId = 'parentId', children = 'children' }) {

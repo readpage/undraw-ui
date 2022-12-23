@@ -4,6 +4,7 @@ import { EmojiApi } from '../emoji/interface'
 export interface CommentSubmitParam {
   content: string
   parentId: string | null
+  imgList: string[]
   finish: () => void
 }
 
@@ -19,6 +20,7 @@ export interface CommentApi {
   content: string
   like: number
   createTime: string
+  imgList?: string[]
   reply?: ReplyApi | null
 }
 

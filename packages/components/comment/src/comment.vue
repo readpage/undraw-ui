@@ -66,7 +66,13 @@ const slots = useSlots()
 const { user, comments } = toRefs(props.config)
 
 const emit = defineEmits<{
-  (e: 'submit', content: string, parentId: string | null, finish: (comment: CommentApi) => void): void
+  (
+    e: 'submit',
+    content: string,
+    parentId: string | null,
+    imgList: string[],
+    finish: (comment: CommentApi) => void
+  ): void
   (e: 'like', id: string, finish: () => void): void
   (e: 'replyPage', { parentId, pageNum, pageSize, finish }: ReplyPageParam): void
   (e: 'getUser', id: string, show: Function): void
@@ -75,7 +81,7 @@ const emit = defineEmits<{
 }>()
 
 const submit = (obj: CommentSubmitParam) => {
-  emit('submit', obj.content, obj.parentId, (comment: CommentApi) => {
+  emit('submit', obj.content, obj.parentId, obj.imgList, (comment: CommentApi) => {
     // 添加内容回调处理,添加到评论列表
     obj.finish()
     if (obj.parentId) {

@@ -26,6 +26,29 @@ $padding: 4px 10px !default;
     content: attr(placeholder);
     color: var(--u-text-color-placeholder);
   }
+  .image-preview-box {
+    display: flex; 
+    padding: 0 12px;
+    .image-preview {
+      position: relative;
+      img {
+        height: 64px;
+        min-width: 64px;
+      }
+      .clean-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        svg {
+          display: block;
+        }
+      }
+      .clean-btn:hover {
+        opacity: .8;
+      }
+    }
+  }
 }
 .active {
   border-color: var(--u-color-primary);

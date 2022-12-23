@@ -29,10 +29,24 @@
         <span class="address" style="color: #939393; font-size: 12px">&nbsp;&nbsp;{{ data.address }}</span>
         <time class="time">{{ data.createTime }}</time>
       </div>
-      <u-fold unfold>
-        <div v-html="content"></div>
-      </u-fold>
+      <div class="content">
+        <u-fold unfold>
+          <div v-html="content"></div>
+          <div class="imgbox" style="display: flex">
+            <template v-for="(url, index) in data.imgList" :key="index">
+              <ElImage
+                :src="url"
+                style="height: 72px; padding: 8px 4px"
+                lazy
+                :preview-src-list="data.imgList"
+                :initial-index="index"
+              ></ElImage>
+            </template>
+          </div>
+        </u-fold>
+      </div>
       <div class="action-box select-none">
+        <!-- 点赞 -->
         <div class="item" @click="like(str(data.id))">
           <u-icon v-if="user.likeIds.map(String).indexOf(str(data.id)) == -1">
             <svg
@@ -60,6 +74,7 @@
           </u-icon>
           <span v-if="data.like != 0">{{ data.like }}</span>
         </div>
+        <!-- 回复 -->
         <div ref="btnRef" class="item" :class="{ active: state.active }" @click="reply">
           <u-icon>
             <svg
@@ -107,8 +122,7 @@ import { ElAvatar } from '~/element'
 import { useEmojiParse } from '~/hooks'
 import UserInfo from './user-info.vue'
 import Operation from './operation.vue'
-import { str } from '~/index'
-import { clear } from 'console'
+import { str, ElImage } from '~/index'
 
 interface Props {
   small?: boolean

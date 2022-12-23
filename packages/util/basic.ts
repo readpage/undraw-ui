@@ -9,3 +9,17 @@ export const str = <T>(val: T) => {
   }
   return String(val)
 }
+
+/**
+ * 判断是否是图片类型
+ * @param filePath
+ * @returns
+ */
+export function isImage(filePath: string) {
+  let type = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg']
+  // 获取最后一个.的位置
+  let index = filePath.lastIndexOf('.')
+  //获取后缀
+  let suffix = filePath.substring(index + 1)
+  return type.indexOf(suffix.toLowerCase()) != -1
+}

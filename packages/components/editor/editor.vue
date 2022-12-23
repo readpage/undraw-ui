@@ -11,10 +11,36 @@
       @keydown.enter="keyDown"
       v-html="text"
     ></div>
+    <div ref="imageRef" class="image-preview-box">
+      <div v-for="(url, index) in imgList" :key="index" class="image-preview">
+        <img :src="url" alt="" />
+        <div class="clean-btn" @click="removeImg(index)">
+          <svg
+            data-v-48a7e3c5=""
+            data-v-7c7c7498=""
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="12" height="12" rx="2" fill="#86909C"></rect>
+            <path
+              data-v-48a7e3c5=""
+              data-v-7c7c7498=""
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M5.98095 5.49307L8.22012 3.25389C8.28521 3.18881 8.39074 3.18881 8.45582 3.25389L8.69153 3.4896C8.75661 3.55468 8.75661 3.66021 8.69153 3.7253L6.45235 5.96447L8.69153 8.20364C8.75661 8.26873 8.75661 8.37426 8.69153 8.43934L8.45582 8.67505C8.39074 8.74013 8.28521 8.74013 8.22012 8.67505L5.98095 6.43587L3.74178 8.67505C3.67669 8.74013 3.57116 8.74013 3.50608 8.67505L3.27037 8.43934C3.20529 8.37426 3.20529 8.26873 3.27037 8.20364L5.50954 5.96447L3.27037 3.7253C3.20529 3.66021 3.20529 3.55468 3.27037 3.4896L3.50608 3.25389C3.57116 3.18881 3.67669 3.18881 3.74178 3.25389L5.98095 5.49307Z"
+              fill="white"
+            ></path>
+          </svg>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, toRefs, watch } from 'vue'
 
 defineOptions({
   name: 'UEditor'
@@ -24,6 +50,7 @@ interface Props {
   placeholder?: string
   modelValue: string
   minHeight?: number
+  imgList?: string[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -35,6 +62,9 @@ const editorRef = ref<HTMLDivElement>()
 const text = ref()
 const isLocked = ref(false)
 const active = ref(false)
+const imageRef = ref<HTMLDivElement>()
+
+const { imgList } = toRefs(props)
 
 const minHeight = computed(() => props.minHeight + 'px')
 
@@ -124,6 +154,10 @@ const keyDown = (e: KeyboardEvent) => {
   }
 }
 
+// 移除图片
+const removeImg = (val: number) => {
+  imgList?.value?.splice(val, 1)
+}
 onMounted(() => {
   editorRef.value?.addEventListener('keyup', (event: Event) => {
     const el = event.target as HTMLDivElement
@@ -136,7 +170,8 @@ onMounted(() => {
 defineExpose({
   addText,
   clear,
-  focus
+  focus,
+  imageRef
 })
 </script>
 
