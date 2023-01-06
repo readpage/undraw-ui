@@ -54,7 +54,7 @@ interface Props {
   uid: string
 }
 
-const visible = ref(false)
+// 是否可以点击
 const active = ref(false)
 const popoverRef = ref<PopoverInstance>()
 
@@ -62,6 +62,9 @@ const props = defineProps<Props>()
 
 const { user, report, remove } = inject(InjectionContentBox) as ContentBoxParam
 
+/**
+ * 隐藏操作栏
+ */
 const close = () => {
   popoverRef.value?.hide()
 }
@@ -69,6 +72,9 @@ const close = () => {
 const rawReport = () => {
   active.value = true
   close()
+  /**
+   * 取消禁用举报按钮
+   */
   report(props.id, () => {
     active.value = false
   })
@@ -77,9 +83,16 @@ const rawReport = () => {
 const rawRemove = () => {
   active.value = true
   close()
-  remove(props.id, props.parentId, () => {
-    active.value = false
-  })
+  remove(
+    props.id,
+    props.parentId,
+    /**
+     * 取消禁用删除按钮
+     */
+    () => {
+      active.value = false
+    }
+  )
 }
 </script>
 

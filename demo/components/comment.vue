@@ -56,7 +56,7 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { UToast, ConfigApi, CommentApi, useLevel, ReplyPageParam, debounce } from '~/index'
+import { UToast, ConfigApi, CommentApi, useLevel, ReplyPageParam, ReplyApi, CommentSubmitParam, cloneDeep } from '~/index'
 // 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases
 // static文件放在public下,引入emoji.ts文件可以移动到自定义位置
 import emoji from '@/assets/emoji'
@@ -111,10 +111,27 @@ const getUser = (uid: string, show: Function) => {
   }, 0)
 }
 
+//获取文件url
+function createObjectURL(blob: any) {
+  if (window.URL) {
+    return window.URL.createObjectURL(blob)
+  } else if (window.webkitURL) {
+    return window.webkitURL.createObjectURL(blob)
+  } else {
+    return ''
+  }
+}
+
 let temp_id = 100
 // 提交评论事件
-const submit = (content: string, parentId: string, imgList: string[], finish: (comment: CommentApi) => void) => {
-  console.log('提交评论: ' + content, parentId)
+const submit = ({ content, parentId, files, finish }: CommentSubmitParam) => {
+  console.log('提交评论: ' + content, parentId, files)
+
+  /**
+   * 上传文件后端返回图片访问地址，格式以', '为分割; 如:  '/static/img/program.gif, /static/img/normal.webp'
+   */
+  let contentImg = files.map(e => createObjectURL(e)).join(', ')
+
   let comment: CommentApi = {
     id: String((temp_id += 1)),
     parentId: parentId,
@@ -125,9 +142,9 @@ const submit = (content: string, parentId: string, imgList: string[], finish: (c
     link: `/${(temp_id += 1)}`,
     address: '来自江苏',
     content: content,
-    like: 0,
+    likes: 0,
     createTime: '1分钟前',
-    imgList: imgList,
+    contentImg: contentImg,
     reply: null
   }
   setTimeout(() => {
@@ -164,120 +181,123 @@ const like = (id: string, finish: () => void) => {
 }
 
 //模拟数据
-const replyList = [
-  {
-    id: '31',
-    parentId: '3',
-    uid: '6',
-    username: '陆呈洋',
-    avatar:
-      'https://static.juzicon.com/avatars/avatar-20220310090547-fxvx.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
-    level: 4,
-    link: '/31',
-    address: '来自成都',
-    content: '人生就像愤怒的小鸟，当你失败时，总有几只猪在笑。',
-    like: 7,
-    createTime: '1天前'
-  },
-  {
-    id: '32',
-    parentId: '3',
-    uid: '7',
-    username: '哑谜',
-    avatar:
-      'https://static.juzicon.com/avatars/avatar-190919180152-2VDE.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-    level: 3,
-    link: '/32',
-    address: '来自杭州',
-    content: '深思熟虑的结果往往就是说不清楚。',
-    like: 3,
-    createTime: '2天前'
-  },
-  {
-    id: '33',
-    parentId: '3',
-    uid: '8',
-    username: 'Mia',
-    avatar:
-      'https://static.juzicon.com/avatars/avatar-190919181554-L2ZO.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-    like: 3,
-    link: '/33',
-    level: 2,
-    address: '来自深圳',
-    content: '当我跨过沉沦的一切，向着永恒开战的时候，你是我的军旗。',
-    createTime: '5天前'
-  },
-  {
-    id: '34',
-    parentId: '3',
-    uid: '9',
-    username: 'poli301',
-    avatar:
-      'https://static.juzicon.com/avatars/avatar-190919180043-XPLP.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-    like: 34,
-    level: 4,
-    link: '/34',
-    address: '来自西安',
-    content: '不要由于别人不能成为我们所希望的人而愤怒，因为我们自己也难以成为自己所希望的人。',
-    createTime: '1天前'
-  },
-  {
-    id: '35',
-    parentId: '3',
-    uid: '10',
-    username: 'fish_eno',
-    avatar:
-      'https://static.juzicon.com/avatars/avatar-190919180320-NAQJ.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-    like: 32,
-    level: 6,
-    link: '/35',
-    address: '来自武汉',
-    content: '世上莫名其妙走霉运的人多的是，都是一边为命运生气，一边化愤怒为力量地活着。',
-    createTime: '11小时前'
-  },
-  {
-    id: '36',
-    parentId: '3',
-    uid: '11',
-    username: '十三',
-    avatar:
-      'https://static.juzicon.com/user/avatar-f103e42d-a5c9-4837-84e3-d10fad0bcb36-210108053135-E90E.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-    like: 21,
-    level: 4,
-    link: '/36',
-    address: '来自上海',
-    content: '这世上所有的不利情况，都是当事者能力不足造成的',
-    createTime: '10小时前'
-  },
-  {
-    id: '37',
-    parentId: '3',
-    uid: '12',
-    username: 'D.z.H****',
-    avatar:
-      'https://static.juzicon.com/avatars/avatar-190919181051-M3HK.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-    like: 18,
-    level: 3,
-    link: '/37',
-    address: '来自广州',
-    content: ' 绝望自有绝望的力量，就像希望自有希望的无能。',
-    createTime: '9小时前'
-  },
-  {
-    id: '38',
-    parentId: '3',
-    uid: '13',
-    username: '繁星Cong2',
-    avatar:
-      'https://static.juzicon.com/user/avatar-f81b3655-03fd-485c-811b-4b5ceaca52b6-210817180051-YTO4.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-    like: 17,
-    level: 1,
-    link: '/38',
-    address: '来自重庆',
-    content: ' 无论这个世界对你怎样，都请你一如既往的努力，勇敢，充满希望。',
-    createTime: '8小时前'
-  }
-] as CommentApi[]
+const reply = {
+  total: 6,
+  list: [
+    {
+      id: '31',
+      parentId: '3',
+      uid: '6',
+      username: '陆呈洋',
+      avatar:
+        'https://static.juzicon.com/avatars/avatar-20220310090547-fxvx.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
+      level: 4,
+      link: '/31',
+      address: '来自成都',
+      content: '人生就像愤怒的小鸟，当你失败时，总有几只猪在笑。',
+      likes: 7,
+      createTime: '1天前'
+    },
+    {
+      id: '32',
+      parentId: '3',
+      uid: '7',
+      username: '哑谜',
+      avatar:
+        'https://static.juzicon.com/avatars/avatar-190919180152-2VDE.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+      level: 3,
+      link: '/32',
+      address: '来自杭州',
+      content: '深思熟虑的结果往往就是说不清楚。',
+      likes: 3,
+      createTime: '2天前'
+    },
+    {
+      id: '33',
+      parentId: '3',
+      uid: '8',
+      username: 'Mia',
+      avatar:
+        'https://static.juzicon.com/avatars/avatar-190919181554-L2ZO.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+      likes: 3,
+      link: '/33',
+      level: 2,
+      address: '来自深圳',
+      content: '当我跨过沉沦的一切，向着永恒开战的时候，你是我的军旗。',
+      createTime: '5天前'
+    },
+    {
+      id: '34',
+      parentId: '3',
+      uid: '9',
+      username: 'poli301',
+      avatar:
+        'https://static.juzicon.com/avatars/avatar-190919180043-XPLP.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+      likes: 34,
+      level: 4,
+      link: '/34',
+      address: '来自西安',
+      content: '不要由于别人不能成为我们所希望的人而愤怒，因为我们自己也难以成为自己所希望的人。',
+      createTime: '1天前'
+    },
+    {
+      id: '35',
+      parentId: '3',
+      uid: '10',
+      username: 'fish_eno',
+      avatar:
+        'https://static.juzicon.com/avatars/avatar-190919180320-NAQJ.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+      likes: 32,
+      level: 6,
+      link: '/35',
+      address: '来自武汉',
+      content: '世上莫名其妙走霉运的人多的是，都是一边为命运生气，一边化愤怒为力量地活着。',
+      createTime: '11小时前'
+    },
+    {
+      id: '36',
+      parentId: '3',
+      uid: '11',
+      username: '十三',
+      avatar:
+        'https://static.juzicon.com/user/avatar-f103e42d-a5c9-4837-84e3-d10fad0bcb36-210108053135-E90E.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+      likes: 21,
+      level: 4,
+      link: '/36',
+      address: '来自上海',
+      content: '这世上所有的不利情况，都是当事者能力不足造成的',
+      createTime: '10小时前'
+    },
+    {
+      id: '37',
+      parentId: '3',
+      uid: '12',
+      username: 'D.z.H****',
+      avatar:
+        'https://static.juzicon.com/avatars/avatar-190919181051-M3HK.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+      likes: 18,
+      level: 3,
+      link: '/37',
+      address: '来自广州',
+      content: ' 绝望自有绝望的力量，就像希望自有希望的无能。',
+      createTime: '9小时前'
+    },
+    {
+      id: '38',
+      parentId: '3',
+      uid: '13',
+      username: '繁星Cong2',
+      avatar:
+        'https://static.juzicon.com/user/avatar-f81b3655-03fd-485c-811b-4b5ceaca52b6-210817180051-YTO4.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+      likes: 17,
+      level: 1,
+      link: '/38',
+      address: '来自重庆',
+      content: ' 无论这个世界对你怎样，都请你一如既往的努力，勇敢，充满希望。',
+      createTime: '8小时前'
+    }
+  ]
+} as ReplyApi
 
 const page = (pageNum: number, pageSize: number, arr: any[]) => {
   var skipNum = (pageNum - 1) * pageSize
@@ -288,8 +308,10 @@ const page = (pageNum: number, pageSize: number, arr: any[]) => {
 
 //回复分页
 const replyPage = ({ parentId, pageNum, pageSize, finish }: ReplyPageParam) => {
-  let tmp = page(pageNum, pageSize, replyList)
-  console.log(parentId)
+  let tmp = {
+    total: reply.total,
+    list: page(pageNum, pageSize, reply.list)
+  }
   setTimeout(() => {
     finish(tmp)
   }, 200)
@@ -307,9 +329,9 @@ setTimeout(() => {
       address: '来自上海',
       content:
         '缘生缘灭，缘起缘落，我在看别人的故事，别人何尝不是在看我的故事?别人在演绎人生，我又何尝不是在这场戏里?谁的眼神沧桑了谁?我的眼神，只是沧桑了自己[喝酒]',
-      like: 2,
+      likes: 2,
       createTime: '1分钟前',
-      imgList: ['/static/img/program.gif', '/static/img/normal.webp']
+      contentImg: '/static/img/program.gif, /static/img/normal.webp'
     },
     {
       id: '2',
@@ -321,7 +343,7 @@ setTimeout(() => {
       link: '/2',
       address: '来自苏州',
       content: '知道在学校为什么感觉这么困吗？因为学校，是梦开始的地方。[脱单doge]',
-      like: 11,
+      likes: 11,
       createTime: '1天前',
       reply: {
         total: 2,
@@ -337,7 +359,7 @@ setTimeout(() => {
             link: '/21',
             address: '来自重庆',
             content: '说的对，所以，综上所述，上课睡觉不怪我呀💤',
-            like: 3,
+            likes: 3,
             createTime: '1分钟前'
           },
           {
@@ -352,7 +374,7 @@ setTimeout(() => {
             content:
               '回复 <span style="color: var(--u-color-success-dark-2);">@别扰我清梦*ぁ:</span> 看完打了一个哈切。。。会传染。。。[委屈]',
             address: '来自广州',
-            like: 9,
+            likes: 9,
             createTime: '1天前'
           }
         ]
@@ -369,7 +391,7 @@ setTimeout(() => {
       link: '/3',
       address: '来自北京',
       content: '人的一切痛苦，本质上都是对自己的无能的愤怒。',
-      like: 34116,
+      likes: 34116,
       createTime: '2分钟前',
       reply: {
         total: 2,
@@ -385,7 +407,7 @@ setTimeout(() => {
             link: '/31',
             address: '来自成都',
             content: '人生就像愤怒的小鸟，当你失败时，总有几只猪在笑。',
-            like: 7,
+            likes: 7,
             createTime: '1天前'
           },
           {
@@ -399,7 +421,7 @@ setTimeout(() => {
             link: '/32',
             address: '来自杭州',
             content: '深思熟虑的结果往往就是说不清楚。',
-            like: 3,
+            likes: 3,
             createTime: '2天前'
           }
         ]
@@ -417,7 +439,7 @@ setTimeout(() => {
       address: '来自杭州',
       content:
         '鱼说：我时时刻刻睁开眼睛，就是为了能让你永远在我眼中！<br>水说：我时时刻刻流淌不息，就是为了能永远把你拥抱！！<br>锅说：都快熟了，还这么贫。',
-      like: 13,
+      likes: 13,
       createTime: '2天前',
       reply: {
         total: 2,
@@ -433,7 +455,7 @@ setTimeout(() => {
             link: '/41',
             address: '来自北京',
             content: '鱼对水说，你看不到我流泪，因为我在水中。水对鱼说，我看到你悲伤，因为你在我心中。[呲牙]',
-            like: 36,
+            likes: 36,
             createTime: '1分钟前'
           },
           {
@@ -446,8 +468,8 @@ setTimeout(() => {
             level: 3,
             link: '/42',
             address: '来自杭州',
-            content: ' 约束条件变了，原来的收益，一下子都变为成本。生命如果架在锅上，成本自然也就很高了[tv_微笑]',
-            like: 16,
+            content: '约束条件变了，原来的收益，一下子都变为成本。生命如果架在锅上，成本自然也就很高了[tv_微笑]',
+            likes: 16,
             createTime: '1天前'
           }
         ]

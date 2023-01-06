@@ -10,7 +10,7 @@
         <slot name="userInfo"></slot>
       </template>
     </UserInfo>
-    <div class="content">
+    <div class="comment-main">
       <div class="user-box">
         <UserInfo :is-user-info="isUserInfo" :visible="state.visible2">
           <a :href="data.link" target="_blank" style="display: block" @mouseenter="getInfo()" @mouseleave="leave">
@@ -33,12 +33,12 @@
         <u-fold unfold>
           <div v-html="content"></div>
           <div class="imgbox" style="display: flex">
-            <template v-for="(url, index) in data.imgList" :key="index">
+            <template v-for="(url, index) in imgList" :key="index">
               <ElImage
                 :src="url"
                 style="height: 72px; padding: 8px 4px"
                 lazy
-                :preview-src-list="data.imgList"
+                :preview-src-list="imgList"
                 :initial-index="index"
               ></ElImage>
             </template>
@@ -72,7 +72,7 @@
               ></path>
             </svg>
           </u-icon>
-          <span v-if="data.like != 0">{{ data.like }}</span>
+          <span v-if="data.likes != 0">{{ data.likes }}</span>
         </div>
         <!-- 回复 -->
         <div ref="btnRef" class="item" :class="{ active: state.active }" @click="reply">
@@ -122,7 +122,7 @@ import { ElAvatar } from '~/element'
 import { useEmojiParse } from '~/hooks'
 import UserInfo from './user-info.vue'
 import Operation from './operation.vue'
-import { str, ElImage } from '~/index'
+import { str, ElImage, isEmpty } from '~/index'
 
 interface Props {
   small?: boolean
@@ -141,6 +141,12 @@ const state = reactive({
 
 const commentRef = ref<CommentBoxApi>()
 const btnRef = ref<HTMLDivElement>()
+
+const imgList = computed(() => {
+  let temp = props.data.contentImg
+  if (isEmpty(temp)) return []
+  return temp?.split(', ')
+})
 
 const { allEmoji } = inject(InjectionEmojiApi) as EmojiApi
 const { like, user, isUserInfo, getUser } = inject(InjectionContentBox) as ContentBoxParam

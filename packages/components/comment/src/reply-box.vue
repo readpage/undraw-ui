@@ -68,9 +68,10 @@ const data = computed(() => {
     list: [] as any[]
   }
   if (props.data) {
+    let length = props.data.list.length
     data = {
       total: props.data.total,
-      length: props.data.list.length,
+      length: length,
       list: props.data.list
     }
   }
@@ -93,7 +94,7 @@ const replyFinish = (val: any) => {
   comments.value.forEach(e => {
     if (e.id == props.parentId) {
       if (e.reply) {
-        e.reply.list = val
+        e.reply = val
       }
     }
   })

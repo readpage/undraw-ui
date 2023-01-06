@@ -1,13 +1,6 @@
 import { InjectionKey, Ref } from 'vue'
 import { EmojiApi } from '../emoji/interface'
 
-export interface CommentSubmitParam {
-  content: string
-  parentId: string | null
-  imgList: string[]
-  finish: () => void
-}
-
 export interface CommentApi {
   id: string | number
   parentId: string | number | null
@@ -18,9 +11,9 @@ export interface CommentApi {
   link: string
   address: string
   content: string
-  like: number
+  likes: number
   createTime: string
-  imgList?: string[]
+  contentImg?: string
   reply?: ReplyApi | null
 }
 
@@ -42,29 +35,72 @@ export interface ConfigApi {
   comments: CommentApi[]
 }
 
+export interface CommentSubmitParam {
+  content: string
+  parentId: string | null
+  files: any[]
+  finish: (comment: CommentApi) => void
+}
+
+export interface CommentSubmitParam2 {
+  content: string
+  parentId: string | null
+  files: any[]
+  finish: () => void
+}
+
 export interface ReplyPageParam {
   parentId: string | number
   pageNum: number
   pageSize: number
-  finish: (comments: CommentApi[]) => void
+  finish: (comments: ReplyApi) => void
 }
 
 export interface ReplyParam {
-  replyPage: (parentId: string, pageNum: number, pageSize: number, finish: (comments: CommentApi[]) => void) => void
+  /**
+   * 回复分页
+   */
+  replyPage: (parentId: string, pageNum: number, pageSize: number, finish: (comments: ReplyApi) => void) => void
+  /**
+   * 是否启动分页功能
+   */
   page: boolean
+  /**
+   * 分页: 每页显示的个数
+   */
   showSize: number
+  /**
+   * 评论数据(不包含回复数据)
+   */
   comments: Ref<CommentApi[]>
 }
 
 export interface ContentBoxParam {
+  /**
+   * 是否启动hover信息信息栏
+   */
   isUserInfo: boolean
+  /**
+   * 用户数据
+   */
   user: Ref<UserApi>
+  /**
+   * 点赞方法
+   */
   like: (id: string) => void
   /**
    * 返回用户id，show回调是否显示用户信息卡片
    */
   getUser: (uid: string, show: Function) => void
+  /**
+   * 举报评论方法
+   * finish: 取消禁用举报按钮
+   */
   report: (id: string, finish: () => void) => void
+  /**
+   * 删除评论方法
+   * finish: 取消禁用删除按钮
+   */
   remove: (id: string, parentId: string | null, finish: () => void) => void
 }
 

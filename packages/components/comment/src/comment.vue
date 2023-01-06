@@ -28,13 +28,13 @@
 </template>
 
 <script setup lang="ts">
-import { provide, toRef, toRefs, useSlots } from 'vue'
+import { provide, toRefs, useSlots } from 'vue'
 import CommentBox from './comment-box.vue'
 import CommentList from './comment-list.vue'
 import { ElAvatar } from '~/element'
 import {
   CommentApi,
-  CommentSubmitParam,
+  CommentSubmitParam2,
   ConfigApi,
   ContentBoxParam,
   InjectionCommentFun,
@@ -42,7 +42,8 @@ import {
   InjectionReply,
   ReplyParam,
   ReplyPageParam,
-  InjectionEmojiApi
+  InjectionEmojiApi,
+  CommentSubmitParam
 } from '~/index'
 
 defineOptions({
@@ -66,13 +67,7 @@ const slots = useSlots()
 const { user, comments } = toRefs(props.config)
 
 const emit = defineEmits<{
-  (
-    e: 'submit',
-    content: string,
-    parentId: string | null,
-    imgList: string[],
-    finish: (comment: CommentApi) => void
-  ): void
+  (e: 'submit', { content, parentId, files, finish }: CommentSubmitParam): void
   (e: 'like', id: string, finish: () => void): void
   (e: 'replyPage', { parentId, pageNum, pageSize, finish }: ReplyPageParam): void
   (e: 'getUser', id: string, show: Function): void
@@ -80,8 +75,12 @@ const emit = defineEmits<{
   (e: 'remove', id: string, finish: () => void): void
 }>()
 
-const submit = (obj: CommentSubmitParam) => {
-  emit('submit', obj.content, obj.parentId, obj.imgList, (comment: CommentApi) => {
+/**
+ * 提交评论
+ */
+const submit = (obj: CommentSubmitParam2) => {
+  let { content, parentId, files } = obj
+  const finish = (comment: CommentApi) => {
     // 添加内容回调处理,添加到评论列表
     obj.finish()
     if (obj.parentId) {
@@ -101,10 +100,14 @@ const submit = (obj: CommentSubmitParam) => {
     } else {
       comments.value.unshift(comment)
     }
-  })
+  }
+  emit('submit', { content, parentId, files, finish })
 }
 
-// contentBox点赞事件提供
+/**
+ * contentBox点赞事件提供
+ * @param id
+ */
 const like = (id: string) => {
   // 点赞评论数组处理
   const editLike = (id: string, count: number) => {
@@ -116,7 +119,7 @@ const like = (id: string) => {
         tar = v
       }
       if (tar) {
-        tar.like += count
+        tar.likes += count
       }
     })
   }
@@ -138,6 +141,9 @@ const like = (id: string) => {
   })
 }
 
+/**
+ * replyBox.vue需要用到参数或方法
+ */
 const replyBox: ReplyParam = {
   replyPage: (parentId, pageNum, pageSize, finish) => {
     emit('replyPage', { parentId, pageNum, pageSize, finish })
@@ -147,6 +153,9 @@ const replyBox: ReplyParam = {
   comments: comments
 }
 
+/**
+ * contentBox.vue需要用到参数或方法
+ */
 const contentBox: ContentBoxParam = {
   user: user,
   like: like,
@@ -155,8 +164,8 @@ const contentBox: ContentBoxParam = {
   report: (id, close) => emit('report', id, close),
   remove: (id, parentId, close) =>
     emit('remove', id, () => {
-      // 删除操作回调处理
       close()
+      // 删除评论数据操作
       if (parentId) {
         let comment = comments.value.find(item => item.id == parentId)
         let reply = comment?.reply

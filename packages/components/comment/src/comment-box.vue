@@ -38,7 +38,7 @@
 import { isEmpty, isNull, isImage, cloneDeep } from '~/util'
 import { ClickOutside as vClickOutside } from 'element-plus'
 import { inject, nextTick, reactive, ref } from 'vue'
-import { CommentSubmitParam, InjectionCommentFun, InjectionEmojiApi, EditorInstance, UToast } from '~/index'
+import { CommentSubmitParam2, InjectionCommentFun, InjectionEmojiApi, EditorInstance, UToast } from '~/index'
 import { ElButton } from '~/element'
 
 export interface CommentBoxApi {
@@ -61,6 +61,7 @@ const editorRef = ref<EditorInstance>()
 const popperRef = ref()
 const inputRef = ref<HTMLInputElement>()
 const imgList = ref<string[]>([])
+const files2 = ref<any[]>([])
 const state = reactive({
   imgLength: 0
 })
@@ -73,7 +74,7 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
-const submit = inject(InjectionCommentFun) as (obj: CommentSubmitParam) => void
+const submit = inject(InjectionCommentFun) as (obj: CommentSubmitParam2) => void
 const emoji = inject(InjectionEmojiApi)
 
 // 提交评论的数据
@@ -83,7 +84,7 @@ const onSubmit = () => {
       ? `回复 <span style="color: var(--u-color-success-dark-2);">@${props.replay}:</span> ${content.value}`
       : content.value,
     parentId: isNull(props.parentId, null),
-    imgList: cloneDeep(imgList.value),
+    files: files2.value,
     finish: () => {
       // 清空评论框内容
       ;(editorRef.value as any).clear()
@@ -135,12 +136,16 @@ function createObjectURL(blob: any) {
 
 const change = (val: Event) => {
   imgList.value.length = 0 //清空上一次显示图片效果
-  const files = inputRef.value?.files //获取选中的文件对象
+  files2.value.length = 0
+
+  console.log(val)
+  const files = inputRef.value?.files as any //获取选中的文件对象
   state.imgLength = isNull(files?.length, 0)
   if (files) {
     for (let i = 0; i < files.length; i++) {
       let fileName = files[i].name //获取当-前文件的文件名
       let url = createObjectURL(files[i]) //获取当前文件对象的URL
+      files2.value.push(files[i])
       //判断文件是否是图片类型
       if (isImage(fileName)) {
         imgList.value.push(url)
