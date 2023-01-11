@@ -38,8 +38,8 @@ export default defineConfig({
     lib: {
       entry: resolve(input, 'index.ts'),
       name: 'UndrawUi',
-      fileName: 'index',
-      formats: ['es', 'umd']
+      fileName: () => 'index.js',
+      formats: ['es']
     },
     rollupOptions: {
       output: {
@@ -47,7 +47,6 @@ export default defineConfig({
         globals: {
           vue: 'Vue',
           'element-plus': 'ElementPlus',
-          UndrawUi: 'UndrawUi["default"]'
         }
       },
       // 打包过滤掉第三方库

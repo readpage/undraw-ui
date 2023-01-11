@@ -1,7 +1,7 @@
 {
   "name": "undraw-ui",
   "private": false,
-  "version": "0.7.7",
+  "version": "0.8.0",
   "author": "readpage <f1dao@qq.com>",
   "repository": {
     "type": "git",
@@ -17,15 +17,8 @@
   ],
   "homepage": "https://undraw.gitee.io/undraw-ui/",
   "license": "MIT",
-  "main": "./dist/index.umd.js",
-	"module": "./dist/index.mjs",
-	"exports": {
-	  ".": {
-	    "import": "./dist/index.mjs",
-	    "require": "./dist/index.umd.js"
-	  }
-	},
-  "style": "dist/style.css",
+  "main": "./dist/index.js",
+  "style": "./dist/style.css",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
