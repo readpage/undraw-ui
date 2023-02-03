@@ -5,16 +5,20 @@ export interface CommentApi {
   id: string | number
   parentId: string | number | null
   uid: string | number
-  username: string
-  avatar: string
-  level: number
-  link: string
   address: string
   content: string
   likes: number
-  createTime: string
   contentImg?: string
+  createTime: string
+  user: CommentUserApi
   reply?: ReplyApi | null
+}
+
+export interface CommentUserApi {
+  username: string
+  avatar: string
+  level: number
+  homeLink: string
 }
 
 export interface UserApi {

@@ -1,8 +1,8 @@
 <template>
   <div class="comment" :class="{ small: small }">
     <UserInfo :is-user-info="isUserInfo" :visible="state.visible">
-      <a :href="data.link" target="_blank" style="display: block" @mouseenter="getInfo(1)" @mouseleave="leave">
-        <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.avatar">
+      <a :href="data.user.homeLink" target="_blank" style="display: block" @mouseenter="getInfo(1)" @mouseleave="leave">
+        <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.user.avatar">
           <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
         </el-avatar>
       </a>
@@ -13,11 +13,17 @@
     <div class="comment-main">
       <div class="user-box">
         <UserInfo :is-user-info="isUserInfo" :visible="state.visible2">
-          <a :href="data.link" target="_blank" style="display: block" @mouseenter="getInfo()" @mouseleave="leave">
+          <a
+            :href="data.user.homeLink"
+            target="_blank"
+            style="display: block"
+            @mouseenter="getInfo()"
+            @mouseleave="leave"
+          >
             <div class="username">
-              <span class="name" style="max-width: 10em">{{ data.username }}</span>
+              <span class="name" style="max-width: 10em">{{ data.user.username }}</span>
               <span blank="true" class="rank">
-                <u-icon size="24" v-html="level(data.level)"></u-icon>
+                <u-icon size="24" v-html="level(data.user.level)"></u-icon>
               </span>
             </div>
           </a>
@@ -99,8 +105,8 @@
         <CommentBox
           ref="commentRef"
           :parent-id="parentId"
-          :placeholder="`回复 @${data.username}...`"
-          :replay="data.parentId ? data.username : undefined"
+          :placeholder="`回复 @${data.user.username}...`"
+          :replay="data.parentId ? data.user.username : undefined"
           content-btn="发布"
           style="margin-top: 12px"
           @hide="hide"
