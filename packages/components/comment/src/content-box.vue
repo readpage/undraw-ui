@@ -1,7 +1,7 @@
 <template>
   <div class="comment" :class="{ small: small }">
-    <UserInfo :is-user-info="isUserInfo" :visible="state.visible">
-      <a :href="data.user.homeLink" target="_blank" style="display: block" @mouseenter="getInfo(1)" @mouseleave="leave">
+    <UserInfo :is-user-info="isUserInfo" :uid="str(data.uid)">
+      <a :href="data.user.homeLink" target="_blank" class="no-underline" style="display: block">
         <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.user.avatar">
           <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
         </el-avatar>
@@ -12,14 +12,8 @@
     </UserInfo>
     <div class="comment-main">
       <div class="user-box">
-        <UserInfo :is-user-info="isUserInfo" :visible="state.visible2">
-          <a
-            :href="data.user.homeLink"
-            target="_blank"
-            style="display: block"
-            @mouseenter="getInfo()"
-            @mouseleave="leave"
-          >
+        <UserInfo :is-user-info="isUserInfo" :uid="str(data.uid)">
+          <a :href="data.user.homeLink" target="_blank" class="no-underline" style="display: block">
             <div class="username">
               <span class="name" style="max-width: 10em">{{ data.user.username }}</span>
               <span blank="true" class="rank">
@@ -139,10 +133,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const state = reactive({
-  active: false,
-  // 更多个人信息显示状态
-  visible: false,
-  visible2: false
+  active: false
 })
 
 const commentRef = ref<CommentBoxApi>()
@@ -155,7 +146,7 @@ const imgList = computed(() => {
 })
 
 const { allEmoji } = inject(InjectionEmojiApi) as EmojiApi
-const { like, user, isUserInfo, getUser } = inject(InjectionContentBox) as ContentBoxParam
+const { like, user, isUserInfo } = inject(InjectionContentBox) as ContentBoxParam
 
 const level = (v: number) => {
   switch (v) {
@@ -191,36 +182,6 @@ function hide(event: Event) {
   if (!btnRef.value?.contains(target)) {
     state.active = false
   }
-}
-
-let hoverTime = 300
-let timer: any = null
-/**
- * 获取用户信息
- */
-const getInfo = (val?: number) => {
-  clearTimeout(timer)
-  timer = setTimeout(() => {
-    getUser(str(props.data.uid), () => {
-      if (timer != null) {
-        if (val == 1) {
-          state.visible = true
-        } else {
-          state.visible2 = true
-        }
-      }
-    })
-  }, hoverTime)
-}
-
-/**
- * user-info卡片hover离开事件
- */
-const leave = () => {
-  clearTimeout(timer)
-  timer = null
-  state.visible = false
-  state.visible2 = false
 }
 
 const content = computed(() => useEmojiParse(allEmoji, props.data.content))

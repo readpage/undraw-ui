@@ -100,7 +100,7 @@ const getUser = (uid: string, show: Function) => {
   setTimeout(() => {
     userInfo.value = {
       id: String(uid),
-      username: '落🤍尘',
+      username: '落🤍尘' + uid,
       avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
       level: 6,
       like: 36011,

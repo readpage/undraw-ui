@@ -10,3 +10,9 @@ export function toFormData(object: any) {
   })
   return formData
 }
+
+export function removeEmptyField(obj: any) {
+  return Object.keys(obj)
+    .filter(key => obj[key] !== null && obj[key] !== undefined)
+    .reduce((acc, key) => ({ ...acc, [key]: obj[key] }), {})
+}
