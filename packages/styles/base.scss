@@ -1,6 +1,6 @@
-a {
-  color: inherit;
-  text-decoration: inherit;
+.no-underline {
+  -webkit-text-decoration-line: none;
+  text-decoration-line: none;
 }
 
 .underline {

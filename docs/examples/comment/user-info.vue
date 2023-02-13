@@ -53,7 +53,7 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { UToast, ConfigApi, CommentApi, useLevel, ElAvatar, ElButton } from 'undraw-ui'
+import { UToast, ConfigApi, CommentApi, useLevel, ElAvatar, ElButton, CommentSubmitParam } from 'undraw-ui'
 // 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases
 // static文件放在public下,引入emoji.ts文件可以移动到自定义位置
 import emoji from './emoji'
@@ -88,23 +88,42 @@ const getUser = (id: number, show: Function) => {
   }, 500)
 }
 
+//获取文件url
+function createObjectURL(blob: any) {
+  if (window.URL) {
+    return window.URL.createObjectURL(blob)
+  } else if (window.webkitURL) {
+    return window.webkitURL.createObjectURL(blob)
+  } else {
+    return ''
+  }
+}
+
 let temp_id = 100
 // 提交评论事件
-// 提交评论事件
-const submit = (content: string, parentId: string, finish: (comment: CommentApi) => void) => {
-  console.log(content, parentId)
+const submit = ({ content, parentId, files, finish }: CommentSubmitParam) => {
+  console.log('提交评论: ' + content, parentId, files)
+
+  /**
+   * 上传文件后端返回图片访问地址，格式以', '为分割; 如:  '/static/img/program.gif, /static/img/normal.webp'
+   */
+  let contentImg = files.map(e => createObjectURL(e)).join(', ')
+
   let comment: CommentApi = {
     id: String((temp_id += 1)),
     parentId: parentId,
     uid: config.user.id,
-    username: config.user.username,
-    avatar: config.user.avatar,
-    level: 6,
-    link: `/${(temp_id += 1)}`,
     address: '来自江苏',
     content: content,
-    like: 0,
+    likes: 0,
     createTime: '1分钟前',
+    contentImg: contentImg,
+    user: {
+      username: config.user.username,
+      avatar: config.user.avatar,
+      level: 6,
+      homeLink: `/${(temp_id += 1)}`
+    },
     reply: null
   }
   setTimeout(() => {
@@ -112,7 +131,6 @@ const submit = (content: string, parentId: string, finish: (comment: CommentApi)
     UToast({ message: '评论成功!', type: 'info' })
   }, 200)
 }
-
 // 删除评论
 const remove = (id: number, finish: () => void) => {
   setTimeout(() => {
@@ -143,16 +161,18 @@ config.comments = [
     id: '4',
     parentId: null,
     uid: '14',
-    username: 'Blizzard1',
-    avatar:
-      'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-    level: 3,
-    link: '/4',
     address: '来自杭州',
     content:
       '鱼说：我时时刻刻睁开眼睛，就是为了能让你永远在我眼中！<br>水说：我时时刻刻流淌不息，就是为了能永远把你拥抱！！<br>锅说：都快熟了，还这么贫。',
-    like: 13,
+    likes: 13,
     createTime: '2天前',
+    user: {
+      username: 'Blizzard1',
+      avatar:
+        'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+      level: 3,
+      homeLink: '/4'
+    },
     reply: {
       total: 2,
       list: [
@@ -160,29 +180,33 @@ config.comments = [
           id: '41',
           parentId: '4',
           uid: '15',
-          username: '过往~',
-          avatar:
-            'https://static.juzicon.com/avatars/avatar-20210308112705-zqf0.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          level: 4,
-          link: '/41',
           address: '来自北京',
           content: '鱼对水说，你看不到我流泪，因为我在水中。水对鱼说，我看到你悲伤，因为你在我心中。[呲牙]',
-          like: 36,
-          createTime: '1分钟前'
+          likes: 36,
+          createTime: '1分钟前',
+          user: {
+            username: '过往~',
+            avatar:
+              'https://static.juzicon.com/avatars/avatar-20210308112705-zqf0.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
+            level: 4,
+            homeLink: '/41'
+          }
         },
         {
           id: '42',
           parentId: '4',
           uid: '16',
-          username: 'Blizzard1',
-          avatar:
-            'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-          level: 3,
-          link: '/42',
           address: '来自杭州',
-          content: ' 约束条件变了，原来的收益，一下子都变为成本。生命如果架在锅上，成本自然也就很高了[tv_微笑]',
-          like: 16,
-          createTime: '1天前'
+          content: '约束条件变了，原来的收益，一下子都变为成本。生命如果架在锅上，成本自然也就很高了[tv_微笑]',
+          likes: 16,
+          createTime: '1天前',
+          user: {
+            username: 'Blizzard1',
+            avatar:
+              'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+            level: 3,
+            homeLink: '/42'
+          }
         }
       ]
     }

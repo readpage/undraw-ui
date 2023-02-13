@@ -41,6 +41,8 @@
 </template>
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, toRefs, watch } from 'vue'
+import { isEmpty } from '~/util'
+import UToast from '../toast'
 
 defineOptions({
   name: 'UEditor'
@@ -147,7 +149,11 @@ const keyDown = (e: KeyboardEvent) => {
   if (e.ctrlKey && e.key == 'Enter') {
     //用户点击了ctrl+enter触发
     // console.log('ctrl+enter')
-    emit('submit')
+    if (isEmpty(props.modelValue.replace(/&nbsp;|<br>| /g, ''))) {
+      UToast({ message: '内容不能为空', type: 'info' })
+    } else {
+      emit('submit')
+    }
   } else {
     //用户点击了enter触发
     // console.log('enter')
