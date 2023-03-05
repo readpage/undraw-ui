@@ -1,67 +1,86 @@
-/* 
-  防抖：在第一次触发事件时，不立即执行函数，而是给出一个限定值，比如200ms，然后：
-    如果在200ms内没有再次触发事件，那么执行函数
-    如果在200ms内再次触发函数，那么当前的计时取消，重新开始计时
-    应用场景：
-      点击按钮提交表单
-      输入框中频繁的输入内容，搜索或者提交信息
-      频繁的点击按钮，触发某个事件
-      监听浏览器滚定事件，完成某些特定操作
-      用户缩放浏览器的resize 事件
-  
-  节流：
-      如果短时间内大量触发同一事件，那么在函数执行一次之后，
-      该函数在指定的时间期限内不在工作，直至过了这段时间才重新生效
-    应用场景：
-      监听页面的滚定事件
-      鼠标移动事件
-      搜索框input事件，要支持实时搜索可以使用节流方案
-      用户频繁点击按钮操作
-      游戏中的一些设计
-    效果：在某个时间内(比如500ms)，某个函数只能被触发一次
-*/
-
-/* 防抖和节流的作用：都是为了避免一段代码高频率无意义的触发，减少浏览器或者服务器的负担
-防抖和节流的区别：
-防抖：防止代码多频次执行造成页面抖动，在一定时间内，代码多次触发会销毁之前的执行过程
-节流：指定时间持续触发某个事件时，该事件只会执行首次触发事件，也就是说指定时间内只会触发一次 */
+/**
+ * 函数节流（throttle）与 函数防抖（debounce）都是为了限制函数的执行频次，
+ * 以优化函数触发频率过高导致的响应速度跟不上触发频率，出现延迟，假死或卡顿的现象。
+ *
+ * 防抖的应用场景很多:
+ * 输入框中频繁的输入内容，搜索或者提交信息
+ * 频繁的点击按钮，触发某个事件
+ * 监听浏览器滚动事件，完成某些特定操作
+ * 用户缩放浏览器的resize事件
+ */
 
 /**
  * 防抖
- * 当触发一个函数时，并不会立即执行这个函数，而是会延迟（通过定时器来延迟函数的执行）
- * 如果在延迟时间内，有重新触发函数，那么取消上一次的函数执行（取消定时器）；
- * 如果在延迟时间内，没有重新触发函数，那么这个函数就正常执行（执行传入的函数）
- * debounce(() => console.log('fn 防抖执行了'), 1000)
- * @param fn
- * @param delay
+ * 在持续触发事件中，无论进行时间多长，只有一定时间内没有再触发事件，事件才会执行一次
+ * 如果设定的时间到来之前，又一次触发了事件，就重新开始延时
+ * @param fn 执行的函数
+ * @param delay 延迟执行时间(s)
+ * @param immedidate 是否立即执行
  * @returns
  */
-const debounce = (fn: (...args: any) => void, delay = 200) => {
+
+const debounce = (fn: (...args: any) => void, delay = 200, immedidate = false) => {
+  let isInvoke = false // 是否已经执行了一次
   let timer: any = null
-  return (...args: any) => {
-    if (timer) clearTimeout(timer)
-    timer = setTimeout(() => {
-      fn.apply(this, args)
-    }, delay)
+  const _debounce = (...args: any) => {
+    return new Promise((resolve, reject) => {
+      // 清除上一次的执行
+      if (timer) clearTimeout(timer)
+
+      // 判断是否需要立即执行
+      if (immedidate && !isInvoke) {
+        const result = fn.apply(this, args)
+        resolve(result)
+        isInvoke = true
+      } else {
+        // 延迟fn函数的执行
+        timer = setTimeout(() => {
+          const result = fn.apply(this, args)
+          resolve(result)
+          isInvoke = false
+          timer = null
+        }, delay)
+      }
+    })
   }
+  _debounce.cancel = () => {
+    if (timer) clearTimeout(timer)
+    isInvoke = false
+  }
+
+  return _debounce
 }
 
 /**
  * 节流
- * 指定时间持续触发某个事件时，该事件只会执行首次触发事件，也就是说指定时间内只会触发一次
- * @param fn
- * @param duration
+ * 当持续触发事件时，保证一定时间段内只调用一次事件处理函数
+ * @param fn 执行的函数
+ * @param interval 间隔时间(s)
  * @returns
  */
-const throttle = (fn: (...args: any) => void, duration = 500) => {
-  let timer: any = null
-  return (...args: any) => {
-    if (timer) return
-    timer = setTimeout(() => {
-      fn.apply(this, args)
-      timer = null
-    }, duration)
+const throttle = (fn: (...args: any) => void, interval = 500) => {
+  let lastTime = 0
+
+  const _throttle = (...args: any) => {
+    return new Promise((resolve, reject) => {
+      // 获取当前事件触发的时间
+      const nowTime = new Date().getTime()
+
+      // 使用当前触发的时间和之前的时间间隔以及上一次开始的时间，
+      // 计算出还剩余多长事件需要去触发函数
+      if (nowTime - lastTime >= interval) {
+        // 触发函数
+        const result = fn.apply(this, args)
+        resolve(result)
+        // 保留上一次触发的时间
+        lastTime = nowTime
+      }
+    })
   }
+  _throttle.cancel = () => {
+    lastTime = new Date().getTime()
+  }
+  return _throttle
 }
 
 export { debounce, throttle }
