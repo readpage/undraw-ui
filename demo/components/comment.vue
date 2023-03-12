@@ -13,42 +13,54 @@
       @report="report"
     >
       <!-- <template #list-title>全部评论</template> -->
-      <template #userInfo>
-        <div class="user-card">
-          <div class="user-avatar">
-            <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="userInfo.avatar">
-              <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
-            </el-avatar>
-          </div>
-          <div class="user-content">
-            <div class="user-info">
-              <a href="" class="username" target="_blank">
-                <span class="name" style="max-width: 10em">{{ userInfo.username }}</span>
-                <span blank="true" class="rank">
-                  <u-icon size="24" v-html="useLevel(userInfo.level)"></u-icon>
-                </span>
-              </a>
+      <template #info>
+        <el-skeleton :loading="loading" animated>
+          <template #template>
+            <el-skeleton-item variant="image" style="width: 50px; height: 50px; margin-bottom: 10px" />
+            <div>
+              <el-skeleton-item variant="h3" style="width: 50%" />
+              <el-skeleton-item variant="text" style="margin-right: 16px" />
+              <el-skeleton-item variant="text" style="width: 30%" />
             </div>
-            <div class="social-info">
-              <a href="" class="attention">
-                <span>{{ userInfo.attention }}</span>
-                <span>关注</span>
-              </a>
-              <a href="" class="follower">
-                <span>{{ userInfo.follower }}</span>
-                <span>粉丝</span>
-              </a>
-              <a href="" class="like">
-                <span>{{ userInfo.like }}</span>
-                <span>获赞</span>
-              </a>
+          </template>
+          <template #default>
+            <div class="user-card">
+              <div class="user-avatar">
+                <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="userInfo.avatar">
+                  <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+                </el-avatar>
+              </div>
+              <div class="user-content">
+                <div class="user-info">
+                  <a href="" class="username" target="_blank">
+                    <span class="name" style="max-width: 10em">{{ userInfo.username }}</span>
+                    <span blank="true" class="rank">
+                      <u-icon size="24" v-html="useLevel(userInfo.level)"></u-icon>
+                    </span>
+                  </a>
+                </div>
+                <div class="social-info">
+                  <a href="" class="attention">
+                    <span>{{ userInfo.attention }}</span>
+                    <span>关注</span>
+                  </a>
+                  <a href="" class="follower">
+                    <span>{{ userInfo.follower }}</span>
+                    <span>粉丝</span>
+                  </a>
+                  <a href="" class="like">
+                    <span>{{ userInfo.like }}</span>
+                    <span>获赞</span>
+                  </a>
+                </div>
+                <div class="card-btn">
+                  <el-button type="primary">关注</el-button>
+                  <el-button>发消息</el-button>
+                </div>
+              </div>
             </div>
-            <div class="card-btn">
-              <el-button type="primary">关注</el-button>
-              <el-button>发消息</el-button>
-            </div>
-          </div>
-        </div>
+          </template>
+        </el-skeleton>
       </template>
     </u-comment>
   </div>
@@ -61,6 +73,7 @@ import { UToast, ConfigApi, CommentApi, useLevel, ReplyPageParam, ReplyApi, Comm
 // static文件放在public下,引入emoji.ts文件可以移动到自定义位置
 import emoji from '@/assets/emoji'
 import { ElAvatar, ElButton } from '~/element'
+import { userInfoApi } from '@/type/user-info'
 
 defineOptions({
   name: 'comment'
@@ -92,10 +105,13 @@ setTimeout(() => {
   config.user.likeIds = [2, 3]
 }, 5000)
 
-const userInfo = ref({} as any)
+const userInfo = ref({} as userInfoApi)
+// 用户信息是否加载
+const loading = ref(true)
 
 // 请求获取用户详细信息
 const getUser = (uid: string, show: Function) => {
+  loading.value = true
   console.log('获取用户信息: ' + uid)
   setTimeout(() => {
     userInfo.value = {
@@ -107,8 +123,8 @@ const getUser = (uid: string, show: Function) => {
       attention: 15,
       follower: 6878
     }
-    show()
-  }, 0)
+    loading.value = false
+  }, 200)
 }
 
 //获取文件url

@@ -10,7 +10,7 @@
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
         </div>
-        <CommentBox placeholder="输入评论（Enter换行，Ctrl + Enter发送）" content-btn="发表评论" />
+        <InputBox placeholder="输入评论（Enter换行，Ctrl + Enter发送）" content-btn="发表评论" />
       </div>
     </div>
     <!-- <div class="hot-list"></div> -->
@@ -18,18 +18,15 @@
       <slot name="list-title">
         <div class="title">全部评论</div>
       </slot>
-      <CommentList :data="comments">
-        <template #userInfo>
-          <slot name="userInfo"></slot>
-        </template>
-      </CommentList>
+      <CommentList :data="comments"></CommentList>
     </div>
+    <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
 import { provide, toRefs, useSlots } from 'vue'
-import CommentBox from './comment-box.vue'
+import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
 import { ElAvatar } from '~/element'
 import {
@@ -45,6 +42,7 @@ import {
   InjectionEmojiApi,
   CommentSubmitParam
 } from '~/index'
+import { InjectSlots } from '../key'
 
 defineOptions({
   name: 'UComment'
@@ -159,7 +157,7 @@ const replyBox: ReplyParam = {
 const contentBox: ContentBoxParam = {
   user: user,
   like: like,
-  isUserInfo: slots.userInfo != undefined,
+  isUserInfo: slots.info != undefined,
   getUser: (uid, show) => emit('getUser', uid, show),
   report: (id, close) => emit('report', id, close),
   remove: (id, parentId, close) =>
@@ -189,6 +187,8 @@ provide(InjectionCommentFun, submit)
 provide(InjectionEmojiApi, props.config.emoji)
 provide(InjectionReply, replyBox)
 provide(InjectionContentBox, contentBox)
+// 工具卡槽
+provide(InjectSlots, useSlots())
 </script>
 
 <style lang="scss" scoped>

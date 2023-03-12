@@ -35,13 +35,21 @@
 </template>
 
 <script setup lang="ts">
-import { isEmpty, isNull, isImage, cloneDeep } from '~/util'
+import { isEmpty, isNull, isImage } from '~/util'
 import { ClickOutside as vClickOutside } from 'element-plus'
 import { inject, nextTick, reactive, ref } from 'vue'
-import { CommentSubmitParam2, InjectionCommentFun, InjectionEmojiApi, EditorInstance, UToast } from '~/index'
+import {
+  CommentSubmitParam2,
+  InjectionCommentFun,
+  InjectionEmojiApi,
+  EditorInstance,
+  UToast,
+  UEmoji,
+  UEditor
+} from '~/index'
 import { ElButton } from '~/element'
 
-export interface CommentBoxApi {
+export interface InputBoxApi {
   focus(): void
 }
 

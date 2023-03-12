@@ -1,4 +1,5 @@
 export * from './comment'
+export * from './comment/item'
 export * from './dialog'
 export * from './divider'
 export * from './editor'

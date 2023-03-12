@@ -1,11 +1,13 @@
 <template>
   <div v-if="data.length > 0" class="reply-box">
     <div class="reply-list">
-      <ContentBox v-for="(reply, index) in data.list" :key="index" :parent-id="parentId" :data="reply" small>
-        <template #userInfo>
-          <slot name="userInfo"></slot>
-        </template>
-      </ContentBox>
+      <ContentBox
+        v-for="(reply, index) in data.list"
+        :key="index"
+        :parent-id="parentId"
+        :data="reply"
+        small
+      ></ContentBox>
       <div v-if="data.length > showSize" class="fetch-more">
         <span v-if="state.loading">加载中...</span>
         <div v-else>

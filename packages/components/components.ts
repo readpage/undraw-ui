@@ -13,9 +13,11 @@ import Search from './search'
 import Chat from './chat'
 import Emoji from './emoji'
 import Counter from './Counter'
+import CommentItem from './comment/item'
 
 export default [
   Comment,
+  CommentItem,
   Dialog,
   Divider,
   Editor,
