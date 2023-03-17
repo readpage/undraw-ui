@@ -94,13 +94,23 @@ const onSubmit = () => {
     parentId: isNull(props.parentId, null),
     files: files2.value,
     finish: () => {
-      // 清空评论框内容
-      ;(editorRef.value as any).clear()
-      imgList.value.length = 0
+      //清理提交后的数据
+      clearData()
       // 关闭评论框事件
       emit('close')
     }
   })
+}
+
+//清理提交后输入框和图片列表数据
+const clearData = () => {
+  // 清空评论框内容
+  ;(editorRef.value as any).clear()
+  imgList.value.length = 0
+  //清空图片列表
+  files2.value = []
+  //提交按钮禁用
+  disabled.value = true
 }
 
 // 点击评论框外关闭操作栏和失去评论框焦点
