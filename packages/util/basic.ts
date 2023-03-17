@@ -23,3 +23,14 @@ export function isImage(filePath: string) {
   let suffix = filePath.substring(index + 1)
   return type.indexOf(suffix.toLowerCase()) != -1
 }
+
+//获取文件url
+export function createObjectURL(blob: any) {
+  if (window.URL) {
+    return window.URL.createObjectURL(blob)
+  } else if (window.webkitURL) {
+    return window.webkitURL.createObjectURL(blob)
+  } else {
+    return ''
+  }
+}

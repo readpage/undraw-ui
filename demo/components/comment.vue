@@ -1,20 +1,17 @@
 <template>
-  <div class="comment-view">
+  <u-comment-scroll style="width: 820px; margin-left: 2rem" :disable="disable" @more="more">
     <u-comment
       :config="config"
-      :show-size="2"
-      page
-      style="width: 820px; margin-left: 2rem"
       @submit="submit"
       @like="like"
       @reply-page="replyPage"
-      @get-user="getUser"
+      @show-info="showInfo"
       @remove="remove"
       @report="report"
     >
       <!-- <template #list-title>全部评论</template> -->
-      <template #info>
-        <el-skeleton :loading="loading" animated>
+      <template #info="{ userInfo }">
+        <el-skeleton :loading="loading" :throttle="200" animated>
           <template #template>
             <el-skeleton-item variant="image" style="width: 50px; height: 50px; margin-bottom: 10px" />
             <div>
@@ -42,7 +39,7 @@
                 <div class="social-info">
                   <a href="" class="attention">
                     <span>{{ userInfo.attention }}</span>
-                    <span>关注</span>
+                    <span>关注:</span>
                   </a>
                   <a href="" class="follower">
                     <span>{{ userInfo.follower }}</span>
@@ -63,17 +60,26 @@
         </el-skeleton>
       </template>
     </u-comment>
-  </div>
+  </u-comment-scroll>
 </template>
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { UToast, ConfigApi, CommentApi, useLevel, ReplyPageParam, ReplyApi, CommentSubmitParam } from '~/index'
+import {
+  UToast,
+  ConfigApi,
+  CommentApi,
+  ReplyPageParam,
+  CommentSubmitParam,
+  createObjectURL,
+  useLevel,
+  usePage
+} from '~/index'
 // 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases
 // static文件放在public下,引入emoji.ts文件可以移动到自定义位置
 import emoji from '@/assets/emoji'
 import { ElAvatar, ElButton } from '~/element'
-import { userInfoApi } from '@/type/user-info'
+import { getComment, reply, commentSize } from '@/assets/comment'
 
 defineOptions({
   name: 'comment'
@@ -87,7 +93,8 @@ const config = reactive<ConfigApi>({
     likeIds: []
   },
   emoji: emoji,
-  comments: []
+  comments: [],
+  total: 10
 })
 
 setTimeout(() => {
@@ -99,22 +106,23 @@ setTimeout(() => {
     likeIds: [1, 2, 3]
   }
   config.user = user
-}, 200)
+}, 100)
 
 setTimeout(() => {
   config.user.likeIds = [2, 3]
 }, 5000)
 
-const userInfo = ref({} as userInfoApi)
 // 用户信息是否加载
-const loading = ref(true)
+const loading = ref(false)
 
 // 请求获取用户详细信息
-const getUser = (uid: string, show: Function) => {
+const showInfo = (uid: string, finish: Function) => {
+  console.log(loading.value)
   loading.value = true
   console.log('获取用户信息: ' + uid)
+  let userInfo
   setTimeout(() => {
-    userInfo.value = {
+    userInfo = {
       id: String(uid),
       username: '落🤍尘' + uid,
       avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
@@ -124,18 +132,8 @@ const getUser = (uid: string, show: Function) => {
       follower: 6878
     }
     loading.value = false
+    finish(userInfo)
   }, 200)
-}
-
-//获取文件url
-function createObjectURL(blob: any) {
-  if (window.URL) {
-    return window.URL.createObjectURL(blob)
-  } else if (window.webkitURL) {
-    return window.webkitURL.createObjectURL(blob)
-  } else {
-    return ''
-  }
 }
 
 let temp_id = 100
@@ -144,11 +142,11 @@ const submit = ({ content, parentId, files, finish }: CommentSubmitParam) => {
   console.log('提交评论: ' + content, parentId, files)
 
   /**
-   * 上传文件后端返回图片访问地址，格式以', '为分割; 如:  '/static/img/program.gif, /static/img/normal.webp'
+   * 上传文件后端返回图片访问地址，格式以'||'为分割; 如:  '/static/img/program.gif||/static/img/normal.webp'
    */
-  let contentImg = files.map(e => createObjectURL(e)).join(', ')
+  let contentImg = files.map(e => createObjectURL(e)).join('||')
 
-  let comment: CommentApi = {
+  const comment: CommentApi = {
     id: String((temp_id += 1)),
     parentId: parentId,
     uid: config.user.id,
@@ -166,6 +164,7 @@ const submit = ({ content, parentId, files, finish }: CommentSubmitParam) => {
     reply: null
   }
   setTimeout(() => {
+    console.log(comment)
     finish(comment)
     UToast({ message: '评论成功!', type: 'info' })
   }, 200)
@@ -198,373 +197,72 @@ const like = (id: string, finish: () => void) => {
   }, 200)
 }
 
-//模拟数据
-const reply = {
-  total: 6,
-  list: [
-    {
-      id: '31',
-      parentId: '3',
-      uid: '6',
-      address: '来自成都',
-      content: '人生就像愤怒的小鸟，当你失败时，总有几只猪在笑。',
-      likes: 7,
-      createTime: '1天前',
-      user: {
-        username: '陆呈洋',
-        avatar:
-          'https://static.juzicon.com/avatars/avatar-20220310090547-fxvx.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
-        level: 4,
-        homeLink: '/31'
-      }
-    },
-    {
-      id: '32',
-      parentId: '3',
-      uid: '7',
-      address: '来自杭州',
-      content: '深思熟虑的结果往往就是说不清楚。',
-      likes: 3,
-      createTime: '2天前',
-      user: {
-        username: '哑谜',
-        avatar:
-          'https://static.juzicon.com/avatars/avatar-190919180152-2VDE.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-        level: 3,
-        homeLink: '/32'
-      }
-    },
-    {
-      id: '33',
-      parentId: '3',
-      uid: '8',
-      level: 2,
-      address: '来自深圳',
-      content: '当我跨过沉沦的一切，向着永恒开战的时候，你是我的军旗。',
-      createTime: '5天前',
-      user: {
-        username: 'Mia',
-        avatar:
-          'https://static.juzicon.com/avatars/avatar-190919181554-L2ZO.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-        likes: 3,
-        homeLink: '/33'
-      }
-    },
-    {
-      id: '34',
-      parentId: '3',
-      uid: '9',
-      address: '来自西安',
-      likes: 34,
-      content: '不要由于别人不能成为我们所希望的人而愤怒，因为我们自己也难以成为自己所希望的人。',
-      createTime: '1天前',
-      user: {
-        username: 'poli301',
-        avatar:
-          'https://static.juzicon.com/avatars/avatar-190919180043-XPLP.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-        level: 4,
-        homeLink: '/34'
-      }
-    },
-    {
-      id: '35',
-      parentId: '3',
-      uid: '10',
-      username: 'fish_eno',
-      avatar:
-        'https://static.juzicon.com/avatars/avatar-190919180320-NAQJ.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-      level: 6,
-      link: '/35',
-      likes: 32,
-      address: '来自武汉',
-      content: '世上莫名其妙走霉运的人多的是，都是一边为命运生气，一边化愤怒为力量地活着。',
-      createTime: '11小时前'
-    },
-    {
-      id: '36',
-      parentId: '3',
-      uid: '11',
-      likes: 21,
-      address: '来自上海',
-      content: '这世上所有的不利情况，都是当事者能力不足造成的',
-      createTime: '10小时前',
-      user: {
-        username: '十三',
-        avatar:
-          'https://static.juzicon.com/user/avatar-f103e42d-a5c9-4837-84e3-d10fad0bcb36-210108053135-E90E.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-        level: 4,
-        homeLink: '/36'
-      }
-    },
-    {
-      id: '37',
-      parentId: '3',
-      uid: '12',
-      likes: 18,
-      address: '来自广州',
-      content: ' 绝望自有绝望的力量，就像希望自有希望的无能。',
-      createTime: '9小时前',
-      user: {
-        username: 'D.z.H****',
-        avatar:
-          'https://static.juzicon.com/avatars/avatar-190919181051-M3HK.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-        level: 3,
-        homeLink: '/37'
-      }
-    },
-    {
-      id: '38',
-      parentId: '3',
-      uid: '13',
-      likes: 17,
-      address: '来自重庆',
-      content: ' 无论这个世界对你怎样，都请你一如既往的努力，勇敢，充满希望。',
-      createTime: '8小时前',
-      user: {
-        username: '繁星Cong2',
-        avatar:
-          'https://static.juzicon.com/user/avatar-f81b3655-03fd-485c-811b-4b5ceaca52b6-210817180051-YTO4.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-        level: 1,
-        homeLink: '/38'
-      }
-    }
-  ]
-} as ReplyApi
-
-const page = (pageNum: number, pageSize: number, arr: any[]) => {
-  var skipNum = (pageNum - 1) * pageSize
-  var newArr =
-    skipNum + pageSize >= arr.length ? arr.slice(skipNum, arr.length) : arr.slice(skipNum, skipNum + pageSize)
-  return newArr
-}
-
 //回复分页
 const replyPage = ({ parentId, pageNum, pageSize, finish }: ReplyPageParam) => {
   let tmp = {
     total: reply.total,
-    list: page(pageNum, pageSize, reply.list)
+    list: usePage(pageNum, pageSize, reply.list)
   }
   setTimeout(() => {
     finish(tmp)
   }, 200)
 }
-setTimeout(() => {
-  config.comments = [
-    {
-      id: '1',
-      parentId: null,
-      uid: '1',
-      address: '来自上海',
-      content:
-        '缘生缘灭，缘起缘落，我在看别人的故事，别人何尝不是在看我的故事?别人在演绎人生，我又何尝不是在这场戏里?谁的眼神沧桑了谁?我的眼神，只是沧桑了自己[喝酒]',
-      likes: 2,
-      contentImg: '/static/img/program.gif, /static/img/normal.webp',
-      createTime: '1分钟前',
-      user: {
-        username: '落🤍尘',
-        avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
-        level: 6,
-        homeLink: '/1'
-      }
-    },
-    {
-      id: '2',
-      parentId: null,
-      uid: '2',
-      address: '来自苏州',
-      content: '知道在学校为什么感觉这么困吗？因为学校，是梦开始的地方。[脱单doge]',
-      likes: 11,
-      createTime: '1天前',
-      user: {
-        username: '悟二空',
-        avatar: 'https://static.juzicon.com/user/avatar-bf22291e-ea5c-4280-850d-88bc288fcf5d-220408002256-ZBQQ.jpeg',
-        level: 1,
-        homeLink: '/2'
-      },
-      reply: {
-        total: 2,
-        list: [
-          {
-            id: '21',
-            parentId: '2',
-            uid: '3',
-            address: '来自重庆',
-            content: '说的对，所以，综上所述，上课睡觉不怪我呀💤',
-            likes: 3,
-            createTime: '1分钟前',
-            user: {
-              username: '别扰我清梦*ぁ',
-              avatar:
-                'https://static.juzicon.com/user/avatar-8b6206c1-b28f-4636-8952-d8d9edec975d-191001105631-MDTM.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-              level: 5,
-              homeLink: '/21'
-            }
-          },
-          {
-            id: '22',
-            parentId: '2',
-            uid: '4',
-            content:
-              '回复 <span style="color: var(--u-color-success-dark-2);">@别扰我清梦*ぁ:</span> 看完打了一个哈切。。。会传染。。。[委屈]',
-            address: '来自广州',
-            likes: 9,
-            createTime: '1天前',
-            user: {
-              username: 'Blizzard',
-              avatar:
-                'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-              level: 3,
-              homeLink: '/22'
-            }
-          }
-        ]
-      }
-    },
-    {
-      id: '3',
-      parentId: null,
-      uid: '5',
-      address: '来自北京',
-      content: '人的一切痛苦，本质上都是对自己的无能的愤怒。',
-      likes: 34116,
-      createTime: '2分钟前',
-      user: {
-        username: '半个句号',
-        avatar:
-          'https://static.juzicon.com/user/avatar-0d70406e-5d4a-4107-a689-652ffd063f99-200425180341-1QK6.jpg?x-oss-process=image/resize,m_fill,w_100,h_1000',
-        level: 5,
-        homeLink: '/3'
-      },
-      reply: {
-        total: 2,
-        list: [
-          {
-            id: '31',
-            uid: '6',
-            parentId: '3',
-            address: '来自成都',
-            content: '人生就像愤怒的小鸟，当你失败时，总有几只猪在笑。',
-            likes: 7,
-            createTime: '1天前',
-            user: {
-              username: '陆呈洋',
-              avatar:
-                'https://static.juzicon.com/avatars/avatar-20220310090547-fxvx.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
-              level: 4,
-              homeLink: '/31'
-            }
-          },
-          {
-            id: '32',
-            parentId: '3',
-            uid: '7',
-            address: '来自杭州',
-            content: '深思熟虑的结果往往就是说不清楚。',
-            likes: 3,
-            createTime: '2天前',
-            user: {
-              username: '哑谜',
-              avatar:
-                'https://static.juzicon.com/avatars/avatar-190919180152-2VDE.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-              level: 3,
-              homeLink: '/32'
-            }
-          }
-        ]
-      }
-    },
-    {
-      id: '4',
-      parentId: null,
-      uid: '14',
-      address: '来自杭州',
-      content:
-        '鱼说：我时时刻刻睁开眼睛，就是为了能让你永远在我眼中！<br>水说：我时时刻刻流淌不息，就是为了能永远把你拥抱！！<br>锅说：都快熟了，还这么贫。',
-      likes: 13,
-      createTime: '2天前',
-      user: {
-        username: 'Blizzard1',
-        avatar:
-          'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-        level: 3,
-        homeLink: '/4'
-      },
-      reply: {
-        total: 2,
-        list: [
-          {
-            id: '41',
-            parentId: '4',
-            uid: '15',
-            address: '来自北京',
-            content: '鱼对水说，你看不到我流泪，因为我在水中。水对鱼说，我看到你悲伤，因为你在我心中。[呲牙]',
-            likes: 36,
-            createTime: '1分钟前',
-            user: {
-              username: '过往~',
-              avatar:
-                'https://static.juzicon.com/avatars/avatar-20210308112705-zqf0.jpeg?x-oss-process=image/resize,m_fill,w_100,h_100',
-              level: 4,
-              homeLink: '/41'
-            }
-          },
-          {
-            id: '42',
-            parentId: '4',
-            uid: '16',
-            address: '来自杭州',
-            content: '约束条件变了，原来的收益，一下子都变为成本。生命如果架在锅上，成本自然也就很高了[tv_微笑]',
-            likes: 16,
-            createTime: '1天前',
-            user: {
-              username: 'Blizzard1',
-              avatar:
-                'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-              level: 3,
-              homeLink: '/42'
-            }
-          }
-        ]
-      }
-    }
-  ] as CommentApi[]
-}, 200)
+
+// 初始化评论列表
+config.comments = getComment(1, 1)
+
+// 是否禁用滚动加载评论
+const disable = ref(false)
+
+// 当前页数
+let pageNum = 1
+// 页大小
+let pageSize = 1
+// 评论总数量
+let total = commentSize
+// 加载更多评论
+const more = () => {
+  console.log(disable.value)
+  if (pageNum <= Math.ceil(total / pageSize)) {
+    setTimeout(() => {
+      config.comments.push(...getComment(pageNum, 1))
+      ++pageNum
+    }, 200)
+  } else {
+    disable.value = true
+  }
+}
+
+// watch(
+//   () => count.value,
+//   val => {
+//     config.comments = getComment(val)
+//   },
+//   { immediate: true }
+// )
 </script>
 
 <style lang="scss" scoped>
-.user-card {
+.infinite-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.infinite-list .infinite-list-item {
   display: flex;
-  .user-content {
-    flex: 1;
-    margin-left: 16px;
-    .user-info {
-      .username {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        .name {
-          max-width: 10rem;
-          font-weight: 500;
-          font-size: 15px;
-          color: #252933;
-          line-height: 32px;
-          margin-right: 4px;
-        }
-      }
-    }
-    .social-info {
-      margin-bottom: 10px;
-      a {
-        text-decoration: none;
-      }
-      a:not(:first-child) {
-        margin-left: 18px;
-      }
-      a span:last-child {
-        margin-left: 3px;
-        color: #9499a0;
-      }
-    }
-  }
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  background: var(--el-color-primary-light-9);
+  margin: 10px;
+  color: var(--el-color-primary);
+}
+.infinite-list .infinite-list-item + .list-item {
+  margin-top: 10px;
+}
+
+p {
+  font-size: 1.6rem;
+  padding: 10px;
 }
 </style>

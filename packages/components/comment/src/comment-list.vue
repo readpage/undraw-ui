@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { str } from '~/util'
 import { CommentApi } from '../interface'
 import ContentBox from './content-box.vue'
@@ -15,9 +15,15 @@ import ReplyBox from './reply-box.vue'
 
 interface Props {
   data: CommentApi[]
+  total: number
+  showSize: number
 }
 
 const props = defineProps<Props>()
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.comment-list {
+  padding: 10px;
+}
+</style>

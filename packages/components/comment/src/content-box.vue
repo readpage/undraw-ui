@@ -6,7 +6,7 @@
         placement="top"
         :width="300"
         :show-after="300"
-        @before-enter="() => getUser(str(data.uid), () => {})"
+        @before-enter="() => showInfo(str(data.uid), (v: any) => (userInfo = v))"
       >
         <Info />
         <template #reference>
@@ -25,7 +25,7 @@
           placement="top"
           :width="300"
           :show-after="300"
-          @before-enter="() => getUser(str(data.uid), () => {})"
+          @before-enter="() => showInfo(str(data.uid), (v: any) => (userInfo = v))"
         >
           <Info />
           <template #reference>
@@ -45,7 +45,7 @@
       </div>
       <div class="content">
         <u-fold unfold>
-          <div v-html="content"></div>
+          <div v-html="contents"></div>
           <div class="imgbox" style="display: flex">
             <template v-for="(url, index) in imgList" :key="index">
               <ElImage
@@ -127,7 +127,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, nextTick, ref, reactive, h } from 'vue'
+import { computed, inject, nextTick, ref, reactive, h, toRefs } from 'vue'
 import InputBox from './tools/input-box.vue'
 import {
   EmojiApi,
@@ -141,7 +141,6 @@ import {
 import type { InputBoxApi } from './tools/input-box.vue'
 import { ElAvatar, ElPopover } from '~/element'
 import { useEmojiParse, useLevel } from '~/hooks'
-import UserInfo from './tools/user-info.vue'
 import Operation from './tools/operation.vue'
 import { str, ElImage, isEmpty } from '~/index'
 import { InjectSlots } from '../key'
@@ -160,6 +159,7 @@ const state = reactive({
 
 const commentRef = ref<InputBoxApi>()
 const btnRef = ref<HTMLDivElement>()
+const userInfo = ref({})
 
 const imgList = computed(() => {
   let temp = props.data.contentImg
@@ -168,10 +168,10 @@ const imgList = computed(() => {
 })
 
 const { allEmoji } = inject(InjectionEmojiApi) as EmojiApi
-const { like, user, isUserInfo, getUser } = inject(InjectionContentBox) as ContentBoxParam
+const { like, user, showInfo } = inject(InjectionContentBox) as ContentBoxParam
 //工具slots
 const slots = inject(InjectSlots) as any
-const Info = () => h(slots['info'])
+const Info = () => h('div', slots.info({ userInfo: userInfo.value }))
 
 //点击回复按钮打开输入框
 function reply() {
@@ -192,7 +192,7 @@ function hide(event: Event) {
   }
 }
 
-const content = computed(() => useEmojiParse(allEmoji, props.data.content))
+const contents = computed(() => useEmojiParse(allEmoji, props.data.content))
 </script>
 
 <style lang="scss" scoped>

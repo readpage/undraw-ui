@@ -18,7 +18,7 @@
       <slot name="list-title">
         <div class="title">全部评论</div>
       </slot>
-      <CommentList :data="comments"></CommentList>
+      <CommentList :data="comments" :total="total" :show-size="isNull(showSize, 5)"></CommentList>
     </div>
     <slot></slot>
   </div>
@@ -40,7 +40,8 @@ import {
   ReplyParam,
   ReplyPageParam,
   InjectionEmojiApi,
-  CommentSubmitParam
+  CommentSubmitParam,
+  isNull
 } from '~/index'
 import { InjectSlots } from '../key'
 
@@ -50,25 +51,19 @@ defineOptions({
 
 interface Props {
   config: ConfigApi
-  // 显示评论的数量
-  showSize?: number
-  page?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  showSize: 3,
-  page: false
-})
+const props = defineProps<Props>()
 const slots = useSlots()
 // 将这个属性转换为响应式数据。
 // const comments = toRef(props.config, 'comments')
-const { user, comments } = toRefs(props.config)
+const { user, comments, showSize, replyShowSize, total } = toRefs(props.config)
 
 const emit = defineEmits<{
   (e: 'submit', { content, parentId, files, finish }: CommentSubmitParam): void
   (e: 'like', id: string, finish: () => void): void
   (e: 'replyPage', { parentId, pageNum, pageSize, finish }: ReplyPageParam): void
-  (e: 'getUser', id: string, show: Function): void
+  (e: 'showInfo', id: string, finish: Function): void
   (e: 'report', id: string, finish: () => void): void
   (e: 'remove', id: string, finish: () => void): void
 }>()
@@ -79,8 +74,9 @@ const emit = defineEmits<{
 const submit = (obj: CommentSubmitParam2) => {
   let { content, parentId, files } = obj
   const finish = (comment: CommentApi) => {
-    // 添加内容回调处理,添加到评论列表
+    // 清空输入框内容
     obj.finish()
+    // 提交评论添加到评论列表
     if (obj.parentId) {
       let raw_comment = comments.value.find(v => v.id == obj.parentId)
       if (raw_comment) {
@@ -146,8 +142,7 @@ const replyBox: ReplyParam = {
   replyPage: (parentId, pageNum, pageSize, finish) => {
     emit('replyPage', { parentId, pageNum, pageSize, finish })
   },
-  showSize: props.showSize,
-  page: props.page,
+  replyShowSize: isNull(replyShowSize, 3),
   comments: comments
 }
 
@@ -158,7 +153,7 @@ const contentBox: ContentBoxParam = {
   user: user,
   like: like,
   isUserInfo: slots.info != undefined,
-  getUser: (uid, show) => emit('getUser', uid, show),
+  showInfo: (uid, finish) => emit('showInfo', uid, finish),
   report: (id, close) => emit('report', id, close),
   remove: (id, parentId, close) =>
     emit('remove', id, () => {

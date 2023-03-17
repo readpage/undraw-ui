@@ -37,6 +37,9 @@ export interface ConfigApi {
   user: UserApi
   emoji: EmojiApi
   comments: CommentApi[]
+  total: number
+  showSize?: number
+  replyShowSize?: number
 }
 
 export interface CommentSubmitParam {
@@ -66,13 +69,9 @@ export interface ReplyParam {
    */
   replyPage: (parentId: string, pageNum: number, pageSize: number, finish: (comments: ReplyApi) => void) => void
   /**
-   * 是否启动分页功能
+   * 回复初始显示的个数
    */
-  page: boolean
-  /**
-   * 分页: 每页显示的个数
-   */
-  showSize: number
+  replyShowSize: number
   /**
    * 评论数据(不包含回复数据)
    */
@@ -93,9 +92,9 @@ export interface ContentBoxParam {
    */
   like: (id: string) => void
   /**
-   * 返回用户id，show回调是否显示用户信息卡片
+   * 返回用户id
    */
-  getUser: (uid: string, show: Function) => void
+  showInfo: (uid: string, finish: Function) => void
   /**
    * 举报评论方法
    * finish: 取消禁用举报按钮

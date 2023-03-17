@@ -8,7 +8,7 @@
         :data="reply"
         small
       ></ContentBox>
-      <div v-if="data.length > showSize" class="fetch-more">
+      <div v-if="data.length > replyShowSize" class="fetch-more">
         <span v-if="state.loading">加载中...</span>
         <div v-else>
           <div v-if="!state.over">
@@ -29,7 +29,6 @@
       </div>
       <div v-if="state.over" class="fetch-more">
         <el-pagination
-          v-if="page"
           small
           hide-on-single-page
           layout="total, prev, pager, next"
@@ -61,7 +60,7 @@ const state = reactive({
   pageSize: 5
 })
 
-const { replyPage, showSize, page, comments } = inject(InjectionReply) as ReplyParam
+const { replyPage, replyShowSize, comments } = inject(InjectionReply) as ReplyParam
 
 const data = computed(() => {
   let data = {
@@ -77,12 +76,8 @@ const data = computed(() => {
       list: props.data.list
     }
   }
-  // 开启分页
-  if (page) {
-    data.list = data.list.slice(0, state.pageSize)
-  }
   if (!state.over) {
-    let tmp = data.list.slice(0, showSize)
+    let tmp = data.list.slice(0, replyShowSize)
     data.list = tmp
   }
   return data
