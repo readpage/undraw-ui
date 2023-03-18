@@ -1,7 +1,7 @@
 <template>
   <div v-if="data" class="comment-list">
-    <ContentBox v-for="(comment, index) in data" :key="index" :parent-id="str(comment.id)" :data="comment">
-      <ReplyBox :parent-id="str(comment.id)" :data="comment.reply"></ReplyBox>
+    <ContentBox v-for="(comment, index) in data" :id="str(comment.id)" :key="index" :data="comment">
+      <ReplyBox :id="str(comment.id)" :data="comment.reply"></ReplyBox>
     </ContentBox>
   </div>
 </template>
@@ -25,5 +25,11 @@ const props = defineProps<Props>()
 <style lang="scss" scoped>
 .comment-list {
   padding: 10px;
+}
+</style>
+
+<style>
+.comment-list > .comment > .comment-primary > .comment-main {
+  margin-right: 16px;
 }
 </style>

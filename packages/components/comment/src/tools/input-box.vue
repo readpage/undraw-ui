@@ -45,7 +45,8 @@ import {
   EditorInstance,
   UToast,
   UEmoji,
-  UEditor
+  UEditor,
+  EmojiApi
 } from '~/index'
 import { ElButton } from '~/element'
 
@@ -83,7 +84,7 @@ const emit = defineEmits<{
 }>()
 
 const submit = inject(InjectionCommentFun) as (obj: CommentSubmitParam2) => void
-const emoji = inject(InjectionEmojiApi)
+const emoji = inject(InjectionEmojiApi) as EmojiApi
 
 // 提交评论的数据
 const onSubmit = () => {

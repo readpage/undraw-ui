@@ -6,8 +6,7 @@
       @like="like"
       @reply-page="replyPage"
       @show-info="showInfo"
-      @remove="remove"
-      @report="report"
+      @operate="operate"
     >
       <!-- <template #list-title>全部评论</template> -->
       <template #info="{ userInfo }">
@@ -73,7 +72,8 @@ import {
   CommentSubmitParam,
   createObjectURL,
   useLevel,
-  usePage
+  usePage,
+  throttle
 } from '~/index'
 // 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases
 // static文件放在public下,引入emoji.ts文件可以移动到自定义位置
@@ -94,7 +94,9 @@ const config = reactive<ConfigApi>({
   },
   emoji: emoji,
   comments: [],
-  total: 10
+  total: 10,
+  // 默认全部用户显示，#1当前用户显示，#2当前用户以外显示
+  tools: ['举报#2', '删除#1', '复制', '屏蔽#2']
 })
 
 setTimeout(() => {
@@ -170,24 +172,6 @@ const submit = ({ content, parentId, files, finish }: CommentSubmitParam) => {
   }, 200)
 }
 
-// 删除评论
-const remove = (id: string, finish: () => void) => {
-  console.log('删除评论: ' + id)
-  setTimeout(() => {
-    finish()
-    alert(`删除成功: ${id}`)
-  }, 200)
-}
-
-//举报用户
-const report = (id: string, finish: () => void) => {
-  console.log('举报用户: ' + id)
-  setTimeout(() => {
-    finish()
-    alert(`举报成功: ${id}`)
-  }, 200)
-}
-
 // 点赞按钮事件
 const like = (id: string, finish: () => void) => {
   console.log('点赞: ' + id)
@@ -195,6 +179,22 @@ const like = (id: string, finish: () => void) => {
   setTimeout(() => {
     finish()
   }, 200)
+}
+
+const _throttle = throttle((type: string, comment: CommentApi, finish: Function) => {
+  switch (type) {
+    case '删除':
+      alert(`删除成功: ${comment.id}`)
+      finish()
+      break
+    case '举报':
+      alert(`举报成功: ${comment.id}`)
+      break
+  }
+})
+
+const operate = (type: string, comment: CommentApi, finish: Function) => {
+  _throttle(type, comment, finish)
 }
 
 //回复分页

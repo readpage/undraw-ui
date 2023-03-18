@@ -7,12 +7,14 @@
   .u-icon {
     font-size: 16px;
   }
+  &-primary {
+    flex: 1;
+    margin-left: 16px;
+    overflow: hidden;
+  }
 }
 
 .comment-main {
-  flex: 1;
-  margin-left: 16px;
-  overflow: hidden;
   .user-box {
     display: flex;
     align-items: center;

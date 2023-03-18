@@ -1,13 +1,7 @@
 <template>
   <div v-if="data.length > 0" class="reply-box">
     <div class="reply-list">
-      <ContentBox
-        v-for="(reply, index) in data.list"
-        :key="index"
-        :parent-id="parentId"
-        :data="reply"
-        small
-      ></ContentBox>
+      <ContentBox v-for="(reply, index) in data.list" :id="id" :key="index" :data="reply" small></ContentBox>
       <div v-if="data.length > replyShowSize" class="fetch-more">
         <span v-if="state.loading">加载中...</span>
         <div v-else>
@@ -49,7 +43,7 @@ import { ReplyApi, ElPagination, InjectionReply, ReplyParam } from '~/index'
 
 interface Props {
   data?: ReplyApi | null
-  parentId: string
+  id: string
 }
 
 const props = defineProps<Props>()
@@ -89,7 +83,7 @@ const replyMore = () => {
 
 const replyFinish = (val: any) => {
   comments.value.forEach(e => {
-    if (e.id == props.parentId) {
+    if (e.id == props.id) {
       if (e.reply) {
         e.reply = val
       }
@@ -99,12 +93,12 @@ const replyFinish = (val: any) => {
 
 const currentChange = (val: number) => {
   state.pageNum = val
-  replyPage(props.parentId, val, state.pageSize, val => replyFinish(val))
+  replyPage(props.id, val, state.pageSize, val => replyFinish(val))
 }
 
 const sizeChange = (val: number) => {
   state.pageSize = val
-  replyPage(props.parentId, state.pageNum, val, val => replyFinish(val))
+  replyPage(props.id, state.pageNum, val, val => replyFinish(val))
 }
 </script>
 

@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { debounce } from '~/util'
+import { vInfiniteScroll, ElLink } from '~/element'
 
 defineOptions({
   name: 'UCommentScroll'
@@ -21,6 +22,7 @@ defineOptions({
 
 interface Props {
   disable: boolean
+  // show: boolean
 }
 
 const props = defineProps<Props>()
@@ -43,7 +45,6 @@ const _debounce = debounce(() => {
 }, 500)
 
 const load = () => {
-  console.log('scroll')
   loading.value = true
   _debounce()
 }

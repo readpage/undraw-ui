@@ -41,9 +41,11 @@ import {
   ReplyPageParam,
   InjectionEmojiApi,
   CommentSubmitParam,
-  isNull
+  isNull,
+  isEmpty
 } from '~/index'
-import { InjectSlots } from '../key'
+import { InjectOperation, InjectSlots, OperationApi } from '../key'
+import { split } from 'lodash'
 
 defineOptions({
   name: 'UComment'
@@ -57,15 +59,14 @@ const props = defineProps<Props>()
 const slots = useSlots()
 // 将这个属性转换为响应式数据。
 // const comments = toRef(props.config, 'comments')
-const { user, comments, showSize, replyShowSize, total } = toRefs(props.config)
+const { user, comments, showSize, replyShowSize, total, tools } = toRefs(props.config)
 
 const emit = defineEmits<{
   (e: 'submit', { content, parentId, files, finish }: CommentSubmitParam): void
   (e: 'like', id: string, finish: () => void): void
   (e: 'replyPage', { parentId, pageNum, pageSize, finish }: ReplyPageParam): void
   (e: 'showInfo', id: string, finish: Function): void
-  (e: 'report', id: string, finish: () => void): void
-  (e: 'remove', id: string, finish: () => void): void
+  (e: 'operate', type: string, comment: CommentApi, finish: () => void): void
 }>()
 
 /**
@@ -99,7 +100,7 @@ const submit = (obj: CommentSubmitParam2) => {
 }
 
 /**
- * contentBox点赞事件提供
+ * 点赞事件
  * @param id
  */
 const like = (id: string) => {
@@ -136,7 +137,7 @@ const like = (id: string) => {
 }
 
 /**
- * replyBox.vue需要用到参数或方法
+ * 回复盒子参数或方法
  */
 const replyBox: ReplyParam = {
   replyPage: (parentId, pageNum, pageSize, finish) => {
@@ -147,41 +148,67 @@ const replyBox: ReplyParam = {
 }
 
 /**
- * contentBox.vue需要用到参数或方法
+ * 评论盒子参数或方法
  */
 const contentBox: ContentBoxParam = {
   user: user,
   like: like,
-  isUserInfo: slots.info != undefined,
-  showInfo: (uid, finish) => emit('showInfo', uid, finish),
-  report: (id, close) => emit('report', id, close),
-  remove: (id, parentId, close) =>
-    emit('remove', id, () => {
-      close()
-      // 删除评论数据操作
-      if (parentId) {
-        let comment = comments.value.find(item => item.id == parentId)
-        let reply = comment?.reply
-        if (reply) {
-          let index = reply.list.findIndex(item => item.id == id)
-          if (index != -1) {
-            reply.list.splice(index, 1)
-            reply.total--
-          }
-        }
-      } else {
-        let index = comments.value.findIndex(item => item.id == id)
-        if (index != -1) {
-          comments.value.splice(index, 1)
-        }
-      }
-    })
+  showInfo: (uid, finish) => emit('showInfo', uid, finish)
 }
 
+/**
+ * 删除当前评论
+ * @param comment
+ */
+const remove = (comment: CommentApi) => {
+  // 删除评论数据操作
+  const { parentId, id } = comment
+  if (parentId) {
+    let comment = comments.value.find(item => item.id == parentId)
+    let reply = comment?.reply
+    if (reply) {
+      let index = reply.list.findIndex(item => item.id == id)
+      if (index != -1) {
+        reply.list.splice(index, 1)
+        reply.total--
+      }
+    }
+  } else {
+    let index = comments.value.findIndex(item => item.id == id)
+    if (index != -1) {
+      comments.value.splice(index, 1)
+    }
+  }
+}
+
+// 工具栏方法
+const operation: OperationApi = {
+  user: user,
+  tools: tools?.value,
+  operate: (type, comment, finish) => {
+    if (isEmpty(type)) return
+    let v = type.split('#')[0]
+    if (v == '删除') {
+      emit('operate', type, comment, () => {
+        finish()
+        remove(comment)
+      })
+    } else {
+      emit('operate', type, comment, finish)
+    }
+  }
+}
+
+// 提交评论
 provide(InjectionCommentFun, submit)
+// 表情包
 provide(InjectionEmojiApi, props.config.emoji)
+// 回复盒子
 provide(InjectionReply, replyBox)
+// 评论盒子
 provide(InjectionContentBox, contentBox)
+// 工具栏功能
+provide(InjectOperation, operation)
 // 工具卡槽
 provide(InjectSlots, useSlots())
 </script>

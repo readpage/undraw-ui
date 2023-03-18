@@ -40,6 +40,7 @@ export interface ConfigApi {
   total: number
   showSize?: number
   replyShowSize?: number
+  tools?: string[]
 }
 
 export interface CommentSubmitParam {
@@ -80,10 +81,6 @@ export interface ReplyParam {
 
 export interface ContentBoxParam {
   /**
-   * 是否启动hover信息信息栏
-   */
-  isUserInfo: boolean
-  /**
    * 用户数据
    */
   user: Ref<UserApi>
@@ -95,16 +92,6 @@ export interface ContentBoxParam {
    * 返回用户id
    */
   showInfo: (uid: string, finish: Function) => void
-  /**
-   * 举报评论方法
-   * finish: 取消禁用举报按钮
-   */
-  report: (id: string, finish: () => void) => void
-  /**
-   * 删除评论方法
-   * finish: 取消禁用删除按钮
-   */
-  remove: (id: string, parentId: string | null, finish: () => void) => void
 }
 
 export const InjectionCommentFun: InjectionKey<(obj: CommentSubmitParam) => void> = Symbol()
