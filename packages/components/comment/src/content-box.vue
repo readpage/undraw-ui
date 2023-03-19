@@ -1,5 +1,5 @@
 <template>
-  <div class="comment" :class="{ small: small }">
+  <div class="comment" :class="{ reply: props.reply }">
     <div class="comment-sub">
       <el-popover
         v-if="slots.info"
@@ -149,7 +149,7 @@ import { str, ElImage, isEmpty } from '~/index'
 import { InjectSlots } from '../key'
 
 interface Props {
-  small?: boolean
+  reply?: boolean
   data: CommentApi
   id: string
 }

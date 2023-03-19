@@ -1,6 +1,6 @@
 .comment {
   display: flex;
-  margin: 32px 0;
+  padding: 1.6rem 0;
   a:hover {
     text-decoration: none;
   }
@@ -65,15 +65,15 @@
   margin-top: 8px;
 }
 
-.small {
+.reply {
   .content-box {
     margin-left: 12px;
   }
   .el-avatar {
     --el-avatar-size: 24px !important;
   }
-  margin: 0;
+  padding: 0;
 }
-.small:not(:first-child) {
-  margin-top: 32px;
+.reply:not(:first-child) {
+  margin-top: 2rem;
 }

@@ -1,5 +1,7 @@
 import { Plugin } from 'vue'
 import Comment from './comment'
+import CommentScroll from './comment/comment-scroll'
+import CommentItem from './comment/src/tools/comment-item.vue'
 import Dialog from './dialog'
 import Divider from './divider'
 import Editor from './editor'
@@ -13,11 +15,11 @@ import Search from './search'
 import Chat from './chat'
 import Emoji from './emoji'
 import Counter from './Counter'
-import CommentScroll from './comment/comment-scroll'
 
 export default [
   Comment,
   CommentScroll,
+  CommentItem,
   Dialog,
   Divider,
   Editor,

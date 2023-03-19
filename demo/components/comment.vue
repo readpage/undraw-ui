@@ -9,6 +9,7 @@
       @operate="operate"
     >
       <!-- <template #list-title>全部评论</template> -->
+      <u-comment-item v-model="latest"></u-comment-item>
       <template #info="{ userInfo }">
         <el-skeleton :loading="loading" :throttle="200" animated>
           <template #template>
@@ -38,7 +39,7 @@
                 <div class="social-info">
                   <a href="" class="attention">
                     <span>{{ userInfo.attention }}</span>
-                    <span>关注:</span>
+                    <span>关注</span>
                   </a>
                   <a href="" class="follower">
                     <span>{{ userInfo.follower }}</span>
@@ -98,6 +99,8 @@ const config = reactive<ConfigApi>({
   // 默认全部用户显示，#1当前用户显示，#2当前用户以外显示
   tools: ['举报#2', '删除#1', '复制', '屏蔽#2']
 })
+
+const latest = ref(true)
 
 setTimeout(() => {
   const user = {
@@ -196,7 +199,6 @@ const _throttle = throttle((type: string, comment: CommentApi, finish: Function)
 const operate = (type: string, comment: CommentApi, finish: Function) => {
   _throttle(type, comment, finish)
 }
-
 //回复分页
 const replyPage = ({ parentId, pageNum, pageSize, finish }: ReplyPageParam) => {
   let tmp = {
@@ -243,26 +245,40 @@ const more = () => {
 </script>
 
 <style lang="scss" scoped>
-.infinite-list {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-.infinite-list .infinite-list-item {
+.user-card {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-  background: var(--el-color-primary-light-9);
-  margin: 10px;
-  color: var(--el-color-primary);
-}
-.infinite-list .infinite-list-item + .list-item {
-  margin-top: 10px;
-}
-
-p {
-  font-size: 1.6rem;
-  padding: 10px;
+  .user-content {
+    flex: 1;
+    margin-left: 16px;
+    .user-info {
+      .username {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        .name {
+          max-width: 10rem;
+          font-weight: 500;
+          font-size: 15px;
+          color: #252933;
+          line-height: 32px;
+          margin-right: 4px;
+        }
+      }
+    }
+    .social-info {
+      font-size: 12px;
+      margin-bottom: 10px;
+      a {
+        text-decoration: none;
+      }
+      a:not(:first-child) {
+        margin-left: 18px;
+      }
+      a span:last-child {
+        margin-left: 3px;
+        color: #9499a0;
+      }
+    }
+  }
 }
 </style>

@@ -34,11 +34,11 @@ const style = computed(() => {
 <style lang="scss" scoped>
 .u-icon {
   display: inline-flex;
-  fill: currentColor;
+  vertical-align: -0.15em;
   font-size: inherit;
   color: inherit;
-  vertical-align: -0.15em;
   :deep(svg) {
+    fill: currentColor;
     width: 1em;
     height: 1em;
   }

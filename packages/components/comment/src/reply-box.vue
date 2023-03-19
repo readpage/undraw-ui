@@ -1,7 +1,7 @@
 <template>
   <div v-if="data.length > 0" class="reply-box">
     <div class="reply-list">
-      <ContentBox v-for="(reply, index) in data.list" :id="id" :key="index" :data="reply" small></ContentBox>
+      <ContentBox v-for="(reply, index) in data.list" :id="id" :key="index" :data="reply" reply></ContentBox>
       <div v-if="data.length > replyShowSize" class="fetch-more">
         <span v-if="state.loading">加载中...</span>
         <div v-else>

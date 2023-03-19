@@ -22,11 +22,7 @@ interface Props {
 const props = defineProps<Props>()
 </script>
 
-<style lang="scss" scoped>
-.comment-list {
-  padding: 10px;
-}
-</style>
+<style lang="scss" scoped></style>
 
 <style>
 .comment-list > .comment > .comment-primary > .comment-main {

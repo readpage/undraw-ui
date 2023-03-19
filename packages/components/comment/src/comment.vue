@@ -15,12 +15,11 @@
     </div>
     <!-- <div class="hot-list"></div> -->
     <div class="comment-list-wrapper">
-      <slot name="list-title">
+      <slot>
         <div class="title">全部评论</div>
       </slot>
       <CommentList :data="comments" :total="total" :show-size="isNull(showSize, 5)"></CommentList>
     </div>
-    <slot></slot>
   </div>
 </template>
 
@@ -45,7 +44,6 @@ import {
   isEmpty
 } from '~/index'
 import { InjectOperation, InjectSlots, OperationApi } from '../key'
-import { split } from 'lodash'
 
 defineOptions({
   name: 'UComment'
