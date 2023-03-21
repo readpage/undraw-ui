@@ -1,6 +1,6 @@
 export * from './comment'
 export * from './comment/comment-scroll'
-export * from './comment/comment-item'
+export * from './comment/comment-nav'
 export * from './dialog'
 export * from './divider'
 export * from './editor'

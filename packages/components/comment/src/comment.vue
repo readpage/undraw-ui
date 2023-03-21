@@ -28,22 +28,19 @@ import { provide, toRefs, useSlots } from 'vue'
 import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
 import { ElAvatar } from '~/element'
+import { CommentApi, ConfigApi, InjectionEmojiApi, isNull, isEmpty, SubmitParamApi, ReplyPageParamApi } from '~/index'
 import {
-  CommentApi,
-  CommentSubmitParam2,
-  ConfigApi,
-  ContentBoxParam,
-  InjectionCommentFun,
-  InjectionContentBox,
-  InjectionReply,
-  ReplyParam,
-  ReplyPageParam,
-  InjectionEmojiApi,
-  CommentSubmitParam,
-  isNull,
-  isEmpty
-} from '~/index'
-import { InjectOperation, InjectSlots, OperationApi } from '../key'
+  InjectContentBoxApi,
+  InjectContentBox,
+  InjectInputBox,
+  InjectOperation,
+  InjectReplyBox,
+  InjectSlots,
+  InjectInputBoxApi,
+  InjectOperationApi,
+  InjectReplyBoxApi,
+  SubmitParam2Api
+} from '../key'
 
 defineOptions({
   name: 'UComment'
@@ -51,18 +48,22 @@ defineOptions({
 
 interface Props {
   config: ConfigApi
+  page?: boolean
+  upload?: boolean
 }
 
-const props = defineProps<Props>()
-const slots = useSlots()
+const props = withDefaults(defineProps<Props>(), {
+  page: false,
+  upload: false
+})
 // 将这个属性转换为响应式数据。
 // const comments = toRef(props.config, 'comments')
 const { user, comments, showSize, replyShowSize, total, tools } = toRefs(props.config)
 
 const emit = defineEmits<{
-  (e: 'submit', { content, parentId, files, finish }: CommentSubmitParam): void
+  (e: 'submit', { content, parentId, files, finish }: SubmitParamApi): void
   (e: 'like', id: string, finish: () => void): void
-  (e: 'replyPage', { parentId, pageNum, pageSize, finish }: ReplyPageParam): void
+  (e: 'replyPage', { parentId, pageNum, pageSize, finish }: ReplyPageParamApi): void
   (e: 'showInfo', id: string, finish: Function): void
   (e: 'operate', type: string, comment: CommentApi, finish: () => void): void
 }>()
@@ -70,14 +71,14 @@ const emit = defineEmits<{
 /**
  * 提交评论
  */
-const submit = (obj: CommentSubmitParam2) => {
-  let { content, parentId, files } = obj
+const submit = ({ content, parentId, files, clear }: SubmitParam2Api) => {
+  // 添加评论
   const finish = (comment: CommentApi) => {
     // 清空输入框内容
-    obj.finish()
+    clear()
     // 提交评论添加到评论列表
-    if (obj.parentId) {
-      let raw_comment = comments.value.find(v => v.id == obj.parentId)
+    if (parentId) {
+      let raw_comment = comments.value.find(v => v.id == parentId)
       if (raw_comment) {
         let reply = raw_comment.reply
         if (reply) {
@@ -96,6 +97,12 @@ const submit = (obj: CommentSubmitParam2) => {
   }
   emit('submit', { content, parentId, files, finish })
 }
+const inputBoxParam: InjectInputBoxApi = {
+  upload: props.upload,
+  submit: submit
+}
+// 输入框盒子
+provide(InjectInputBox, inputBoxParam)
 
 /**
  * 点赞事件
@@ -133,26 +140,26 @@ const like = (id: string) => {
     }
   })
 }
-
 /**
- * 回复盒子参数或方法
+ * 评论盒子参数或方法
  */
-const replyBox: ReplyParam = {
+const contentBoxParam: InjectContentBoxApi = {
+  user: user,
+  like: like,
+  showInfo: (uid, finish) => emit('showInfo', uid, finish)
+}
+provide(InjectContentBox, contentBoxParam)
+
+// 回复盒子
+const replyBoxParam: InjectReplyBoxApi = {
+  page: props.page,
   replyPage: (parentId, pageNum, pageSize, finish) => {
     emit('replyPage', { parentId, pageNum, pageSize, finish })
   },
   replyShowSize: isNull(replyShowSize, 3),
   comments: comments
 }
-
-/**
- * 评论盒子参数或方法
- */
-const contentBox: ContentBoxParam = {
-  user: user,
-  like: like,
-  showInfo: (uid, finish) => emit('showInfo', uid, finish)
-}
+provide(InjectReplyBox, replyBoxParam)
 
 /**
  * 删除当前评论
@@ -178,15 +185,15 @@ const remove = (comment: CommentApi) => {
     }
   }
 }
-
+// 工具栏功能
 // 工具栏方法
-const operation: OperationApi = {
+const operation: InjectOperationApi = {
   user: user,
   tools: tools?.value,
   operate: (type, comment, finish) => {
     if (isEmpty(type)) return
     let v = type.split('#')[0]
-    if (v == '删除') {
+    if (v == '删除' || v == 'delete' || v == 'remove') {
       emit('operate', type, comment, () => {
         finish()
         remove(comment)
@@ -196,17 +203,11 @@ const operation: OperationApi = {
     }
   }
 }
+provide(InjectOperation, operation)
 
-// 提交评论
-provide(InjectionCommentFun, submit)
 // 表情包
 provide(InjectionEmojiApi, props.config.emoji)
-// 回复盒子
-provide(InjectionReply, replyBox)
-// 评论盒子
-provide(InjectionContentBox, contentBox)
-// 工具栏功能
-provide(InjectOperation, operation)
+
 // 工具卡槽
 provide(InjectSlots, useSlots())
 </script>

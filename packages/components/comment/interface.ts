@@ -14,6 +14,11 @@ export interface CommentApi {
   reply?: ReplyApi | null
 }
 
+export interface ReplyApi {
+  total: number
+  list: CommentApi[]
+}
+
 export interface CommentUserApi {
   username: string
   avatar: string
@@ -28,11 +33,6 @@ export interface UserApi {
   likeIds: string[] | number[]
 }
 
-export interface ReplyApi {
-  total: number
-  list: CommentApi[]
-}
-
 export interface ConfigApi {
   user: UserApi
   emoji: EmojiApi
@@ -43,57 +43,16 @@ export interface ConfigApi {
   tools?: string[]
 }
 
-export interface CommentSubmitParam {
+export interface SubmitParamApi {
   content: string
   parentId: string | null
   files: any[]
   finish: (comment: CommentApi) => void
 }
 
-export interface CommentSubmitParam2 {
-  content: string
-  parentId: string | null
-  files: any[]
-  finish: () => void
-}
-
-export interface ReplyPageParam {
-  parentId: string | number
+export interface ReplyPageParamApi {
+  parentId: string
   pageNum: number
   pageSize: number
-  finish: (comments: ReplyApi) => void
+  finish: (reply: ReplyApi) => void
 }
-
-export interface ReplyParam {
-  /**
-   * 回复分页
-   */
-  replyPage: (parentId: string, pageNum: number, pageSize: number, finish: (comments: ReplyApi) => void) => void
-  /**
-   * 回复初始显示的个数
-   */
-  replyShowSize: number
-  /**
-   * 评论数据(不包含回复数据)
-   */
-  comments: Ref<CommentApi[]>
-}
-
-export interface ContentBoxParam {
-  /**
-   * 用户数据
-   */
-  user: Ref<UserApi>
-  /**
-   * 点赞方法
-   */
-  like: (id: string) => void
-  /**
-   * 返回用户id
-   */
-  showInfo: (uid: string, finish: Function) => void
-}
-
-export const InjectionCommentFun: InjectionKey<(obj: CommentSubmitParam) => void> = Symbol()
-export const InjectionReply: InjectionKey<ReplyParam> = Symbol()
-export const InjectionContentBox: InjectionKey<ContentBoxParam> = Symbol()

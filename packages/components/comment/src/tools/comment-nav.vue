@@ -37,11 +37,12 @@ interface Props {
 const props = defineProps<Props>()
 
 defineOptions({
-  name: 'uCommentItem'
+  name: 'uCommentNav'
 })
 
 const emit = defineEmits<{
   (e: 'update:modelValue', val: boolean): void
+  (e: 'sorted', latest: boolean): void
 }>()
 
 const latest = computed({
@@ -50,6 +51,7 @@ const latest = computed({
   },
   set(value) {
     emit('update:modelValue', value)
+    emit('sorted', value)
   }
 })
 </script>

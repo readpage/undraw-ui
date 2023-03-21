@@ -14,7 +14,7 @@
     <Transition name="fade">
       <div v-if="action" class="action-box">
         <u-emoji :emoji="emoji" @add-emoji="(val: string) => editorRef?.addText(val)"></u-emoji>
-        <div class="picture" @click="inputRef?.click">
+        <div v-if="upload" class="picture" @click="inputRef?.click">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon">
             <path
               data-v-48a7e3c5=""
@@ -35,12 +35,10 @@
 </template>
 
 <script setup lang="ts">
-import { isEmpty, isNull, isImage } from '~/util'
+import { isEmpty, isNull, isImage, createObjectURL } from '~/util'
 import { ClickOutside as vClickOutside } from 'element-plus'
 import { inject, nextTick, reactive, ref } from 'vue'
 import {
-  CommentSubmitParam2,
-  InjectionCommentFun,
   InjectionEmojiApi,
   EditorInstance,
   UToast,
@@ -49,6 +47,7 @@ import {
   EmojiApi
 } from '~/index'
 import { ElButton } from '~/element'
+import { InjectInputBox, InjectInputBoxApi } from '../../key'
 
 export interface InputBoxApi {
   focus(): void
@@ -83,7 +82,7 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
-const submit = inject(InjectionCommentFun) as (obj: CommentSubmitParam2) => void
+const { upload, submit } = inject(InjectInputBox) as InjectInputBoxApi
 const emoji = inject(InjectionEmojiApi) as EmojiApi
 
 // 提交评论的数据
@@ -94,8 +93,8 @@ const onSubmit = () => {
       : content.value,
     parentId: isNull(props.parentId, null),
     files: files2.value,
-    finish: () => {
-      //清理提交后的数据
+    clear: () => {
+      //清理输入框提交的数据
       clearData()
       // 关闭评论框事件
       emit('close')
@@ -142,17 +141,6 @@ defineExpose({
   focus: () => (editorRef as any).value?.focus()
 })
 
-//获取文件url
-function createObjectURL(blob: any) {
-  if (window.URL) {
-    return window.URL.createObjectURL(blob)
-  } else if (window.webkitURL) {
-    return window.webkitURL.createObjectURL(blob)
-  } else {
-    return ''
-  }
-}
-
 const change = (val: Event) => {
   imgList.value.length = 0 //清空上一次显示图片效果
   files2.value.length = 0
@@ -169,7 +157,7 @@ const change = (val: Event) => {
       if (isImage(fileName)) {
         imgList.value.push(url)
       } else {
-        UToast({ type: 'warning', message: '请选择图片类型文件!', duration: 2500 })
+        UToast({ type: 'warn', message: '请选择图片类型文件!', duration: 2500 })
       }
     }
   }

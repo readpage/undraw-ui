@@ -26,7 +26,7 @@ const toastTypes: toastType[] = [
     }
   },
   {
-    type: 'warning',
+    type: 'warn',
     options: {
       color: '#fdf6ec',
       bgColor: '#e6a23c',

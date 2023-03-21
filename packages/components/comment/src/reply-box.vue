@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-      <div v-if="state.over" class="fetch-more">
+      <div v-if="state.over && page" class="fetch-more">
         <el-pagination
           small
           hide-on-single-page
@@ -39,7 +39,8 @@
 <script setup lang="ts">
 import { computed, inject, reactive } from 'vue'
 import ContentBox from './content-box.vue'
-import { ReplyApi, ElPagination, InjectionReply, ReplyParam } from '~/index'
+import { ReplyApi, ElPagination } from '~/index'
+import { InjectReplyBox, InjectReplyBoxApi } from '../key'
 
 interface Props {
   data?: ReplyApi | null
@@ -54,8 +55,11 @@ const state = reactive({
   pageSize: 5
 })
 
-const { replyPage, replyShowSize, comments } = inject(InjectionReply) as ReplyParam
+const { replyPage, replyShowSize, comments } = inject(InjectReplyBox) as InjectReplyBoxApi
 
+const { page } = inject(InjectReplyBox) as InjectReplyBoxApi
+
+// 分页操作
 const data = computed(() => {
   let data = {
     total: 0,
@@ -81,7 +85,7 @@ const replyMore = () => {
   state.over = true
 }
 
-const replyFinish = (val: any) => {
+const finish = (val: any) => {
   comments.value.forEach(e => {
     if (e.id == props.id) {
       if (e.reply) {
@@ -93,12 +97,12 @@ const replyFinish = (val: any) => {
 
 const currentChange = (val: number) => {
   state.pageNum = val
-  replyPage(props.id, val, state.pageSize, val => replyFinish(val))
+  replyPage(props.id, val, state.pageSize, reply => finish(reply))
 }
 
 const sizeChange = (val: number) => {
   state.pageSize = val
-  replyPage(props.id, state.pageNum, val, val => replyFinish(val))
+  replyPage(props.id, state.pageNum, val, reply => finish(reply))
 }
 </script>
 

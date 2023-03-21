@@ -1,45 +1,30 @@
 <template>
   <div class="comment" :class="{ reply: props.reply }">
     <div class="comment-sub">
-      <el-popover
-        v-if="slots.info"
-        placement="top"
-        :width="300"
-        :show-after="300"
-        @before-enter="() => showInfo(str(data.uid), (v: any) => (userInfo = v))"
-      >
-        <Info />
-        <template #reference>
-          <a :href="data.user.homeLink" target="_blank" class="no-underline" style="display: block">
-            <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.user.avatar">
-              <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
-            </el-avatar>
-          </a>
-        </template>
-      </el-popover>
+      <UserCard :uid="str(data.uid)">
+        <a :href="data.user.homeLink" target="_blank" class="no-underline" style="display: block">
+          <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.user.avatar">
+            <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+          </el-avatar>
+        </a>
+      </UserCard>
     </div>
     <div class="comment-primary">
       <div class="comment-main">
-        <div class="user-box">
-          <el-popover
-            v-if="slots.info"
-            placement="top"
-            :width="300"
-            :show-after="300"
-            @before-enter="() => showInfo(str(data.uid), (v: any) => (userInfo = v))"
-          >
-            <Info />
-            <template #reference>
-              <a :href="data.user.homeLink" target="_blank" class="no-underline" style="display: block">
-                <div class="username">
-                  <span class="name" style="max-width: 10em">{{ data.user.username }}</span>
-                  <span blank="true" class="rank">
-                    <u-icon size="24" v-html="useLevel(data.user.level)"></u-icon>
-                  </span>
-                </div>
-              </a>
-            </template>
-          </el-popover>
+        <template v-if="slots.info">
+          <Info />
+        </template>
+        <div v-else class="user-info">
+          <UserCard :uid="str(data.uid)">
+            <a :href="data.user.homeLink" target="_blank" class="no-underline" style="display: block">
+              <div class="username">
+                <span class="name" style="max-width: 10em">{{ data.user.username }}</span>
+                <span blank="true" class="rank">
+                  <u-icon size="24" v-html="useLevel(data.user.level)"></u-icon>
+                </span>
+              </div>
+            </a>
+          </UserCard>
           <!-- <span class="author-badge-text">（作者）</span> -->
           <span class="address" style="color: #939393; font-size: 12px">&nbsp;&nbsp;{{ data.address }}</span>
           <time class="time">{{ data.createTime }}</time>
@@ -138,15 +123,14 @@ import {
   UFold,
   UIcon,
   CommentApi,
-  ContentBoxParam,
-  InjectionContentBox
 } from '~/components'
 import type { InputBoxApi } from './tools/input-box.vue'
-import { ElAvatar, ElPopover } from '~/element'
+import { ElAvatar } from '~/element'
 import { useEmojiParse, useLevel } from '~/hooks'
 import Operation from './tools/operation.vue'
 import { str, ElImage, isEmpty } from '~/index'
-import { InjectSlots } from '../key'
+import UserCard from './tools/user-card.vue'
+import { InjectContentBox, InjectContentBoxApi, InjectSlots } from '../key'
 
 interface Props {
   reply?: boolean
@@ -162,7 +146,6 @@ const state = reactive({
 
 const commentRef = ref<InputBoxApi>()
 const btnRef = ref<HTMLDivElement>()
-const userInfo = ref({})
 
 const imgList = computed(() => {
   let temp = props.data.contentImg
@@ -171,10 +154,7 @@ const imgList = computed(() => {
 })
 
 const { allEmoji } = inject(InjectionEmojiApi) as EmojiApi
-const { like, user, showInfo } = inject(InjectionContentBox) as ContentBoxParam
-//工具slots
-const slots = inject(InjectSlots) as any
-const Info = () => h('div', slots.info({ userInfo: userInfo.value }))
+const { like, user } = inject(InjectContentBox) as InjectContentBoxApi
 
 //点击回复按钮打开输入框
 function reply() {
@@ -194,6 +174,11 @@ function hide(event: Event) {
     state.active = false
   }
 }
+
+//工具slots
+const slots = inject(InjectSlots) as any
+// 用户信息卡槽
+const Info = () => h('div', slots.info(props.data))
 
 const contents = computed(() => useEmojiParse(allEmoji, props.data.content))
 </script>

@@ -7,6 +7,5 @@ module.exports = {
   trailingComma: 'none',  // all 包括函数对象等所有可选
   tabWidth: 2,  // tab缩进大小,默认为2
   useTabs: false,   // 使用tab缩进，默认false
-  endOfLine: 'auto',
   htmlWhitespaceSensitivity: 'ignore',
 }

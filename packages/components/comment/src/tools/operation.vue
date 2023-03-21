@@ -36,9 +36,9 @@
 <script setup lang="ts">
 import { computed, inject, ref } from 'vue'
 import { ElPopover } from '~/element/popover'
-import { CommentApi, ContentBoxParam, InjectionContentBox } from '~/components'
+import { CommentApi } from '~/components'
 import { PopoverInstance } from 'element-plus'
-import { InjectOperation, OperationApi } from '../../key'
+import { InjectOperation, InjectOperationApi } from '../../key'
 
 interface Props {
   comment: CommentApi
@@ -49,7 +49,7 @@ const props = defineProps<Props>()
 const active = ref(false)
 const popoverRef = ref<PopoverInstance>()
 
-const { user, tools, operate } = inject(InjectOperation) as OperationApi
+const { user, tools, operate } = inject(InjectOperation) as InjectOperationApi
 
 /**
  * 工具栏点击事件
