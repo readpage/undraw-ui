@@ -5,23 +5,42 @@ title: Comment
 # Comment 评论
 功能: 评论回复、点赞、支持表情包、删除评论、图片上传
 
-[Comment代码实例地址](https://gitee.com/undraw/undraw-ui-demo)
+[Comment完整前后端代码实例地址](https://gitee.com/undraw/undraw-comment-demo)
 
 ## 基础用法
 :::demo
 comment/basic
 :::
 
-## 回复分页
-:::demo
-comment/page
+## 图片上传
+:::demo 使用 `uplaod` 来开启图片上传
+comment/upload
 :::
 
+## 回复分页
+:::demo 使用 `page` 来开启回复分页
+comment/reply-page
+:::
 
-## 查询用户信息
-鼠标移动在头像内显示用户信息
-:::demo
-comment/user-info
+## 用户信息卡片
+:::demo 利用卡槽取代用户信息卡片内容, 鼠标移动在头像内显示用户信息
+comment/user-card
+:::
+
+## 工具栏
+:::demo 设置config.tools值开启工具栏功能
+comment/tools
+:::
+
+## 导航栏排序
+:::demo 使用v-comment-nav组件切换评论最新和排序，也可自定义默认卡槽
+comment/nav-sort
+:::
+
+## 评论滚动
+**滚动样式受到文档样式影响，体验效果请在本地使用**
+:::demo 使用v-comment-scroll组件实现评论滚动 
+comment/scroll
 :::
 
 
@@ -37,8 +56,6 @@ comment/user-info
 |-------|------|----------|
 | submit|提交评论| (content: string, parentId: number, finish: (comment: CommentApi) => void) => void |
 | like | 点赞 | (id: number, finish: () => void) => void |
-| remove | 删除评论 | (id: number, finish: () => void) => void |
-| report | 举报用户 | (id: number, finish: () => void) => void |
 | replyPage | 回复分页 | (parentId: string, pageNum: number, pageSize: number, finish: (comments: CommentApi[]) => void) => void |
 | getUser | 获取用户详细信息 | (id: number, show: Function) => void |
 

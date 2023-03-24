@@ -37,7 +37,6 @@
 import { computed, inject, ref } from 'vue'
 import { ElPopover } from '~/element/popover'
 import { CommentApi } from '~/components'
-import { PopoverInstance } from 'element-plus'
 import { InjectOperation, InjectOperationApi } from '../../key'
 
 interface Props {
@@ -47,7 +46,7 @@ interface Props {
 const props = defineProps<Props>()
 // 是否可以点击
 const active = ref(false)
-const popoverRef = ref<PopoverInstance>()
+const popoverRef = ref()
 
 const { user, tools, operate } = inject(InjectOperation) as InjectOperationApi
 

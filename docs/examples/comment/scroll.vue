@@ -1,0 +1,96 @@
+<template>
+  <u-comment-scroll :disable="disable" @more="more">
+    <u-comment :config="config" @submit="submit" @like="like">
+      <!-- <template>用户信息导航栏卡槽</template> -->
+      <!-- <template #info>用户信息卡槽</template> -->
+      <!-- <template #card>用户信息卡片卡槽</template> -->
+    </u-comment>
+  </u-comment-scroll>
+</template>
+
+<script setup lang="ts">
+import emoji from './emoji'
+import { reactive, ref } from 'vue'
+import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL } from 'undraw-ui'
+import { commentSize, getComment } from './comment';
+
+const config = reactive<ConfigApi>({
+  user: {
+    id: 1,
+    username: 'jack',
+    avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
+    // 评论id数组 建议:存储方式用户uid和评论id组成关系,根据用户uid来获取对应点赞评论id,然后加入到数组中返回
+    likeIds: [1, 2, 3]
+  },
+  emoji: emoji,
+  comments: [],
+  total: 10
+})
+
+// 初始化评论列表
+config.comments = getComment(1, 1)
+
+// 是否禁用滚动加载评论
+const disable = ref(false)
+
+// 当前页数
+let pageNum = 1
+// 页大小
+let pageSize = 1
+// 评论总数量
+let total = commentSize
+// 加载更多评论
+const more = () => {
+  console.log(disable.value)
+  if (pageNum <= Math.ceil(total / pageSize)) {
+    setTimeout(() => {
+      config.comments.push(...getComment(pageNum, 1))
+      ++pageNum
+    }, 200)
+  } else {
+    disable.value = true
+  }
+}
+
+let temp_id = 100
+// 提交评论事件
+const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
+  console.log('提交评论: ' + content, parentId, files)
+
+  /**
+   * 上传文件后端返回图片访问地址，格式以'||'为分割; 如:  '/static/img/program.gif||/static/img/normal.webp'
+   */
+  let contentImg = files.map(e => createObjectURL(e)).join('||')
+
+  const comment: CommentApi = {
+    id: String((temp_id += 1)),
+    parentId: parentId,
+    uid: config.user.id,
+    address: '来自江苏',
+    content: content,
+    likes: 0,
+    createTime: '1分钟前',
+    contentImg: contentImg,
+    user: {
+      username: config.user.username,
+      avatar: config.user.avatar,
+      level: 6,
+      homeLink: `/${(temp_id += 1)}`
+    },
+    reply: null
+  }
+  setTimeout(() => {
+    finish(comment)
+    UToast({ message: '评论成功!', type: 'info' })
+  }, 200)
+}
+// 点赞按钮事件 将评论id返回后端判断是否点赞，然后在处理点赞状态
+const like = (id: string, finish: () => void) => {
+  console.log('点赞: ' + id)
+  setTimeout(() => {
+    finish()
+  }, 200)
+}
+
+</script>
+

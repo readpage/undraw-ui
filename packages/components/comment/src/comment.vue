@@ -104,6 +104,9 @@ const inputBoxParam: InjectInputBoxApi = {
 // 输入框盒子
 provide(InjectInputBox, inputBoxParam)
 
+
+
+
 /**
  * 点赞事件
  * @param id
@@ -150,6 +153,9 @@ const contentBoxParam: InjectContentBoxApi = {
 }
 provide(InjectContentBox, contentBoxParam)
 
+
+
+
 // 回复盒子
 const replyBoxParam: InjectReplyBoxApi = {
   page: props.page,
@@ -160,6 +166,9 @@ const replyBoxParam: InjectReplyBoxApi = {
   comments: comments
 }
 provide(InjectReplyBox, replyBoxParam)
+
+
+
 
 /**
  * 删除当前评论
@@ -204,6 +213,9 @@ const operation: InjectOperationApi = {
   }
 }
 provide(InjectOperation, operation)
+
+
+
 
 // 表情包
 provide(InjectionEmojiApi, props.config.emoji)

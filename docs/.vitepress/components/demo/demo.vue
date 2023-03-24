@@ -127,15 +127,15 @@ highlighter.then(highlighter => {
   border-radius: 4px;
 
   .op-btns {
-    padding: 0.5rem;
+    padding: 1rem;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    height: 2rem;
-    line-height: 2rem;
+    height: 3rem;
+    line-height: 3rem;
 
     .op-btn {
-      margin: 0 0.5rem;
+      margin: 0 1rem;
       cursor: pointer;
       transition: 0.2s;
     }

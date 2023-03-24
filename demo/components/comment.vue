@@ -21,7 +21,7 @@ const config = reactive<ConfigApi>({
     id: 1,
     username: 'jack',
     avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
-    // 评论id数组 建议:存储方式用户id和文章id和评论id组成关系,根据用户id和文章id来获取对应点赞评论id,然后加入到数组中返回
+    // 评论id数组 建议:存储方式用户uid和评论id组成关系,根据用户uid来获取对应点赞评论id,然后加入到数组中返回
     likeIds: [1, 2, 3]
   },
   emoji: emoji,
@@ -61,10 +61,9 @@ const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
     UToast({ message: '评论成功!', type: 'info' })
   }, 200)
 }
-// 点赞按钮事件
+// 点赞按钮事件 将评论id返回后端判断是否点赞，然后在处理点赞状态
 const like = (id: string, finish: () => void) => {
   console.log('点赞: ' + id)
-  console.log(id)
   setTimeout(() => {
     finish()
   }, 200)

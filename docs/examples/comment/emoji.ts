@@ -7,6 +7,7 @@ const emojiList: {}[] = [
     '[口罩]': `${raw}/emoji/kouzhao.webp`,
     '[狗头]': `${raw}/emoji/goutou.webp`,
     '[微笑]': `${raw}/emoji/smile.webp`,
+    '[大笑2]': `${raw}/emoji/daxiao2.png`,
     '[OK]': `${raw}/emoji/ok.webp`,
     '[星星眼]': `${raw}/emoji/star.webp`,
     '[辣眼睛]': `${raw}/emoji/layanjing.webp`,

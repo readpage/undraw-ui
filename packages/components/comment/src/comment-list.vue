@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
 import { str } from '~/util'
 import { CommentApi } from '../interface'
 import ContentBox from './content-box.vue'

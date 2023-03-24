@@ -14,6 +14,10 @@ export const nav: DefaultTheme.NavItem[] = [
     text: '更新日志',
     link: '/update/doc'
   },
+  {
+    text: '💖支持',
+    link: '/other/support'
+  },
   { 
     text: 'gitee⚡️', 
     link: 'https://gitee.com/undraw/undraw-ui'

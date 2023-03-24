@@ -1,4 +1,3 @@
-import { InjectionKey, Ref } from 'vue'
 import { EmojiApi } from '../emoji/interface'
 
 export interface CommentApi {

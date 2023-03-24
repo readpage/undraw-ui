@@ -24,7 +24,7 @@ const comment = [
     parentId: null,
     uid: '2',
     address: '来自苏州',
-    content: '知道在学校为什么感觉这么困吗？因为学校，是梦开始的地方。[脱单doge]',
+    content: '知道在学校为什么感觉这么困吗？[大笑2]因为学校，是梦开始的地方。[脱单doge]',
     likes: 11,
     createTime: '1天前',
     user: {
@@ -216,6 +216,7 @@ const comment = [
     }
   }
 ] as CommentApi[]
+
 export const reply = {
   total: 6,
   list: [

@@ -15,6 +15,9 @@ hero:
     - theme: alt
       text: View on GitHub
       link: https://github.com/readpage/undraw-ui
+    - theme: alt
+      text: 支持这个项目
+      link: /undraw-ui/other/support
 
 features:
   - title: 开源免费

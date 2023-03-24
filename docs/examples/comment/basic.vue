@@ -1,52 +1,40 @@
 <template>
-  <div class="comment-view" style="padding: 0px">
-    <u-comment :config="config" :show-size="2" @submit="submit" @like="like" @remove="remove" @report="report">
-      <!-- <template #list-title>全部评论</template> -->
-    </u-comment>
-  </div>
+  <u-comment :config="config" @submit="submit" @like="like">
+    <!-- <template>用户信息导航栏卡槽</template> -->
+    <!-- <template #info>用户信息卡槽</template> -->
+    <!-- <template #card>用户信息卡片卡槽</template> -->
+  </u-comment>
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
-import { UToast, CommentApi, ConfigApi, CommentSubmitParam } from 'undraw-ui'
-// 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases
-// static文件放在public下,引入emoji.ts文件可以移动到自定义位置
 import emoji from './emoji'
+import { reactive } from 'vue'
+import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL } from 'undraw-ui'
 
 const config = reactive<ConfigApi>({
   user: {
-    id: '1',
-    username: 'user',
+    id: 1,
+    username: 'jack',
     avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
-    // 评论id数组 建议:存储方式用户id和文章id和评论id组成关系,根据用户id和文章id来获取对应点赞评论id,然后加入到数组中返回
-    likeIds: ['1', '2', '11']
+    // 评论id数组 建议:存储方式用户uid和评论id组成关系,根据用户uid来获取对应点赞评论id,然后加入到数组中返回
+    likeIds: [1, 2, 3]
   },
   emoji: emoji,
-  comments: []
+  comments: [],
+  total: 10
 })
-
-//获取文件url
-function createObjectURL(blob: any) {
-  if (window.URL) {
-    return window.URL.createObjectURL(blob)
-  } else if (window.webkitURL) {
-    return window.webkitURL.createObjectURL(blob)
-  } else {
-    return ''
-  }
-}
 
 let temp_id = 100
 // 提交评论事件
-const submit = ({ content, parentId, files, finish }: CommentSubmitParam) => {
+const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
   console.log('提交评论: ' + content, parentId, files)
 
   /**
-   * 上传文件后端返回图片访问地址，格式以', '为分割; 如:  '/static/img/program.gif, /static/img/normal.webp'
+   * 上传文件后端返回图片访问地址，格式以'||'为分割; 如:  '/static/img/program.gif||/static/img/normal.webp'
    */
-  let contentImg = files.map((e: any) => createObjectURL(e)).join(', ')
+  let contentImg = files.map(e => createObjectURL(e)).join('||')
 
-  let comment: CommentApi = {
+  const comment: CommentApi = {
     id: String((temp_id += 1)),
     parentId: parentId,
     uid: config.user.id,
@@ -68,27 +56,9 @@ const submit = ({ content, parentId, files, finish }: CommentSubmitParam) => {
     UToast({ message: '评论成功!', type: 'info' })
   }, 200)
 }
-
-// 删除评论
-const remove = (id: number, finish: () => void) => {
-  setTimeout(() => {
-    finish()
-    alert(`删除成功: ${id}`)
-  }, 200)
-}
-
-//举报用户
-const report = (id: number, finish: () => void) => {
-  console.log(id)
-  setTimeout(() => {
-    finish()
-    alert(`举报成功: ${id}`)
-  }, 200)
-}
-
-// 点赞按钮事件
-const like = (id: number, finish: () => void) => {
-  console.log(id)
+// 点赞按钮事件 将评论id返回后端判断是否点赞，然后在处理点赞状态
+const like = (id: string, finish: () => void) => {
+  console.log('点赞: ' + id)
   setTimeout(() => {
     finish()
   }, 200)
@@ -111,59 +81,20 @@ config.comments = [
       level: 6,
       homeLink: '/1'
     }
-  },
-  {
-    id: '2',
-    parentId: null,
-    uid: '2',
-    address: '来自苏州',
-    content: '知道在学校为什么感觉这么困吗？因为学校，是梦开始的地方。[脱单doge]',
-    likes: 11,
-    createTime: '1天前',
-    user: {
-      username: '悟二空',
-      avatar: 'https://static.juzicon.com/user/avatar-bf22291e-ea5c-4280-850d-88bc288fcf5d-220408002256-ZBQQ.jpeg',
-      level: 1,
-      homeLink: '/2'
-    },
-    reply: {
-      total: 2,
-      list: [
-        {
-          id: '21',
-          parentId: '2',
-          uid: '3',
-          address: '来自重庆',
-          content: '说的对，所以，综上所述，上课睡觉不怪我呀💤',
-          likes: 3,
-          createTime: '1分钟前',
-          user: {
-            username: '别扰我清梦*ぁ',
-            avatar:
-              'https://static.juzicon.com/user/avatar-8b6206c1-b28f-4636-8952-d8d9edec975d-191001105631-MDTM.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-            level: 5,
-            homeLink: '/21'
-          }
-        },
-        {
-          id: '22',
-          parentId: '2',
-          uid: '4',
-          content:
-            '回复 <span style="color: var(--u-color-success-dark-2);">@别扰我清梦*ぁ:</span> 看完打了一个哈切。。。会传染。。。[委屈]',
-          address: '来自广州',
-          likes: 9,
-          createTime: '1天前',
-          user: {
-            username: 'Blizzard',
-            avatar:
-              'https://static.juzicon.com/user/avatar-3cb86a0c-08e7-4305-9ac6-34e0cf4937cc-180320123405-BCV6.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-            level: 3,
-            homeLink: '/22'
-          }
-        }
-      ]
-    }
   }
 ]
 </script>
+
+<style lang="scss" scoped>
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 10px;
+}
+body {
+  font-size: 12px;
+}
+</style>
