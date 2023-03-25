@@ -31,7 +31,6 @@
 ![](https://s2.loli.net/2022/04/28/frd5h8bulF7SZK6.png)
 
 
-
 2. 评论
 
 ![](https://s2.loli.net/2022/04/28/HtGWBxsJ5LljDEU.png)
@@ -42,7 +41,7 @@
 
 3. 搜索(input关键词动态滚动)
 
-   ![](https://s2.loli.net/2022/06/22/juvX79t6OPcaWZs.png)
+![](https://s2.loli.net/2022/06/22/juvX79t6OPcaWZs.png)
 
 4. 锚点
 
