@@ -1,6 +1,6 @@
 <template>
   <u-comment :config="config" page @submit="submit" @like="like" @reply-page="replyPage">
-    <!-- <template>用户信息导航栏卡槽</template> -->
+    <!-- <template>导航栏卡槽</template> -->
     <!-- <template #info>用户信息卡槽</template> -->
     <!-- <template #card>用户信息卡片卡槽</template> -->
   </u-comment>

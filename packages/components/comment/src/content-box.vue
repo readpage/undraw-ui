@@ -150,7 +150,7 @@ const btnRef = ref<HTMLDivElement>()
 const imgList = computed(() => {
   let temp = props.data.contentImg
   if (isEmpty(temp)) return []
-  return temp?.split(', ')
+  return temp?.split('||')
 })
 
 const { allEmoji } = inject(InjectionEmojiApi) as EmojiApi

@@ -1,7 +1,7 @@
 <template>
   <u-comment-scroll :disable="disable" @more="more">
     <u-comment :config="config" @submit="submit" @like="like">
-      <!-- <template>用户信息导航栏卡槽</template> -->
+      <!-- <template>导航栏卡槽</template> -->
       <!-- <template #info>用户信息卡槽</template> -->
       <!-- <template #card>用户信息卡片卡槽</template> -->
     </u-comment>

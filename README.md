@@ -37,7 +37,7 @@
 
 <p style="text-align: center">暗黑主题<p>
 
-![img](https://gitee.com/undraw/undraw-ui/raw/master/public/docs/comment-2.png)
+![img](https://gitee.com/undraw/undraw-ui/raw/master/public/docs/comment-dark.png)
 
 3. 搜索(input关键词动态滚动)
 
