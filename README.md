@@ -9,7 +9,7 @@
     <img src="https://img.shields.io/npm/dt/undraw-ui.svg">
   </a>
   <a href="https://github.com/vuejs/core">
-    <img src="https://img.shields.io/badge/dependencies-vue%E2%89%A53.2.0-green">
+    <img src="https://img.shields.io/badge/dependencies-vue%E2%89%A53.2.25-green">
   </a>
    <a href="https://github.com/element-plus/element-plus">
     <img src="https://img.shields.io/badge/dependencies-ElementPlus%E2%89%A52.1.8-green">
@@ -60,6 +60,7 @@
 
 使用`npm`安装
 
+***element-plus低于2.1.8，el-input样式会受影响；vue低于3.2.25不能正常使用***
 ```bash
 npm i undraw-ui@0.9.0
 ```

@@ -2,7 +2,7 @@
   <div class="nav">
     <span class="nav__title">全部评论</span>
     <div class="nav__sort">
-      <div class="item" :class="{ active: latest }" @click="latest = !latest">
+      <div class="item select-none" :class="{ active: latest }" @click="latest = true">
         <u-icon>
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="">
             <path
@@ -14,7 +14,7 @@
         </u-icon>
         最新
       </div>
-      <div class="item" :class="{ active: !latest }" @click="latest = !latest">
+      <div class="item select-none" :class="{ active: !latest }" @click="latest = false">
         <u-icon>
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="">
             <path

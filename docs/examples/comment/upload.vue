@@ -7,6 +7,8 @@
 </template>
 
 <script setup lang="ts">
+// 下载表情包资源emoji.zip https://readpage.lanzouy.com/b04duelxg 密码:undraw
+// static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from './emoji'
 import { reactive } from 'vue'
 import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL } from 'undraw-ui'
@@ -83,7 +85,7 @@ config.comments = [
 ]
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 * {
   padding: 0;
   margin: 0;

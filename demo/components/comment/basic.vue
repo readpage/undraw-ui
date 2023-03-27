@@ -1,6 +1,6 @@
 <template>
   <u-comment :config="config" @submit="submit" @like="like">
-    <!-- <template>用户信息导航栏卡槽</template> -->
+    <!-- <template>导航栏卡槽</template> -->
     <!-- <template #info>用户信息卡槽</template> -->
     <!-- <template #card>用户信息卡片卡槽</template> -->
   </u-comment>
@@ -8,6 +8,8 @@
 
 <script setup lang="ts">
 import { getComment } from '@/assets/comment'
+// 下载表情包资源emoji.zip https://readpage.lanzouy.com/b04duelxg 密码:undraw
+// static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from '@/assets/emoji'
 import { reactive } from 'vue'
 import { CommentApi, ConfigApi, SubmitParamApi, UToast } from '~/components'

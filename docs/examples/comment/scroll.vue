@@ -9,6 +9,8 @@
 </template>
 
 <script setup lang="ts">
+// 下载表情包资源emoji.zip https://readpage.lanzouy.com/b04duelxg 密码:undraw
+// static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from './emoji'
 import { reactive, ref } from 'vue'
 import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL } from 'undraw-ui'
@@ -34,7 +36,7 @@ config.comments = getComment(1, 1)
 const disable = ref(false)
 
 // 当前页数
-let pageNum = 1
+let pageNum = 2
 // 页大小
 let pageSize = 1
 // 评论总数量

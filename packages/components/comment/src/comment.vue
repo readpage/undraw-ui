@@ -41,7 +41,6 @@ import {
   InjectReplyBoxApi,
   SubmitParam2Api
 } from '../key'
-
 defineOptions({
   name: 'UComment'
 })
