@@ -27,7 +27,7 @@ interface Props {
   // 指定监听的容器
   container: string
   // 滚动轴
-  target?: string
+  scroll?: string
   // 距离窗口顶部达到指定偏移量
   targetOffset?: number
 }
@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const active = ref(0)
 const navs = ref({} as NodeListOf<HTMLDivElement>)
-const target = ref({} as Element | Window)
+const scroll = ref({} as Element | Window)
 
 const d1 = (val: string) => {
   switch (val) {
@@ -59,10 +59,10 @@ const onScroll = () => {
     offsetTopArr.push(v.offsetTop)
   })
 
-  let scroll = target.value instanceof Element ? target.value.scrollTop : undefined
+  let scroll2 = scroll.value instanceof Element ? scroll.value.scrollTop : undefined
 
   // 获取当前文档流的 scrollTop
-  const scrollTop = scroll || document.documentElement.scrollTop || document.body.scrollTop
+  const scrollTop = scroll2 || document.documentElement.scrollTop || document.body.scrollTop
   // 定义当前点亮的导航下标
   offsetTopArr.forEach((v, k) => {
     if (scrollTop >= v - 10 - props.targetOffset) {
@@ -74,8 +74,9 @@ const onScroll = () => {
 // 跳转到指定索引的元素
 const scrollTo = (k: number) => {
   const tar = navs.value.item(k)
-  if (props.target) {
-    target.value.scrollTo({
+  console.log(tar)
+  if (props.scroll) {
+    scroll.value.scrollTo({
       top: tar.offsetTop - props.targetOffset,
       behavior: 'smooth'
     })
@@ -87,21 +88,31 @@ const scrollTo = (k: number) => {
   }
 }
 
+onMounted(() => {})
+
+onUnmounted(() => {
+  scroll.value.removeEventListener('scroll', onScroll)
+})
+
+let observer: ResizeObserver
+
 onMounted(() => {
-  if (props.target) {
-    target.value = document.querySelector(props.target) as Element
-  } else {
-    target.value = window
-  }
-  // 获取所有锚点元素
-  navs.value = document
-    .querySelector(props.container)
-    ?.querySelectorAll('h1, h2, h3, h4, h5, h6') as NodeListOf<HTMLDivElement>
-  target.value.addEventListener('scroll', onScroll)
+  let container = document.querySelector(props.container) as Element
+  observer = new ResizeObserver(entry => {
+    if (props.scroll) {
+      scroll.value = document.querySelector(props.scroll) as Element
+    } else {
+      scroll.value = window
+    }
+    // 获取所有锚点元素
+    navs.value = container.querySelectorAll('h1, h2, h3, h4, h5, h6') as NodeListOf<HTMLDivElement>
+    scroll.value.addEventListener('scroll', onScroll)
+  })
+  observer.observe(container as any)
 })
 
 onUnmounted(() => {
-  target.value.removeEventListener('scroll', onScroll)
+  observer.disconnect()
 })
 </script>
 

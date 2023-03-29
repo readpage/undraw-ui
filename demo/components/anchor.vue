@@ -2,7 +2,8 @@
   <div class="view" style="height: 500px">
     <el-scrollbar class="anchor" height="500px">
       <div id="article" class="article">
-        <h2>人的大地</h2>
+        <section>
+          <h2>人的大地</h2>
         <p>
           我们对自身的了解，来自大地的，比来自书本的多。因为大地桀骜不驯。人在跟障碍较量时，才会发现自己的价值。但是，为了克服障碍，人需要一个工具——一个木刨，或一把铁犁。农民在劳动中，逐渐窥探到自然界的一些奥秘，他们挖掘到的真理是无处不在的。同样地，飞机这个航空运输工具，也使人接触到这些古老的问题。
         </p>
@@ -57,7 +58,32 @@
           </p>
           <p>(徐 行摘自《看天下》，IC photo供图)</p>
         </div>
-        <h2>村庄的时间</h2>
+        </section>
+        <section v-html="content"></section>
+      </div>
+    </el-scrollbar>
+    <!-- container指定监听的容器 scroll滚动轴 target-offset距离窗口顶部达到指定偏移量 -->
+    <div class="article-catalog">
+      <u-anchor
+        style="position: fixed"
+        container="#article"
+        :target-offset="50"
+        scroll=".anchor .el-scrollbar__wrap"
+      ></u-anchor>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { ElScrollbar } from '~/index'
+defineOptions({
+  name: 'anchor'
+})
+
+const content = ref()
+setTimeout(() => {
+  content.value = ` <h2>村庄的时间</h2>
         <div class="content">
           <p>
             当我十岁的时候站在我家后面的皂荚树下，我突然感到时间的停滞。我的视野里只有寂静的午后村庄，没有风，没有人，空气均匀地铺展在池塘的深绿色水面上。我在这种突如其来的空寂中不敢妄动，与此同时，心中涌起永恒的瞻望。我想我永远不会长大，鸭蹼状的宽大树叶也永遠不会扇动，而放眼望去，青砖平房、柴垛、洗衣石板都永远在这里，不会变动一分一毫。
@@ -84,26 +110,8 @@
             他跟随他的父母离开村庄，进入不同的城市，不断变更就读的学校，不断认识新同学又忘记老同学。这样一种流动不居的空间变动，给他带来的是怎样的时间体验呢?我想在我之前，祖辈都在这个村庄日出而作、日落而息，耕种同一片土地，喝同一脉井水，我想时间于他们是绵长的、悠远的。而到了我这一代，空间开始变动，时间慢慢加快，村庄中的人不断外涌。由此我看到在我父亲与他的父亲之间，时间是没有肌理的;而在我跟我侄子之间，时间裹挟的人事变化远超从前。
           </p>
           <p>(朱 颜摘自人民文学出版社《纸上王国》一书，黄思思图)</p>
-        </div>
-      </div>
-    </el-scrollbar>
-    <!-- container指定监听的容器 target滚动轴 target-offset距离窗口顶部达到指定偏移量 -->
-    <div class="article-catalog">
-      <u-anchor
-        style="position: fixed"
-        container="#article"
-        :target-offset="50"
-        target=".anchor .el-scrollbar__wrap"
-      ></u-anchor>
-    </div>
-  </div>
-</template>
-
-<script lang="ts" setup>
-import { ElScrollbar } from '~/index'
-defineOptions({
-  name: 'anchor'
-})
+        </div>`
+}, 2000)
 </script>
 
 <style lang="scss" scoped>
@@ -116,7 +124,7 @@ defineOptions({
 }
 .article {
   width: 400px;
-  p {
+  :deep(p) {
     margin: 20px 0;
     font-size: 16px;
     line-height: 32px;
@@ -124,4 +132,5 @@ defineOptions({
     text-indent: 2em;
   }
 }
+
 </style>
