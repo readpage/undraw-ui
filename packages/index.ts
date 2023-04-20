@@ -6,10 +6,12 @@ export * from './element'
 export * from './hooks'
 export * from './util'
 
+const install = (app: App) => {
+  components.forEach(item => {
+    app.use(item)
+  })
+}
+
 export default {
-  install: (app: App) => {
-    components.forEach(item => {
-      app.use(item)
-    })
-  }
+  install
 }

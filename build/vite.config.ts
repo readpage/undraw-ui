@@ -1,4 +1,3 @@
-import { UndrawUi } from '~/index';
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue' // 处理vue文件
 import DefineOptions from 'unplugin-vue-define-options/vite'
@@ -37,20 +36,21 @@ export default defineConfig({
     minify: true, //是否进行压缩
     lib: {
       entry: resolve(input, 'index.ts'),
-      name: 'UndrawUi',
-      fileName: () => 'index.js',
-      formats: ['es']
+      name: 'UndrawUi', // umd的变量名
+      fileName: (format) => `index.${format}.js`,
+      // 输出格式
+      formats: ['es', 'umd']
     },
     rollupOptions: {
       output: {
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
         globals: {
           vue: 'Vue',
-          'element-plus': 'ElementPlus',
+          'element-plus': 'ElementPlus'
         }
       },
       // 打包过滤掉第三方库
-      external: ['vue', 'element-plus']
+      external: ['vue', 'element-plus', '@element-plus/icons-vue']
     }
   }
 })

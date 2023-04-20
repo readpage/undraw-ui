@@ -112,6 +112,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  scroll.value.removeEventListener('scroll', onScroll)
   observer.disconnect()
 })
 </script>
