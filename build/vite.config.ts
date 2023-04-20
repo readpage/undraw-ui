@@ -33,7 +33,6 @@ export default defineConfig({
   build: {
     // 打包输出目录
     outDir: output,
-    minify: true, //是否进行压缩
     lib: {
       entry: resolve(input, 'index.ts'),
       name: 'UndrawUi', // umd的变量名
@@ -46,7 +45,8 @@ export default defineConfig({
         exports: 'named',
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
         globals: {
-          vue: 'Vue'
+          vue: 'Vue',
+          'element-plus': 'ElementPlus'
         }
       },
       // 打包过滤掉第三方库

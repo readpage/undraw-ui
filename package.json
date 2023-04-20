@@ -1,7 +1,7 @@
 {
   "name": "undraw-ui",
   "private": false,
-  "version": "0.9.2",
+  "version": "0.9.3",
   "type": "module",
   "author": "readpage <f1dao@qq.com>",
   "repository": {
@@ -18,8 +18,9 @@
   ],
   "homepage": "https://undraw.gitee.io/undraw-ui/",
   "license": "MIT",
-  "main": "dist/index.umd.js",
-  "module": "dist/index.es.js",
+  "main": "dist/index.es.js",
+  "unpkg": "dist/index.umd.js",
+  "jsdelivr": "dist/index.umd.js",
   "types": "dist/index.d.ts",
   "style": "dist/style.css",
   "scripts": {
