@@ -2,9 +2,9 @@
   <div class="u-sign">
     <el-button link @click="visible = true">登录/注册</el-button>
     <u-dialog v-model="visible" :title="title" width="320px" top="30vh" :close-on-click-modal="false">
-      <img v-if="toggle == 0" class="sign-img normal" src="/static/img/normal.webp" alt="" />
+      <!-- <img v-if="toggle == 0" class="sign-img normal" src="/static/img/normal.webp" alt="" />
       <img v-else-if="toggle == 1" class="sign-img greeting" src="/static/img/greeting.webp" alt="" />
-      <img v-else class="sign-img blindfold" src="/static/img/blindfold.webp" alt="" />
+      <img v-else class="sign-img blindfold" src="/static/img/blindfold.webp" alt="" /> -->
       <formVue v-model="type" @toggle="val => (toggle = val)" @submit="form => $emit('submit', form)" />
       <u-divider>其他方式登录</u-divider>
       <div class="sign-oauth">

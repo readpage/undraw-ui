@@ -178,7 +178,6 @@ const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
 // 点赞按钮事件
 const like = (id: string, finish: () => void) => {
   console.log('点赞: ' + id)
-  console.log(id)
   setTimeout(() => {
     finish()
   }, 200)

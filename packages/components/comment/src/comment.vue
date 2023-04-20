@@ -41,6 +41,7 @@ import {
   InjectReplyBoxApi,
   SubmitParam2Api
 } from '../key'
+import { throttle } from 'lodash'
 defineOptions({
   name: 'UComment'
 })
@@ -103,42 +104,40 @@ const inputBoxParam: InjectInputBoxApi = {
 // 输入框盒子
 provide(InjectInputBox, inputBoxParam)
 
-
-
+// 点赞评论数组处理
+const editLikeCount = (id: string, count: number) => {
+  let tar = null
+  comments.value.forEach(v => {
+    if (v.id == id) {
+      tar = v
+    } else {
+      tar = v.reply?.list.find(v => v.id == id)
+    }
+    if (tar) {
+      tar.likes += count
+    }
+  })
+}
 
 /**
  * 点赞事件
  * @param id
  */
 const like = (id: string) => {
-  // 点赞评论数组处理
-  const editLike = (id: string, count: number) => {
-    let tar = null
-    comments.value.forEach(v => {
-      if (v.id != id) {
-        tar = v.reply?.list.find(v => v.id == id)
-      } else {
-        tar = v
-      }
-      if (tar) {
-        tar.likes += count
-      }
-    })
-  }
-
   // 点赞事件处理
   const likeIds = props.config.user.likeIds
-  let temp = likeIds.map(String)
   emit('like', id, () => {
-    if (temp.indexOf(id) == -1) {
+    if (likeIds.findIndex(item => item == id) == -1) {
       // 点赞
       likeIds.push(id as never)
-      editLike(id, 1)
+      editLikeCount(id, 1)
     } else {
       // 取消点赞
-      let index = temp.findIndex(item => item == id)
-      if (index != -1) likeIds.splice(index, 1)
-      editLike(id, -1)
+      let index = likeIds.findIndex(item => item == id)
+      if (index != -1) {
+        likeIds.splice(index, 1)
+        editLikeCount(id, -1)
+      }
     }
   })
 }
@@ -152,9 +151,6 @@ const contentBoxParam: InjectContentBoxApi = {
 }
 provide(InjectContentBox, contentBoxParam)
 
-
-
-
 // 回复盒子
 const replyBoxParam: InjectReplyBoxApi = {
   page: props.page,
@@ -165,9 +161,6 @@ const replyBoxParam: InjectReplyBoxApi = {
   comments: comments
 }
 provide(InjectReplyBox, replyBoxParam)
-
-
-
 
 /**
  * 删除当前评论
@@ -212,9 +205,6 @@ const operation: InjectOperationApi = {
   }
 }
 provide(InjectOperation, operation)
-
-
-
 
 // 表情包
 provide(InjectionEmojiApi, props.config.emoji)
