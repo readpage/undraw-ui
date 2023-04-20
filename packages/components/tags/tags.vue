@@ -65,24 +65,25 @@ watch(
   () => [...tagsList.value],
   (val, oldVal) => {
     if (oldVal) {
+      console.log(val, oldVal)
       if (val.length > oldVal.length) {
         //新增目标元素id
         let tag = val.find(v => !oldVal?.includes(v))
         // 删除相同的元素
         tagsList.value.forEach((item, index, self) => {
-          if (self.findIndex(v => v.meta.title == item.meta.title) != index) {
+          if (self.findIndex(v => v.path == item.path) != index) {
             self.splice(index, 1)
           }
         })
-        active.value = tagsList.value.findIndex(v => v.meta.title == tag?.meta.title)
+        active.value = tagsList.value.findIndex(v => v.path == tag?.path)
       }
     } else {
       let flag = 1
       // 删除相同的元素
       tagsList.value.forEach((item, index, self) => {
-        if (self.findIndex(v => v.meta.title == item.meta.title) != index) {
+        if (self.findIndex(v => v.path == item.path) != index) {
           self.splice(index, 1)
-          active.value = self.findIndex(v => v.meta.title == item.meta.title)
+          active.value = self.findIndex(v => v.path == item.path)
           flag = 0
         }
       })
