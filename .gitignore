@@ -11,5 +11,4 @@ demo-dist/
 
 # Editor directories and files
 .vscode/*
-!.vscode/extensions.json
 .idea

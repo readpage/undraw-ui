@@ -20,6 +20,7 @@ import { ElConfigProvider } from 'element-plus'
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import Page from './components/Page.vue'
 import counterVue from './components/counter.vue'
+import { cloneDeep } from '~/index'
 
 const components = [
   commentVue,
@@ -35,6 +36,7 @@ const components = [
   signVue,
   counterVue
 ]
+ 
 </script>
 
 <style lang="scss">

@@ -1,42 +1,5 @@
 import { isArray } from '.'
-
-/**
- * @param data
- * @returns
- *
- * 适用于任何数组和对象的深拷贝
- * const arr = [1, 2, 3, { a: "b" }, [{ c: "d" }]];
- * const cloneArr = cloneDeep(arr);
- *
- * cloneArr[3].a = "u";
- * cloneArr[4][0].c = "uu";
- *
- * console.log(arr); // [1, 2, 3, { a: "b" }, [{ c: "d" }]]
- * console.log(cloneArr); // [1, 2, 3, { a: "u" }, [{ c: "uu" }]]
- */
-export function cloneDeep(data: any) {
-  // 判断传入的值类型
-  if (!data) {
-    return data
-  }
-  if (typeof data !== 'object') return data
-  if (data.constructor === Date) return new Date(data)
-  if (data.constructor === RegExp) return new RegExp(data)
-
-  // 开始克隆
-  const clone: any = Array.isArray(data) ? [] : {}
-  for (let key in data) {
-    // 不克隆原型链上的属性和方法
-    if (data.hasOwnProperty(key)) {
-      if (typeof data[key] === 'object') {
-        clone[key] = cloneDeep(data[key])
-      } else {
-        clone[key] = data[key]
-      }
-    }
-  }
-  return clone
-}
+import { cloneDeep} from './clone-deep'
 
 // const obj = {
 //   name: '张三'
