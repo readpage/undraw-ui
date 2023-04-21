@@ -211,7 +211,14 @@ const reply = {
       likes: 32,
       address: '来自武汉',
       content: '世上莫名其妙走霉运的人多的是，都是一边为命运生气，一边化愤怒为力量地活着。',
-      createTime: '11小时前'
+      createTime: '11小时前',
+      user: {
+        username: 'poli301',
+        avatar:
+          'https://static.juzicon.com/avatars/avatar-190919180043-XPLP.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+        level: 4,
+        homeLink: '/34'
+      }
     },
     {
       id: '36',

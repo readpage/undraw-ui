@@ -1,6 +1,16 @@
 ---
 sidebar: false
 ---
+## 0.9.3
+***2023-04-20***
+
+### 新增
+- 新增cdn引用 by ([readpage](https://gitee.com/readpage))
+### 修复
+- element-plus: el-input样式都收到影响 ([#I6VSWT](https://gitee.com/undraw/undraw-ui/issues/I6VSWT) by [readpage](https://gitee.com/readpage))
+- 点赞多次点赞数量错误 ([#I6WR4H](https://gitee.com/undraw/undraw-ui/issues/I6WR4H) by [readpage](https://gitee.com/readpage))
+
+
 ## 0.9.0
 ***2023-03-24***
 
@@ -10,7 +20,7 @@ sidebar: false
 - 用户信息卡槽
 
 ### 修复
-- 修复评论后未清空图片、按钮禁用
+- 修复评论后未清空图片、按钮禁用 ([#I6NH97](https://gitee.com/undraw/undraw-ui/issues/I6NH97) by [@jishudaquan](https://gitee.com/jishudaquan))
 
 ### 重构
 - 防抖和节流  

@@ -178,8 +178,6 @@ const comment = [
       ]
     }
   },
-
-
   {
     id: '4',
     parentId: null,

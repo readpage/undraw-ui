@@ -1,6 +1,9 @@
 # 使用
 
 1. 在 `main.ts` 中引入组件
+> (1)下载表情包资源[emoji.zip下载](https://readpage.lanzouy.com/b04duelxg)，密码:undraw  
+> (2)static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置  
+> (3)js实例在[emoji.zip](https://readpage.lanzouy.com/b04duelxg)文件里
 
 ```ts
 import { createApp } from 'vue'
@@ -15,7 +18,7 @@ app.mount('#app')
 
 ```
 
-2. 在`App.vue`中基础使用 → [其他功能](/components/comment.html)
+1. 在`App.vue`中基础使用 → [其他功能](/components/comment.html)
 ```ts
 <template>
   <u-comment :config="config" @submit="submit" @like="like">

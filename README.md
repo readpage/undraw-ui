@@ -11,10 +11,6 @@
   <a href="https://github.com/vuejs/core">
     <img src="https://img.shields.io/badge/dependencies-vue%E2%89%A53.2.25-green">
   </a>
-   <a href="https://github.com/element-plus/element-plus">
-    <img src="https://img.shields.io/badge/dependencies-ElementPlus%E2%89%A52.1.8-green">
-  </a>
-
 
 
 
@@ -60,9 +56,9 @@
 
 使用`npm`安装
 
-***element-plus低于2.1.8，el-input样式会受影响；vue低于3.2.25不能正常使用***
+***vue低于3.2.25可能无法正常使用***
 ```bash
-npm i undraw-ui@0.9.0
+npm i undraw-ui@0.9.3
 ```
 
 
@@ -84,6 +80,11 @@ app.mount('#app')
 ```
 
 2. 在`App.vue`中使用
+> (1)下载表情包资源[emoji.zip下载](https://readpage.lanzouy.com/b04duelxg)，密码:undraw  
+> (2)static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置  
+> (3)js实例在[emoji.zip](https://readpage.lanzouy.com/b04duelxg)文件里
+
+
 ```ts
 <template>
   <u-comment :config="config" @submit="submit" @like="like">
@@ -186,6 +187,7 @@ body {
 </style>
 
 ```
+
 
 ## 开发交流
 

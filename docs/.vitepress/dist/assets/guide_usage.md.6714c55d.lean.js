@@ -1,1 +1,0 @@
-import{_ as s,o as n,c as a,g as l}from"./app.f61c97d5.js";const i='{"title":"\u4F7F\u7528","description":"","frontmatter":{},"headers":[],"relativePath":"guide/usage.md","lastUpdated":1679667329000}',p={name:"guide/usage.md"},o=l("",5),e=[o];function t(c,r,D,F,y,C){return n(),a("div",null,e)}var m=s(p,[["render",t]]);export{i as __pageData,m as default};
