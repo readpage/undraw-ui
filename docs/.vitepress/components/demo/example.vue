@@ -4,13 +4,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, defineAsyncComponent, markRaw } from "vue";
 
 export interface Props {
-  example: object
+  example: any;
 }
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
+let example = computed(() => markRaw(defineAsyncComponent(props.example)))
 </script>
 
 <style lang="scss" scoped>

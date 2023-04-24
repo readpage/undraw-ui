@@ -15,7 +15,7 @@ export default defineConfig({
       },
       {
         find: '~',
-        replacement: resolve('packages')
+        replacement: resolve('packages/src')
       }
     ]
   },
@@ -26,7 +26,7 @@ export default defineConfig({
   // 打包
   build: {
     // 打包输出目录
-    outDir: 'demo-dist',
+    outDir: 'demo',
     minify: true //是否进行压缩
   }
 })

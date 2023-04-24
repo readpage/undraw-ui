@@ -56,26 +56,23 @@ import exampleVue from './example.vue'
 import sourceCodeVue from './source-code.vue'
 import { useClipboard } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
-import theme from 'vitepress/theme'
-
+import { modules } from '..'
 export interface DemoProps {
   path: string
-  demos: any
   description: string
   source: string
-  rawSource: string
 }
 const props = defineProps<DemoProps>()
 
 const sourceVisible = ref(false)
 const { copy, isSupported } = useClipboard({
-  source: decodeURIComponent(props.rawSource)
+  source: decodeURIComponent(props.source)
 })
 
 const examples = computed(() => {
   let examples: any[] = []
-  Object.keys(props.demos).forEach((key: any) => {
-    examples[key.replace('../../examples/', '').replace('.vue', '')] = props.demos[key].default
+  Object.keys(modules).forEach((key: string) => {
+    examples[key.replace('/examples/', '').replace('.vue', '')] = modules[key]
   })
   return examples
 })
@@ -92,20 +89,6 @@ async function copyCode() {
   }
 }
 
-const source = ref('')
-import { setCDN, getHighlighter } from 'shiki'
-setCDN('/undraw-ui/shiki/')
-const highlighter = getHighlighter({ themes: ['material-palenight'], langs: ['vue', 'typescript'] })
-highlighter.then(highlighter => {
-  const preRE = /^<pre.*?>/
-  const dark = highlighter
-    .codeToHtml(decodeURIComponent(props.source), { lang: 'vue' })
-    .replace(preRE, '<pre v-pre class="vp-code-dark">')
-  const light = highlighter
-    .codeToHtml(decodeURIComponent(props.source), { lang: 'vue' })
-    .replace(preRE, '<pre v-pre class="vp-code-light">')
-  source.value = dark + light
-})
 </script>
 
 <style lang="scss" scoped>
@@ -127,15 +110,15 @@ highlighter.then(highlighter => {
   border-radius: 4px;
 
   .op-btns {
-    padding: 1rem;
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    height: 3rem;
-    line-height: 3rem;
+    height: 30px;
+    line-height: 30px;
 
     .op-btn {
-      margin: 0 1rem;
+      margin: 0 10px;
       cursor: pointer;
       transition: 0.2s;
     }
@@ -176,14 +159,6 @@ highlighter.then(highlighter => {
     &:hover {
       color: var(--el-color-primary);
     }
-  }
-}
-</style>
-
-<style lang="scss">
-@media (min-width: 640px) {
-  .vp-doc div[class*='language-'] {
-    margin: 0 !important;
   }
 }
 </style>

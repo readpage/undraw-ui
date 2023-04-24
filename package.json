@@ -1,35 +1,17 @@
 {
   "name": "undraw-ui",
   "private": false,
-  "version": "0.9.3",
+  "version": "0.0.0",
   "type": "module",
-  "author": "readpage <f1dao@qq.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://gitee.com/undraw/undraw-ui.git"
-  },
-  "keywords": [
-    "undraw-ui",
-    "element-plus",
-    "component library",
-    "ui framework",
-    "ui",
-    "vue"
-  ],
-  "homepage": "https://undraw.gitee.io/undraw-ui/",
-  "license": "MIT",
-  "main": "dist/index.es.js",
-  "unpkg": "dist/index.umd.js",
-  "jsdelivr": "dist/index.umd.js",
-  "types": "dist/index.d.ts",
-  "style": "dist/style.css",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "build:package": "vue-tsc --noEmit && vite build -c build/vite.config.ts",
     "format": "prettier --write **/*.{ts,js,json,vue}",
-    "commit": "git add . && git-cz && git push"
+    "commit": "git add . && git-cz && git push",
+    "dev:docs": "vitepress dev docs",
+    "build:docs": "vitepress build docs",
+    "preview:docs": "vitepress preview docs"
   },
   "config": {
     "commitizen": {
@@ -37,18 +19,19 @@
     }
   },
   "dependencies": {
+    "highlight.js": "^11.7.0",
+    "@highlightjs/vue-plugin": "^2.1.2",
     "@element-plus/icons-vue": "^2.1.0",
-    "@vueuse/core": "^9.3.0",
     "element-plus": "^2.2.0",
-    "store": "^2.0.12",
-    "vue": "^3.2.31"
+    "undraw-ui": "^0.9.3",
+    "vue": "^3.2.47"
   },
   "devDependencies": {
     "@types/node": "^16.4.7",
     "@types/store": "^2.0.2",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
-    "@vitejs/plugin-vue": "^3.2.0",
+    "@vitejs/plugin-vue": "^4.1.0",
     "commitizen": "^4.2.4",
     "cz-git": "^1.3.5",
     "eslint": "^8.12.0",
@@ -56,11 +39,13 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.6.0",
     "prettier": "^2.6.2",
+    "markdown-it": "^12.3.2",
+    "markdown-it-container": "^3.0.0",
+    "vitepress": "^1.0.0-alpha.73",
     "sass": "^1.49.7",
-    "typescript": "^4.5.4",
-    "unplugin-vue-define-options": "^0.6.0",
-    "vite": "^3.1.0",
-    "vite-plugin-dts": "^1.5.0",
-    "vue-tsc": "^0.40.13"
+    "typescript": "^4.9.3",
+    "unplugin-vue-define-options": "^1.3.3",
+    "vite": "^4.2.0",
+    "vue-tsc": "^1.2.0"
   }
 }
