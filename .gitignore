@@ -8,7 +8,6 @@ node_modules/
 dist/
 static/
 !docs/.vitepress/**/dist/
-!docs/public
 demo-dist/
 .vscode/
 cache/
