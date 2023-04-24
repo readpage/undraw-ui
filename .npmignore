@@ -1,15 +1,3 @@
-# 忽略目录
-.vscode/
-.git/
-build/
-docs/
-demo/
-node_modules/
-packages/
-demo-dist/
-public/
-**/static/
-
 # 忽略指定文件
 favicon.ico
 .eslintrc.js
@@ -22,3 +10,15 @@ package-lock.json
 tsconfig.json
 tsconfig.node.json
 vite.config.ts
+
+# 忽略目录
+.vscode/
+.git/
+build/
+docs/
+demo/
+node_modules/
+packages/
+demo-dist/
+public/
+**/static/

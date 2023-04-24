@@ -1,14 +1,15 @@
-# Logs
-logs
+# Editor directories and files
+.idea
 *.log
 
-
+# Ignore directory
+logs/
 node_modules/
 dist/
+static/
 !docs/.vitepress/**/dist/
-!docs/src/public/shiki/dist/
+!docs/public
 demo-dist/
+.vscode/
+cache/
 
-# Editor directories and files
-.vscode/*
-.idea
