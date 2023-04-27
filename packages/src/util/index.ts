@@ -7,6 +7,6 @@ export * from './storage'
 export * from './core'
 export * from './basic'
 export * from './convert'
-export * from './dark'
 export * from './clone-deep'
+export * from './day'
 

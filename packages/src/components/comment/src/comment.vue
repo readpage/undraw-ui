@@ -41,7 +41,6 @@ import {
   InjectReplyBoxApi,
   SubmitParam2Api
 } from '../key'
-import { throttle } from 'lodash'
 defineOptions({
   name: 'UComment'
 })
@@ -50,6 +49,7 @@ interface Props {
   config: ConfigApi
   page?: boolean
   upload?: boolean
+  relativeTime?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -61,7 +61,7 @@ const props = withDefaults(defineProps<Props>(), {
 const { user, comments, showSize, replyShowSize, total, tools } = toRefs(props.config)
 
 const emit = defineEmits<{
-  (e: 'submit', { content, parentId, files, finish }: SubmitParamApi): void
+  (e: 'submit', { content, parentId, files, replyId, finish }: SubmitParamApi): void
   (e: 'like', id: string, finish: () => void): void
   (e: 'replyPage', { parentId, pageNum, pageSize, finish }: ReplyPageParamApi): void
   (e: 'showInfo', id: string, finish: Function): void
@@ -71,7 +71,7 @@ const emit = defineEmits<{
 /**
  * 提交评论
  */
-const submit = ({ content, parentId, files, clear }: SubmitParam2Api) => {
+const submit = ({ content, parentId, replyId, files, clear }: SubmitParam2Api) => {
   // 添加评论
   const finish = (comment: CommentApi) => {
     // 清空输入框内容
@@ -95,7 +95,7 @@ const submit = ({ content, parentId, files, clear }: SubmitParam2Api) => {
       comments.value.unshift(comment)
     }
   }
-  emit('submit', { content, parentId, files, finish })
+  emit('submit', { content, parentId, replyId, files, finish })
 }
 const inputBoxParam: InjectInputBoxApi = {
   upload: props.upload,

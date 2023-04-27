@@ -9,7 +9,8 @@ export const InjectSlots = Symbol()
 export interface SubmitParam2Api {
   content: string
   parentId: string | null
-  files: any[]
+  replyId?: string | null
+  files?: any[]
   clear: () => void
 }
 export interface InjectInputBoxApi {

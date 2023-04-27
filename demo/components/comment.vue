@@ -143,13 +143,14 @@ const showInfo = (uid: string, finish: Function) => {
 
 let temp_id = 100
 // 提交评论事件
-const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
-  console.log('提交评论: ' + content, parentId, files)
+const submit = ({ content, parentId, files, finish, replyId }: SubmitParamApi) => {
+  let str = '提交评论:' + content + ';\t父id: ' + parentId + ';\t图片:' + files + ';\t回复id:' + replyId
+  console.log(str)
 
   /**
    * 上传文件后端返回图片访问地址，格式以'||'为分割; 如:  '/static/img/program.gif||/static/img/normal.webp'
    */
-  let contentImg = files.map(e => createObjectURL(e)).join('||')
+  let contentImg = files?.map(e => createObjectURL(e)).join('||')
 
   const comment: CommentApi = {
     id: String((temp_id += 1)),

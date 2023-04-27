@@ -14,11 +14,6 @@ vite.config.ts
 # 忽略目录
 .vscode/
 .git/
-build/
-docs/
-demo/
 node_modules/
-packages/
-demo-dist/
+src/
 public/
-**/static/
