@@ -25,6 +25,7 @@ export const InjectInputBox: InjectionKey<InjectInputBoxApi> = Symbol()
 // 内容盒子
 export interface InjectContentBoxApi {
   user: Ref<UserApi>
+  relativeTime: boolean
   like: (id: string) => void
   showInfo: (id: string, finish: Function) => void
 }

@@ -147,6 +147,7 @@ const like = (id: string) => {
 const contentBoxParam: InjectContentBoxApi = {
   user: user,
   like: like,
+  relativeTime: isNull(props.relativeTime, false),
   showInfo: (uid, finish) => emit('showInfo', uid, finish)
 }
 provide(InjectContentBox, contentBoxParam)

@@ -27,7 +27,7 @@
           </UserCard>
           <!-- <span class="author-badge-text">（作者）</span> -->
           <span class="address" style="color: #939393; font-size: 12px">&nbsp;&nbsp;{{ data.address }}</span>
-          <time class="time">{{ data.createTime }}</time>
+          <time class="time">{{ relativeTime ? dayjs(data.createTime).fromNow() : data.createTime }}</time>
         </div>
         <div class="content">
           <u-fold unfold>
@@ -128,7 +128,7 @@ import type { InputBoxApi } from './tools/input-box.vue'
 import { ElAvatar } from '~/element'
 import { useEmojiParse, useLevel } from '~/hooks'
 import Operation from './tools/operation.vue'
-import { str, ElImage, isEmpty } from '~/index'
+import { str, ElImage, isEmpty, dayjs } from '~/index'
 import UserCard from './tools/user-card.vue'
 import { InjectContentBox, InjectContentBoxApi, InjectSlots } from '../key'
 
@@ -154,7 +154,7 @@ const imgList = computed(() => {
 })
 
 const { allEmoji } = inject(InjectionEmojiApi) as EmojiApi
-const { like, user } = inject(InjectContentBox) as InjectContentBoxApi
+const { like, user, relativeTime } = inject(InjectContentBox) as InjectContentBoxApi
 
 //点击回复按钮打开输入框
 function reply() {

@@ -7,6 +7,7 @@
       @reply-page="replyPage"
       @show-info="showInfo"
       @operate="operate"
+      relative-time
       upload
       page
     >
