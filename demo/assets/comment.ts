@@ -288,15 +288,17 @@ export const reply = {
       id: '35',
       parentId: '3',
       uid: '10',
-      username: 'fish_eno',
-      avatar:
-        'https://static.juzicon.com/avatars/avatar-190919180320-NAQJ.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-      level: 6,
-      link: '/35',
       likes: 32,
       address: '来自武汉',
       content: '世上莫名其妙走霉运的人多的是，都是一边为命运生气，一边化愤怒为力量地活着。',
-      createTime: '2023-04-29 14:00'
+      createTime: '2023-04-29 14:00',
+      user: {
+        username: 'fish_eno',
+        avatar:
+        'https://static.juzicon.com/avatars/avatar-190919180320-NAQJ.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+        level: 6,
+        homeLink: '/34'
+      }
     },
     {
       id: '36',

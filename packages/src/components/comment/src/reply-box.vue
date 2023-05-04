@@ -78,6 +78,9 @@ const data = computed(() => {
     let tmp = data.list.slice(0, replyShowSize)
     data.list = tmp
   }
+  if (page) {
+    data.list = data.list.slice(0, 5)
+  }
   return data
 })
 

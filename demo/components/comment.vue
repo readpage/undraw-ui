@@ -77,7 +77,8 @@ import {
   usePage,
   throttle,
 SubmitParamApi,
-ReplyPageParamApi
+ReplyPageParamApi,
+dayjs
 } from '~/index'
 // 下载表情包资源emoji.zip https://readpage.lanzouy.com/b04duelxg 密码:undraw
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
@@ -160,7 +161,7 @@ const submit = ({ content, parentId, files, finish, replyId }: SubmitParamApi) =
     address: '来自江苏',
     content: content,
     likes: 0,
-    createTime: '1分钟前',
+    createTime: dayjs().toString(),
     contentImg: contentImg,
     user: {
       username: config.user.username,
