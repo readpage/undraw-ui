@@ -1,6 +1,16 @@
 ---
 sidebar: false
 ---
+
+## 0.9.4
+***2023-05-05***
+
+### 增强
+- [comment] 回复分页添加评论显示数量不超过分页数量大小([#I6XNKZ](https://gitee.com/undraw/undraw-ui/issues/I6XNKZ)) 
+- [comment] 添加相对时间属性([#I5PWF6](https://gitee.com/undraw/undraw-ui/issues/I5PWF6))
+- [comment] 评论事件添加replyId回复参数([#I6UT8S](https://gitee.com/undraw/undraw-ui/issues/I6UT8S))
+
+
 ## 0.9.3
 ***2023-04-20***
 

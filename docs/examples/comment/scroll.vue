@@ -62,22 +62,22 @@ const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
   /**
    * 上传文件后端返回图片访问地址，格式以'||'为分割; 如:  '/static/img/program.gif||/static/img/normal.webp'
    */
-  let contentImg = files.map(e => createObjectURL(e)).join('||')
-
+  let contentImg = files?.map(e => createObjectURL(e)).join('||')
+  temp_id += 1
   const comment: CommentApi = {
-    id: String((temp_id += 1)),
+    id: String(temp_id),
     parentId: parentId,
     uid: config.user.id,
     address: '来自江苏',
     content: content,
     likes: 0,
-    createTime: '1分钟前',
+    createTime: '2023-05-05 06:00:00',
     contentImg: contentImg,
     user: {
       username: config.user.username,
       avatar: config.user.avatar,
       level: 6,
-      homeLink: `/${(temp_id += 1)}`
+      homeLink: `/${temp_id}`
     },
     reply: null
   }

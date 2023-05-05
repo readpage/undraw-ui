@@ -1,0 +1,1 @@
+import{_ as t,i as e,j as a,O as o}from"./chunks/framework.a4d4515f.js";const m=JSON.parse('{"title":"支持这个项目","description":"","frontmatter":{},"headers":[],"relativePath":"other/support.md"}'),r={name:"other/support.md"},s=o("",4),_=[s];function p(n,c,i,d,l,h){return e(),a("div",null,_)}const f=t(r,[["render",p]]);export{m as __pageData,f as default};

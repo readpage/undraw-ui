@@ -1,1 +1,0 @@
-import{_ as t,c as e,o as a,O as o}from"./chunks/framework.347a35cb.js";const m=JSON.parse('{"title":"支持这个项目","description":"","frontmatter":{},"headers":[],"relativePath":"other/support.md"}'),r={name:"other/support.md"},s=o("",4),c=[s];function _(p,d,n,i,h,l){return a(),e("div",null,c)}const b=t(r,[["render",_]]);export{m as __pageData,b as default};

@@ -1,5 +1,5 @@
 <template>
-  <u-comment :config="config" upload @submit="submit" @like="like">
+  <u-comment :config="config" upload @submit="submit" @like="like" relative-time>
     <!-- <template>导航栏卡槽</template> -->
     <!-- <template #info>用户信息卡槽</template> -->
     <!-- <template #card>用户信息卡片卡槽</template> -->
@@ -11,7 +11,7 @@
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from './emoji'
 import { reactive } from 'vue'
-import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL } from 'undraw-ui'
+import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL, dayjs } from 'undraw-ui'
 
 const config = reactive<ConfigApi>({
   user: {
@@ -34,22 +34,22 @@ const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
   /**
    * 上传文件后端返回图片访问地址，格式以'||'为分割; 如:  '/static/img/program.gif||/static/img/normal.webp'
    */
-  let contentImg = files.map(e => createObjectURL(e)).join('||')
-
+  let contentImg = files?.map(e => createObjectURL(e)).join('||')
+  temp_id += 1
   const comment: CommentApi = {
-    id: String((temp_id += 1)),
+    id: String(temp_id),
     parentId: parentId,
     uid: config.user.id,
     address: '来自江苏',
     content: content,
     likes: 0,
-    createTime: '1分钟前',
+    createTime: dayjs().subtract(5, 'seconds').toString(),
     contentImg: contentImg,
     user: {
       username: config.user.username,
       avatar: config.user.avatar,
       level: 6,
-      homeLink: `/${(temp_id += 1)}`
+      homeLink: `/${temp_id}`
     },
     reply: null
   }
@@ -74,7 +74,7 @@ config.comments = [
     address: '来自苏州',
     content: '知道在学校为什么感觉这么困吗？[大笑2]因为学校，是梦开始的地方。[脱单doge]',
     likes: 11,
-    createTime: '1天前',
+    createTime: dayjs().subtract(10, 'day').toString(),
     user: {
       username: '悟二空',
       avatar: 'https://static.juzicon.com/user/avatar-bf22291e-ea5c-4280-850d-88bc288fcf5d-220408002256-ZBQQ.jpeg',

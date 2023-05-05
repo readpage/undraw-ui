@@ -1,0 +1,1 @@
+import{_,D as c,i as s,j as a,G as o}from"./framework.a4d4515f.js";const n={class:"icon-box"},t={__name:"basic",setup(i){return(r,l)=>{const e=c("u-icon");return s(),a("div",n,[o(e,{name:"home"}),o(e,{name:"lightning",color:"purple"}),o(e,{name:"whale",color:"blue",size:"35"})])}}},m=_(t,[["__scopeId","data-v-bb8e38a4"]]);export{m as default};

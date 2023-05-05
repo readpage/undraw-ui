@@ -76,14 +76,13 @@ import {
   useLevel,
   usePage,
   throttle,
-SubmitParamApi,
-ReplyPageParamApi,
-dayjs
+  SubmitParamApi,
+  ReplyPageParamApi,
 } from '~/index'
 // 下载表情包资源emoji.zip https://readpage.lanzouy.com/b04duelxg 密码:undraw
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from '@/assets/emoji'
-import { ElAvatar, ElButton } from '~/element'
+import { ElAvatar, ElButton, dayjs } from '~/index'
 import { getComment, reply, commentSize } from '@/assets/comment'
 
 defineOptions({
@@ -154,20 +153,21 @@ const submit = ({ content, parentId, files, finish, replyId }: SubmitParamApi) =
    */
   let contentImg = files?.map(e => createObjectURL(e)).join('||')
 
+  temp_id += 1
   const comment: CommentApi = {
-    id: String((temp_id += 1)),
+    id: String(temp_id),
     parentId: parentId,
     uid: config.user.id,
     address: '来自江苏',
     content: content,
     likes: 0,
-    createTime: dayjs().toString(),
+    createTime: dayjs().subtract(5, 'seconds').toString(),
     contentImg: contentImg,
     user: {
       username: config.user.username,
       avatar: config.user.avatar,
       level: 6,
-      homeLink: `/${(temp_id += 1)}`
+      homeLink: `/${(temp_id)}`
     },
     reply: null
   }

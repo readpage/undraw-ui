@@ -1,0 +1,1 @@
+import{_ as o,D as n,i as t,A as s,B as c,z as _}from"./framework.a4d4515f.js";const a={},r=_("p",null," 时间不是某种从我们身上流过的东西，而就是我的生命。弃我而去的不是日历上的一个个日子，而是我生命中的岁月；甚至也不仅仅是我的岁月，而就是我自己。我不但找不回逝去的岁月，而且也找不回从前的我了。 ",-1);function l(f,d){const e=n("u-fold");return t(),s(e,{unfold:"",line:"1"},{default:c(()=>[r]),_:1})}const i=o(a,[["render",l]]);export{i as default};

@@ -49,15 +49,18 @@ comment/scroll
 | 属性    | 说明 | 类型           | 默认值 |
 |----------|-------|---------------|--------|
 | config | 评论    |  ConfigApi  | -      |
+| upload | 是否上传图片    |  boolean  | false      |
+| page | 是否启动回复分页    |  boolean  | false      |
+| relative-time | 是否使用相对时间    |  boolean  | false      |
 
 ## Comment 事件
 
 | 事件名 | 说明 | 回调参数 |
 |-------|------|----------|
-| submit|提交评论| (content: string, parentId: number, finish: (comment: CommentApi) => void) => void |
+| submit|提交评论| (submitParam: SubmitParamApi) => void |
 | like | 点赞 | (id: number, finish: () => void) => void |
-| replyPage | 回复分页 | (parentId: string, pageNum: number, pageSize: number, finish: (comments: CommentApi[]) => void) => void |
-| getUser | 获取用户详细信息 | (id: number, show: Function) => void |
+| reply-page | 回复分页 | (replaygeParam: ReplyPageParamApi) => void |
+| show-info | 获取用户详细信息 | (id: number, show: Function) => void |
 
 ## 接口类型
 ```ts
@@ -65,15 +68,25 @@ export interface CommentApi {
   id: string | number
   parentId: string | number | null
   uid: string | number
+  address: string
+  content: string
+  likes: number
+  contentImg?: string
+  createTime: string
+  user: CommentUserApi
+  reply?: ReplyApi | null
+}
+
+export interface ReplyApi {
+  total: number
+  list: CommentApi[]
+}
+
+export interface CommentUserApi {
   username: string
   avatar: string
   level: number
-  link: string
-  address: string
-  content: string
-  like: number
-  createTime: string
-  reply?: ReplyApi | null
+  homeLink: string
 }
 
 export interface UserApi {
@@ -83,41 +96,29 @@ export interface UserApi {
   likeIds: string[] | number[]
 }
 
-export interface ReplyApi {
-  total: number
-  list: CommentApi[]
-}
-
 export interface ConfigApi {
   user: UserApi
   emoji: EmojiApi
   comments: CommentApi[]
+  total: number
+  showSize?: number
+  replyShowSize?: number
+  tools?: string[]
 }
 
-export interface ReplyPageParam {
-  parentId: string | number
+export interface SubmitParamApi {
+  content: string
+  parentId: string | null
+  files?: any[]
+  replyId?: string | null
+  finish: (comment: CommentApi) => void
+}
+
+export interface ReplyPageParamApi {
+  parentId: string
   pageNum: number
   pageSize: number
-  finish: (comments: CommentApi[]) => void
-}
-
-export interface ReplyParam {
-  replyPage: (parentId: string, pageNum: number, pageSize: number, finish: (comments: CommentApi[]) => void) => void
-  page: boolean
-  showSize: number
-  comments: Ref<CommentApi[]>
-}
-
-export interface ContentBoxParam {
-  isUserInfo: boolean
-  user: Ref<UserApi>
-  like: (id: string) => void
-  /**
-   * 返回用户id，show回调是否显示用户信息卡片
-   */
-  getUser: (uid: string, show: Function) => void
-  report: (id: string, finish: () => void) => void
-  remove: (id: string, parentId: string | null, finish: () => void) => void
+  finish: (reply: ReplyApi) => void
 }
 
 ```
