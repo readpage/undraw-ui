@@ -144,8 +144,8 @@ const showInfo = (uid: string, finish: Function) => {
 
 let temp_id = 100
 // 提交评论事件
-const submit = ({ content, parentId, files, finish, replyId }: SubmitParamApi) => {
-  let str = '提交评论:' + content + ';\t父id: ' + parentId + ';\t图片:' + files + ';\t回复id:' + replyId
+const submit = ({ content, parentId, files, finish, replyUid }: SubmitParamApi) => {
+  let str = '提交评论:' + content + ';\t父id: ' + parentId + ';\t图片:' + files + ';\t回复uid:' + replyUid
   console.log(str)
 
   /**
@@ -229,8 +229,8 @@ const more = () => {
   console.log(disable.value)
   if (pageNum <= Math.ceil(total / pageSize)) {
     setTimeout(() => {
-      config.comments.push(...getComment(pageNum, 1))
       ++pageNum
+      config.comments.push(...getComment(pageNum, 1))
     }, 200)
   } else {
     disable.value = true

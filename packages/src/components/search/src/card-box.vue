@@ -1,5 +1,5 @@
 <template>
-  <div v-show="data.cardVisible" class="card-box u-scrollbar">
+  <div v-show="data.cardVisible && visible" class="card-box u-scrollbar">
     <div v-if="data.historySearchList.length != 0" class="history">
       <div class="header">
         <div class="title">历史搜索</div>
@@ -26,7 +26,7 @@
         {{ item.name }}
       </el-tag>
     </div>
-    <div class="trending">
+    <div class="trending" v-if="!isEmpty(data.hotSearchList)">
       <div class="title">
         <span>热搜</span>
         <u-icon style="margin: 0 6px">
@@ -60,15 +60,19 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { DataApi } from './search.vue'
 import { ElTag, ElLink } from '~/element'
+import { isEmpty } from 'undraw-ui'
+import { dataType } from 'element-plus/es/components/table-v2/src/common'
 
 interface Props {
   data: DataApi
 }
 
 const props = defineProps<Props>()
+
+const visible = computed(() => !(isEmpty(props.data.historySearchList) && isEmpty(props.data.hotSearchList)))
 
 const emit = defineEmits<{
   (e: 'onClose', val: string): void

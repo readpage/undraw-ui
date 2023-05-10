@@ -93,7 +93,7 @@ const onSubmit = () => {
       ? `回复 <span style="color: var(--u-color-success-dark-2);">@${props.replay.user.username}:</span> ${content.value}`
       : content.value,
     parentId: isNull(props.parentId, null),
-    replyId: isNull(props.replay?.id, null),
+    replyUid: isNull(props.replay?.uid, null),
     files: files2.value,
     clear: () => {
       //清理输入框提交的数据
