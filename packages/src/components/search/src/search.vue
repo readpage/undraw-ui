@@ -27,7 +27,7 @@
           @focus="
             () => {
               isFocus = true
-              data.cardVisible = true
+              data.visible = true
             }
           "
           @blur="isFocus = false"
@@ -60,7 +60,7 @@
       </div>
     </div>
     <CardBox
-      v-click-outside:[labelRef]="() => (data.cardVisible = false)"
+      v-click-outside:[labelRef]="() => (data.visible = false)"
       :data="data"
       @on-close="closeHander"
       @on-clear="removeAllHistory"
@@ -82,7 +82,7 @@ export interface HistoryApi {
 
 export interface DataApi {
   search: string
-  cardVisible: boolean
+  visible: boolean
   historySearchList: HistoryApi[]
   hotSearchList: string[]
 }
@@ -111,7 +111,7 @@ const state = reactive({
 
 const data = reactive<DataApi>({
   search: '',
-  cardVisible: false,
+  visible: false,
   historySearchList: storage.get('searchHistory') || [], // 历史搜索数据
   hotSearchList: props.config.hotSearchList
 })
@@ -196,6 +196,10 @@ const animationend = (e: AnimationEvent) => {
     }, 3000)
   }
 }
+
+defineExpose({
+  close: () => data.visible = false
+})
 </script>
 
 <style lang="scss" scoped>

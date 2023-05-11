@@ -1,14 +1,16 @@
 <template>
-  <u-search :config="config" style="margin-left: 20px" @submit="submit"></u-search>
+  <u-search :config="config" style="margin-left: 20px" @submit="submit" ref="searchRef"></u-search>
   <div>abdds</div>
 </template>
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue'
-import { SearchConfig } from '~/index'
+import { onMounted, reactive, ref } from 'vue'
+import { SearchConfig, SearchInstance } from '~/index'
 
 defineOptions({
   name: 'search'
 })
+
+const searchRef = ref<SearchInstance>()
 
 const config = reactive<SearchConfig>({
   keywords: [],

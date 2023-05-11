@@ -1,5 +1,5 @@
 <template>
-  <div v-show="data.cardVisible && visible" class="card-box u-scrollbar">
+  <div v-show="data.visible && visible" class="card-box u-scrollbar">
     <div v-if="data.historySearchList.length != 0" class="history">
       <div class="header">
         <div class="title">历史搜索</div>
