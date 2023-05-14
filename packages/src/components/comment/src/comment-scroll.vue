@@ -53,6 +53,7 @@ const load = () => {
 <style lang="scss" scoped>
 .u-comment-scroll {
   position: relative;
+  font-size: 10px;
   .scroll-btn {
     position: absolute;
     left: 50%;

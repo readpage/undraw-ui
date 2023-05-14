@@ -4,12 +4,12 @@
   border-radius: 4px;
   // 设置的边框和内边距的值是包含在width内
   box-sizing: border-box;
-  padding: 0 2.5rem;
-  padding-bottom: 2rem;
-  margin-top: 1.5rem;
+  padding: 0 25px;
+  padding-bottom: 20px;
+  margin-top: 15px;
 
   .comment-form {
-    padding-top: 2rem;
+    padding-top: 20px;
     .header {
       .header-title {
         font-size: 18px;
@@ -20,7 +20,7 @@
     }
 
     .content {
-      margin-top: 2rem;
+      margin-top: 20px;
       display: flex;
       .el-avatar {
         margin-right: 16px;

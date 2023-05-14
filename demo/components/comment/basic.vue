@@ -76,6 +76,6 @@ const like = (id: string, finish: () => void) => {
 <style lang="scss" scoped>
 .u-comment {
   width: 820px;
-  margin-left: 2rem;
+  margin-left: 20px;
 }
 </style>

@@ -1,6 +1,6 @@
 .comment {
   display: flex;
-  padding: 1.6rem 0;
+  padding: 16px 0;
   a:hover {
     text-decoration: none;
   }
@@ -22,7 +22,7 @@
       display: flex;
       align-items: center;
       .name {
-        max-width: 10rem;
+        max-width: 10px;
         font-weight: 500;
         font-size: 15px;
         color: var(--u-text-color);

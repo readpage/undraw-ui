@@ -61,32 +61,32 @@ const latest = computed({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  line-height: 3rem;
-  margin-bottom: 1rem;
+  line-height: 30px;
+  margin-bottom: 10px;
   &__title {
     font-weight: 600;
-    font-size: 1.8rem;
+    font-size: 18px;
   }
   &__sort {
     display: flex;
     align-items: center;
-    font-size: 1.4rem;
+    font-size: 14px;
     color: #4e5969;
     cursor: pointer;
     background-color: #f2f3f5;
-    border-radius: 0.2rem;
-    padding: 0.3rem;
+    border-radius: 2px;
+    padding: 3px;
 
     .item {
-      line-height: 2.2rem;
-      font-size: 1.4rem;
+      line-height: 22px;
+      font-size: 14px;
       display: flex;
       align-items: center;
       color: #8a919f;
-      padding: 0.2rem 1.2rem;
+      padding: 2px 12px;
       .u-icon {
-        font-size: 1.2rem;
-        margin-right: 0.4rem;
+        font-size: 12px;
+        margin-right: 4px;
       }
     }
 

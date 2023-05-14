@@ -1,5 +1,5 @@
 <template>
-  <u-comment-scroll style="width: 820px; margin-left: 2rem" :disable="disable" @more="more">
+  <u-comment-scroll style="width: 820px; margin-left: 20px" :disable="disable" @more="more">
     <u-comment
       :config="config"
       @submit="submit"
@@ -256,7 +256,7 @@ const sorted = (latest: boolean) => {
         align-items: center;
         text-decoration: none;
         .name {
-          max-width: 10rem;
+          max-width: 100px;
           font-weight: 500;
           font-size: 15px;
           color: #252933;

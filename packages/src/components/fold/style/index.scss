@@ -2,17 +2,17 @@ $line: 5 !default;
 
 .u-fold {
   font-size: 14px;
-  line-height: 2rem;
+  line-height: 20px;
   color: inherit;
 
   .txt-box {
-    margin-top: 0.5rem;
+    margin-top: 5px;
     // 会对过长的单词做词内断词处理，这样单词始终会在容器中，不会溢出容器
     word-wrap: break-word;
   }
 
   .action-box {
-    margin-bottom: 0.5rem;
+    margin-bottom: 5px;
     .expand-btn {
       display: inline-block;
       line-height: 22px;

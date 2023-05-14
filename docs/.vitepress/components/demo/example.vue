@@ -16,7 +16,7 @@ let example = computed(() => markRaw(defineAsyncComponent(props.example)))
 
 <style lang="scss" scoped>
 .example-show {
-  padding: 1.5rem;
+  padding: 15px;
   margin: 0.5px;
 }
 </style>
