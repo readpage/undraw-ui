@@ -45,7 +45,7 @@ export interface SubmitParamApi {
   content: string
   parentId: string | null
   files?: any[]
-  replyUid?: string | null
+  reply?: CommentApi
   finish: (comment: CommentApi) => void
 }
 

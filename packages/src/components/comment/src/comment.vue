@@ -60,7 +60,7 @@ const props = withDefaults(defineProps<Props>(), {
 const { user, comments, showSize, replyShowSize, total } = toRefs(props.config)
 
 const emit = defineEmits<{
-  (e: 'submit', { content, parentId, files, replyUid, finish }: SubmitParamApi): void
+  (e: 'submit', { content, parentId, files, reply, finish }: SubmitParamApi): void
   (e: 'like', id: string, finish: () => void): void
   (e: 'replyPage', { parentId, pageNum, pageSize, finish }: ReplyPageParamApi): void
   (e: 'showInfo', id: string, finish: Function): void
@@ -69,7 +69,7 @@ const emit = defineEmits<{
 /**
  * 提交评论
  */
-const submit = ({ content, parentId, replyUid, files, clear }: SubmitParam2Api) => {
+const submit = ({ content, parentId, reply, files, clear }: SubmitParam2Api) => {
   // 添加评论
   const finish = (comment: CommentApi) => {
     // 清空输入框内容
@@ -78,10 +78,10 @@ const submit = ({ content, parentId, replyUid, files, clear }: SubmitParam2Api) 
     if (parentId) {
       let raw_comment = comments.value.find(v => v.id == parentId)
       if (raw_comment) {
-        let reply = raw_comment.reply
-        if (reply) {
-          reply.list.unshift(comment)
-          reply.total++
+        let replys = raw_comment.reply
+        if (replys) {
+          replys.list.unshift(comment)
+          replys.total++
         } else {
           raw_comment.reply = {
             total: 1,
@@ -93,7 +93,7 @@ const submit = ({ content, parentId, replyUid, files, clear }: SubmitParam2Api) 
       comments.value.unshift(comment)
     }
   }
-  emit('submit', { content, parentId, replyUid, files, finish })
+  emit('submit', { content, parentId, reply, files, finish })
 }
 const inputBoxParam: InjectInputBoxApi = {
   upload: props.upload,

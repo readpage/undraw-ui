@@ -9,7 +9,8 @@ export const InjectSlots = Symbol()
 export interface SubmitParam2Api {
   content: string
   parentId: string | null
-  replyUid?: string | null
+  replyId?: string | null
+  reply?: CommentApi
   files?: any[]
   clear: () => void
 }

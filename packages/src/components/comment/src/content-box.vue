@@ -103,7 +103,7 @@
             ref="commentRef"
             :parent-id="str(id)"
             :placeholder="`回复 @${data.user.username}...`"
-            :replay="data"
+            :reply="data"
             content-btn="发布"
             style="margin-top: 12px"
             @hide="hide"

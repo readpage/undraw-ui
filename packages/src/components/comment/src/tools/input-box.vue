@@ -58,7 +58,7 @@ interface Props {
   placeholder: string
   contentBtn: string
   parentId?: string
-  replay?: CommentApi
+  reply?: CommentApi
 }
 
 const props = defineProps<Props>()
@@ -89,11 +89,11 @@ const emoji = inject(InjectionEmojiApi) as EmojiApi
 // 提交评论的数据
 const onSubmit = () => {
   submit({
-    content: props.replay
-      ? `回复 <span style="color: var(--u-color-success-dark-2);">@${props.replay.user.username}:</span> ${content.value}`
+    content: props.reply
+      ? `回复 <span style="color: var(--u-color-success-dark-2);">@${props.reply.user.username}:</span> ${content.value}`
       : content.value,
     parentId: isNull(props.parentId, null),
-    replyUid: isNull(props.replay?.uid, null),
+    reply: props.reply,
     files: files2.value,
     clear: () => {
       //清理输入框提交的数据
