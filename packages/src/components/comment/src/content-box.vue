@@ -93,7 +93,10 @@
             </u-icon>
             <span>{{ state.active ? '取消回复' : '回复' }}</span>
           </div>
-          <Operation :comment="data" />
+          <!-- 操作栏 -->
+          <template v-if="slots.operate">
+            <Operate />
+          </template>
         </div>
         <div v-if="state.active">
           <InputBox
@@ -127,7 +130,6 @@ import {
 import type { InputBoxApi } from './tools/input-box.vue'
 import { ElAvatar } from '~/element'
 import { useEmojiParse, useLevel } from '~/hooks'
-import Operation from './tools/operation.vue'
 import { str, ElImage, isEmpty, dayjs } from '~/index'
 import UserCard from './tools/user-card.vue'
 import { InjectContentBox, InjectContentBoxApi, InjectSlots } from '../key'
@@ -179,6 +181,9 @@ function hide(event: Event) {
 const slots = inject(InjectSlots) as any
 // 用户信息卡槽
 const Info = () => h('div', slots.info(props.data))
+
+//操作栏卡槽
+const Operate = () => h('div', slots.operate(props.data))
 
 const contents = computed(() => useEmojiParse(allEmoji, props.data.content))
 </script>

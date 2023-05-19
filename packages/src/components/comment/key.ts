@@ -41,12 +41,3 @@ export interface InjectReplyBoxApi {
 }
 export const InjectReplyBox: InjectionKey<InjectReplyBoxApi> = Symbol()
 
-
-
-// 工具栏
-export interface InjectOperationApi {
-  user: Ref<UserApi>
-  tools: string[] | undefined
-  operate: (type: string, comment: CommentApi, finish: () => void) => void
-}
-export const InjectOperation: InjectionKey<InjectOperationApi> = Symbol()

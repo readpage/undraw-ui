@@ -39,7 +39,6 @@ export interface ConfigApi {
   total: number
   showSize?: number
   replyShowSize?: number
-  tools?: string[]
 }
 
 export interface SubmitParamApi {

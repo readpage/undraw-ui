@@ -19,7 +19,7 @@ import iconVue from '../icon'
 export interface ToastApi {
   message?: string
   duration?: number
-  type?: string
+  type?: 'normal' | 'success' | 'info' | 'warn' | 'error'
 }
 
 defineOptions({

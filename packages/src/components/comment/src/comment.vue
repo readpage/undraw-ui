@@ -28,16 +28,14 @@ import { provide, toRefs, useSlots } from 'vue'
 import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
 import { ElAvatar } from '~/element'
-import { CommentApi, ConfigApi, InjectionEmojiApi, isNull, isEmpty, SubmitParamApi, ReplyPageParamApi } from '~/index'
+import { CommentApi, ConfigApi, InjectionEmojiApi, isNull, SubmitParamApi, ReplyPageParamApi } from '~/index'
 import {
   InjectContentBoxApi,
   InjectContentBox,
   InjectInputBox,
-  InjectOperation,
   InjectReplyBox,
   InjectSlots,
   InjectInputBoxApi,
-  InjectOperationApi,
   InjectReplyBoxApi,
   SubmitParam2Api
 } from '../key'
@@ -59,14 +57,13 @@ const props = withDefaults(defineProps<Props>(), {
 })
 // 将这个属性转换为响应式数据。
 // const comments = toRef(props.config, 'comments')
-const { user, comments, showSize, replyShowSize, total, tools } = toRefs(props.config)
+const { user, comments, showSize, replyShowSize, total } = toRefs(props.config)
 
 const emit = defineEmits<{
   (e: 'submit', { content, parentId, files, replyUid, finish }: SubmitParamApi): void
   (e: 'like', id: string, finish: () => void): void
   (e: 'replyPage', { parentId, pageNum, pageSize, finish }: ReplyPageParamApi): void
   (e: 'showInfo', id: string, finish: Function): void
-  (e: 'operate', type: string, comment: CommentApi, finish: () => void): void
 }>()
 
 /**
@@ -188,31 +185,16 @@ const remove = (comment: CommentApi) => {
     }
   }
 }
-// 工具栏功能
-// 工具栏方法
-const operation: InjectOperationApi = {
-  user: user,
-  tools: tools?.value,
-  operate: (type, comment, finish) => {
-    if (isEmpty(type)) return
-    let v = type.split('#')[0]
-    if (v == '删除' || v == 'delete' || v == 'remove') {
-      emit('operate', type, comment, () => {
-        finish()
-        remove(comment)
-      })
-    } else {
-      emit('operate', type, comment, finish)
-    }
-  }
-}
-provide(InjectOperation, operation)
 
 // 表情包
 provide(InjectionEmojiApi, props.config.emoji)
 
 // 工具卡槽
 provide(InjectSlots, useSlots())
+
+defineExpose({
+  remove: remove
+})
 </script>
 
 <style lang="scss" scoped>

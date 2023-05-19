@@ -38,6 +38,7 @@ const submit = (val: string) => {
   console.log(val)
   window.open('/all?keyword=' + val)
 }
+
 </script>
 
 <style lang="scss" scoped></style>

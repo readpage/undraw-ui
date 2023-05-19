@@ -6,10 +6,10 @@
       @like="like"
       @reply-page="replyPage"
       @show-info="showInfo"
-      @operate="operate"
       relative-time
       upload
       page
+      ref="commentRef"
     >
       <!-- <template #info>用户信息卡槽</template> -->
       <u-comment-nav v-model="latest" @sorted="sorted"></u-comment-nav>
@@ -62,6 +62,9 @@
           </template>
         </el-skeleton>
       </template>
+      <template #operate="scope">
+        <Operate :comment="scope" @remove="remove" />
+      </template>
     </u-comment>
   </u-comment-scroll>
 </template>
@@ -82,8 +85,9 @@ import {
 // 下载表情包资源emoji.zip https://readpage.lanzouy.com/b04duelxg 密码:undraw
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from '@/assets/emoji'
-import { ElAvatar, ElButton, dayjs } from '~/index'
+import { ElAvatar, ElButton, dayjs, CommentInstance } from '~/index'
 import { getComment, reply, commentSize } from '@/assets/comment'
+import Operate from './comment/operate.vue'
 
 defineOptions({
   name: 'comment'
@@ -98,10 +102,10 @@ const config = reactive<ConfigApi>({
   },
   emoji: emoji,
   comments: [],
-  total: 10,
-  // 默认全部用户显示，#1当前用户显示，#2当前用户以外显示
-  tools: ['举报#2', '删除#1', '复制', '屏蔽#2']
+  total: 10
 })
+
+const commentRef = ref<CommentInstance>()
 
 setTimeout(() => {
   const user = {
@@ -186,6 +190,13 @@ const like = (id: string, finish: () => void) => {
   }, 200)
 }
 
+// 删除评论
+const remove = (comment: CommentApi) => {
+  setTimeout(() => {
+    commentRef.value?.remove(comment)
+  }, 200)
+}
+
 const _throttle = throttle((type: string, comment: CommentApi, finish: Function) => {
   switch (type) {
     case '删除':
@@ -198,9 +209,6 @@ const _throttle = throttle((type: string, comment: CommentApi, finish: Function)
   }
 })
 
-const operate = (type: string, comment: CommentApi, finish: Function) => {
-  _throttle(type, comment, finish)
-}
 //回复分页
 const replyPage = ({ parentId, pageNum, pageSize, finish }: ReplyPageParamApi) => {
   let tmp = {
@@ -219,7 +227,7 @@ config.comments = getComment(1, 1)
 const disable = ref(false)
 
 // 当前页数
-let pageNum = 1
+let pageNum = 2
 // 页大小
 let pageSize = 1
 // 评论总数量
@@ -229,8 +237,8 @@ const more = () => {
   console.log(disable.value)
   if (pageNum <= Math.ceil(total / pageSize)) {
     setTimeout(() => {
-      ++pageNum
       config.comments.push(...getComment(pageNum, 1))
+      pageNum++
     }, 200)
   } else {
     disable.value = true

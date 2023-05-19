@@ -47,7 +47,7 @@ const more = () => {
   if (pageNum <= Math.ceil(total / pageSize)) {
     setTimeout(() => {
       config.comments.push(...getComment(pageNum, 1))
-      ++pageNum
+      pageNum++
     }, 200)
   } else {
     disable.value = true

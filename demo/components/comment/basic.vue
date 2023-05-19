@@ -40,7 +40,7 @@ const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
   /**
    * 上传文件后端返回图片访问地址，格式以'||'为分割; 如:  '/static/img/program.gif||/static/img/normal.webp'
    */
-  let contentImg = files.map(e => createObjectURL(e)).join('||')
+  let contentImg = files?.map(e => createObjectURL(e)).join('||')
 
   const comment: CommentApi = {
     id: String((temp_id += 1)),
