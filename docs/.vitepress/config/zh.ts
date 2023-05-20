@@ -6,6 +6,7 @@ export const zhConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
   head: [
     ['link', { rel: 'icon', href: '/u.webp '}]
   ],
+  
 
   themeConfig: {
     logo: '/u.webp',
@@ -14,6 +15,10 @@ export const zhConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
       text: '对本页提出修改建议',
     },
 
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/readpage/undraw-ui' }
+    ],
+    
     outline: {
       label: '本页内容',
     },
@@ -125,5 +130,6 @@ export const zhConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
         }
       ],
     },
+
   },
 }

@@ -63,8 +63,7 @@
 import { computed, ref } from 'vue'
 import { DataApi } from './search.vue'
 import { ElTag, ElLink } from '~/element'
-import { isEmpty } from 'undraw-ui'
-import { dataType } from 'element-plus/es/components/table-v2/src/common'
+import { isEmpty } from '~/index'
 
 interface Props {
   data: DataApi

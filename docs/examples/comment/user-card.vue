@@ -146,18 +146,6 @@ config.comments = [
 </script>
 
 <style lang="scss" scoped>
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-html {
-  font-size: 10px;
-}
-body {
-  font-size: 12px;
-}
-
 .user-card {
   display: flex;
   .user-content {

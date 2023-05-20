@@ -7,6 +7,7 @@ export default defineConfig({
   base: '/undraw-ui',
   lang: 'zh-CN',
   ...zhConfig,
+  lastUpdated: true,
   markdown: {
     config: (md) => mdPlugin(md)
   }

@@ -2,6 +2,22 @@
 sidebar: false
 ---
 
+### 0.9.6
+***2023-05-21***
+
+### 重构
+
+- [comment] submit事件的参数reply获取到回复评论对象 ([#I76OXP](https://gitee.com/undraw/undraw-ui/issues/I76OXP))
+- [comment] 重构操作栏 ([#12](https://github.com/readpage/undraw-ui/issues/12))
+- [search] 当热搜为null，不显示热搜栏 ([#I70N0N](https://gitee.com/undraw/undraw-ui/issues/I70N0N))
+
+### 修改样式
+- [comment] 修改样式 ([#I6ZT6C](https://gitee.com/undraw/undraw-ui/issues/I6ZT6C))
+
+### 新增
+- [search] 添加关闭下拉框隐藏方法 ([#11](https://github.com/readpage/undraw-ui/issues/11))
+
+
 ## 0.9.4
 ***2023-05-05***
 

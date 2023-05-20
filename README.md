@@ -58,7 +58,7 @@
 
 ***vue低于3.2.25可能无法正常使用***
 ```bash
-npm i undraw-ui@0.9.4
+npm i undraw-ui@0.9.6
 ```
 
 
@@ -82,7 +82,7 @@ app.mount('#app')
 2. 在`App.vue`中使用
 > (1)下载表情包资源[emoji.zip下载](https://readpage.lanzouy.com/b04duelxg)，密码:undraw  
 > (2)static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置  
-> (3)js实例在[emoji.zip](https://readpage.lanzouy.com/b04duelxg)文件里
+> (3)js实例地址[comment-js.vue](https://undraw.gitee.io/undraw-ui/guide/usage.html)
 
 
 ```ts
@@ -91,6 +91,7 @@ app.mount('#app')
     <!-- <template>导航栏卡槽</template> -->
     <!-- <template #info>用户信息卡槽</template> -->
     <!-- <template #card>用户信息卡片卡槽</template> -->
+    <!-- <template #opearte>操作栏卡槽</template> -->
   </u-comment>
 </template>
 
@@ -116,9 +117,9 @@ const config = reactive<ConfigApi>({
 
 let temp_id = 100
 // 提交评论事件
-const submit = ({ content, parentId, files, finish, replyId }: SubmitParamApi) => {
-  let str = '提交评论:' + content + ';\t父id: ' + parentId + ';\t图片:' + files + ';\t回复id:' + replyId
-  console.log(str)
+const submit = ({ content, parentId, files, finish, reply }: SubmitParamApi) => {
+  let str = '提交评论:' + content + ';\t父id: ' + parentId + ';\t图片:' + files + ';\t被回复评论:'
+  console.log(str, reply)
 
   /**
    * 上传文件后端返回图片访问地址，格式以'||'为分割; 如:  '/static/img/program.gif||/static/img/normal.webp'
@@ -176,22 +177,6 @@ config.comments = [
   }
 ]
 </script>
-
-<style scoped>
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-html {
-  font-size: 10px;
-}
-body {
-  font-size: 12px;
-}
-</style>
-
-
 
 ```
 

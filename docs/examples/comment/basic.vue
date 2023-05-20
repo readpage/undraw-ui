@@ -3,6 +3,7 @@
     <!-- <template>导航栏卡槽</template> -->
     <!-- <template #info>用户信息卡槽</template> -->
     <!-- <template #card>用户信息卡片卡槽</template> -->
+    <!-- <template #opearte>操作栏卡槽</template> -->
   </u-comment>
 </template>
 
@@ -28,9 +29,9 @@ const config = reactive<ConfigApi>({
 
 let temp_id = 100
 // 提交评论事件
-const submit = ({ content, parentId, files, finish, replyId }: SubmitParamApi) => {
-  let str = '提交评论:' + content + ';\t父id: ' + parentId + ';\t图片:' + files + ';\t回复id:' + replyId
-  console.log(str)
+const submit = ({ content, parentId, files, finish, reply }: SubmitParamApi) => {
+  let str = '提交评论:' + content + ';\t父id: ' + parentId + ';\t图片:' + files + ';\t被回复评论:'
+  console.log(str, reply)
 
   /**
    * 上传文件后端返回图片访问地址，格式以'||'为分割; 如:  '/static/img/program.gif||/static/img/normal.webp'
@@ -88,17 +89,3 @@ config.comments = [
   }
 ]
 </script>
-
-<style scoped>
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-html {
-  font-size: 10px;
-}
-body {
-  font-size: 12px;
-}
-</style>

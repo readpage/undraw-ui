@@ -34,9 +34,7 @@ const emit = defineEmits<{
   (e: 'remove', comment: CommentApi): void
 }>()
 
-const { copy, isSupported } = useClipboard({
-  source: props.comment.content
-})
+const { copy } = useClipboard()
 
 const onCommand = (command: any) => {
   switch(command) {
@@ -47,10 +45,11 @@ const onCommand = (command: any) => {
       UToast({type: 'info', message: '举报成功: ' + props.comment.id})
       break
     case 'copy':
-      copy()
+      copy(props.comment.content)
       UToast({type: 'info', message: '复制成功'})
   }
 }
+
 
 </script>
 

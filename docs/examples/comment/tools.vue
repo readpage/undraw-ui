@@ -1,8 +1,11 @@
 <template>
-  <u-comment :config="config" @submit="submit" @like="like" @operate="operate" relative-time>
+  <u-comment :config="config" @submit="submit" @like="like" @operate="operate" ref="commentRef" relative-time>
     <!-- <template>导航栏卡槽</template> -->
     <!-- <template #info>用户信息卡槽</template> -->
     <!-- <template #card>用户信息卡片卡槽</template> -->
+    <template #operate="scope">
+      <Operate :comment="scope" @remove="remove" />
+    </template>
   </u-comment>
 </template>
 
@@ -10,8 +13,9 @@
 // 下载表情包资源emoji.zip https://readpage.lanzouy.com/b04duelxg 密码:undraw
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from './emoji'
-import { reactive } from 'vue'
-import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL, throttle, dayjs } from 'undraw-ui'
+import { reactive, ref } from 'vue'
+import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL, throttle, dayjs, CommentInstance } from 'undraw-ui'
+import Operate from './operate.vue'
 
 const config = reactive<ConfigApi>({
   user: {
@@ -24,9 +28,16 @@ const config = reactive<ConfigApi>({
   emoji: emoji,
   comments: [],
   total: 10,
-  // 默认全部用户显示，#1当前用户显示，#2当前用户以外显示
-  tools: ['举报#2', '删除#1', '复制', '屏蔽#2']
 })
+
+const commentRef = ref<CommentInstance>()
+
+// 删除评论
+const remove = (comment: CommentApi) => {
+  setTimeout(() => {
+    commentRef.value?.remove(comment)
+  }, 200)
+}
 
 const _throttle = throttle((type: string, comment: CommentApi, finish: Function) => {
   switch (type) {
@@ -104,17 +115,3 @@ config.comments = [
   }
 ]
 </script>
-
-<style scoped>
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-html {
-  font-size: 10px;
-}
-body {
-  font-size: 12px;
-}
-</style>

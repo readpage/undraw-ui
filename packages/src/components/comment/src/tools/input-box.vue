@@ -48,7 +48,7 @@ import {
 } from '~/index'
 import { ElButton } from '~/element'
 import { InjectInputBox, InjectInputBoxApi } from '../../key'
-import { CommentApi } from 'undraw-ui'
+import { CommentApi } from '~/index'
 
 export interface InputBoxApi {
   focus(): void
