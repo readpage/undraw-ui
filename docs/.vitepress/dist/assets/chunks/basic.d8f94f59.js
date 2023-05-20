@@ -1,0 +1,1 @@
+import{M as t}from"../app.80baa0a6.js";import{h as s,D as a,i as n,A as c,B as r,l as m}from"./framework.a4d4515f.js";import"./theme.07413ae8.js";const h=s({__name:"basic",setup(p){const e=()=>{t({message:"this is a message.",type:"info"})};return(i,_)=>{const o=a("el-button");return n(),c(o,{onClick:e},{default:r(()=>[m("show message")]),_:1})}}});export{h as default};
