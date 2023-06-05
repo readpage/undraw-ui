@@ -111,7 +111,7 @@ const counting = (timestamp: number) => {
   let progress: number = timestamp - state.startTimestamp
   state.remaining = state.currentDuration - progress
 
-  if (!isCountingUP) {
+  if (!isCountingUP()) {
     state.currentAmount =
       state.currentStartAmount - (state.currentStartAmount - props.endAmount) * (progress / state.currentDuration)
     state.currentAmount = state.currentAmount < props.endAmount ? props.endAmount : state.currentAmount
