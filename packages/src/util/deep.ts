@@ -1,5 +1,5 @@
-import { isArray } from '.'
-import { cloneDeep} from './clone-deep'
+import { isArray, isNull } from '.'
+import { cloneDeep } from './clone-deep'
 
 // const obj = {
 //   name: '张三'
@@ -8,13 +8,20 @@ import { cloneDeep} from './clone-deep'
 // obj[str] = '李明'
 // console.log(obj[str])
 
+interface DeepTreeApi {
+  parentId?: string
+  children?: string
+}
 /**
  * 数组结构转换树型结构
  * @param list
  * @param param: { parentId: string, children: string } //parentId 判断条件属性名， children转换树型结构合并成数组的属性名
  * @returns
  */
-export function deepTree(list: any[], { parentId = 'parentId', children = 'children' }) {
+export function deepTree(list: any[], param: DeepTreeApi = { parentId: 'parentId', children: 'children' }) {
+  let parentId = isNull(param.parentId, 'parentId')
+  let children = isNull(param.children, 'children')
+
   list = cloneDeep(list)
   const newList: any[] = []
   const map: any = {}
@@ -40,7 +47,10 @@ export function deepTree(list: any[], { parentId = 'parentId', children = 'child
  * @param param: { parentId: string, children: string} //parentId 判断条件属性名, 默认值parentId， children转换数据结构拆分对象的属性名 默认值: children
  * @returns
  */
-export function revDeepTree(list: any[] = [], { parentId = 'parentId', children = 'children' }) {
+export function revDeepTree(list: any[] = [], param: DeepTreeApi = { parentId: 'parentId', children: 'children' }) {
+  let parentId = isNull(param.parentId, 'parentId')
+  let children = isNull(param.children, 'children')
+
   const d: any[] = []
   let id = 0
 

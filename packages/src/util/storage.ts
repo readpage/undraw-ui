@@ -22,7 +22,7 @@ export const set = <T = any>(key: string, value: T, localStorage = true) => {
  * @param localStorage 
  * @returns 
  */
-export const get = <T>(key: string, localStorage = true) => {
+export const get = <T = any>(key: string, localStorage = true) => {
   let res: any
   const val = window[getType(localStorage)].getItem(key);
   if (val) {

@@ -15,6 +15,7 @@ import noticeBarVue from './components/notice-bar.vue'
 import searchVue from './components/search.vue'
 import tagsVue from './components/tags.vue'
 import testVue from './components/test.vue'
+import Fold from './components/fold.vue'
 import chatVue from './components/chat.vue'
 import { ElConfigProvider } from 'element-plus'
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
@@ -32,11 +33,11 @@ const components = [
   editorVue,
   iconVue,
   tagsVue,
-  testVue,
   signVue,
-  counterVue
+  counterVue,
+  Fold,
+  testVue
 ]
- 
 </script>
 
 <style lang="scss">

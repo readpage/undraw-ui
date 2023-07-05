@@ -118,15 +118,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, nextTick, ref, reactive, h, toRefs } from 'vue'
+import { computed, inject, nextTick, ref, reactive, h } from 'vue'
 import InputBox from './tools/input-box.vue'
-import {
-  EmojiApi,
-  InjectionEmojiApi,
-  UFold,
-  UIcon,
-  CommentApi,
-} from '~/components'
+import { EmojiApi, InjectionEmojiApi, UFold, UIcon, CommentApi } from '~/components'
 import type { InputBoxApi } from './tools/input-box.vue'
 import { ElAvatar } from '~/element'
 import { useEmojiParse, useLevel } from '~/hooks'

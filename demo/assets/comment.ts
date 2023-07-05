@@ -1,7 +1,7 @@
 import { CommentApi, ReplyApi } from '~/components'
 import { usePage } from '~/hooks'
 
-const comment = [
+export const comment = [
   {
     id: '1',
     parentId: null,
@@ -180,7 +180,6 @@ const comment = [
     }
   },
 
-
   {
     id: '4',
     parentId: null,
@@ -295,7 +294,7 @@ export const reply = {
       user: {
         username: 'fish_eno',
         avatar:
-        'https://static.juzicon.com/avatars/avatar-190919180320-NAQJ.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+          'https://static.juzicon.com/avatars/avatar-190919180320-NAQJ.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
         level: 6,
         homeLink: '/34'
       }

@@ -2,7 +2,7 @@
   <u-chat :user-id="userId" :emoji="emoji" :data="data" @submit="submit"></u-chat>
 </template>
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, onUnmounted, reactive, ref } from 'vue'
 import { ChatApi, ChatSubmitParam } from '~/index'
 // 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases
 // static文件放在public下,引入emoji.ts文件可以移动到自定义位置
@@ -37,7 +37,7 @@ const submit = ({ clear, content }: ChatSubmitParam) => {
   clear()
 }
 
-const address = 'ws://localhost:7000/groupchat'
+const address = 'ws://localhost:8099/ws'
 
 let socket: WebSocket
 
@@ -68,9 +68,13 @@ const send = () => {
   }
 }
 
-// onMounted(() => {
-//   connect()
-// })
+onMounted(() => {
+  connect()
+})
+
+onUnmounted(() => {
+  socket.close()
+})
 </script>
 
 <style lang="scss" scoped></style>

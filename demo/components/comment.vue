@@ -1,15 +1,16 @@
 <template>
   <u-comment-scroll style="width: 820px; margin-left: 20px" :disable="disable" @more="more">
     <u-comment
+      ref="commentRef"
       :config="config"
+      relative-time
+      page
+      upload
       @submit="submit"
       @like="like"
       @reply-page="replyPage"
       @show-info="showInfo"
-      relative-time
-      upload
-      page
-      ref="commentRef"
+      @focus="focus"
     >
       <!-- <template #info>用户信息卡槽</template> -->
       <u-comment-nav v-model="latest" @sorted="sorted"></u-comment-nav>
@@ -80,7 +81,7 @@ import {
   usePage,
   throttle,
   SubmitParamApi,
-  ReplyPageParamApi,
+  ReplyPageParamApi
 } from '~/index'
 // 下载表情包资源emoji.zip https://readpage.lanzouy.com/b04duelxg 密码:undraw
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
@@ -171,7 +172,7 @@ const submit = ({ content, parentId, files, finish, reply }: SubmitParamApi) => 
       username: config.user.username,
       avatar: config.user.avatar,
       level: 6,
-      homeLink: `/${(temp_id)}`
+      homeLink: `/${temp_id}`
     },
     reply: null
   }
@@ -188,6 +189,11 @@ const like = (id: string, finish: () => void) => {
   setTimeout(() => {
     finish()
   }, 200)
+}
+
+// 评论框焦点事件
+const focus = () => {
+  console.log('评论框焦点事件')
 }
 
 // 删除评论

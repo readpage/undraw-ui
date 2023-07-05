@@ -4,4 +4,4 @@
 
 非常感谢！ 💖
 
-![support.jpg](https://s2.loli.net/2023/03/25/DQLMFwBv2PWydsX.jpg)
+![support.jpg](https://jihulab.com/readpage/img/-/raw/main/pictures/2023/06/7_18_32_2_support.jpg)

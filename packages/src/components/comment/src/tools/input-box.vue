@@ -38,14 +38,7 @@
 import { isEmpty, isNull, isImage, createObjectURL } from '~/util'
 import { ClickOutside as vClickOutside } from 'element-plus'
 import { inject, nextTick, reactive, ref } from 'vue'
-import {
-  InjectionEmojiApi,
-  EditorInstance,
-  UToast,
-  UEmoji,
-  UEditor,
-  EmojiApi
-} from '~/index'
+import { InjectionEmojiApi, EditorInstance, UToast, UEmoji, UEditor, EmojiApi } from '~/index'
 import { ElButton } from '~/element'
 import { InjectInputBox, InjectInputBoxApi } from '../../key'
 import { CommentApi } from '~/index'
@@ -83,7 +76,7 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
-const { upload, submit } = inject(InjectInputBox) as InjectInputBoxApi
+const { upload, submit, focus } = inject(InjectInputBox) as InjectInputBoxApi
 const emoji = inject(InjectionEmojiApi) as EmojiApi
 
 // 提交评论的数据
@@ -137,6 +130,8 @@ function onFocus() {
     // 所有以'el-popper-container'开头的id且被选中的元素
     popperRef.value = document.querySelector("div[id^='el-popper-container']")
   })
+  // u-comment 评论框焦点事件
+  focus()
 }
 
 defineExpose({

@@ -43,7 +43,6 @@ defineOptions({
   name: 'UComment'
 })
 
-
 interface Props {
   config: ConfigApi
   page?: boolean
@@ -64,6 +63,7 @@ const emit = defineEmits<{
   (e: 'like', id: string, finish: () => void): void
   (e: 'replyPage', { parentId, pageNum, pageSize, finish }: ReplyPageParamApi): void
   (e: 'showInfo', id: string, finish: Function): void
+  (e: 'focus'): void
 }>()
 
 /**
@@ -97,7 +97,8 @@ const submit = ({ content, parentId, reply, files, clear }: SubmitParam2Api) => 
 }
 const inputBoxParam: InjectInputBoxApi = {
   upload: props.upload,
-  submit: submit
+  submit: submit,
+  focus: () => emit('focus')
 }
 // 输入框盒子
 provide(InjectInputBox, inputBoxParam)

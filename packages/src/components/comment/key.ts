@@ -1,4 +1,4 @@
-import { ReplyApi } from '~/components';
+import { ReplyApi } from '~/components'
 import { InjectionKey, Ref } from 'vue'
 import { CommentApi, ReplyPageParamApi, UserApi } from './interface'
 
@@ -16,12 +16,10 @@ export interface SubmitParam2Api {
 }
 export interface InjectInputBoxApi {
   upload: boolean
-  submit: ({content, parentId, files, clear}: SubmitParam2Api) => void
+  submit: ({ content, parentId, files, clear }: SubmitParam2Api) => void
+  focus: () => void
 }
 export const InjectInputBox: InjectionKey<InjectInputBoxApi> = Symbol()
-
-
-
 
 // 内容盒子
 export interface InjectContentBoxApi {
@@ -32,7 +30,6 @@ export interface InjectContentBoxApi {
 }
 export const InjectContentBox: InjectionKey<InjectContentBoxApi> = Symbol()
 
-
 // 回复盒子
 export interface InjectReplyBoxApi {
   page: boolean
@@ -41,4 +38,3 @@ export interface InjectReplyBoxApi {
   replyPage: (parentId: string, pageNum: number, pageSize: number, finish: (reply: ReplyApi) => void) => void
 }
 export const InjectReplyBox: InjectionKey<InjectReplyBoxApi> = Symbol()
-
