@@ -110,7 +110,7 @@ const state = reactive({
 })
 
 const data = reactive<DataApi>({
-  search: '',
+  search: props.config.search || '',
   visible: false,
   historySearchList: storage.get('searchHistory') || [], // 历史搜索数据
   hotSearchList: props.config.hotSearchList
@@ -120,6 +120,13 @@ watch(
   () => props.config.hotSearchList,
   val => {
     data.hotSearchList = val
+  }
+)
+
+watch(
+  () => props.config.search,
+  val => {
+    data.search = val || ''
   }
 )
 
@@ -147,21 +154,23 @@ const shouldAnimate = computed(() => !isFocus.value && !data.search && animation
 
 // 搜索存储历史记录信息
 const searchHandler = (keyword: string) => {
-  // 随机生成搜索历史tag样式
-  let n = (min: number, max: number) => Math.round(Math.random() * (max - min)) + min
-
-  let exist = (val: string) => data.historySearchList.filter(v => v.name == val).length != 0
-  if (keyword && data.historySearchList) {
-    if (!exist(keyword)) {
-      data.historySearchList.push({ name: keyword, type: state.types[n(0, 3)] })
-    }
-  } else {
-    let t = isFocus.value ? placeholder : before
-    keyword = t.value
-    if (!exist(t.value)) data.historySearchList.push({ name: t.value, type: state.types[n(0, 3)] })
-  }
   // 存储历史搜索记录
-  storage.set('searchHistory', data.historySearchList)
+  if (keyword != null && keyword.trim() != '') {
+    // 随机生成搜索历史tag样式
+    let n = (min: number, max: number) => Math.round(Math.random() * (max - min)) + min
+
+    let exist = (val: string) => data.historySearchList.filter(v => v.name == val).length != 0
+    if (keyword && data.historySearchList) {
+      if (!exist(keyword)) {
+        data.historySearchList.unshift({ name: keyword, type: state.types[n(0, 3)] })
+      }
+    } else {
+      let t = isFocus.value ? placeholder : before
+      keyword = t.value
+      if (!exist(t.value)) data.historySearchList.unshift({ name: t.value, type: state.types[n(0, 3)] })
+    }
+    storage.set('searchHistory', data.historySearchList)
+  }
   data.search = keyword
   inputRef.value.focus()
   // 提交关键词搜索
@@ -198,7 +207,7 @@ const animationend = (e: AnimationEvent) => {
 }
 
 defineExpose({
-  close: () => data.visible = false
+  close: () => (data.visible = false)
 })
 </script>
 

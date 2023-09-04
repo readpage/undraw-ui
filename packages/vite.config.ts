@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue' // 处理vue文件
-import DefineOptions from 'unplugin-vue-define-options/vite'
 import { resolve } from 'path'
 import dts from 'vite-plugin-dts' //生成类库的声明文件.d.ts
 import pkg from './package.json'
@@ -12,7 +11,6 @@ const output = resolve('dist') // 输出文件
 export default defineConfig({
   plugins: [
     vue(),
-    DefineOptions(),
     dts({
       include: ['src/**/*'],
       exclude: ['node_modules/**']

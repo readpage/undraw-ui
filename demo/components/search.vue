@@ -1,6 +1,6 @@
 <template>
-  <u-search :config="config" style="margin-left: 20px" @submit="submit" ref="searchRef"></u-search>
-  <div>abdds</div>
+  <u-search ref="searchRef" :config="config" style="margin-left: 20px" @submit="submit"></u-search>
+  <div>{{ config.search }}</div>
 </template>
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
@@ -38,7 +38,9 @@ const submit = (val: string) => {
   console.log(val)
   window.open('/all?keyword=' + val)
 }
-
+setTimeout(() => {
+  config.search = 'test'
+}, 2000)
 </script>
 
 <style lang="scss" scoped></style>

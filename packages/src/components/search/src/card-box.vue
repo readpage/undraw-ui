@@ -26,7 +26,7 @@
         {{ item.name }}
       </el-tag>
     </div>
-    <div class="trending" v-if="!isEmpty(data.hotSearchList)">
+    <div v-if="!isEmpty(data.hotSearchList)" class="trending">
       <div class="title">
         <span>热搜</span>
         <u-icon style="margin: 0 6px">
