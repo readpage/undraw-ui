@@ -6,6 +6,7 @@ import { ref } from 'vue'
 import { SearchConfig } from 'undraw-ui'
 
 const config = ref<SearchConfig>({
+  search: '', //可选输入框默认值
   keywords: ['斗罗大陆', '斗破苍穹', '吞噬星空', '凡人修仙传', '一念永恒'], // 搜索框关键字滚动
   hotSearchList: [
     '斗罗大陆',
