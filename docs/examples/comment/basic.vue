@@ -24,6 +24,7 @@ const config = reactive<ConfigApi>({
   },
   emoji: emoji,
   comments: [],
+  // aTarget: '_self',
   total: 10
 })
 
@@ -52,7 +53,7 @@ const submit = ({ content, parentId, files, finish, reply }: SubmitParamApi) => 
       username: config.user.username,
       avatar: config.user.avatar,
       level: 6,
-      homeLink: `/${(temp_id)}`
+      homeLink: `/${temp_id}`
     },
     reply: null
   }
