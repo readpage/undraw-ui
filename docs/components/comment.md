@@ -127,6 +127,7 @@ comment/scroll
 | upload | 是否上传图片    |  boolean  | false      |
 | page | 是否启动回复分页    |  boolean  | false      |
 | relative-time | 是否使用相对时间    |  boolean  | false      |
+| aTarget       | 头像链接a标签target | _blank / _parent / _self / _top |
 
 ## Comment 事件
 
@@ -179,6 +180,7 @@ export interface ConfigApi {
   showSize?: number
   replyShowSize?: number
   tools?: string[]
+  aTarget?: '_blank' | '_parent' | '_self' | '_top'
 }
 
 export interface SubmitParamApi {

@@ -27,6 +27,7 @@ export interface InjectContentBoxApi {
   relativeTime: boolean
   like: (id: string) => void
   showInfo: (id: string, finish: Function) => void
+  aTarget: '_blank' | '_parent' | '_self' | '_top'
 }
 export const InjectContentBox: InjectionKey<InjectContentBoxApi> = Symbol()
 

@@ -39,6 +39,7 @@ export interface ConfigApi {
   total: number
   showSize?: number
   replyShowSize?: number
+  aTarget?: '_blank' | '_parent' | '_self' | '_top'
 }
 
 export interface SubmitParamApi {

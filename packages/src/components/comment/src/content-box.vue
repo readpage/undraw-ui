@@ -2,7 +2,7 @@
   <div class="comment" :class="{ reply: props.reply }">
     <div class="comment-sub">
       <UserCard :uid="str(data.uid)">
-        <a :href="data.user.homeLink" target="_blank" class="no-underline" style="display: block">
+        <a :href="data.user.homeLink" :target="aTarget" class="no-underline" style="display: block">
           <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.user.avatar">
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
@@ -16,7 +16,7 @@
         </template>
         <div v-else class="user-info">
           <UserCard :uid="str(data.uid)">
-            <a :href="data.user.homeLink" target="_blank" class="no-underline" style="display: block">
+            <a :href="data.user.homeLink" :target="aTarget" class="no-underline" style="display: block">
               <div class="username">
                 <span class="name" style="max-width: 10em">{{ data.user.username }}</span>
                 <span blank="true" class="rank">
@@ -150,7 +150,7 @@ const imgList = computed(() => {
 })
 
 const { allEmoji } = inject(InjectionEmojiApi) as EmojiApi
-const { like, user, relativeTime } = inject(InjectContentBox) as InjectContentBoxApi
+const { like, user, relativeTime, aTarget } = inject(InjectContentBox) as InjectContentBoxApi
 
 //点击回复按钮打开输入框
 function reply() {

@@ -56,7 +56,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 // 将这个属性转换为响应式数据。
 // const comments = toRef(props.config, 'comments')
-const { user, comments, showSize, replyShowSize, total } = toRefs(props.config)
+const { user, comments, showSize, replyShowSize, total, aTarget } = toRefs(props.config)
 
 const emit = defineEmits<{
   (e: 'submit', { content, parentId, files, reply, finish }: SubmitParamApi): void
@@ -147,7 +147,8 @@ const contentBoxParam: InjectContentBoxApi = {
   user: user,
   like: like,
   relativeTime: isNull(props.relativeTime, false),
-  showInfo: (uid, finish) => emit('showInfo', uid, finish)
+  showInfo: (uid, finish) => emit('showInfo', uid, finish),
+  aTarget: isNull(aTarget, '_blank')
 }
 provide(InjectContentBox, contentBoxParam)
 
