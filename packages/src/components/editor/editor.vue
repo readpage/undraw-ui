@@ -165,12 +165,6 @@ const removeImg = (val: number) => {
   imgList?.value?.splice(val, 1)
 }
 onMounted(() => {
-  editorRef.value?.addEventListener('keyup', (event: Event) => {
-    const el = event.target as HTMLDivElement
-    if (el.innerHTML == '<br>') {
-      el.innerHTML = ''
-    }
-  })
 })
 
 defineExpose({

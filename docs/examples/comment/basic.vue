@@ -4,6 +4,7 @@
     <!-- <template #info>用户信息卡槽</template> -->
     <!-- <template #card>用户信息卡片卡槽</template> -->
     <!-- <template #opearte>操作栏卡槽</template> -->
+    <!-- <template #func>功能区域卡槽</template> -->
   </u-comment>
 </template>
 

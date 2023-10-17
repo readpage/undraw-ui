@@ -58,7 +58,7 @@
 
 ***vue低于3.2.25可能无法正常使用***
 ```bash
-npm i undraw-ui@0.9.6
+npm i undraw-ui@0.9.9
 ```
 
 
@@ -92,6 +92,7 @@ app.mount('#app')
     <!-- <template #info>用户信息卡槽</template> -->
     <!-- <template #card>用户信息卡片卡槽</template> -->
     <!-- <template #opearte>操作栏卡槽</template> -->
+    <!-- <template #func>功能区域卡槽</template> -->
   </u-comment>
 </template>
 

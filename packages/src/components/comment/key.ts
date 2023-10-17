@@ -2,7 +2,6 @@ import { ReplyApi } from '~/components'
 import { InjectionKey, Ref } from 'vue'
 import { CommentApi, ReplyPageParamApi, UserApi } from './interface'
 
-export const InjectItemSlot = Symbol()
 export const InjectSlots = Symbol()
 
 // 输入框

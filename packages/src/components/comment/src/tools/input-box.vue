@@ -26,6 +26,9 @@
           <span>图片</span>
           <input id="comment-upload" ref="inputRef" type="file" multiple @change="change" />
         </div>
+        <template v-if="slots.func">
+          <Func />
+        </template>
         <el-button type="primary" :disabled="disabled" @click="onSubmit">
           {{ props.contentBtn }}
         </el-button>
@@ -37,10 +40,10 @@
 <script setup lang="ts">
 import { isEmpty, isNull, isImage, createObjectURL } from '~/util'
 import { ClickOutside as vClickOutside } from 'element-plus'
-import { inject, nextTick, reactive, ref } from 'vue'
+import { h, inject, nextTick, reactive, ref } from 'vue'
 import { InjectionEmojiApi, EditorInstance, UToast, UEmoji, UEditor, EmojiApi } from '~/index'
 import { ElButton } from '~/element'
-import { InjectInputBox, InjectInputBoxApi } from '../../key'
+import { InjectInputBox, InjectInputBoxApi, InjectSlots } from '../../key'
 import { CommentApi } from '~/index'
 
 export interface InputBoxApi {
@@ -142,7 +145,6 @@ const change = (val: Event) => {
   imgList.value.length = 0 //清空上一次显示图片效果
   files2.value.length = 0
 
-  console.log(val)
   const files = inputRef.value?.files as any //获取选中的文件对象
   state.imgLength = isNull(files?.length, 0)
   if (files) {
@@ -159,6 +161,11 @@ const change = (val: Event) => {
     }
   }
 }
+
+// slots
+const slots = inject(InjectSlots) as any
+// 功能卡槽
+const Func = () => h('div', slots.func())
 </script>
 
 <style lang="scss" scoped>
@@ -170,19 +177,22 @@ const change = (val: Event) => {
     display: flex;
     align-items: center;
     margin-top: 8px;
+
+    & > div {
+      margin-right: 16px;
+    }
     .el-button {
       margin-left: auto;
     }
 
     .picture {
-      margin-left: 20px;
       font-size: 14px;
       color: var(--u-text-color-secondary);
       cursor: pointer;
       .icon {
         fill: var(--u-text-color-secondary);
         margin-right: 4px;
-        margin-bottom: 1px;
+        margin-bottom: 2px;
       }
       #comment-upload {
         display: none;

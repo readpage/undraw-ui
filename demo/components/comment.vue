@@ -12,7 +12,10 @@
       @show-info="showInfo"
       @focus="focus"
     >
+      <!-- <template>导航栏卡槽</template> -->
       <!-- <template #info>用户信息卡槽</template> -->
+      <!-- <template #card>用户信息卡片卡槽</template> -->
+      <!-- <template #func>功能区域卡槽</template> -->
       <u-comment-nav v-model="latest" @sorted="sorted"></u-comment-nav>
       <template #card="scope">
         <el-skeleton :loading="loading" :throttle="200" animated>
