@@ -158,7 +158,7 @@ const replyBoxParam: InjectReplyBoxApi = {
   replyPage: (parentId, pageNum, pageSize, finish) => {
     emit('replyPage', { parentId, pageNum, pageSize, finish })
   },
-  replyShowSize: isNull(replyShowSize, 3),
+  replyShowSize: isNull(replyShowSize?.value, 3),
   comments: comments
 }
 provide(InjectReplyBox, replyBoxParam)
