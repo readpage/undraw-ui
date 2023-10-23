@@ -79,7 +79,7 @@ const data = computed(() => {
     data.list = tmp
   }
   if (page) {
-    data.list = data.list.slice(0, 5)
+    data.list = data.list.slice(0, state.pageSize)
   }
   return data
 })
