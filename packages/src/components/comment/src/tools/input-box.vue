@@ -192,7 +192,7 @@ const Func = () => h('div', slots.func())
       .icon {
         fill: var(--u-text-color-secondary);
         margin-right: 4px;
-        margin-bottom: 2px;
+        margin-bottom: 1px;
       }
       #comment-upload {
         display: none;

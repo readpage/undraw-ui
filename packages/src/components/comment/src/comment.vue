@@ -1,9 +1,11 @@
 <template>
   <div class="u-comment">
-    <div class="comment-form">
-      <div class="header">
-        <span class="header-title">评论</span>
-      </div>
+    <div v-if="showForm" class="comment-form">
+      <slot name="header">
+        <div class="header">
+          <span class="header-title">评论</span>
+        </div>
+      </slot>
       <div class="content">
         <div class="avatar-box">
           <el-avatar :size="40" :src="config.user.avatar">
@@ -14,7 +16,7 @@
       </div>
     </div>
     <!-- <div class="hot-list"></div> -->
-    <div class="comment-list-wrapper">
+    <div v-if="showContent" class="comment-list-wrapper">
       <slot>
         <div class="title">全部评论</div>
       </slot>
@@ -52,11 +54,21 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   page: false,
-  upload: false
+  upload: false,
+  formDiabled: true
 })
 // 将这个属性转换为响应式数据。
 // const comments = toRef(props.config, 'comments')
-const { user, comments, showSize, replyShowSize, total, aTarget } = toRefs(props.config)
+const {
+  user,
+  comments,
+  showSize,
+  replyShowSize,
+  total,
+  aTarget,
+  showForm = true,
+  showContent = true
+} = toRefs(props.config)
 
 const emit = defineEmits<{
   (e: 'submit', { content, parentId, files, reply, finish }: SubmitParamApi): void

@@ -39,6 +39,8 @@ export interface ConfigApi {
   total: number
   showSize?: number
   replyShowSize?: number
+  showForm?: boolean
+  showContent?: boolean
   aTarget?: '_blank' | '_parent' | '_self' | '_top'
 }
 
