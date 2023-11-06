@@ -1,8 +1,11 @@
 <template>
   <u-comment :config="config" page @submit="submit" @like="like" @reply-page="replyPage">
-    <!-- <template>导航栏卡槽</template> -->
+    <!-- <div>导航栏卡槽</div> -->
+    <!-- <template #header>头部卡槽</template> -->
     <!-- <template #info>用户信息卡槽</template> -->
     <!-- <template #card>用户信息卡片卡槽</template> -->
+    <!-- <template #opearte>操作栏卡槽</template> -->
+    <!-- <template #func>功能区域卡槽</template> -->
   </u-comment>
 </template>
 

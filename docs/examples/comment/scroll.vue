@@ -1,9 +1,12 @@
 <template>
   <u-comment-scroll :disable="disable" @more="more">
     <u-comment :config="config" @submit="submit" @like="like">
-      <!-- <template>导航栏卡槽</template> -->
+      <!-- <div>导航栏卡槽</div> -->
+      <!-- <template #header>头部卡槽</template> -->
       <!-- <template #info>用户信息卡槽</template> -->
       <!-- <template #card>用户信息卡片卡槽</template> -->
+      <!-- <template #opearte>操作栏卡槽</template> -->
+      <!-- <template #func>功能区域卡槽</template> -->
     </u-comment>
   </u-comment-scroll>
 </template>
@@ -14,7 +17,7 @@
 import emoji from './emoji'
 import { reactive, ref } from 'vue'
 import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL } from 'undraw-ui'
-import { commentSize, getComment } from './comment';
+import { commentSize, getComment } from './comment'
 
 const config = reactive<ConfigApi>({
   user: {
@@ -93,6 +96,4 @@ const like = (id: string, finish: () => void) => {
     finish()
   }, 200)
 }
-
 </script>
-

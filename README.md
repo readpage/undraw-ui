@@ -58,7 +58,7 @@
 
 ***vue低于3.2.25可能无法正常使用***
 ```bash
-npm i undraw-ui@0.9.9
+npm i undraw-ui@1.0.0
 ```
 
 
@@ -88,7 +88,8 @@ app.mount('#app')
 ```ts
 <template>
   <u-comment :config="config" @submit="submit" @like="like" relative-time>
-    <!-- <template>导航栏卡槽</template> -->
+    <!-- <div>导航栏卡槽</div> -->
+    <!-- <template #header>头部卡槽</template> -->
     <!-- <template #info>用户信息卡槽</template> -->
     <!-- <template #card>用户信息卡片卡槽</template> -->
     <!-- <template #opearte>操作栏卡槽</template> -->

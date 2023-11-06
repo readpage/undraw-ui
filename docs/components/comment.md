@@ -128,6 +128,8 @@ comment/scroll
 | page | 是否启动回复分页    |  boolean  | false      |
 | relative-time | 是否使用相对时间    |  boolean  | false      |
 | aTarget       | 头像链接a标签target | _blank / _parent / _self / _top |
+| showForm      | 是否显示评论表单     | boolean     | true  |
+| showContent   | 是否显示评论内容     | boolean     | ture  |
 
 ## Comment 事件
 
@@ -180,6 +182,8 @@ export interface ConfigApi {
   showSize?: number
   replyShowSize?: number
   tools?: string[]
+  showForm?: boolean
+  showContent?: boolean
   aTarget?: '_blank' | '_parent' | '_self' | '_top'
 }
 

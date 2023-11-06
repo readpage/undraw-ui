@@ -1,6 +1,6 @@
 <template>
   <u-comment :config="config" upload @submit="submit" @like="like" relative-time>
-    <!-- <template>导航栏卡槽</template> -->
+    <!-- <div>导航栏卡槽</div> -->
     <!-- <template #info>用户信息卡槽</template> -->
     <!-- <template #card>用户信息卡片卡槽</template> -->
   </u-comment>
