@@ -12,7 +12,7 @@
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
         </div>
-        <InputBox placeholder="输入评论（Enter换行，Ctrl + Enter发送）" content-btn="发表评论" />
+        <InputBox placeholder="输入评论（Enter换行，Ctrl + Enter发送）" v-bind="$attrs" content-btn="发表评论" />
       </div>
     </div>
     <!-- <div class="hot-list"></div> -->
@@ -76,6 +76,7 @@ const emit = defineEmits<{
   (e: 'replyPage', { parentId, pageNum, pageSize, finish }: ReplyPageParamApi): void
   (e: 'showInfo', id: string, finish: Function): void
   (e: 'focus'): void
+  (e: 'cancel'): void
 }>()
 
 /**
@@ -114,7 +115,7 @@ const inputBoxParam: InjectInputBoxApi = {
 }
 // 输入框盒子
 provide(InjectInputBox, inputBoxParam)
-
+provide('cancelFn', () => emit('cancel'))
 // 点赞评论数组处理
 const editLikeCount = (id: string, count: number) => {
   let tar = null

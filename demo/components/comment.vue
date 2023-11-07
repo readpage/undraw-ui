@@ -6,11 +6,13 @@
       relative-time
       page
       upload
+      cancel-btn="取消"
       @submit="submit"
       @like="like"
       @reply-page="replyPage"
       @show-info="showInfo"
       @focus="focus"
+      @cancel="cancelFn"
     >
       <!-- <template>导航栏卡槽</template> -->
       <!-- <template #header>头部卡槽</template> -->
@@ -111,7 +113,9 @@ const config = reactive<ConfigApi>({
 })
 
 const commentRef = ref<CommentInstance>()
-
+const cancelFn = () => {
+  console.log('取消按钮')
+}
 setTimeout(() => {
   const user = {
     id: 1,
