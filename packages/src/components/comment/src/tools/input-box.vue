@@ -29,9 +29,14 @@
         <template v-if="slots.func">
           <Func />
         </template>
-        <el-button type="primary" :disabled="disabled" @click="onSubmit">
-          {{ props.contentBtn }}
-        </el-button>
+        <div class="btn-box">
+          <el-button type="primary" :disabled="disabled" @click="onSubmit">
+            {{ props.contentBtn }}
+          </el-button>
+          <el-button v-if="props.cancelBtn" @click="onCancel">
+            {{ props.cancelBtn }}
+          </el-button>
+        </div>
       </div>
     </Transition>
   </div>
@@ -55,6 +60,7 @@ interface Props {
   contentBtn: string
   parentId?: string
   reply?: CommentApi
+  cancelBtn?: string
 }
 
 const props = defineProps<Props>()
@@ -99,7 +105,14 @@ const onSubmit = () => {
     }
   })
 }
-
+const cancelFn = inject('cancelFn') as Function
+// 取消按钮的事件
+const onCancel = () => {
+  // 关闭评论框事件
+  clearData()
+  emit('close')
+  cancelFn()
+}
 //清理提交后输入框和图片列表数据
 const clearData = () => {
   // 清空评论框内容
@@ -181,7 +194,7 @@ const Func = () => h('div', slots.func())
     & > div {
       margin-right: 16px;
     }
-    .el-button {
+    .btn-box {
       margin-left: auto;
     }
 
