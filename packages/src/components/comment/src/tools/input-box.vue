@@ -191,7 +191,7 @@ const Func = () => h('div', slots.func())
     align-items: center;
     margin-top: 8px;
 
-    & > div {
+    & > div:not(.btn-box) {
       margin-right: 16px;
     }
     .btn-box {
