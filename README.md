@@ -58,7 +58,7 @@
 
 ***vue低于3.2.25可能无法正常使用***
 ```bash
-npm i undraw-ui@1.0.0
+npm i undraw-ui@1.0.1
 ```
 
 

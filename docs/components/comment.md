@@ -139,6 +139,7 @@ comment/scroll
 | like | 点赞 | (id: number, finish: () => void) => void |
 | reply-page | 回复分页 | (replaygeParam: ReplyPageParamApi) => void |
 | show-info | 获取用户详细信息 | (id: number, show: Function) => void |
+| cancel    |  取消事件按钮    |  () => void    |
 
 ## 接口类型
 ```ts

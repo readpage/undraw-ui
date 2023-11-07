@@ -2,16 +2,33 @@
 sidebar: false
 ---
 
+## 1.0.1
+***2023-11-07***
+### 增强
+- [comment] @cancel取消按钮回调
+
+### 修复
+- [comment] 发布按钮不靠最右样式问题
+  
+
+## 1.0.0
+***2023-11-06***
+### 增强
+- [comment] 是否显示评论表单和评论列表参数
+
+### 修复
+- [comment] replyShowSize 参数时回复不正确显示
+
+
+
 ## 0.9.8
 ***2023-10-17***
-
 ### 增强
 - [comment] 功能区域卡槽
 
 
 ## 0.9.8
 ***2023-09-13***
-
 ### 增强
 - [comment] 自定义头像a标签target属性
 
@@ -28,7 +45,6 @@ sidebar: false
 
 ## 0.9.6
 ***2023-05-21***
-
 ### 重构
 
 - [comment] submit事件的参数reply获取到回复评论对象 ([#I76OXP](https://gitee.com/undraw/undraw-ui/issues/I76OXP))
@@ -44,7 +60,6 @@ sidebar: false
 
 ## 0.9.4
 ***2023-05-05***
-
 ### 增强
 - [comment] 回复分页添加评论显示数量不超过分页数量大小([#I6XNKZ](https://gitee.com/undraw/undraw-ui/issues/I6XNKZ)) 
 - [comment] 添加相对时间属性([#I5PWF6](https://gitee.com/undraw/undraw-ui/issues/I5PWF6))
@@ -53,9 +68,9 @@ sidebar: false
 
 ## 0.9.3
 ***2023-04-20***
-
 ### 新增
 - 新增cdn引用 by ([readpage](https://gitee.com/readpage))
+  
 ### 修复
 - element-plus: el-input样式都收到影响 ([#I6VSWT](https://gitee.com/undraw/undraw-ui/issues/I6VSWT) by [readpage](https://gitee.com/readpage))
 - 点赞多次点赞数量错误 ([#I6WR4H](https://gitee.com/undraw/undraw-ui/issues/I6WR4H) by [readpage](https://gitee.com/readpage))
@@ -63,7 +78,6 @@ sidebar: false
 
 ## 0.9.0
 ***2023-03-24***
-
 ### 新增
 - 导航栏nav卡槽(排序)
 - [comment-scroll]滚动加载更多评论组件  
