@@ -10,6 +10,8 @@
       @focus="onFocus"
       @input="input"
       @submit="onSubmit"
+      @paste="change"
+      @change-img-list-fn="changeFilesFn"
     ></u-editor>
     <Transition name="fade">
       <div v-if="action" class="action-box">
@@ -76,7 +78,9 @@ const files2 = ref<any[]>([])
 const state = reactive({
   imgLength: 0
 })
-
+const changeFilesFn = (arr: any[]) => {
+  files2.value = arr
+}
 const input = (e: Event) => {
   isEmpty(content.value.replace(/&nbsp;|<br>| /g, '')) ? (disabled.value = true) : (disabled.value = false)
 }
@@ -150,15 +154,22 @@ function onFocus() {
   focus()
 }
 
+function AddMention() {
+  console.log(editorRef.value)
+}
+
 defineExpose({
-  focus: () => (editorRef as any).value?.focus()
+  focus: () => (editorRef as any).value?.focus(),
+  AddMention
 })
 
-const change = (val: Event) => {
-  imgList.value.length = 0 //清空上一次显示图片效果
-  files2.value.length = 0
+const change = (val: Event, file?: File) => {
+  if (!file) {
+    imgList.value.length = 0 //清空上一次显示图片效果
+    files2.value.length = 0
+  }
 
-  const files = inputRef.value?.files as any //获取选中的文件对象
+  const files = file ? [file] : (inputRef.value?.files as any) //获取选中的文件对象
   state.imgLength = isNull(files?.length, 0)
   if (files) {
     for (let i = 0; i < files.length; i++) {

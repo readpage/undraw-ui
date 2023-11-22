@@ -1,6 +1,9 @@
 $minHeight: 30 !default;
 $padding: 4px 10px !default;
-
+span {
+  display: inline-block;
+  min-width: 1px;
+}
 .u-editor {
   transition: all 0.3s;
   background: var(--u-bg-color-secondary);
@@ -19,14 +22,18 @@ $padding: 4px 10px !default;
     resize: both;
     background-position: 120% -10px;
     transition: background 0.3s;
+    .mentionUser {
+      background-color: red;
+    }
   }
+
   .rich-input:empty::before {
     cursor: text;
     content: attr(placeholder);
     color: var(--u-text-color-placeholder);
   }
   .image-preview-box {
-    display: flex; 
+    display: flex;
     padding: 0 12px;
     .image-preview {
       position: relative;
@@ -44,7 +51,7 @@ $padding: 4px 10px !default;
         }
       }
       .clean-btn:hover {
-        opacity: .8;
+        opacity: 0.8;
       }
     }
   }

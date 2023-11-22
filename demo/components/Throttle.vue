@@ -3,7 +3,6 @@
 </template>
 
 <script setup lang="ts">
-import { reject } from 'lodash'
 import {} from 'vue'
 import Parent from './components/Parent.vue'
 

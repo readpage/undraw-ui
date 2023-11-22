@@ -12,7 +12,12 @@
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
         </div>
-        <InputBox placeholder="输入评论（Enter换行，Ctrl + Enter发送）" v-bind="$attrs" content-btn="发表评论" />
+        <InputBox
+          v-bind="$attrs"
+          ref="inputBox"
+          placeholder="输入评论（Enter换行，Ctrl + Enter发送）"
+          content-btn="发表评论"
+        />
       </div>
     </div>
     <!-- <div class="hot-list"></div> -->
@@ -26,11 +31,11 @@
 </template>
 
 <script setup lang="ts">
-import { provide, toRefs, useSlots } from 'vue'
+import { provide, ref, toRefs, useSlots } from 'vue'
 import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
 import { ElAvatar } from '~/element'
-import { CommentApi, ConfigApi, InjectionEmojiApi, isNull, SubmitParamApi, ReplyPageParamApi } from '~/index'
+import { CommentApi, ConfigApi, InjectionEmojiApi, isNull, SubmitParamApi, ReplyPageParamApi, debounce } from '~/index'
 import {
   InjectContentBoxApi,
   InjectContentBox,
@@ -67,7 +72,8 @@ const {
   total,
   aTarget,
   showForm = true,
-  showContent = true
+  showContent = true,
+  mentionConfig
 } = toRefs(props.config)
 
 const emit = defineEmits<{
@@ -77,6 +83,8 @@ const emit = defineEmits<{
   (e: 'showInfo', id: string, finish: Function): void
   (e: 'focus'): void
   (e: 'cancel'): void
+  (e: 'getMentionList', arr: any[]): void
+  (e: 'mentionSearch', searchStr: string): void
 }>()
 
 /**
@@ -106,7 +114,7 @@ const submit = ({ content, parentId, reply, files, clear }: SubmitParam2Api) => 
       comments.value.unshift(comment)
     }
   }
-  emit('submit', { content, parentId, reply, files, finish })
+  emit('submit', { content, parentId, reply, files, mentionList: mentionList.value, finish })
 }
 const inputBoxParam: InjectInputBoxApi = {
   upload: props.upload,
@@ -116,6 +124,7 @@ const inputBoxParam: InjectInputBoxApi = {
 // 输入框盒子
 provide(InjectInputBox, inputBoxParam)
 provide('cancelFn', () => emit('cancel'))
+
 // 点赞评论数组处理
 const editLikeCount = (id: string, count: number) => {
   let tar = null
@@ -200,15 +209,32 @@ const remove = (comment: CommentApi) => {
     }
   }
 }
-
+const inputBox = ref(null)
+const mentionList = ref<any[]>([])
+function changeMetionList(list: any[]) {
+  mentionList.value = list
+}
+function getMentionList() {
+  return mentionList.value
+}
+// mentionList 触发事件
+const mentionSearch = debounce((searchStr: string) => {
+  emit('mentionSearch', searchStr)
+}, 300)
 // 表情包
 provide(InjectionEmojiApi, props.config.emoji)
-
+//提及配置
+provide('mentionConfig', mentionConfig as any)
 // 工具卡槽
 provide(InjectSlots, useSlots())
-
+//修改提及列表
+provide('changeMetionList', changeMetionList)
+//修改提及列表
+provide('mentionSearch', mentionSearch)
 defineExpose({
-  remove: remove
+  remove: remove,
+  mentionList: mentionList,
+  getMentionList: getMentionList
 })
 </script>
 
