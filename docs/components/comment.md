@@ -118,6 +118,11 @@ comment/nav-sort
 comment/scroll
 :::
 
+## @mention提及
+:::demo
+comment/mention
+:::
+
 
 ## Comment 属性
 
@@ -194,6 +199,7 @@ export interface SubmitParamApi {
   files?: any[]
   replyId?: string | null
   finish: (comment: CommentApi) => void
+  mentionList?: any[];
 }
 
 export interface ReplyPageParamApi {

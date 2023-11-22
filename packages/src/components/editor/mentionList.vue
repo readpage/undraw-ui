@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ElScrollbar } from 'element-plus'
+import { ElScrollbar } from '~/element'
 import { nextTick, onMounted, ref, watch } from 'vue'
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 interface Props {
@@ -63,9 +63,9 @@ const moveSelection = (step: number) => {
   // 如果选中的图标不在当前的视口范围内 那么就滚动到选中的item的位置
 
   if (scrollbarRef.value) {
-    const item = scrollbarRef.value.wrapRef?.children[0].children[selectedIndex.value] as HTMLElement
+    const item = (scrollbarRef.value as any).wrapRef.children[0].children[selectedIndex.value] as HTMLElement
     if (item) {
-      const h = scrollbarRef.value.wrapRef?.offsetHeight || 0
+      const h = (scrollbarRef.value as any).wrapRef.offsetHeight || 0
       scrollbarRef.value?.setScrollTop((selectedIndex.value - h / item.offsetHeight + 1) * item.offsetHeight)
     }
   }
