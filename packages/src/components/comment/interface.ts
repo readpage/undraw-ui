@@ -42,7 +42,7 @@ export interface ConfigApi {
   showForm?: boolean
   showContent?: boolean
   aTarget?: '_blank' | '_parent' | '_self' | '_top'
-  mentionConfig: {
+  mentionConfig?: {
     // 是否显示提及
     show?: boolean
     // 用户id的key
@@ -55,6 +55,8 @@ export interface ConfigApi {
     mentionColor?: string
     // 用户列表
     userArr?: any[]
+    // 是否显示头像
+    showAvatar?: boolean
   }
 }
 

@@ -45,6 +45,7 @@
       :is-show="isShowMention"
       :position="mentionPosition"
       :list="mentionConfig?.userArr"
+      :show-avatar="mentionConfig?.showAvatar"
       @insert="insertUser"
       @change-show="changeMentionShow"
     ></MentionList>

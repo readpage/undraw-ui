@@ -224,7 +224,8 @@ const config = reactive<ConfigApi>({
     userNameKey: 'userName',
     userAvatarKey: 'userAvatar',
     show: true,
-    mentionColor: '#1e80ff'
+    mentionColor: '#1e80ff',
+    showAvatar: false
   }
 })
 

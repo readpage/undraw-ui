@@ -18,7 +18,7 @@
       >
         <slot name="user" :item="item" :index="index">
           <div class="userInfo">
-            <img :src="item.userAvatar" width="30" class="avatar" />
+            <img v-if="showAvatar" :src="item.userAvatar" width="30" class="avatar" />
             <span class="username">{{ item.userName }}</span>
           </div>
         </slot>
@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ElScrollbar } from '~/element'
+import { ElScrollbar, ElEmpty } from '~/element'
 import { nextTick, onMounted, ref, watch } from 'vue'
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 interface Props {
@@ -41,6 +41,7 @@ interface Props {
     top: number
   }
   list: any[]
+  showAvatar?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
   isShow: false,
@@ -48,7 +49,8 @@ const props = withDefaults(defineProps<Props>(), {
     left: 0,
     top: 0
   }),
-  list: () => []
+  list: () => [],
+  showAvatar: true
 })
 
 const selectedIndex = ref(-1)
