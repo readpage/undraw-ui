@@ -6,7 +6,7 @@ export interface CommentApi {
   uid: string | number
   address: string
   content: string
-  likes: number
+  likes?: number
   contentImg?: string
   createTime: string
   user: CommentUserApi
@@ -21,15 +21,15 @@ export interface ReplyApi {
 export interface CommentUserApi {
   username: string
   avatar: string
-  level: number
-  homeLink: string
+  level?: number
+  homeLink?: string
 }
 
 export interface UserApi {
   id: string | number
   username: string
   avatar: string
-  likeIds: string[] | number[]
+  likeIds?: string[] | number[]
 }
 
 export interface ConfigApi {
@@ -41,6 +41,10 @@ export interface ConfigApi {
   replyShowSize?: number
   showForm?: boolean
   showContent?: boolean
+  showLevel?: boolean
+  showLikes?: boolean
+  showAddress?: boolean
+  showHomeLike?: boolean
   aTarget?: '_blank' | '_parent' | '_self' | '_top'
   mentionConfig?: {
     // 是否显示提及

@@ -25,6 +25,6 @@ const props = defineProps<Props>()
 
 <style>
 .comment-list > .comment > .comment-primary > .comment-main {
-  margin-right: 16px;
+  margin-right: 12px;
 }
 </style>

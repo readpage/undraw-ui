@@ -73,6 +73,10 @@ const {
   aTarget,
   showForm = true,
   showContent = true,
+  showLevel = true,
+  showLikes = true,
+  showAddress = true,
+  showHomeLike = true,
   mentionConfig
 } = toRefs(props.config)
 
@@ -134,7 +138,7 @@ const editLikeCount = (id: string, count: number) => {
     } else {
       tar = v.reply?.list.find(v => v.id == id)
     }
-    if (tar) {
+    if (tar && tar.likes) {
       tar.likes += count
     }
   })
@@ -147,20 +151,22 @@ const editLikeCount = (id: string, count: number) => {
 const like = (id: string) => {
   // 点赞事件处理
   const likeIds = props.config.user.likeIds
-  emit('like', id, () => {
-    if (likeIds.findIndex(item => item == id) == -1) {
-      // 点赞
-      likeIds.push(id as never)
-      editLikeCount(id, 1)
-    } else {
-      // 取消点赞
-      let index = likeIds.findIndex(item => item == id)
-      if (index != -1) {
-        likeIds.splice(index, 1)
-        editLikeCount(id, -1)
+  if (likeIds) {
+    emit('like', id, () => {
+      if (likeIds.findIndex(item => item == id) == -1) {
+        // 点赞
+        likeIds.push(id as never)
+        editLikeCount(id, 1)
+      } else {
+        // 取消点赞
+        let index = likeIds.findIndex(item => item == id)
+        if (index != -1) {
+          likeIds.splice(index, 1)
+          editLikeCount(id, -1)
+        }
       }
-    }
-  })
+    })
+  }
 }
 /**
  * 评论盒子参数或方法
@@ -170,7 +176,11 @@ const contentBoxParam: InjectContentBoxApi = {
   like: like,
   relativeTime: isNull(props.relativeTime, false),
   showInfo: (uid, finish) => emit('showInfo', uid, finish),
-  aTarget: isNull(aTarget, '_blank')
+  aTarget: isNull(aTarget, '_blank'),
+  showLevel,
+  showLikes,
+  showAddress,
+  showHomeLike
 }
 provide(InjectContentBox, contentBoxParam)
 

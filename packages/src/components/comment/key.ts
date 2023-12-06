@@ -27,6 +27,10 @@ export interface InjectContentBoxApi {
   like: (id: string) => void
   showInfo: (id: string, finish: Function) => void
   aTarget: '_blank' | '_parent' | '_self' | '_top'
+  showLevel: true | Ref<boolean | undefined>
+  showLikes: true | Ref<boolean | undefined>
+  showAddress: true | Ref<boolean | undefined>
+  showHomeLike: true | Ref<boolean | undefined>
 }
 export const InjectContentBox: InjectionKey<InjectContentBoxApi> = Symbol()
 

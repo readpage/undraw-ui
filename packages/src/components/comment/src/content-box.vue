@@ -2,7 +2,14 @@
   <div class="comment" :class="{ reply: props.reply }">
     <div class="comment-sub">
       <UserCard :uid="str(data.uid)">
-        <a :href="data.user.homeLink" :target="aTarget" class="no-underline" style="display: block">
+        <!-- avatar -->
+        <a
+          :href="data.user.homeLink"
+          :target="aTarget"
+          :class="{ 'pointer-events-none': !showHomeLike }"
+          class="no-underline"
+          style="display: block"
+        >
           <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.user.avatar">
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
@@ -16,17 +23,26 @@
         </template>
         <div v-else class="user-info">
           <UserCard :uid="str(data.uid)">
-            <a :href="data.user.homeLink" :target="aTarget" class="no-underline" style="display: block">
+            <a
+              :href="data.user.homeLink"
+              :target="aTarget"
+              :class="{ 'pointer-events-none': !showHomeLike }"
+              class="no-underline"
+              style="display: block"
+            >
               <div class="username">
                 <span class="name" style="max-width: 10em">{{ data.user.username }}</span>
-                <span blank="true" class="rank">
-                  <u-icon size="24" v-html="useLevel(data.user.level)"></u-icon>
+                <!-- level -->
+                <span v-if="showLevel" blank="true" class="rank">
+                  <u-icon size="24" v-html="useLevel(data.user.level || 1)"></u-icon>
                 </span>
               </div>
             </a>
           </UserCard>
           <!-- <span class="author-badge-text">（作者）</span> -->
-          <span class="address" style="color: #939393; font-size: 12px">&nbsp;&nbsp;{{ data.address }}</span>
+          <span v-if="showAddress" class="address" style="color: #939393; font-size: 12px">
+            &nbsp;&nbsp;{{ data.address }}
+          </span>
           <time class="time">{{ relativeTime ? dayjs(data.createTime).fromNow() : data.createTime }}</time>
         </div>
         <div class="content">
@@ -47,8 +63,8 @@
         </div>
         <div class="action-box select-none">
           <!-- 点赞 -->
-          <div class="item" @click="like(str(data.id))">
-            <u-icon v-if="user.likeIds.map(String).indexOf(str(data.id)) == -1">
+          <div v-if="showLikes" class="item" @click="like(str(data.id))">
+            <u-icon v-if="user.likeIds && user.likeIds.map(String).indexOf(str(data.id)) == -1">
               <svg
                 t="1650360973068"
                 viewBox="0 0 1024 1024"
@@ -150,7 +166,9 @@ const imgList = computed(() => {
 })
 
 const { allEmoji } = inject(InjectionEmojiApi) as EmojiApi
-const { like, user, relativeTime, aTarget } = inject(InjectContentBox) as InjectContentBoxApi
+const { like, user, relativeTime, aTarget, showLevel, showLikes, showAddress, showHomeLike } = inject(
+  InjectContentBox
+) as InjectContentBoxApi
 
 //点击回复按钮打开输入框
 function reply() {

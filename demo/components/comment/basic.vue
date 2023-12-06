@@ -1,5 +1,5 @@
 <template>
-  <u-comment :config="config" @submit="submit" @like="like">
+  <u-comment :config="config" @submit="submit">
     <!-- <template>导航栏卡槽</template> -->
     <!-- <template #info>用户信息卡槽</template> -->
     <!-- <template #card>用户信息卡片卡槽</template> -->
@@ -29,7 +29,11 @@ const config = reactive<ConfigApi>({
   },
   emoji: emoji,
   comments: getComment(1, 2),
-  total: 10
+  total: 10,
+  showLevel: false,
+  showHomeLike: false,
+  showAddress: false,
+  showLikes: false
 })
 
 let temp_id = 100
@@ -62,13 +66,6 @@ const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
   setTimeout(() => {
     finish(comment)
     UToast({ message: '评论成功!', type: 'info' })
-  }, 200)
-}
-// 点赞按钮事件 将评论id返回后端判断是否点赞，然后在处理点赞状态
-const like = (id: string, finish: () => void) => {
-  console.log('点赞: ' + id)
-  setTimeout(() => {
-    finish()
   }, 200)
 }
 </script>

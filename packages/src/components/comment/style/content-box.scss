@@ -46,8 +46,9 @@
   position: relative;
 
   .item {
+    display: flex;
+    align-items: center;
     margin-right: 16px;
-    line-height: 20px;
     line-height: 22px;
     font-size: 14px;
     cursor: pointer;
@@ -56,7 +57,8 @@
       margin-right: 4px;
     }
   }
-  .item:hover, .active {
+  .item:hover,
+  .active {
     color: var(--u-color-primary);
   }
 }
