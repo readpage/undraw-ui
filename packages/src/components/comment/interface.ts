@@ -36,15 +36,14 @@ export interface ConfigApi {
   user: UserApi
   emoji: EmojiApi
   comments: CommentApi[]
-  total: number
-  showSize?: number
   replyShowSize?: number
   showForm?: boolean
   showContent?: boolean
   showLevel?: boolean
   showLikes?: boolean
   showAddress?: boolean
-  showHomeLike?: boolean
+  showHomeLink?: boolean
+  placeholder?: string
   aTarget?: '_blank' | '_parent' | '_self' | '_top'
   mentionConfig?: {
     // 是否显示提及

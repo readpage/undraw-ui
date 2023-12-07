@@ -29,9 +29,8 @@ const config = reactive<ConfigApi>({
   },
   emoji: emoji,
   comments: getComment(1, 2),
-  total: 10,
   showLevel: false,
-  showHomeLike: false,
+  showHomeLink: false,
   showAddress: false,
   showLikes: false
 })

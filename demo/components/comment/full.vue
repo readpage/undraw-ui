@@ -166,7 +166,6 @@ const config = reactive<ConfigApi>({
   },
   emoji: emoji,
   comments: [],
-  total: 10,
   mentionConfig: {
     userArr: [
       {

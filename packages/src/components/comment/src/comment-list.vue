@@ -14,8 +14,6 @@ import ReplyBox from './reply-box.vue'
 
 interface Props {
   data: CommentApi[]
-  total: number
-  showSize: number
 }
 
 const props = defineProps<Props>()

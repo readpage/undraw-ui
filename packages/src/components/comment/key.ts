@@ -30,7 +30,7 @@ export interface InjectContentBoxApi {
   showLevel: true | Ref<boolean | undefined>
   showLikes: true | Ref<boolean | undefined>
   showAddress: true | Ref<boolean | undefined>
-  showHomeLike: true | Ref<boolean | undefined>
+  showHomeLink: true | Ref<boolean | undefined>
 }
 export const InjectContentBox: InjectionKey<InjectContentBoxApi> = Symbol()
 

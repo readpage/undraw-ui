@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import { isEmpty, isNull, isImage, createObjectURL } from '~/util'
 import { ClickOutside as vClickOutside } from 'element-plus'
-import { h, inject, nextTick, reactive, ref } from 'vue'
+import { Ref, h, inject, nextTick, reactive, ref } from 'vue'
 import { InjectionEmojiApi, EditorInstance, UToast, UEmoji, UEditor, EmojiApi } from '~/index'
 import { ElButton } from '~/element'
 import { InjectInputBox, InjectInputBoxApi, InjectSlots } from '../../key'
@@ -94,10 +94,12 @@ const emoji = inject(InjectionEmojiApi) as EmojiApi
 
 // 提交评论的数据
 const onSubmit = () => {
+  console.log(props)
   submit({
-    content: props.reply
-      ? `回复 <span style="color: var(--u-color-success-dark-2);">@${props.reply.user.username}:</span> ${content.value}`
-      : content.value,
+    content:
+      props.reply && props.parentId != props.reply.id
+        ? `回复 <span style="color: var(--u-color-success-dark-2);">@${props.reply.user.username}:</span> ${content.value}`
+        : content.value,
     parentId: isNull(props.parentId, null),
     reply: props.reply,
     files: files2.value,

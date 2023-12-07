@@ -12,12 +12,7 @@
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
         </div>
-        <InputBox
-          v-bind="$attrs"
-          ref="inputBox"
-          placeholder="输入评论（Enter换行，Ctrl + Enter发送）"
-          content-btn="发表评论"
-        />
+        <InputBox v-bind="$attrs" ref="inputBox" :placeholder="(placeholder as string)" content-btn="发表评论" />
       </div>
     </div>
     <!-- <div class="hot-list"></div> -->
@@ -25,7 +20,7 @@
       <slot>
         <div class="title">全部评论</div>
       </slot>
-      <CommentList :data="comments" :total="total" :show-size="isNull(showSize, 5)"></CommentList>
+      <CommentList :data="comments"></CommentList>
     </div>
   </div>
 </template>
@@ -67,16 +62,15 @@ const props = withDefaults(defineProps<Props>(), {
 const {
   user,
   comments,
-  showSize,
   replyShowSize,
-  total,
   aTarget,
+  placeholder = '输入评论（Enter换行，Ctrl + Enter发送）',
   showForm = true,
   showContent = true,
   showLevel = true,
   showLikes = true,
   showAddress = true,
-  showHomeLike = true,
+  showHomeLink = true,
   mentionConfig
 } = toRefs(props.config)
 
@@ -180,7 +174,7 @@ const contentBoxParam: InjectContentBoxApi = {
   showLevel,
   showLikes,
   showAddress,
-  showHomeLike
+  showHomeLink
 }
 provide(InjectContentBox, contentBoxParam)
 
