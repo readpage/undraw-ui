@@ -4,7 +4,7 @@ export interface CommentApi {
   id: string | number
   parentId: string | number | null
   uid: string | number
-  address: string
+  address?: string
   content: string
   likes?: number
   contentImg?: string
