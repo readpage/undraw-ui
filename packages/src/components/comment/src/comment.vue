@@ -9,7 +9,8 @@
       <div class="content">
         <div class="avatar-box">
           <el-avatar :size="40" :src="config.user.avatar">
-            <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+            <span v-if="config.user.username">{{ config.user.username }}</span>
+            <img v-else src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
         </div>
         <InputBox v-bind="$attrs" ref="inputBox" :placeholder="(placeholder as string)" content-btn="发表评论" />
@@ -90,26 +91,28 @@ const emit = defineEmits<{
  */
 const submit = ({ content, parentId, reply, files, clear }: SubmitParam2Api) => {
   // 添加评论
-  const finish = (comment: CommentApi) => {
+  const finish = (comment?: CommentApi) => {
     // 清空输入框内容
     clear()
     // 提交评论添加到评论列表
-    if (parentId) {
-      let raw_comment = comments.value.find(v => v.id == parentId)
-      if (raw_comment) {
-        let replys = raw_comment.reply
-        if (replys) {
-          replys.list.unshift(comment)
-          replys.total++
-        } else {
-          raw_comment.reply = {
-            total: 1,
-            list: [comment]
+    if (comment) {
+      if (parentId) {
+        let raw_comment = comments.value.find(v => v.id == parentId)
+        if (raw_comment) {
+          let replys = raw_comment.reply
+          if (replys) {
+            replys.list.unshift(comment)
+            replys.total++
+          } else {
+            raw_comment.reply = {
+              total: 1,
+              list: [comment]
+            }
           }
         }
+      } else {
+        comments.value.unshift(comment)
       }
-    } else {
-      comments.value.unshift(comment)
     }
   }
   emit('submit', { content, parentId, reply, files, mentionList: mentionList.value, finish })

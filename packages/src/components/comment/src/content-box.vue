@@ -11,7 +11,8 @@
           style="display: block"
         >
           <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.user.avatar">
-            <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+            <span v-if="data.user.username">{{ data.user.username }}</span>
+            <img v-else src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
         </a>
       </UserCard>

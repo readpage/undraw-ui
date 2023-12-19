@@ -68,7 +68,7 @@ export interface SubmitParamApi {
   parentId: string | null
   files?: any[]
   reply?: CommentApi
-  finish: (comment: CommentApi) => void
+  finish: (comment?: CommentApi) => void
   mentionList?: any[]
 }
 
