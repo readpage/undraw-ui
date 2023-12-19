@@ -87,7 +87,7 @@ watch(
   val => {
     if (val) {
       selectedIndex.value = 0
-      console.log('获取焦点', scrollbarRef.value)
+      // console.log('获取焦点', scrollbarRef.value)
       // 显示的时候，让滚动条滚到第一个
       nextTick(() => {
         if (scrollbarRef.value) {
@@ -101,6 +101,7 @@ const emit = defineEmits(['insert', 'changeShow'])
 const resetSelectIndex = () => {
   selectedIndex.value = 0
 }
+
 onMounted(() => {
   mentionList.value?.focus()
 })

@@ -29,7 +29,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { markRaw, reactive, ref } from 'vue'
+import { markRaw, provide, reactive, ref } from 'vue'
 import { ElScrollbar } from '~/element'
 import { isDark } from '@/util'
 import { Moon, Sunny } from '@element-plus/icons-vue'

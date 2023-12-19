@@ -238,7 +238,10 @@ provide('mentionSearch', mentionSearch)
 defineExpose({
   remove: remove,
   mentionList: mentionList,
-  getMentionList: getMentionList
+  getMentionList: getMentionList,
+  setMentionShow: (show: boolean) => {
+    ;(inputBox.value as any).setMentionShow(show)
+  }
 })
 </script>
 
