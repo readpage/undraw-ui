@@ -162,6 +162,7 @@ function AddMention() {
 
 defineExpose({
   focus: () => (editorRef as any).value?.focus(),
+  changeMentionShow: (isShow: boolean) => (editorRef as any).value?.changeMentionShow(isShow),
   AddMention
 })
 

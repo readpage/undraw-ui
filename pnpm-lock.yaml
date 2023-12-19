@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@element-plus/icons-vue':
     specifier: ^2.1.0
@@ -19,6 +23,9 @@ dependencies:
   highlight.js:
     specifier: ^11.7.0
     version: 11.7.0
+  lodash:
+    specifier: ^4.17.21
+    version: 4.17.21
   undraw-ui:
     specifier: ^1.0.2
     version: 1.0.2
@@ -30,6 +37,9 @@ dependencies:
     version: 3.3.4
 
 devDependencies:
+  '@types/lodash':
+    specifier: ^4.14.202
+    version: 4.14.202
   '@types/node':
     specifier: ^16.4.7
     version: 16.4.7
@@ -710,12 +720,11 @@ packages:
   /@types/lodash-es@4.17.8:
     resolution: {integrity: sha512-euY3XQcZmIzSy7YH5+Unb3b2X12Wtk54YWINBvvGQ5SmMvwb11JQskGsfkH/5HXK77Kr8GF0wkVDIxzAisWtog==}
     dependencies:
-      '@types/lodash': 4.14.197
+      '@types/lodash': 4.14.202
     dev: false
 
-  /@types/lodash@4.14.197:
-    resolution: {integrity: sha512-BMVOiWs0uNxHVlHBgzTIqJYmj+PgCo4euloGF+5m4okL3rEYzM2EEv78mw8zWSMM57dM7kVIgJ2QDvwHSoCI5g==}
-    dev: false
+  /@types/lodash@4.14.202:
+    resolution: {integrity: sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==}
 
   /@types/node@16.4.7:
     resolution: {integrity: sha512-aDDY54sst8sx47CWT6QQqIZp45yURq4dic0+HCYfYNcY5Ejlb/CLmFnRLfy3wQuYafOeh3lB/DAKaqRKBtcZmA==}
@@ -1447,7 +1456,7 @@ packages:
       '@element-plus/icons-vue': 2.1.0(vue@3.3.4)
       '@floating-ui/dom': 1.5.1
       '@popperjs/core': /@sxzz/popperjs-es@2.11.7
-      '@types/lodash': 4.14.197
+      '@types/lodash': 4.14.202
       '@types/lodash-es': 4.17.8
       '@vueuse/core': 9.13.0(vue@3.3.4)
       async-validator: 4.2.5
@@ -2887,7 +2896,3 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false

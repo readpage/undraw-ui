@@ -46,6 +46,8 @@ export interface ConfigApi {
   placeholder?: string
   aTarget?: '_blank' | '_parent' | '_self' | '_top'
   mentionConfig?: {
+    // 是否加载中
+    isLoading?: boolean
     // 是否显示提及
     show?: boolean
     // 用户id的key

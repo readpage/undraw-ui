@@ -81,7 +81,8 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { inject, nextTick, onMounted, reactive, ref } from 'vue'
+import delay from 'lodash/delay'
 import {
   UToast,
   ConfigApi,
@@ -224,7 +225,8 @@ const config = reactive<ConfigApi>({
     userAvatarKey: 'userAvatar',
     show: true,
     mentionColor: '#1e80ff',
-    showAvatar: false
+    showAvatar: true,
+    isLoading: true
   }
 })
 
@@ -349,13 +351,31 @@ const _throttle = throttle((type: string, comment: CommentApi, finish: Function)
   }
 })
 const mentionSearchFn = (keyword: string) => {
+  if (config && config.mentionConfig) {
+    config.mentionConfig.isLoading = true
+  }
   if (!keyword) {
-    config.mentionConfig.userArr = baseUserArr
+    delay(() => {
+      if (config && config.mentionConfig) {
+        config.mentionConfig.userArr = baseUserArr
+      }
+    }, 1000)
+
+    if (config && config.mentionConfig) {
+      config.mentionConfig.isLoading = false
+    }
     return
   }
-  config.mentionConfig.userArr = baseUserArr.filter(e => {
-    return e.userName.includes(keyword)
-  })
+  delay(() => {
+    if (config && config.mentionConfig) {
+      config.mentionConfig.userArr = baseUserArr.filter(e => {
+        return e.userName.includes(keyword)
+      })
+    }
+    if (config && config.mentionConfig) {
+      config.mentionConfig.isLoading = false
+    }
+  }, 1000)
 }
 //回复分页
 const replyPage = ({ parentId, pageNum, pageSize, finish }: ReplyPageParamApi) => {

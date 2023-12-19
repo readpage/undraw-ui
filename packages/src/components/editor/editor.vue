@@ -42,6 +42,7 @@
     </div>
     <MentionList
       ref="metionList"
+      v-loading="mentionConfig.isLoading"
       :is-show="isShowMention"
       :position="mentionPosition"
       :list="mentionConfig?.userArr"
@@ -292,7 +293,7 @@ function focus() {
 //@用户插入操作
 function insertUser(user: any) {
   if (user) {
-    let img = createImgUrl(user)
+    let img = createSvgUrl(user)
     addText(`${img}\u2008`, true)
   }
 }
@@ -329,36 +330,62 @@ defineExpose({
   clear,
   focus,
   imageRef,
-  insertUser
+  insertUser,
+  changeMentionShow
 })
-// 创建@标签
-const createImgUrl = (user: any) => {
-  const str = `@${user[mentionConfig.value.userNameKey]}`
-  let canvas = document.createElement('canvas')
-  let ctx = canvas.getContext('2d')
+//创建@标签
+const createSvgUrl = (user: any) => {
+  // 获取用户名和用户ID
+  const userName = user[mentionConfig.value.userNameKey]
+  const userId = user[mentionConfig.value.userIdKey]
+  const mentionColor = mentionConfig.value.mentionColor || '#409eff'
 
-  if (ctx) {
-    // 设置字体样式
-    ctx.font = '14px PingFangSC-Regular, PingFang SC'
-    // 测量文本的宽度
-    let textWidth = ctx.measureText(str).width
-    // 设置canvas的宽度
-    canvas.width = textWidth
-    // 设置canvas的高度
-    canvas.height = 20
-    // 再次设置字体样式
-    ctx.font = '14px PingFangSC-Regular, PingFang SC'
-    // 设置字体颜色
-    ctx.fillStyle = mentionConfig.value.mentionColor || '#409eff'
-    // 绘制文本
-    ctx.fillText(str, 0, 15)
+  // 创建一个不可见的SVG元素用于测量文本宽度
+  const svgForMeasure = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
+      <style>
+        .mention-text { font: 14px 'PingFangSC-Regular', 'PingFang SC'; }
+      </style>
+      <text x="0" y="15" class="mention-text">@${userName}</text>
+    </svg>
+  `
+
+  // 将SVG添加到DOM中以测量文本
+  const container = document.createElement('div')
+  container.style.visibility = 'hidden' // 隐藏容器
+  container.innerHTML = svgForMeasure
+  document.body.appendChild(container)
+
+  // 测量文本宽度
+  const textElement = container.querySelector('text')
+  let textWidth = 200 // 默认宽度
+  if (textElement) {
+    textWidth = textElement.getComputedTextLength()
   }
 
-  let url = canvas.toDataURL('image/png')
+  // 移除用于测量的SVG
+  document.body.removeChild(container)
+
+  // 创建最终的SVG元素
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${textWidth}" height="20">
+      <style>
+        .mention-text { font: 14px 'PingFangSC-Regular', 'PingFang SC'; fill: ${mentionColor}; }
+      </style>
+      <text x="0" y="15" class="mention-text">@${userName}</text>
+    </svg>
+  `
+
+  // 编码SVG以便作为URL使用
+  const encodedSvg = encodeURIComponent(svg).replace(/'/g, '%27').replace(/"/g, '%22')
+
+  const url = `data:image/svg+xml,${encodedSvg}`
+
+  // 返回img标签
   return `
-  <img src="${url}" alt="${str}" style="width:${canvas.width}px;height:${canvas.height}px;user-select: none;"
-   data-userName="${user[mentionConfig.value.userNameKey]}"  data-id="${user[mentionConfig.value.userIdKey]}"
-   draggable="false"
+    <img src="${url}" alt="@${userName}" style="width:${textWidth}px;height:20px;user-select: none;  vertical-align: sub;"
+     data-userName="${userName}" data-id="${userId}"
+     draggable="false"
     >`
 }
 </script>
