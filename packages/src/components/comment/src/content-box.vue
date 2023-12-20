@@ -6,7 +6,7 @@
         <a
           :href="data.user.homeLink"
           :target="aTarget"
-          :class="{ 'pointer-events-none': !showHomeLike }"
+          :class="{ 'pointer-events-none': !showHomeLink }"
           class="no-underline"
           style="display: block"
         >
@@ -19,15 +19,12 @@
     </div>
     <div class="comment-primary">
       <div class="comment-main">
-        <template v-if="slots.info">
-          <Info />
-        </template>
-        <div v-else class="user-info">
+        <div class="user-info">
           <UserCard :uid="str(data.uid)">
             <a
               :href="data.user.homeLink"
               :target="aTarget"
-              :class="{ 'pointer-events-none': !showHomeLike }"
+              :class="{ 'pointer-events-none': !showHomeLink }"
               class="no-underline"
               style="display: block"
             >
@@ -44,6 +41,9 @@
           <span v-if="showAddress" class="address" style="color: #939393; font-size: 12px">
             &nbsp;&nbsp;{{ data.address }}
           </span>
+          <template v-if="slots.info">
+            <Info />
+          </template>
           <time class="time">{{ relativeTime ? dayjs(data.createTime).fromNow() : data.createTime }}</time>
         </div>
         <div class="content">
@@ -167,7 +167,7 @@ const imgList = computed(() => {
 })
 
 const { allEmoji } = inject(InjectionEmojiApi) as EmojiApi
-const { like, user, relativeTime, aTarget, showLevel, showLikes, showAddress, showHomeLike } = inject(
+const { like, user, relativeTime, aTarget, showLevel, showLikes, showAddress, showHomeLink } = inject(
   InjectContentBox
 ) as InjectContentBoxApi
 
@@ -192,7 +192,7 @@ function hide(event: Event) {
 
 //工具slots
 const slots = inject(InjectSlots) as any
-// 用户信息卡槽
+// 信息卡槽
 const Info = () => h('div', slots.info(props.data))
 
 //操作栏卡槽
