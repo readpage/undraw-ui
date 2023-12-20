@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, reactive } from 'vue'
+import { computed, inject, reactive, watch } from 'vue'
 import ContentBox from './content-box.vue'
 import { ReplyApi, ElPagination } from '~/index'
 import { InjectReplyBox, InjectReplyBoxApi } from '../key'

@@ -82,7 +82,6 @@
 
 <script setup lang="ts">
 import { inject, nextTick, onMounted, reactive, ref } from 'vue'
-import delay from 'lodash/delay'
 import {
   UToast,
   ConfigApi,
@@ -355,7 +354,7 @@ const mentionSearchFn = (keyword: string) => {
     config.mentionConfig.isLoading = true
   }
   if (!keyword) {
-    delay(() => {
+    setTimeout(() => {
       if (config && config.mentionConfig) {
         config.mentionConfig.userArr = baseUserArr
       }
@@ -366,7 +365,7 @@ const mentionSearchFn = (keyword: string) => {
     }
     return
   }
-  delay(() => {
+  setTimeout(() => {
     if (config && config.mentionConfig) {
       config.mentionConfig.userArr = baseUserArr.filter(e => {
         return e.userName.includes(keyword)
@@ -383,6 +382,7 @@ const replyPage = ({ parentId, pageNum, pageSize, finish }: ReplyPageParamApi) =
     total: reply.total,
     list: usePage(pageNum, pageSize, reply.list)
   }
+  console.log('回复分页')
   setTimeout(() => {
     finish(tmp)
   }, 200)

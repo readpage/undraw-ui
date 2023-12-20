@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { provide, ref, toRefs, useSlots } from 'vue'
+import { nextTick, provide, ref, toRefs, useSlots } from 'vue'
 import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
 import { ElAvatar } from '~/element'
@@ -111,7 +111,9 @@ const submit = ({ content, parentId, reply, files, clear }: SubmitParam2Api) => 
           }
         }
       } else {
-        comments.value.unshift(comment)
+        nextTick(() => {
+          comments.value.unshift(comment)
+        })
       }
     }
   }

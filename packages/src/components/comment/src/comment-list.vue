@@ -1,6 +1,6 @@
 <template>
   <div v-if="data" class="comment-list">
-    <ContentBox v-for="(comment, index) in data" :id="str(comment.id)" :key="index" :data="comment">
+    <ContentBox v-for="comment in data" :id="str(comment.id)" :key="str(comment.id)" :data="comment">
       <ReplyBox :id="str(comment.id)" :data="comment.reply"></ReplyBox>
     </ContentBox>
   </div>

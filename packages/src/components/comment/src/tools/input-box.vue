@@ -94,7 +94,6 @@ const emoji = inject(InjectionEmojiApi) as EmojiApi
 
 // 提交评论的数据
 const onSubmit = () => {
-  console.log(props)
   submit({
     content:
       props.reply && props.parentId != props.reply.id
