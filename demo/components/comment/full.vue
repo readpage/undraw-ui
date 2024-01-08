@@ -22,7 +22,6 @@
       <!-- <template #card>用户信息卡片卡槽</template> -->
       <!-- <template #func>功能区域卡槽</template> -->
       <!-- <template #user>功能区域卡槽</template> -->
-
       <u-comment-nav v-model="latest" @sorted="sorted"></u-comment-nav>
       <template #card="scope">
         <el-skeleton :loading="loading" :throttle="200" animated>

@@ -27,6 +27,7 @@
           hide-on-single-page
           layout="total, prev, pager, next"
           :total="data.total"
+          :current-page="state.currentPage"
           :page-size="state.pageSize"
           @current-change="currentChange"
           @size-change="sizeChange"
@@ -51,7 +52,7 @@ const props = defineProps<Props>()
 const state = reactive({
   loading: false,
   over: false,
-  pageNum: 1,
+  currentPage: 1,
   pageSize: 5
 })
 
@@ -84,6 +85,20 @@ const data = computed(() => {
   return data
 })
 
+watch(
+  () => props.data?.total,
+  val => {
+    if (val) {
+      let totalPage = Math.ceil(val / state.pageSize)
+      let currentPage = state.currentPage > totalPage ? totalPage : state.currentPage
+      currentPage = currentPage < 1 ? 1 : currentPage
+      if (state.currentPage != currentPage) {
+        changePage(currentPage)
+      }
+    }
+  }
+)
+
 const replyMore = () => {
   state.over = true
 }
@@ -98,14 +113,23 @@ const finish = (val: any) => {
   })
 }
 
-const currentChange = (val: number) => {
-  state.pageNum = val
+/**
+ * 改变当前页数
+ * @param val
+ */
+const changePage = (val: number) => {
+  console.log(val)
+  state.currentPage = val
   replyPage(props.id, val, state.pageSize, reply => finish(reply))
+}
+
+const currentChange = (val: number) => {
+  changePage(val)
 }
 
 const sizeChange = (val: number) => {
   state.pageSize = val
-  replyPage(props.id, state.pageNum, val, reply => finish(reply))
+  replyPage(props.id, state.currentPage, val, reply => finish(reply))
 }
 </script>
 

@@ -40,6 +40,7 @@ const onCommand = (command: any) => {
   switch (command) {
     case 'remove':
       emit('remove', props.comment)
+      console.log(props.comment)
       break
     case 'report':
       UToast({ type: 'info', message: '举报成功: ' + props.comment.id })

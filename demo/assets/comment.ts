@@ -217,7 +217,7 @@ export const comment = [
 ] as CommentApi[]
 
 export const reply = {
-  total: 6,
+  total: 11,
   list: [
     {
       id: '31',
@@ -325,6 +325,54 @@ export const reply = {
       createTime: '2023-04-30 14:00',
       user: {
         username: 'D.z.H****',
+        avatar:
+          'https://static.juzicon.com/avatars/avatar-190919181051-M3HK.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+        level: 3,
+        homeLink: '/37'
+      }
+    },
+    {
+      id: '37',
+      parentId: '3',
+      uid: '12',
+      likes: 18,
+      address: '来自广州',
+      content: ' 绝望自有绝望的力量，就像希望自有希望的无能。',
+      createTime: '2023-04-30 14:00',
+      user: {
+        username: 'D.z.H****',
+        avatar:
+          'https://static.juzicon.com/avatars/avatar-190919181051-M3HK.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+        level: 3,
+        homeLink: '/37'
+      }
+    },
+    {
+      id: '37',
+      parentId: '3',
+      uid: '12',
+      likes: 18,
+      address: '来自广州',
+      content: ' 绝望自有绝望的力量，就像希望自有希望的无能。',
+      createTime: '2023-04-30 14:00',
+      user: {
+        username: 'D.z.H****',
+        avatar:
+          'https://static.juzicon.com/avatars/avatar-190919181051-M3HK.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
+        level: 3,
+        homeLink: '/37'
+      }
+    },
+    {
+      id: '37',
+      parentId: '3',
+      uid: '12',
+      likes: 18,
+      address: '来自广州',
+      content: ' 绝望自有绝望的力量，就像希望自有希望的无能。',
+      createTime: '2023-04-30 14:00',
+      user: {
+        username: '1D.z.H****',
         avatar:
           'https://static.juzicon.com/avatars/avatar-190919181051-M3HK.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
         level: 3,

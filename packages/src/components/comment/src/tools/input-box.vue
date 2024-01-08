@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import { isEmpty, isNull, isImage, createObjectURL } from '~/util'
 import { ClickOutside as vClickOutside } from 'element-plus'
-import { Ref, h, inject, nextTick, reactive, ref } from 'vue'
+import { h, inject, nextTick, reactive, ref } from 'vue'
 import { InjectionEmojiApi, EditorInstance, UToast, UEmoji, UEditor, EmojiApi } from '~/index'
 import { ElButton } from '~/element'
 import { InjectInputBox, InjectInputBoxApi, InjectSlots } from '../../key'
