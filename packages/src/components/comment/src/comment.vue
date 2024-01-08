@@ -72,6 +72,7 @@ const {
   showLikes = true,
   showAddress = true,
   showHomeLink = true,
+  showReply = true,
   mentionConfig
 } = toRefs(props.config)
 
@@ -177,7 +178,8 @@ const contentBoxParam: InjectContentBoxApi = {
   showLevel,
   showLikes,
   showAddress,
-  showHomeLink
+  showHomeLink,
+  showReply
 }
 provide(InjectContentBox, contentBoxParam)
 

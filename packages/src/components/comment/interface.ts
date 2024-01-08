@@ -43,6 +43,7 @@ export interface ConfigApi {
   showLikes?: boolean
   showAddress?: boolean
   showHomeLink?: boolean
+  showReply?: boolean
   placeholder?: string
   aTarget?: '_blank' | '_parent' | '_self' | '_top'
   mentionConfig?: {

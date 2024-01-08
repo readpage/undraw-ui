@@ -11,7 +11,7 @@
           style="display: block"
         >
           <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.user.avatar">
-            <span v-if="data.user.username">{{ data.user.username }}</span>
+            <span v-if="data.user.avatar">{{ data.user.username }}</span>
             <img v-else src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
         </a>
@@ -92,7 +92,7 @@
             <span v-if="data.likes != 0">{{ data.likes }}</span>
           </div>
           <!-- 回复 -->
-          <div ref="btnRef" class="item" :class="{ active: state.active }" @click="reply">
+          <div v-if="showReply" ref="btnRef" class="item" :class="{ active: state.active }" @click="reply">
             <u-icon>
               <svg
                 viewBox="0 0 1024 1024"
@@ -167,7 +167,7 @@ const imgList = computed(() => {
 })
 
 const { allEmoji } = inject(InjectionEmojiApi) as EmojiApi
-const { like, user, relativeTime, aTarget, showLevel, showLikes, showAddress, showHomeLink } = inject(
+const { like, user, relativeTime, aTarget, showLevel, showLikes, showAddress, showHomeLink, showReply } = inject(
   InjectContentBox
 ) as InjectContentBoxApi
 

@@ -31,6 +31,7 @@ export interface InjectContentBoxApi {
   showLikes: true | Ref<boolean | undefined>
   showAddress: true | Ref<boolean | undefined>
   showHomeLink: true | Ref<boolean | undefined>
+  showReply: true | Ref<boolean | undefined>
 }
 export const InjectContentBox: InjectionKey<InjectContentBoxApi> = Symbol()
 
