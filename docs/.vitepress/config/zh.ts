@@ -4,16 +4,12 @@ export const zhConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
   title: "undraw-ui",
   description: "a Vue 3 based component library for designers and developers",
   head: [
-    ['link', { rel: 'icon', href: '/u.webp '}]
+    ['link', { rel: 'icon', href: '/undraw-ui/normal.webp'}]
   ],
   
 
   themeConfig: {
     logo: '/u.webp',
-    editLink: {
-      pattern: 'https://github.com/vuejs/pinia/edit/v2/packages/docs/:path',
-      text: '对本页提出修改建议',
-    },
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/readpage/undraw-ui' }

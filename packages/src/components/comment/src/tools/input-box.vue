@@ -7,6 +7,7 @@
       :placeholder="props.placeholder"
       :min-height="64"
       :img-list="imgList"
+      @click="() => (action = true)"
       @focus="onFocus"
       @input="input"
       @submit="onSubmit"
@@ -145,8 +146,8 @@ function onClickOutside(event: Event) {
 }
 
 function onFocus() {
-  // 显示操作栏
   action.value = true
+  // 显示操作栏
   nextTick(() => {
     // 所有以'el-popper-container'开头的id且被选中的元素
     popperRef.value = document.querySelector("div[id^='el-popper-container']")

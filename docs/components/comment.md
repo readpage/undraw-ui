@@ -132,9 +132,20 @@ comment/mention
 | upload | 是否上传图片    |  boolean  | false      |
 | page | 是否启动回复分页    |  boolean  | false      |
 | relative-time | 是否使用相对时间    |  boolean  | false      |
+
+## config 属性
+
+| 属性    | 说明 | 类型           | 默认值 |
+|----------|-------|---------------|--------|
 | aTarget       | 头像链接a标签target | _blank / _parent / _self / _top |
 | showForm      | 是否显示评论表单     | boolean     | true  |
-| showContent   | 是否显示评论内容     | boolean     | ture  |
+| showContent   | 是否显示评论内容     | boolean     | true  |
+| showReply   | 是否显示回复按钮     | boolean     | true  |
+| showLevel     | 是否显示等级     | boolean     | true  |
+| showLikes     | 是否显示点赞    | boolean     | true  |
+| showAddress     | 是否显示地址    | boolean     | true  |
+| showHomeLink     | 是否启用个人主页链接     | boolean     | true  |
+| placeholder     | 输入框占位文本     | string     | 输入评论（Enter换行，Ctrl + Enter发送）  |
 
 ## Comment 事件
 
@@ -149,64 +160,71 @@ comment/mention
 ## 接口类型
 ```ts
 export interface CommentApi {
-  id: string | number
-  parentId: string | number | null
-  uid: string | number
-  address: string
-  content: string
-  likes: number
-  contentImg?: string
-  createTime: string
-  user: CommentUserApi
-  reply?: ReplyApi | null
+    id: string | number;
+    parentId: string | number | null;
+    uid: string | number;
+    address?: string;
+    content: string;
+    likes?: number;
+    contentImg?: string;
+    createTime: string;
+    user: CommentUserApi;
+    reply?: ReplyApi | null;
 }
-
 export interface ReplyApi {
-  total: number
-  list: CommentApi[]
+    total: number;
+    list: CommentApi[];
 }
-
 export interface CommentUserApi {
-  username: string
-  avatar: string
-  level: number
-  homeLink: string
+    username: string;
+    avatar: string;
+    level?: number;
+    homeLink?: string;
 }
-
 export interface UserApi {
-  id: string | number
-  username: string
-  avatar: string
-  likeIds: string[] | number[]
+    id: string | number;
+    username: string;
+    avatar: string;
+    likeIds?: string[] | number[];
 }
-
 export interface ConfigApi {
-  user: UserApi
-  emoji: EmojiApi
-  comments: CommentApi[]
-  total: number
-  showSize?: number
-  replyShowSize?: number
-  tools?: string[]
-  showForm?: boolean
-  showContent?: boolean
-  aTarget?: '_blank' | '_parent' | '_self' | '_top'
+    user: UserApi;
+    emoji: EmojiApi;
+    comments: CommentApi[];
+    replyShowSize?: number;
+    showForm?: boolean;
+    showContent?: boolean;
+    showLevel?: boolean;
+    showLikes?: boolean;
+    showAddress?: boolean;
+    showHomeLink?: boolean;
+    showReply?: boolean;
+    placeholder?: string;
+    aTarget?: '_blank' | '_parent' | '_self' | '_top';
+    mentionConfig?: {
+        isLoading?: boolean;
+        show?: boolean;
+        userIdKey?: string;
+        userNameKey?: string;
+        userAvatarKey?: string;
+        mentionColor?: string;
+        userArr?: any[];
+        showAvatar?: boolean;
+    };
 }
-
 export interface SubmitParamApi {
-  content: string
-  parentId: string | null
-  files?: any[]
-  replyId?: string | null
-  finish: (comment: CommentApi) => void
-  mentionList?: any[];
+    content: string;
+    parentId: string | null;
+    files?: any[];
+    reply?: CommentApi;
+    finish: (comment?: CommentApi) => void;
+    mentionList?: any[];
 }
-
 export interface ReplyPageParamApi {
-  parentId: string
-  pageNum: number
-  pageSize: number
-  finish: (reply: ReplyApi) => void
+    parentId: string;
+    pageNum: number;
+    pageSize: number;
+    finish: (reply: ReplyApi) => void;
 }
 
 ```

@@ -1,6 +1,23 @@
 ---
 sidebar: false
 ---
+## 1.0.7
+***2024-01-10***
+### 增强
+- [comment] 自定义是否显示回复
+- [comment] 新增信息卡槽
+- [comment] 创建@处变为svg 放大不失真 暴露隐藏mention的方法
+- [comment] 支持头像为空显示用户名文字头像
+- [comment] 自定义输入框placeholder
+- [comment] 自定义是否显示点赞、等级、地址、个人主页链接
+
+### 修复
+- [comment] 提及 isLoading properties of undefined
+- [comment] 删除本页最后一条数据，返回上一页
+- [commment] 添加评论,v-for 时用index当做key unshift整个列表重新渲染,key切换为评论id
+- [comment] 提及功能列表为空时错误
+
+
 ## 1.0.2
 ***2023-11-22***
 ### 增强

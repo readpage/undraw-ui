@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-// 下载表情包资源emoji.zip https://readpage.lanzouy.com/b04duelxg 密码:undraw
+// 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases/tag/v0.0.0
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from './emoji'
 import { reactive, ref } from 'vue'

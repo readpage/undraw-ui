@@ -1,13 +1,15 @@
 <template>
   <u-comment :config="config" @submit="submit">
     <!-- <template>导航栏卡槽</template> -->
+    <!-- <template #header>头部卡槽</template> -->
     <!-- <template #info>信息卡槽</template> -->
     <!-- <template #card>用户信息卡片卡槽</template> -->
+    <!-- <template #func>功能区域卡槽</template> -->
   </u-comment>
 </template>
 
 <script setup lang="ts">
-// 下载表情包资源emoji.zip https://readpage.lanzouj.com/b04duelxg 密码:undraw
+// 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases/tag/v0.0.0
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from '@/assets/emoji'
 import { reactive } from 'vue'

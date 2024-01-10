@@ -21,7 +21,6 @@
       <!-- <template #info>信息卡槽</template> -->
       <!-- <template #card>用户信息卡片卡槽</template> -->
       <!-- <template #func>功能区域卡槽</template> -->
-      <!-- <template #user>功能区域卡槽</template> -->
       <u-comment-nav v-model="latest" @sorted="sorted"></u-comment-nav>
       <template #card="scope">
         <el-skeleton :loading="loading" :throttle="200" animated>
@@ -92,7 +91,7 @@ import {
   SubmitParamApi,
   ReplyPageParamApi
 } from '~/index'
-// 下载表情包资源emoji.zip https://readpage.lanzouy.com/b04duelxg 密码:undraw
+// 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases/tag/v0.0.0
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from '@/assets/emoji'
 import { ElAvatar, ElButton, dayjs, CommentInstance } from '~/index'

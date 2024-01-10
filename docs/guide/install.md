@@ -4,5 +4,5 @@
 
 ***vue低于3.2.25可能无法正常使用***
 ```sh
-npm i undraw-ui@0.9.9
+npm i undraw-ui@1.0.7
 ```
