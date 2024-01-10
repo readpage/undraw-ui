@@ -217,7 +217,7 @@ export const comment = [
 ] as CommentApi[]
 
 export const reply = {
-  total: 11,
+  total: 8,
   list: [
     {
       id: '31',
@@ -345,54 +345,6 @@ export const reply = {
           'https://static.juzicon.com/avatars/avatar-190919181051-M3HK.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
         level: 3,
         homeLink: '/37'
-      }
-    },
-    {
-      id: '37',
-      parentId: '3',
-      uid: '12',
-      likes: 18,
-      address: '来自广州',
-      content: ' 绝望自有绝望的力量，就像希望自有希望的无能。',
-      createTime: '2023-04-30 14:00',
-      user: {
-        username: 'D.z.H****',
-        avatar:
-          'https://static.juzicon.com/avatars/avatar-190919181051-M3HK.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-        level: 3,
-        homeLink: '/37'
-      }
-    },
-    {
-      id: '37',
-      parentId: '3',
-      uid: '12',
-      likes: 18,
-      address: '来自广州',
-      content: ' 绝望自有绝望的力量，就像希望自有希望的无能。',
-      createTime: '2023-04-30 14:00',
-      user: {
-        username: '1D.z.H****',
-        avatar:
-          'https://static.juzicon.com/avatars/avatar-190919181051-M3HK.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-        level: 3,
-        homeLink: '/37'
-      }
-    },
-    {
-      id: '38',
-      parentId: '3',
-      uid: '13',
-      likes: 17,
-      address: '来自重庆',
-      content: ' 无论这个世界对你怎样，都请你一如既往的努力，勇敢，充满希望。',
-      createTime: '2023-04-30 15:00',
-      user: {
-        username: '繁星Cong2',
-        avatar:
-          'https://static.juzicon.com/user/avatar-f81b3655-03fd-485c-811b-4b5ceaca52b6-210817180051-YTO4.jpg?x-oss-process=image/resize,m_fill,w_100,h_100',
-        level: 1,
-        homeLink: '/38'
       }
     }
   ]

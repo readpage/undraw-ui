@@ -42,7 +42,7 @@
     </div>
     <MentionList
       ref="metionList"
-      v-loading="mentionConfig.isLoading"
+      v-loading="mentionConfig?.isLoading"
       :is-show="isShowMention"
       :position="mentionPosition"
       :list="mentionConfig?.userArr"
