@@ -80,7 +80,7 @@ app.mount('#app')
 ```
 
 2. 在`App.vue`中使用
-> (1)下载表情包资源[emoji.zip下载](https://gitee.com/undraw/undraw-ui/releases/tag/v0.0.0)
+> (1)下载表情包资源[emoji.zip下载](https://gitee.com/undraw/undraw-ui/releases/tag/v0.0.0)  
 > (2)static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置  
 > (3)js实例地址[comment-js.vue](https://undraw.gitee.io/undraw-ui/guide/usage.html)
 
