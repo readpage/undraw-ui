@@ -1,6 +1,7 @@
 <template>
   <div class="u-fold">
-    <div class="txt-box" :class="{ 'over-hidden': fold }">
+    <!-- over-hidden -->
+    <div ref="textBox" class="txt-box" :class="{ 'over-hidden': fold }">
       <div ref="divBox">
         <slot></slot>
       </div>
@@ -12,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
 import './style/index.scss'
 
 defineOptions({
@@ -38,24 +39,26 @@ const fold = ref(true)
 const isOver = ref(false)
 
 const divBox = ref<HTMLDivElement>()
+const textBox = ref<HTMLDivElement>()
 
 let observer: ResizeObserver
 
 onMounted(() => {
   observer = new ResizeObserver(entry => {
-    if (fold.value && divBox.value) {
+    if (fold.value && divBox.value && textBox.value) {
       //offsetHeight：包括内容可见部分的高度，border，可见的padding，水平方向的scrollbar（如果存在）；不包括margin。
       // clientHeight：包括内容可见部分的高度，可见的padding；不包括border，水平方向的scrollbar，margin。
       //scrollHeight：包括内容的高度（可见与不可见），padding（可见与不可见）；不包括border，margin。
-      isOver.value = divBox.value.offsetHeight < divBox.value.scrollHeight
+      // isOver.value = divBox.value.offsetHeight < divBox.value.scrollHeight
+      //兼容火狐
+      isOver.value = textBox.value.clientHeight < divBox.value.scrollHeight
     }
   })
-
   observer.observe(divBox.value as any)
 })
 
 onUnmounted(() => {
-  observer.disconnect()
+  observer?.disconnect()
 })
 </script>
 
