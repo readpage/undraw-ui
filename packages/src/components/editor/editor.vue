@@ -52,7 +52,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Ref, computed, inject, nextTick, onMounted, ref, toRefs, watch } from 'vue'
+import { Ref, computed, inject, nextTick, onMounted, ref, toRefs, watch, onBeforeUnmount } from 'vue'
 import { cloneDeep, isEmpty } from '~/util'
 import UToast from '../toast'
 import MentionList from './mentionList.vue'
@@ -322,7 +322,24 @@ const removeImg = (val: number) => {
   imgList?.value?.splice(val, 1)
   emit('changeImgListFn', cloneDeep(imgList?.value as any[]))
 }
-onMounted(() => {})
+//光标位置监听
+const onEditorSelectionChange = (event?: Event) => {
+  //实时保存光标位置
+  if (editorRef.value) {
+    range.value = editorRef?.value.ownerDocument.getSelection()?.getRangeAt(0)
+  }
+}
+onMounted(() => {
+  if (editorRef?.value) {
+    editorRef.value.addEventListener('mousemove', onEditorSelectionChange)
+  }
+})
+
+onBeforeUnmount(() => {
+  if (editorRef?.value) {
+    editorRef.value.removeEventListener('mousemove', onEditorSelectionChange)
+  }
+})
 
 defineExpose({
   addText,
