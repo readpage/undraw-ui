@@ -219,6 +219,7 @@ function onInput(event: InputEvent) {
 
   emit('update:modelValue', innerHTML)
   emit('input', event)
+  onEditorSelectionChange(event)
 }
 
 function addText(val: string, isPop?: boolean) {
