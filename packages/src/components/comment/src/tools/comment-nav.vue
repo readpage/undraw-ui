@@ -1,6 +1,6 @@
 <template>
   <div class="nav">
-    <span class="nav__title">全部评论</span>
+    <span class="nav__title">{{$u('nav.title')}}</span>
     <div class="nav__sort">
       <div class="item select-none" :class="{ active: latest }" @click="latest = true">
         <u-icon>
@@ -12,7 +12,7 @@
             ></path>
           </svg>
         </u-icon>
-        最新
+        {{$u('nav.newest')}}
       </div>
       <div class="item select-none" :class="{ active: !latest }" @click="latest = false">
         <u-icon>
@@ -22,7 +22,7 @@
             ></path>
           </svg>
         </u-icon>
-        最热
+        {{$u('nav.hottest')}}
       </div>
     </div>
   </div>

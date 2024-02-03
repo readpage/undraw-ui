@@ -108,7 +108,7 @@
                 ></path>
               </svg>
             </u-icon>
-            <span>{{ state.active ? '取消回复' : '回复' }}</span>
+            <span>{{ state.active ? $u('comment.cancelReply') : $u('comment.reply') }}</span>
           </div>
           <!-- 操作栏 -->
           <template v-if="slots.operate">
@@ -119,9 +119,9 @@
           <InputBox
             ref="commentRef"
             :parent-id="str(id)"
-            :placeholder="`回复 @${data.user.username}...`"
+            :placeholder="`${$u('comment.placeholder2')}@${data.user.username}...`"
             :reply="data"
-            content-btn="发布"
+            :content-btn="$u('comment.contentBtn2')"
             style="margin-top: 12px"
             @hide="hide"
             @close="state.active = false"

@@ -3,9 +3,9 @@
     <div v-infinite-scroll="load" :infinite-scroll-disabled="disabled" infinite-scroll-distance="2">
       <slot></slot>
       <div class="scroll-btn">
-        <el-link v-if="!active" type="primary" :underline="false" @click="active = !active">加载更多</el-link>
-        <p v-if="loading">加载中...</p>
-        <p v-if="noMore">没有更多了</p>
+        <el-link v-if="!active" type="primary" :underline="false" @click="active = !active">{{$u('scroll.content')}}</el-link>
+        <p v-if="loading">{{$u('scroll.loading')}}</p>
+        <p v-if="noMore">{{$u('scroll.noMore')}}</p>
       </div>
     </div>
   </div>

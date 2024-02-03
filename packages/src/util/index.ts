@@ -9,4 +9,5 @@ export * from './basic'
 export * from './convert'
 export * from './clone-deep'
 export * from './day'
+export * from './lang'
 

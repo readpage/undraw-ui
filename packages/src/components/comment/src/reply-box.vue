@@ -3,12 +3,11 @@
     <div class="reply-list">
       <ContentBox v-for="(reply, index) in data.list" :id="id" :key="index" :data="reply" reply></ContentBox>
       <div v-if="data.length > replyShowSize" class="fetch-more">
-        <span v-if="state.loading">加载中...</span>
+        <span v-if="state.loading">{{ $u('comment.more.loading')}}</span>
         <div v-else>
           <div v-if="!state.over">
-            共{{ data.total }}条回复,
             <span class="fetch-more-comment select-none" @click="replyMore">
-              点击查看
+              {{ $u('comment.more.prefixTotal')}}{{ data.total }}{{ $u('comment.more.suffixTotal')}}
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="">
                 <path
                   data-v-d6f79dbc=""

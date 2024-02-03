@@ -44,7 +44,6 @@ export interface ConfigApi {
   showAddress?: boolean
   showHomeLink?: boolean
   showReply?: boolean
-  placeholder?: string
   aTarget?: '_blank' | '_parent' | '_self' | '_top'
   mentionConfig?: {
     // 是否显示提及

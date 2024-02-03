@@ -3,7 +3,7 @@
     <div v-if="showForm" class="comment-form">
       <slot name="header">
         <div class="header">
-          <span class="header-title">评论</span>
+          <span class="header-title">{{ $u('comment.headerTitle') }}</span>
         </div>
       </slot>
       <div class="content">
@@ -13,13 +13,18 @@
             <img v-else src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
         </div>
-        <InputBox v-bind="$attrs" ref="inputBox" :placeholder="(placeholder as string)" content-btn="发表评论" />
+        <InputBox
+          v-bind="$attrs"
+          ref="inputBox"
+          :placeholder="$u('comment.placeholder')"
+          :content-btn="$u('comment.contentBtn')"
+        />
       </div>
     </div>
     <!-- <div class="hot-list"></div> -->
     <div v-if="showContent" class="comment-list-wrapper">
       <slot>
-        <div class="title">全部评论</div>
+        <div class="title">{{ $u('comment.title') }}</div>
       </slot>
       <CommentList :data="comments"></CommentList>
     </div>
@@ -31,7 +36,7 @@ import { provide, ref, toRefs, useSlots } from 'vue'
 import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
 import { ElAvatar } from '~/element'
-import { CommentApi, ConfigApi, InjectionEmojiApi, isNull, SubmitParamApi, ReplyPageParamApi, debounce } from '~/index'
+import { CommentApi, ConfigApi, InjectionEmojiApi, isNull, SubmitParamApi, ReplyPageParamApi, debounce, isEmpty } from '~/index'
 import {
   InjectContentBoxApi,
   InjectContentBox,
@@ -65,7 +70,6 @@ const {
   comments,
   replyShowSize,
   aTarget,
-  placeholder = '输入评论（Enter换行，Ctrl + Enter发送）',
   showForm = true,
   showContent = true,
   showLevel = true,
@@ -134,12 +138,16 @@ const editLikeCount = (id: string, count: number) => {
     if (v.id == id) {
       tar = v
     } else {
-      tar = v.reply?.list.find(v => v.id == id)
-    }
-    if (tar && tar.likes) {
-      tar.likes += count
+      let tmp = v.reply?.list.find(v => v.id == id)
+      if (tmp) {
+        tar = tmp
+      }
     }
   })
+  console.log('test2', tar)
+  if (tar && !isEmpty(tar.likes)) {
+    tar.likes += count
+  }
 }
 
 /**
