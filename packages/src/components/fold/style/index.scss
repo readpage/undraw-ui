@@ -1,5 +1,4 @@
 $line: 5 !default;
-
 .u-fold {
   font-size: 14px;
   line-height: 20px;
@@ -21,7 +20,7 @@ $line: 5 !default;
     }
   }
 
-  .over-hidden {
+  .over-hidden, .over-hidden > div {
     //象作为弹性伸缩盒子模型显示。
     display: -webkit-box;
     overflow: hidden;
@@ -30,5 +29,26 @@ $line: 5 !default;
     -webkit-box-orient: vertical;
     //用来限制在一个块元素显示的文本的行数。
     -webkit-line-clamp: $line;
+  }
+}
+
+// position为end时，展开按钮位置及状态样式
+.u-fold {
+  .txt-box {
+    display: flex;
+    > div {
+      &::before {
+        content: '';
+        float: right;
+        width: 0;
+        height: 100%;
+        margin-top: -20px;
+      }
+    }
+  }
+  .end-btn {
+    float: right;
+    clear: both;
+    background-color: inherit;
   }
 }
