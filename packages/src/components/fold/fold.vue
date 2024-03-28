@@ -3,11 +3,16 @@
     <!-- over-hidden -->
     <div ref="textBox" class="txt-box" :class="{ 'over-hidden': fold }">
       <div ref="divBox">
+        <el-button v-if="isOver && unfold && position == 'end'" @click="fold = !fold" :class="{ 'over-hidden': fold, 'end-btn': 1 }"  type="primary" plain link>{{ fold ? $u('fold.unfold') : $u('fold.fold') }}</el-button>
         <slot></slot>
       </div>
     </div>
     <div class="action-box select-none">
-      <div v-if="isOver && unfold" class="expand-btn" @click="fold = !fold">{{ fold ? $u('fold.unfold') : $u('fold.fold') }}</div>
+      <div v-if="isOver && unfold && position == 'line'" class="expand-btn" @click="fold = !fold">
+        <slot name="expand" :fold="fold">
+          <el-button type="primary" plain link>{{ fold ? $u('fold.unfold') : $u('fold.fold') }}</el-button>
+        </slot>
+      </div>
     </div>
   </div>
 </template>
@@ -15,6 +20,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
 import './style/index.scss'
+import { translate as $u } from '~/util/lang'
 
 defineOptions({
   name: 'UFold'
@@ -23,10 +29,12 @@ defineOptions({
 interface Props {
   line?: number | string
   unfold?: boolean
+  position?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  line: 5
+  line: 5,
+  position: 'line'
 })
 const line = computed(() => {
   let line = Math.trunc(Number(props.line))
