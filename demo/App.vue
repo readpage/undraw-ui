@@ -4,7 +4,6 @@
   </el-config-provider>
 </template>
 <script setup lang="ts">
-import {} from 'vue'
 import signVue from './components/sign.vue'
 import anchorVue from './components/anchor.vue'
 import commentVue from './components/comment.vue'
@@ -18,7 +17,7 @@ import testVue from './components/test.vue'
 import Fold from './components/fold.vue'
 import chatVue from './components/chat.vue'
 import { ElConfigProvider } from 'element-plus'
-import zhCn from 'element-plus/lib/locale/lang/zh-cn'
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import Page from './components/Page.vue'
 import counterVue from './components/counter.vue'
 import { cloneDeep, lang } from '~/index'

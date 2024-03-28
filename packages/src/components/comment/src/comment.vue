@@ -36,7 +36,9 @@ import { provide, ref, toRefs, useSlots } from 'vue'
 import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
 import { ElAvatar } from '~/element'
+/* eslint-disable */  
 import { CommentApi, ConfigApi, InjectionEmojiApi, isNull, SubmitParamApi, ReplyPageParamApi, debounce, isEmpty } from '~/index'
+/* eslint-enable */
 import {
   InjectContentBoxApi,
   InjectContentBox,
@@ -133,7 +135,7 @@ provide('cancelFn', () => emit('cancel'))
 
 // 点赞评论数组处理
 const editLikeCount = (id: string, count: number) => {
-  let tar = null
+  let tar: any = null
   comments.value.forEach(v => {
     if (v.id == id) {
       tar = v
@@ -144,7 +146,6 @@ const editLikeCount = (id: string, count: number) => {
       }
     }
   })
-  console.log('test2', tar)
   if (tar && !isEmpty(tar.likes)) {
     tar.likes += count
   }

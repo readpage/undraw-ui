@@ -1,7 +1,7 @@
-import { reactive } from "vue"
+import { reactive } from 'vue'
 
 const message = {
-  zh: {  
+  zh: {
     emoji: {
       content: '表情'
     },
@@ -18,7 +18,7 @@ const message = {
       more: {
         loading: '加载中',
         prefixTotal: '展开',
-        suffixTotal: '条回复',
+        suffixTotal: '条回复'
       }
     },
     scroll: {
@@ -36,7 +36,7 @@ const message = {
       fold: '收起'
     }
   },
-  en: {  
+  en: {
     emoji: {
       content: 'emoji'
     },
@@ -53,7 +53,7 @@ const message = {
       more: {
         loading: 'loading',
         prefixTotal: 'unfold',
-        suffixTotal: 'return receipt',
+        suffixTotal: 'return receipt'
       }
     },
     scroll: {
@@ -78,8 +78,7 @@ export const lang = reactive({
   messages: message
 })
 
-
 export const translate = (v: string) => {
-  v = lang.locale + "." + v
-  return v.split('.').reduce((obj: any, key: string) => (obj[key] || ''), lang.messages);
+  v = lang.locale + '.' + v
+  return v.split('.').reduce((obj: any, key: string) => obj[key] || '', lang.messages)
 }
