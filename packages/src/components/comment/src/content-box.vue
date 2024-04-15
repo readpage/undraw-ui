@@ -1,5 +1,5 @@
 <template>
-  <div class="comment" :class="{ reply: props.reply }">
+  <div :id="data.id as any" class="comment" :class="{ reply: props.reply }">
     <div class="comment-sub">
       <UserCard :uid="str(data.uid)">
         <!-- avatar -->

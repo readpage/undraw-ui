@@ -45,7 +45,8 @@ setTimeout(() => {
       createTime: '2023-04-30 16:22',
       user: {
         username: '团团喵喵',
-        avatar: 'https://static.juzicon.com/user/avatar-23ac4bfe-ae93-4e0b-9f13-f22f22c7fc12-221001003441-Y0MB.jpeg'
+        avatar: 'https://static.juzicon.com/user/avatar-23ac4bfe-ae93-4e0b-9f13-f22f22c7fc12-221001003441-Y0MB.jpeg',
+        homeLink: "",
       }
     },
     {
@@ -60,6 +61,7 @@ setTimeout(() => {
       }
     }
   ]
+  console.log(config.comments)
 }, 500)
 
 // 评论提交事件
