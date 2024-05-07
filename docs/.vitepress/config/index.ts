@@ -4,7 +4,7 @@ import { zhConfig } from './zh'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: '/',
+  base: '/undraw-ui',
   lang: 'zh-CN',
   ...zhConfig,
   lastUpdated: true,

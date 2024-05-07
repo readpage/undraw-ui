@@ -4,7 +4,7 @@ export const zhConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
   title: "undraw-ui",
   description: "a Vue 3 based component library for designers and developers",
   head: [
-    ['link', { rel: 'icon', href: '/u.webp'}]
+    ['link', { rel: 'icon', href: '/undraw-ui/u.webp'}]
   ],
   
 
