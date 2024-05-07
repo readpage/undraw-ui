@@ -1,0 +1,13 @@
+# Editor directories and files
+.idea
+*.log
+
+# Ignore directory
+logs/
+node_modules/
+dist/
+# !docs/.vitepress/**/dist/
+public/static/
+demo-dist/
+.vscode/
+cache/
