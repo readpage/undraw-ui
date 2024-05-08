@@ -37,10 +37,10 @@ import { ElAvatar } from 'element-plus'
 import { translate as $u } from 'undraw-ui'
 import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
-import { isNull,  debounce, isEmpty } from '~/util'
+import { isNull, debounce, isEmpty } from '~/util'
 import { InjectContentBox, InjectInputBox, InjectReplyBox, InjectSlots, InjectionEmojiApi } from '~/components/comment'
-/* eslint-disable */  
-import { InjectContentBoxApi, InjectReplyBoxApi, InjectInputBoxApi} from '~/components/comment'
+/* eslint-disable */
+import { InjectContentBoxApi, InjectReplyBoxApi, InjectInputBoxApi } from '~/components/comment'
 import { SubmitParamApi, ReplyPageParamApi, ConfigApi, CommentApi, SubmitParam2Api } from '~/components/comment'
 /* eslint-enable */
 

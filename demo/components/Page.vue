@@ -30,7 +30,7 @@
 </template>
 <script setup lang="ts">
 import { markRaw, provide, reactive, ref } from 'vue'
-import { ElScrollbar } from '~/element'
+import { ElScrollbar } from 'element-plus'
 import { isDark } from '@/util'
 import { Moon, Sunny } from '@element-plus/icons-vue'
 import { ElSwitch } from 'element-plus'

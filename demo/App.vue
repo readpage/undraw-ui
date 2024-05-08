@@ -4,7 +4,6 @@
   </el-config-provider>
 </template>
 <script setup lang="ts">
-import signVue from './components/sign.vue'
 import anchorVue from './components/anchor.vue'
 import commentVue from './components/comment.vue'
 import dialogVue from './components/dialog.vue'
@@ -12,7 +11,6 @@ import editorVue from './components/editor.vue'
 import iconVue from './components/icon.vue'
 import noticeBarVue from './components/notice-bar.vue'
 import searchVue from './components/search.vue'
-import tagsVue from './components/tags.vue'
 import testVue from './components/test.vue'
 import Fold from './components/fold.vue'
 import chatVue from './components/chat.vue'
@@ -31,8 +29,6 @@ const components = [
   dialogVue,
   editorVue,
   iconVue,
-  tagsVue,
-  signVue,
   counterVue,
   Fold,
   testVue

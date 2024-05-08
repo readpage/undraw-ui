@@ -76,7 +76,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { ElScrollbar } from '~/index'
+import { ElScrollbar } from 'element-plus'
 defineOptions({
   name: 'anchor'
 })

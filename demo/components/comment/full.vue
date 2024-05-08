@@ -94,8 +94,9 @@ import {
 // 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases/tag/v0.0.0
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from '@/assets/emoji'
-import { ElAvatar, ElButton, CommentInstance } from '~/index'
+import { ElAvatar, ElButton } from 'element-plus'
 import { getComment, reply, commentSize } from '@/assets/comment'
+import { CommentInstance } from '~/index'
 import Operate from './operate.vue'
 
 defineOptions({
@@ -299,7 +300,7 @@ const submit = ({ content, parentId, files, finish, reply, mentionList }: Submit
     address: '来自江苏',
     content: content,
     likes: 0,
-    createTime: dayjs().subtract(5, 'seconds').toString(),
+    createTime: '2023-04-30 16:22',
     contentImg: contentImg,
     user: {
       username: config.user.username,

@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ElButton } from '~/index'
+import { ElButton } from 'element-plus'
 
 defineOptions({
   name: 'dialogVue'
