@@ -6,6 +6,7 @@
 logs/
 node_modules/
 dist/
+es/
 # !docs/.vitepress/**/dist/
 public/static/
 demo-dist/
