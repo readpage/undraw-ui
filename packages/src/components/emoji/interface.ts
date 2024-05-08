@@ -8,5 +8,3 @@ export interface EmojiApi {
   emojiList: Emoji[]
   allEmoji: Emoji
 }
-
-export const InjectionEmojiApi: InjectionKey<EmojiApi> = Symbol()

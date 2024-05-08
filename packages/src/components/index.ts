@@ -1,17 +1,59 @@
+export * from './anchor'
+export * from './chat'
 export * from './comment'
-export * from './comment/comment-scroll'
-export * from './comment/comment-nav'
+export * from './comment-nav'
+export * from './comment-scroll'
+export * from './counter'
 export * from './dialog'
 export * from './divider'
 export * from './editor'
+export * from './emoji'
 export * from './fold'
 export * from './icon'
-export * from './sign'
-export * from './toast'
-export * from './tags'
 export * from './notice-bar'
-export * from './anchor'
 export * from './search'
-export * from './chat'
-export * from './emoji'
-export * from './counter'
+export * from './toast'
+
+
+import { withInstall } from '~/util'
+import Anchor from './anchor'
+import Chat from './chat'
+import Comment from './comment'
+import CommentNav from './comment-nav'
+import CommentScroll from './comment-scroll'
+import Counter from './counter'
+import Dialog  from './dialog'
+import Divider from './divider'
+import Editor from './editor'
+import Emoji from './emoji'
+import Fold from './fold'
+import Icon from './icon'
+import NoticeBar from './notice-bar'
+import Search from './search'
+
+const components = [
+  Anchor,
+  Chat,
+  Comment,
+  CommentNav,
+  CommentScroll,
+  Counter,
+  Dialog,
+  Divider,
+  Editor,
+  Emoji,
+  Fold,
+  Icon,
+  NoticeBar,
+  Emoji,
+  Search
+]
+
+
+import { App } from 'vue'
+const install = (app: App) => {
+  components.forEach(item => {
+    app.use(withInstall(item))
+  })
+}
+export { install }

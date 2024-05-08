@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@element-plus/icons-vue':
     specifier: ^2.1.0
@@ -19,9 +23,6 @@ dependencies:
   highlight.js:
     specifier: ^11.7.0
     version: 11.7.0
-  undraw-ui:
-    specifier: ^1.0.8
-    version: 1.0.8
   vitepress:
     specifier: ^1.0.0-alpha.72
     version: 1.0.0-alpha.72(@algolia/client-search@4.19.1)(@types/node@16.4.7)(sass@1.49.7)(search-insights@2.7.0)
@@ -2695,15 +2696,6 @@ packages:
     resolution: {integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==}
     dev: true
 
-  /undraw-ui@1.0.8:
-    resolution: {integrity: sha512-uN4wX+MRFK3VuHs5vjDH4tEKDW/4fmhOVs9yEUg3JFtX5kFc4pnM5jVM7KUmtY4XNvipq4odOiscWGNGHI0qKg==}
-    dependencies:
-      element-plus: 2.6.0(vue@3.3.4)
-      vue: 3.3.4
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-    dev: false
-
   /universalify@0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
     engines: {node: '>= 4.0.0'}
@@ -2895,7 +2887,3 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false

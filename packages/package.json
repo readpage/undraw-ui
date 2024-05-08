@@ -1,7 +1,7 @@
 {
   "name": "undraw-ui",
   "private": false,
-  "version": "1.0.82",
+  "version": "1.1.0",
   "type": "module",
   "author": "readpage <f1dao@qq.com>",
   "repository": {
@@ -18,14 +18,16 @@
   ],
   "homepage": "https://undraw.gitee.io/undraw-ui/",
   "license": "MIT",
-  "main": "dist/index.es.js",
+  "main": "es/index.js",
   "unpkg": "dist/index.umd.js",
   "jsdelivr": "dist/index.umd.js",
-  "types": "dist/index.d.ts",
+  "types": "es/index.d.ts",
   "style": "dist/style.css",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "build": "npm run build:es && npm run build:umd",
+    "build:es": "vite build --emptyOutDir --config ./scripts/build.es.ts && node ./scripts/element.js",
+    "build:umd": "vite build --emptyOutDir --config ./scripts/build.umd.ts",
     "preview": "vite preview"
   },
   "dependencies": {

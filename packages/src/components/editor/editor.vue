@@ -52,9 +52,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Ref, computed, inject, nextTick, onMounted, ref, toRefs, watch, onBeforeUnmount } from 'vue'
+import { computed, inject, nextTick, onMounted, ref, toRefs, watch, onBeforeUnmount } from 'vue'
 import { cloneDeep, isEmpty } from '~/util'
-import UToast from '../toast'
+import { UToast } from 'undraw-ui'
 import MentionList from './mentionList.vue'
 defineOptions({
   name: 'UEditor'
@@ -172,6 +172,15 @@ watch(
   }
 )
 
+function getRange(v: Selection | null) {
+  try {
+    return v ? v.getRangeAt(0) : undefined
+  } catch (e) {
+
+  }
+  return undefined
+}
+
 function onFocus(event: Event) {
   emit('focus', event)
   isLocked.value = true
@@ -181,9 +190,8 @@ function onFocus(event: Event) {
 function onBlur(event: Event) {
   // 记录光标
   try {
-    range.value = window.getSelection()?.getRangeAt(0)
-  } catch (error) {
-    console.log(error)
+    range.value = getRange(document.getSelection())
+  } catch (e) {
   }
   emit('blur', event)
   if (!editorRef.value?.innerHTML) active.value = false
@@ -201,9 +209,8 @@ function onInput(event: InputEvent) {
     // 获取用户列表
     // 记录光标
     try {
-      range.value = window.getSelection()?.getRangeAt(0)
+      range.value = getRange(window.getSelection())
     } catch (error) {
-      console.log(error)
     }
 
     let rect = range.value?.getBoundingClientRect()
@@ -318,6 +325,7 @@ const keyDown = (e: KeyboardEvent) => {
     // console.log('enter')
   }
 }
+
 // 移除图片
 const removeImg = (val: number) => {
   imgList?.value?.splice(val, 1)
@@ -327,7 +335,7 @@ const removeImg = (val: number) => {
 const onEditorSelectionChange = (event?: Event) => {
   //实时保存光标位置
   if (editorRef.value) {
-    range.value = editorRef?.value.ownerDocument.getSelection()?.getRangeAt(0)
+    range.value = getRange(editorRef?.value.ownerDocument.getSelection())
   }
 }
 onMounted(() => {

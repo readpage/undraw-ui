@@ -1,6 +1,13 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
+  dayjs:
+    specifier: ^1.11.7
+    version: 1.11.10
   element-plus:
     specifier: ^2.6.0
     version: 2.6.0(vue@3.3.4)

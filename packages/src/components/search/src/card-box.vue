@@ -62,8 +62,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { DataApi } from './search.vue'
-import { ElTag, ElLink } from '~/element'
-import { isEmpty } from '~/index'
+import { ElTag, ElLink } from 'element-plus'
+import { isEmpty } from '~/util'
 
 interface Props {
   data: DataApi

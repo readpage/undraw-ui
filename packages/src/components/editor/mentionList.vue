@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ElScrollbar, ElEmpty } from '~/element'
+import { ElScrollbar, ElEmpty } from 'element-plus'
 import { nextTick, onMounted, ref, watch } from 'vue'
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 interface Props {

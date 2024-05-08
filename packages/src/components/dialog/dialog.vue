@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { ElDialog } from '~/element'
+import { ElDialog } from 'element-plus'
 
 defineOptions({
   name: 'UDialog'

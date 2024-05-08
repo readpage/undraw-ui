@@ -1,4 +1,4 @@
-import { ReplyApi } from '~/components'
+import { EmojiApi, ReplyApi } from '~/components'
 import { InjectionKey, Ref } from 'vue'
 import { CommentApi, ReplyPageParamApi, UserApi } from './interface'
 
@@ -23,7 +23,6 @@ export const InjectInputBox: InjectionKey<InjectInputBoxApi> = Symbol()
 // 内容盒子
 export interface InjectContentBoxApi {
   user: Ref<UserApi>
-  relativeTime: boolean
   like: (id: string) => void
   showInfo: (id: string, finish: Function) => void
   aTarget: '_blank' | '_parent' | '_self' | '_top'
@@ -43,3 +42,4 @@ export interface InjectReplyBoxApi {
   replyPage: (parentId: string, pageNum: number, pageSize: number, finish: (reply: ReplyApi) => void) => void
 }
 export const InjectReplyBox: InjectionKey<InjectReplyBoxApi> = Symbol()
+export const InjectionEmojiApi: InjectionKey<EmojiApi> = Symbol()

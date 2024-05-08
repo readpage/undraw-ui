@@ -1,5 +1,5 @@
 <template>
-  <div :id="data.id as any" class="comment" :class="{ reply: props.reply }">
+  <div class="comment" :class="{ reply: props.reply }">
     <div class="comment-sub">
       <UserCard :uid="str(data.uid)">
         <!-- avatar -->
@@ -44,7 +44,7 @@
           <template v-if="slots.info">
             <Info />
           </template>
-          <time class="time">{{ relativeTime ? dayjs(data.createTime).fromNow() : data.createTime }}</time>
+          <time class="time">{{ data.createTime }}</time>
         </div>
         <div class="content">
           <u-fold unfold>
@@ -136,14 +136,16 @@
 
 <script setup lang="ts">
 import { computed, inject, nextTick, ref, reactive, h } from 'vue'
-import InputBox from './tools/input-box.vue'
-import { EmojiApi, InjectionEmojiApi, UFold, UIcon, CommentApi } from '~/components'
-import type { InputBoxApi } from './tools/input-box.vue'
-import { ElAvatar } from '~/element'
-import { useEmojiParse, useLevel } from '~/hooks'
-import { str, ElImage, isEmpty, dayjs } from '~/index'
+import { ElImage, ElAvatar } from 'element-plus'
+import { UFold, UIcon, translate as $u } from 'undraw-ui'
+import { EmojiApi } from '~/components/emoji'
 import UserCard from './tools/user-card.vue'
-import { InjectContentBox, InjectContentBoxApi, InjectSlots } from '../key'
+import InputBox from './tools/input-box.vue'
+import type { InputBoxApi } from './tools/input-box.vue'
+import { str, isEmpty } from '~/util'
+import { useEmojiParse, useLevel } from '~/hooks'
+import { InjectContentBox, InjectContentBoxApi, InjectSlots, CommentApi, InjectionEmojiApi} from '~/components/comment'
+
 
 interface Props {
   reply?: boolean
@@ -167,7 +169,7 @@ const imgList = computed(() => {
 })
 
 const { allEmoji } = inject(InjectionEmojiApi) as EmojiApi
-const { like, user, relativeTime, aTarget, showLevel, showLikes, showAddress, showHomeLink, showReply } = inject(
+const { like, user, aTarget, showLevel, showLikes, showAddress, showHomeLink, showReply } = inject(
   InjectContentBox
 ) as InjectContentBoxApi
 

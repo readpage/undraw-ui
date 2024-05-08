@@ -1,4 +1,4 @@
-import { Emoji } from '~/index'
+import { Emoji } from '~/components/emoji'
 export const useEmojiParse = (allEmoji: Emoji, val: string): string => {
   //解析表情
   const reg = /\[.+?\]/g

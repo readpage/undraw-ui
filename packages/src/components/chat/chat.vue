@@ -62,8 +62,9 @@
 </template>
 <script setup lang="ts">
 import { ref, provide } from 'vue'
-import { ElButton, ElInput } from '~/element'
-import { ChatApi, ChatSubmitParam, EmojiApi, InjectionEmojiApi, UToast } from '~/index'
+import { UIcon, UEmoji } from 'undraw-ui'
+import { ElButton, ElInput } from 'element-plus'
+import { ChatApi, ChatSubmitParam, EmojiApi, InjectionEmojiApi, UToast } from '~/components'
 import Message from './message.vue'
 
 interface Props {

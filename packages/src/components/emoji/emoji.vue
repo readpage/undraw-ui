@@ -64,8 +64,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { EmojiApi } from '~/components'
-import { ElPopover, ElImage, ElScrollbar } from '~/element'
+import { translate as $u } from 'undraw-ui'
+import { ElPopover, ElImage, ElScrollbar } from 'element-plus'
+import { EmojiApi } from '~/components/emoji'
 
 defineOptions({
   name: 'UEmoji'

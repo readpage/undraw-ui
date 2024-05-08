@@ -33,22 +33,17 @@
 
 <script setup lang="ts">
 import { provide, ref, toRefs, useSlots } from 'vue'
+import { ElAvatar } from 'element-plus'
+import { translate as $u } from 'undraw-ui'
 import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
-import { ElAvatar } from '~/element'
+import { isNull,  debounce, isEmpty } from '~/util'
+import { InjectContentBox, InjectInputBox, InjectReplyBox, InjectSlots, InjectionEmojiApi } from '~/components/comment'
 /* eslint-disable */  
-import { CommentApi, ConfigApi, InjectionEmojiApi, isNull, SubmitParamApi, ReplyPageParamApi, debounce, isEmpty } from '~/index'
+import { InjectContentBoxApi, InjectReplyBoxApi, InjectInputBoxApi} from '~/components/comment'
+import { SubmitParamApi, ReplyPageParamApi, ConfigApi, CommentApi, SubmitParam2Api } from '~/components/comment'
 /* eslint-enable */
-import {
-  InjectContentBoxApi,
-  InjectContentBox,
-  InjectInputBox,
-  InjectReplyBox,
-  InjectSlots,
-  InjectInputBoxApi,
-  InjectReplyBoxApi,
-  SubmitParam2Api
-} from '../key'
+
 defineOptions({
   name: 'UComment'
 })
@@ -181,7 +176,6 @@ const like = (id: string) => {
 const contentBoxParam: InjectContentBoxApi = {
   user: user,
   like: like,
-  relativeTime: isNull(props.relativeTime, false),
   showInfo: (uid, finish) => emit('showInfo', uid, finish),
   aTarget: isNull(aTarget, '_blank'),
   showLevel,

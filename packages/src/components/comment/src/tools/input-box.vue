@@ -44,13 +44,12 @@
 </template>
 
 <script setup lang="ts">
-import { isEmpty, isNull, isImage, createObjectURL } from '~/util'
-import { ClickOutside as vClickOutside } from 'element-plus'
 import { h, inject, nextTick, reactive, ref } from 'vue'
-import { InjectionEmojiApi, EditorInstance, UToast, UEmoji, UEditor, EmojiApi } from '~/index'
-import { ElButton } from '~/element'
-import { InjectInputBox, InjectInputBoxApi, InjectSlots } from '../../key'
-import { CommentApi } from '~/index'
+import { ClickOutside as vClickOutside, ElButton } from 'element-plus'
+import { UEmoji, UToast, UEditor, translate as $u, EditorInstance } from 'undraw-ui'
+import { EmojiApi } from '~/components/emoji'
+import { InjectInputBox, InjectInputBoxApi, InjectSlots, CommentApi,InjectionEmojiApi } from '~/components/comment'
+import { isEmpty, isNull, isImage, createObjectURL } from '~/util'
 
 export interface InputBoxApi {
   focus(): void
@@ -194,42 +193,5 @@ const Func = () => h('div', slots.func())
 </script>
 
 <style lang="scss" scoped>
-.comment-box {
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  .action-box {
-    display: flex;
-    align-items: center;
-    margin-top: 8px;
-
-    & > div:not(.btn-box) {
-      margin-right: 16px;
-    }
-    .btn-box {
-      margin-left: auto;
-    }
-
-    .picture {
-      font-size: 14px;
-      color: var(--u-text-color-secondary);
-      cursor: pointer;
-      .icon {
-        fill: var(--u-text-color-secondary);
-        margin-right: 4px;
-        margin-bottom: 1px;
-      }
-      #comment-upload {
-        display: none;
-      }
-    }
-  }
-  .picture:hover {
-    color: var(--u-color-primary);
-
-    .icon {
-      fill: var(--u-color-primary);
-    }
-  }
-}
+@use '../../style/input-box.scss';
 </style>

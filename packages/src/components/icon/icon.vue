@@ -32,15 +32,5 @@ const style = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-.u-icon {
-  display: inline-flex;
-  vertical-align: -0.15em;
-  font-size: inherit;
-  color: inherit;
-  :deep(svg) {
-    fill: currentColor;
-    width: 1em;
-    height: 1em;
-  }
-}
+@use './icon.scss';
 </style>

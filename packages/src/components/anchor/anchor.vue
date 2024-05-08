@@ -18,6 +18,7 @@
 </template>
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
+import { UDivider } from 'undraw-ui'
 
 defineOptions({
   name: 'UAnchor'

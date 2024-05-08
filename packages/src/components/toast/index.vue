@@ -3,7 +3,7 @@
     <transition name="v-toast">
       <div v-show="visible" class="inner">
         <div class="message">
-          <iconVue v-if="alert.icon" v-html="alert.icon" />
+          <u-icon v-if="alert.icon" v-html="alert.icon" ></u-icon>
           <span :class="{ normal: type != 'normal' }">{{ message }}</span>
         </div>
       </div>
@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import { getToastType, getDefaultToastType } from './toastTypes'
-import iconVue from '../icon'
+import { UIcon } from 'undraw-ui'
 
 export interface ToastApi {
   message?: string

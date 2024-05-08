@@ -18,8 +18,16 @@
     // 设置模块名到基于baseUrl的路径映射,可以设置路径别名的语法提示
     "paths": {
       "~/*": ["src/*"]
-    },
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "public/element/link/index.d.ts",
+    "src/element/button/index.js",
+    "src/element/index.js"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

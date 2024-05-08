@@ -3,7 +3,16 @@
     <!-- over-hidden -->
     <div ref="textBox" class="txt-box" :class="{ 'over-hidden': fold }">
       <div ref="divBox">
-        <el-button v-if="isOver && unfold && position == 'end'" @click="fold = !fold" :class="{ 'over-hidden': fold, 'end-btn': 1 }"  type="primary" plain link>{{ fold ? $u('fold.unfold') : $u('fold.fold') }}</el-button>
+        <el-button
+          v-if="isOver && unfold && position == 'end'"
+          @click="fold = !fold"
+          :class="{ 'over-hidden': fold, 'end-btn': 1 }"
+          type="primary"
+          plain
+          link
+        >
+          {{ fold ? $u('fold.unfold') : $u('fold.fold') }}
+        </el-button>
         <slot></slot>
       </div>
     </div>
@@ -19,8 +28,8 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
-import './style/index.scss'
-import { translate as $u } from '~/util/lang'
+import { translate as $u } from 'undraw-ui'
+import { ElButton } from 'element-plus'
 
 defineOptions({
   name: 'UFold'
@@ -71,7 +80,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@use './style/index.scss' with (
+@use './fold.scss' with (
   $line: v-bind(line)
 );
 </style>

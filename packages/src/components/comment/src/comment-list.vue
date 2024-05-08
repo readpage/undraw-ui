@@ -19,10 +19,7 @@ interface Props {
 const props = defineProps<Props>()
 </script>
 
-<style lang="scss" scoped></style>
-
-<style>
-.comment-list > .comment > .comment-primary > .comment-main {
-  margin-right: 12px;
-}
+<style lang="scss" scoped>
+@use '../style/comment-list.scss';
 </style>
+

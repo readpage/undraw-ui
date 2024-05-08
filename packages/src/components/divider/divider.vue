@@ -41,48 +41,8 @@ watch(
   { immediate: true }
 )
 </script>
-
 <style lang="scss" scoped>
-.u-divider {
-  font-size: 14px;
-  margin: 1rem 0;
-  .field {
-    border: 0;
-    padding: 0;
-    margin: 0;
-    border-top: 1px v-bind('props.borderStyle') var(--u-fill-color-light);
-
-    .inner {
-      margin: 0 auto;
-      padding: 0 10px;
-    }
-
-    .is-left {
-      margin-left: 20px;
-    }
-
-    .is-right {
-      margin-right: 20px;
-    }
-  }
-}
-
-.vertical {
-  display: inline-block;
-  vertical-align: middle;
-  .field {
-    border: 0;
-
-    .inner {
-      margin: 0;
-      padding: 0;
-    }
-
-    .inner::before {
-      content: '';
-      border-left: 1px v-bind('props.borderStyle') var(--u-fill-color-light);
-      margin: 0 8px;
-    }
-  }
-}
+@use './divider.scss' with (
+  $border: v-bind('props.borderStyle')
+);
 </style>

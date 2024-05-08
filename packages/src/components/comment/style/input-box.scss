@@ -1,0 +1,38 @@
+.comment-box {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  .action-box {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+
+    & > div:not(.btn-box) {
+      margin-right: 16px;
+    }
+    .btn-box {
+      margin-left: auto;
+    }
+
+    .picture {
+      font-size: 14px;
+      color: var(--u-text-color-secondary);
+      cursor: pointer;
+      .icon {
+        fill: var(--u-text-color-secondary);
+        margin-right: 4px;
+        margin-bottom: 1px;
+      }
+      #comment-upload {
+        display: none;
+      }
+    }
+  }
+  .picture:hover {
+    color: var(--u-color-primary);
+
+    .icon {
+      fill: var(--u-color-primary);
+    }
+  }
+}

@@ -16,7 +16,7 @@
 </template>
 <script setup lang="ts">
 import { computed, nextTick, onMounted, reactive, ref } from 'vue'
-import { ElCarousel } from '~/element'
+import { ElCarousel } from 'element-plus'
 
 defineOptions({
   name: 'UNoticeBar'

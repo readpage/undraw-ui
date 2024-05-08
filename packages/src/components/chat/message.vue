@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { inject, nextTick, ref } from 'vue'
 import { ElAvatar, ElScrollbar } from 'element-plus'
-import { ChatApi, EmojiApi, InjectionEmojiApi } from '~/index'
+import { ChatApi, EmojiApi, InjectionEmojiApi } from '~/components'
 import { useEmojiParse } from '~/hooks'
 
 interface Props {

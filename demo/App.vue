@@ -20,9 +20,8 @@ import { ElConfigProvider } from 'element-plus'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import Page from './components/Page.vue'
 import counterVue from './components/counter.vue'
-import { cloneDeep, lang } from '~/index'
+import { cloneDeep } from '~/index'
 
-lang.locale = 'en'
 const components = [
   commentVue,
   chatVue,

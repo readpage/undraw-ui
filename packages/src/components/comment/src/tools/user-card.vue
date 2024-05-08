@@ -18,8 +18,8 @@
 
 <script setup lang="ts">
 import { h, inject, ref } from 'vue'
-import { ElPopover } from '~/element/popover'
-import { InjectContentBox, InjectContentBoxApi, InjectSlots } from '../../key'
+import { ElPopover } from 'element-plus'
+import { InjectContentBox, InjectContentBoxApi, InjectSlots } from '~/components/comment'
 
 interface Props {
   uid: string

@@ -3,11 +3,11 @@
     <div class="reply-list">
       <ContentBox v-for="(reply, index) in data.list" :id="id" :key="index" :data="reply" reply></ContentBox>
       <div v-if="data.length > replyShowSize" class="fetch-more">
-        <span v-if="state.loading">{{ $u('comment.more.loading') }}</span>
+        <span v-if="state.loading">{{ $u('comment.more.loading')}}</span>
         <div v-else>
           <div v-if="!state.over">
             <span class="fetch-more-comment select-none" @click="replyMore">
-              {{ $u('comment.more.prefixTotal') }}{{ data.total }}{{ $u('comment.more.suffixTotal') }}
+              {{ $u('comment.more.prefixTotal')}}{{ data.total }}{{ $u('comment.more.suffixTotal')}}
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="">
                 <path
                   data-v-d6f79dbc=""
@@ -38,9 +38,10 @@
 
 <script setup lang="ts">
 import { computed, inject, reactive, watch } from 'vue'
+import { translate as $u } from 'undraw-ui'
+import { ElPagination } from 'element-plus'
 import ContentBox from './content-box.vue'
-import { ReplyApi, ElPagination } from '~/index'
-import { InjectReplyBox, InjectReplyBoxApi } from '../key'
+import { InjectReplyBox, InjectReplyBoxApi, ReplyApi } from '~/components/comment'
 
 interface Props {
   data?: ReplyApi | null

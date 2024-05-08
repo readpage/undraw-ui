@@ -1,11 +1,13 @@
 # 忽略指定文件
-favicon.ico
-.eslintrc.js
 .gitignore
 .npmignore
+.npmrc
+.eslintrc.js
 .prettierrc.js
 index.html
+favicon.ico
 package-lock.json
+pnpm-lock.yaml
 tsconfig.json
 tsconfig.node.json
 vite.config.ts
@@ -14,5 +16,6 @@ vite.config.ts
 .vscode/
 .git/
 node_modules/
-src/
 public/
+scripts/
+src/
