@@ -52,40 +52,5 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-.message {
-  position: absolute;
-  width: 100%;
-  top: 80px;
-  bottom: 50px;
-  .chat-list {
-    padding: 20px 16px 0 16px;
-    .chat-item {
-      display: flex;
-      margin-bottom: 20px;
-      .content {
-        margin: 0 50px 0 10px;
-        .card-box {
-          margin-top: 5px;
-          background: #ffffff;
-          padding: 5px 10px;
-          border-radius: 4px;
-          word-break: break-all;
-        }
-      }
-    }
-  }
-}
-
-.self {
-  flex-direction: row-reverse;
-  .username {
-    text-align: right;
-  }
-  .content {
-    margin: 0 10px 0 50px !important;
-    .card-box {
-      background-color: #95ec69 !important;
-    }
-  }
-}
+@use './style/message.scss';
 </style>

@@ -114,5 +114,5 @@ function onBefore() {
 </style>
 
 <style lang="scss" scoped>
-@use './style/index.scss';
+@use './style/emoji.scss';
 </style>

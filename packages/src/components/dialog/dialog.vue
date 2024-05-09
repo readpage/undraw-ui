@@ -76,37 +76,9 @@ watch(
 </script>
 
 <style lang="scss">
-.el-dialog {
-  .el-dialog__header {
-    text-align: left;
-    margin-right: 0;
-    border-bottom: 1px solid var(--u-border-color);
-  }
-  .el-dialog__body {
-    padding: 20px !important;
-  }
-  .el-dialog__footer {
-    padding: 10px 20px;
-  }
-}
+@use './dialog.scss';
 </style>
 
 <style lang="scss" scoped>
-.el-dialog {
-  .full-screen {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 4px;
-    right: 40px;
-    width: 54px;
-    height: 54px;
-    color: var(--el-color-info);
-    cursor: pointer;
-  }
-  .full-screen:hover {
-    color: var(--el-color-primary);
-  }
-}
+@use './dialog1.scss';
 </style>

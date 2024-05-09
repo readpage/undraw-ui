@@ -52,14 +52,5 @@ const load = () => {
 </script>
 
 <style lang="scss" scoped>
-.u-comment-scroll {
-  position: relative;
-  font-size: 10px;
-  .scroll-btn {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    bottom: 10px;
-  }
-}
+@use './comment-scroll.scss';
 </style>

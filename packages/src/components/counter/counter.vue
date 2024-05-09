@@ -127,7 +127,5 @@ const counting = (timestamp: number) => {
 </script>
 
 <style lang="scss" scoped>
-.u-counter {
-  font-size: inherit;
-}
+@use './counter.scss';
 </style>

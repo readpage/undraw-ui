@@ -119,57 +119,5 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.u-anchor {
-  width: inherit;
-}
-.toc-content {
-  padding: 10px;
-  .toc-content-heading {
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    margin: 0;
-  }
-  h3 {
-    padding-left: 5px;
-  }
-  .toc-items {
-    list-style: none;
-    padding: 0;
-    margin: 12px 0 0;
-    li {
-      cursor: pointer;
-      padding: 5px;
-      font-size: 14px;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      font-weight: 400;
-      position: relative;
-    }
-    li:hover {
-      background: #f7f8fa;
-      border-radius: 4px;
-      color: #409eff;
-    }
-    .active {
-      color: #409eff;
-    }
-    .d3 {
-      padding-left: 15px;
-    }
-    .d4 {
-      padding-left: 35px;
-    }
-    .active::before {
-      content: '';
-      position: absolute;
-      left: -6px;
-      background-color: #409eff;
-      border-radius: 4px;
-      width: 4px;
-      height: 14px;
-      top: 8px;
-    }
-  }
-}
+@use './anchor.scss';
 </style>

@@ -416,7 +416,7 @@ const createSvgUrl = (user: any) => {
 </script>
 
 <style lang="scss" scoped>
-@use './style/index.scss' with (
+@use './style/editor.scss' with (
   $minHeight: v-bind(minHeight),
   $padding: v-bind(padding)
 );

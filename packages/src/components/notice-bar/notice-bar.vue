@@ -113,34 +113,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.u-notice-bar {
-  padding: 0 15px;
-  border-radius: 4px;
-  &-wrap {
-    display: flex;
-    align-items: center;
-    height: inherit;
-    .text-box {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      height: inherit;
-      .text {
-        white-space: nowrap;
-        position: absolute;
-        left: 0;
-      }
-    }
-  }
-}
-.el-carousel__item {
-  display: flex;
-  align-items: center;
-}
-
-.el-carousel__item.is-animating {
-  transition: transform 1s linear;
-}
+@use './notice-bar.scss';
 </style>

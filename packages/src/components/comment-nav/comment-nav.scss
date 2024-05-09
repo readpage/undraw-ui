@@ -1,0 +1,39 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  line-height: 30px;
+  margin-bottom: 10px;
+  &__title {
+    font-weight: 600;
+    font-size: 18px;
+  }
+  &__sort {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #4e5969;
+    cursor: pointer;
+    background-color: #f2f3f5;
+    border-radius: 2px;
+    padding: 3px;
+
+    .item {
+      line-height: 22px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      color: #8a919f;
+      padding: 2px 12px;
+      .u-icon {
+        font-size: 12px;
+        margin-right: 4px;
+      }
+    }
+
+    .active {
+      color: #1e80ff;
+      background: #fff;
+    }
+  }
+}

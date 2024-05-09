@@ -138,6 +138,7 @@
 import { computed, inject, nextTick, ref, reactive, h } from 'vue'
 import { ElImage, ElAvatar } from 'element-plus'
 import { UFold, UIcon, translate as $u } from 'undraw-ui'
+import '~/components/icon/icon.scss'
 import { EmojiApi } from '~/components/emoji'
 import UserCard from './tools/user-card.vue'
 import InputBox from './tools/input-box.vue'

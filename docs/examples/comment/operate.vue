@@ -21,7 +21,8 @@
 </template>
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
-import { CommentApi, ElDropdown, ElDropdownItem, ElDropdownMenu, UToast} from 'undraw-ui'
+import { ElDropdown, ElDropdownItem, ElDropdownMenu } from 'element-plus'
+import { CommentApi, UToast } from 'undraw-ui'
 
 interface Props {
   comment: CommentApi
