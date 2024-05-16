@@ -61,8 +61,9 @@ element-plus可以选择需要版本
 npm i element-plus2.6.0 undraw-ui@1.1.1
 ```
 
+## 导入
 
-## 按需导入(推荐)
+### 按需导入(推荐)
 您需要使用额外的插件来导入要使用的组件。  
 首先你需要安装 unplugin-vue-components 和 unplugin-auto-import 两款插件。
 
@@ -86,7 +87,8 @@ export default {
 }
 ```
 
-## 全局注册
+### 全局注册
+如果你对打包后的文件大小不是很在乎，那么使用完整导入会更方便。
 ```ts
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
