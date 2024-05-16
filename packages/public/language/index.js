@@ -1,5 +1,5 @@
 import { reactive } from 'vue'
-import zh_CN from './locales/zh_CN'
+import zh_CN from './locales/zh_CN.js'
 
 const message = {
   zh: zh_CN

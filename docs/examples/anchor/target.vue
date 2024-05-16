@@ -94,10 +94,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { ElScrollbar } from 'undraw-ui'
-</script>
-
+<script lang="ts" setup></script>
 <style lang="scss" scoped>
 .article-catalog {
   width: 300px;
