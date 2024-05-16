@@ -11,3 +11,8 @@ public/static/
 demo-dist/
 .vscode/
 cache/
+
+
+demo/
+node_modules/
+packages/
