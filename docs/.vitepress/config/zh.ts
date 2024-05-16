@@ -62,6 +62,10 @@ export const zhConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
             {
               text: '使用',
               link: '/guide/usage'
+            },
+            {
+              text: '国际化',
+              link: '/guide/i18n'
             }
           ]
         },
@@ -97,10 +101,6 @@ export const zhConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
             {
               text: 'NoticeBar 通知栏',
               link: '/components/notice-bar'
-            },
-            {
-              text: 'Tags 标签页',
-              link: '/components/tags'
             },
             {
               text: "Divider 分割线",

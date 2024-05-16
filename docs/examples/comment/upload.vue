@@ -11,7 +11,7 @@
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from './emoji'
 import { reactive } from 'vue'
-import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL, dayjs } from 'undraw-ui'
+import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL } from 'undraw-ui'
 
 const config = reactive<ConfigApi>({
   user: {
@@ -22,8 +22,7 @@ const config = reactive<ConfigApi>({
     likeIds: [1, 2, 3]
   },
   emoji: emoji,
-  comments: [],
-  total: 10
+  comments: []
 })
 
 let temp_id = 100
@@ -43,7 +42,7 @@ const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
     address: '来自江苏',
     content: content,
     likes: 0,
-    createTime: dayjs().subtract(5, 'seconds').toString(),
+    createTime: '2024-05-16',
     contentImg: contentImg,
     user: {
       username: config.user.username,
@@ -74,7 +73,7 @@ config.comments = [
     address: '来自苏州',
     content: '知道在学校为什么感觉这么困吗？[大笑2]因为学校，是梦开始的地方。[脱单doge]',
     likes: 11,
-    createTime: dayjs().subtract(10, 'day').toString(),
+    createTime: '2024-05-16',
     user: {
       username: '悟二空',
       avatar: 'https://static.juzicon.com/user/avatar-bf22291e-ea5c-4280-850d-88bc288fcf5d-220408002256-ZBQQ.jpeg',

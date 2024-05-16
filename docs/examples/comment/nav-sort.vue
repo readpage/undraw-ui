@@ -12,7 +12,7 @@
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from './emoji'
 import { reactive, ref } from 'vue'
-import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL, dayjs } from 'undraw-ui'
+import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL } from 'undraw-ui'
 
 const config = reactive<ConfigApi>({
   user: {
@@ -51,7 +51,7 @@ const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
     address: '来自江苏',
     content: content,
     likes: 0,
-    createTime: dayjs().subtract(5, 'seconds').toString(),
+    createTime: '2024-05-16',
     contentImg: contentImg,
     user: {
       username: config.user.username,
@@ -84,7 +84,7 @@ config.comments = [
       '缘生缘灭，缘起缘落，我在看别人的故事，别人何尝不是在看我的故事?别人在演绎人生，我又何尝不是在这场戏里?谁的眼神沧桑了谁?我的眼神，只是沧桑了自己[喝酒]',
     likes: 2,
     contentImg: 'https://gitee.com/undraw/undraw-ui/raw/master/public/docs/normal.webp',
-    createTime: dayjs().subtract(10, 'minute').toString(),
+    createTime: '2024-05-16',
     user: {
       username: '落🤍尘',
       avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',

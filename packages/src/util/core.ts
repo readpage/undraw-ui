@@ -22,10 +22,21 @@
  * 防抖
  * 在持续触发事件中，无论进行时间多长，只有一定时间内没有再触发事件，事件才会执行一次
  * 如果设定的时间到来之前，又一次触发了事件，就重新开始延时
+ *
+ *
  * @param fn 执行的函数
  * @param delay 延迟执行时间(s)
  * @param immedidate 是否立即执行
  * @returns
+ *
+ * 用法:
+ * (1) 定义函数初始化
+ * const _debounce = debounce(() => {
+ * console.log('防抖...')
+ * })
+ *
+ * 执行:
+ * _debounce() 开启， _debounce.cancel() 取消
  */
 
 const debounce = (fn: (...args: any) => void, delay = 200, immedidate = false) => {
@@ -66,7 +77,17 @@ const debounce = (fn: (...args: any) => void, delay = 200, immedidate = false) =
  * @param fn 执行的函数
  * @param interval 间隔时间(s)
  * @returns
+ *
+ * 用法:
+ * (1) 定义函数初始化
+ * const _throttle = throttle(() => {
+ * console.log('节流...')
+ * })
+ *
+ * 执行:
+ * _throttle() 开启，_throttle.cancel() 取消
  */
+
 const throttle = (fn: (...args: any) => void, interval = 500) => {
   let lastTime = 0
 
@@ -92,4 +113,56 @@ const throttle = (fn: (...args: any) => void, interval = 500) => {
   return _throttle
 }
 
-export { debounce, throttle }
+/**
+ * 定时器 支持(多次)执行切换开启/关闭
+ * @param fn 执行的函数
+ * @param interval 执行间隔 秒(s)
+ * @returns
+ * 用法:
+ * (1) 定义函数初始化
+ * const task = interval(() => {
+ * console.log('定时器正在运行...')
+ * })
+ *
+ * 执行:
+ * task() 开启， 再次执行task() 关闭 或使用 task.close()关闭
+ */
+const interval = (fn: (...args: any) => void, interval = 1000) => {
+  let timer: any = null
+  const _interval = (...args: any) => {
+    if (!timer) {
+      timer = setInterval(() => {
+        fn.apply(this, args)
+      }, interval)
+    } else {
+      _interval.close()
+    }
+  }
+  _interval.close = () => {
+    if (timer) {
+      clearInterval(timer)
+      timer = null
+    }
+  }
+  return _interval
+}
+
+function UUID() {
+  let d = new Date().getTime() //Timestamp
+  let d2 = (performance && performance.now && performance.now() * 1000) || 0 //Time in microseconds since page-load or 0 if unsupported
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    let r = Math.random() * 16 //random number between 0 and 16
+    if (d > 0) {
+      //Use timestamp until depleted
+      r = (d + r) % 16 | 0
+      d = Math.floor(d / 16)
+    } else {
+      //Use microseconds since page-load if supported
+      r = (d2 + r) % 16 | 0
+      d2 = Math.floor(d2 / 16)
+    }
+    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16)
+  })
+}
+
+export { debounce, throttle, interval, UUID }

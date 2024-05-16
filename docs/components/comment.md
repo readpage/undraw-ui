@@ -57,7 +57,7 @@ comment/tools
 </template>
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
-import { CommentApi, ElDropdown, ElDropdownItem, ElDropdownMenu, UToast} from 'undraw-ui'
+import { CommentApi, UToast } from 'undraw-ui'
 
 interface Props {
   comment: CommentApi

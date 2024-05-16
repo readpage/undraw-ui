@@ -14,7 +14,16 @@
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from './emoji'
 import { reactive } from 'vue'
-import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL, ReplyApi, usePage, ReplyPageParamApi, dayjs } from 'undraw-ui'
+import {
+  CommentApi,
+  ConfigApi,
+  SubmitParamApi,
+  UToast,
+  createObjectURL,
+  ReplyApi,
+  usePage,
+  ReplyPageParamApi
+} from 'undraw-ui'
 
 const config = reactive<ConfigApi>({
   user: {
@@ -47,7 +56,7 @@ const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
     address: '来自江苏',
     content: content,
     likes: 0,
-    createTime: dayjs().subtract(5, 'seconds').toString(),
+    createTime: '2024-05-16',
     contentImg: contentImg,
     user: {
       username: config.user.username,
@@ -105,7 +114,7 @@ config.comments = [
           address: '来自重庆',
           content: '说的对[大笑2]，所以，综上所述，上课睡觉不怪我呀💤',
           likes: 3,
-          createTime: dayjs().subtract(10, 'minute').toString(),
+          createTime: '2024-05-16',
           user: {
             username: '别扰我清梦*ぁ',
             avatar:
@@ -122,7 +131,7 @@ config.comments = [
             '回复 <span style="color: var(--u-color-success-dark-2);">@别扰我清梦*ぁ:</span> 看完打了一个哈切。。。会传染。。。[委屈]',
           address: '来自广州',
           likes: 9,
-          createTime: dayjs().subtract(20, 'minute').toString(),
+          createTime: '2024-05-16',
           user: {
             username: 'Blizzard',
             avatar:
