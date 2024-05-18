@@ -131,6 +131,9 @@ const emit = defineEmits<{
 watch(
   () => props.modelValue,
   (newVal, oldVal) => {
+    if (newVal == '<br>') {
+      clear()
+    }
     if (!isLocked.value) text.value = newVal
     if (!mentionConfig?.value?.show) return
 
@@ -175,9 +178,7 @@ watch(
 function getRange(v: Selection | null) {
   try {
     return v ? v.getRangeAt(0) : undefined
-  } catch (e) {
-
-  }
+  } catch (e) {}
   return undefined
 }
 
@@ -191,8 +192,7 @@ function onBlur(event: Event) {
   // 记录光标
   try {
     range.value = getRange(document.getSelection())
-  } catch (e) {
-  }
+  } catch (e) {}
   emit('blur', event)
   if (!editorRef.value?.innerHTML) active.value = false
   isLocked.value = false
@@ -210,8 +210,7 @@ function onInput(event: InputEvent) {
     // 记录光标
     try {
       range.value = getRange(window.getSelection())
-    } catch (error) {
-    }
+    } catch (error) {}
 
     let rect = range.value?.getBoundingClientRect()
     // 显示提及组件
