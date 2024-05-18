@@ -89,7 +89,7 @@
     </el-scrollbar>
     <!-- container指定监听的容器 target滚动轴 target-offset距离窗口顶部达到指定偏移量 -->
     <div class="article-catalog">
-      <u-anchor container="#article2" style="width: 120px" target=".el-scrollbar__wrap"></u-anchor>
+      <u-anchor container="#article2" style="width: 120px" scroll=".el-scrollbar__wrap"></u-anchor>
     </div>
   </div>
 </template>

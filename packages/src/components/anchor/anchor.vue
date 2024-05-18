@@ -89,12 +89,6 @@ const scrollTo = (k: number) => {
   }
 }
 
-onMounted(() => {})
-
-onUnmounted(() => {
-  scroll.value.removeEventListener('scroll', onScroll)
-})
-
 let observer: ResizeObserver
 
 onMounted(() => {
