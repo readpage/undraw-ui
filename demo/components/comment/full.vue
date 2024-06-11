@@ -15,6 +15,7 @@
       @focus="focus"
       @cancel="cancelFn"
       @mention-search="mentionSearch"
+      @before-data="beforeData"
     >
       <!-- <template>导航栏卡槽</template> -->
       <!-- <template #header>头部卡槽</template> -->
@@ -88,6 +89,8 @@ import { ElAvatar, ElButton } from 'element-plus'
 import { getComment, reply, commentSize } from '@/assets/comment'
 import { CommentInstance } from '~/index'
 import Operate from './operate.vue'
+// 相对时间
+import { dayjs } from '@/plugins/day'
 
 defineOptions({
   name: 'comment'
@@ -226,7 +229,7 @@ const submit = ({ content, parentId, files, finish, reply, mentionList }: Submit
     address: '来自江苏',
     content: content,
     likes: 0,
-    createTime: '2023-04-30 16:22',
+    createTime: new Date().toString(),
     contentImg: contentImg,
     user: {
       username: config.user.username,
@@ -241,6 +244,11 @@ const submit = ({ content, parentId, files, finish, reply, mentionList }: Submit
     finish(comment)
     UToast({ message: '评论成功!', type: 'info' })
   }, 200)
+}
+
+// 加载前评论数据处理
+function beforeData(val: any) {
+  val.createTime = dayjs(val.createTime).fromNow()
 }
 
 // 点赞按钮事件

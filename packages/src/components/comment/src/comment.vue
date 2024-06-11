@@ -80,6 +80,7 @@ const emit = defineEmits<{
   (e: 'cancel'): void
   (e: 'getMentionList', arr: any[]): void
   (e: 'mentionSearch', searchStr: string): void
+  (e: 'before-data', val: any): void
 }>()
 
 /**
@@ -233,6 +234,9 @@ const mentionSearch = debounce((searchStr: string) => {
   emit('mentionSearch', searchStr)
 }, 300)
 provide('injectMentionSearch', mentionSearch)
+provide('injectBeforeData', (val: any) => {
+  emit('before-data', val)
+})
 
 defineExpose({
   remove: remove
