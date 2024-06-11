@@ -30,6 +30,7 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     'vue/multi-word-component-names': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off', // 关闭 !断言赋值警告
     'vue/require-default-prop': 'off' // props 需要设置默认值
   }
 }

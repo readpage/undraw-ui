@@ -1,3 +1,4 @@
+import { MentionApi } from '../editor/mention.vue'
 import { EmojiApi } from '../emoji/interface'
 
 export interface CommentApi {
@@ -45,22 +46,7 @@ export interface ConfigApi {
   showHomeLink?: boolean
   showReply?: boolean
   aTarget?: '_blank' | '_parent' | '_self' | '_top'
-  mentionConfig?: {
-    // 是否显示提及
-    show?: boolean
-    // 用户id的key
-    userIdKey?: string
-    // 用户name的key
-    userNameKey?: string
-    // 用户头像链接的key
-    userAvatarKey?: string
-    // 提及颜色
-    mentionColor?: string
-    // 用户列表
-    userArr?: any[]
-    // 是否显示头像
-    showAvatar?: boolean
-  }
+  mention?: MentionApi
 }
 
 export interface SubmitParamApi {

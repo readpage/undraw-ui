@@ -1,32 +1,24 @@
 <template>
-  <div class="u-editor" :class="{ active: active }">
+  <div v-click-outside:[mentionRef]="() => (state.showMention = false)" class="u-editor" :class="{ active: state.active }">
     <div
       ref="editorRef"
       class="rich-input"
-      contenteditable
+      contenteditable="true"
       :placeholder="placeholder"
       @focus="onFocus"
       @input="onInput"
       @blur="onBlur"
-      @keydown.enter="keyDown"
-      @keydown.up.prevent="moveSelectionFn(-1)"
-      @keydown.down.prevent="moveSelectionFn(1)"
+      @keydown="keyDown"
       @paste="pasteFn"
+      @keydown.up.prevent="moveSelection(-1)"
+      @keydown.down.prevent="moveSelection(1)"
       v-html="text"
     ></div>
     <div ref="imageRef" class="image-preview-box">
       <div v-for="(url, index) in imgList" :key="index" class="image-preview">
         <img :src="url" alt="" />
         <div class="clean-btn" @click="removeImg(index)">
-          <svg
-            data-v-48a7e3c5=""
-            data-v-7c7c7498=""
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <svg data-v-48a7e3c5="" data-v-7c7c7498="" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="12" height="12" rx="2" fill="#86909C"></rect>
             <path
               data-v-48a7e3c5=""
@@ -40,22 +32,14 @@
         </div>
       </div>
     </div>
-    <MentionList
-      ref="metionList"
-      :is-show="isShowMention"
-      :position="mentionPosition"
-      :list="mentionConfig?.userArr"
-      :show-avatar="mentionConfig?.showAvatar"
-      @insert="insertUser"
-      @change-show="changeMentionShow"
-    ></MentionList>
+    <Mention v-show="state.showMention" ref="mentionRef" v-bind="mention" :show-mention="state.showMention" @insert="insertUser" />
   </div>
 </template>
 <script setup lang="ts">
-import { computed, inject, nextTick, onMounted, ref, toRefs, watch, onBeforeUnmount } from 'vue'
-import { cloneDeep, isEmpty } from '~/util'
-import { UToast } from 'undraw-ui'
-import MentionList from './mentionList.vue'
+import { UToast, cloneDeep, isEmpty, isNull } from 'undraw-ui'
+import { ClickOutside as vClickOutside } from 'element-plus'
+import { computed, nextTick, reactive, ref, toRefs, watch } from 'vue'
+import Mention, { MentionApi } from './mention.vue'
 defineOptions({
   name: 'UEditor'
 })
@@ -64,59 +48,43 @@ interface Props {
   placeholder?: string
   modelValue: string
   minHeight?: number
+  mention?: MentionApi
   imgList?: string[]
 }
+
 const props = withDefaults(defineProps<Props>(), {
   minHeight: 30
 })
-// 是否显示提及框
-const metionList = ref<any>(null)
-const isShowMention = ref(false)
-const mentionPosition = ref({
-  left: 0,
-  top: 0
-})
-// 修改提及框显示的方法
-function changeMentionShow(isShow: boolean) {
-  isShowMention.value = isShow
-  if (!isShow) {
-    searchStr.value = ''
-  }
-}
-function changeMentionPosition(position: { left: number; top: number }) {
-  mentionPosition.value = position
-}
-//上下移动的方法
-function moveOption(step: number) {
-  if (metionList.value) {
-    metionList.value.moveSelection(step)
-  }
-}
-//回车确认关闭方法
-function enterConfirm() {
-  if (metionList.value) {
-    return metionList.value.printSelectedItem()
-  }
-}
-const mentionConfig = inject('mentionConfig') as any
-// 修改提及列表的方法
-const changeMetionList = inject('changeMetionList') as Function
-//搜索事件
-const mentionSearch = inject('mentionSearch') as Function
-const range = ref<Range>()
-const editorRef = ref<HTMLDivElement>()
-const text = ref()
-const isLocked = ref(false)
-const active = ref(false)
-const imageRef = ref<HTMLDivElement>()
 
 const { imgList } = toRefs(props)
 
+const state = reactive({
+  showMention: false,
+  active: false,
+  isLocked: false
+})
+
+const range = ref<Range>()
+const editorRef = ref<HTMLDivElement>()
+const mentionRef = ref<InstanceType<typeof Mention>>()
+const text = ref()
+
 const minHeight = computed(() => props.minHeight + 'px')
-
 const padding = computed(() => (props.minHeight == 30 ? '4px 10px' : '8px 12px'))
+const mention = computed(() => {
+  let mention = props.mention || ({} as any)
+  mention.target = props.mention?.target
+  mention.alias = fillDeafults(mention?.alias, {
+    id: 'id',
+    username: 'username',
+    avatar: 'avatar'
+  })
+  return mention
+})
 
-const searchStr = ref('')
+function fillDeafults<T>(obj: any, defaults: T) {
+  return Object.assign({}, defaults, obj) as T
+}
 
 const emit = defineEmits<{
   (e: 'update:modelValue', val: string): void
@@ -124,148 +92,142 @@ const emit = defineEmits<{
   (e: 'focus', event: Event): void
   (e: 'blur', event: Event): void
   (e: 'submit'): void
+  (e: 'mention-search', val: string): void
   (e: 'paste', event: Event, file: File): void
-  (e: 'changeImgListFn', arr: any[]): void
+  (e: 'change-img-list', val: any[]): void
 }>()
+
+function findDiff(str1: string, str2: string) {
+  let shortStr = str1.length < str2.length ? str1 : str2
+  let longStr = shortStr == str1 ? str2 : str1
+  let start = shortStr.length
+  let end = start
+  let diffs = []
+
+  for (let i = 0; i < shortStr.length; i++) {
+    if (shortStr[i] != longStr[i]) {
+      start = i
+      break
+    }
+  }
+
+  let n = longStr.length - shortStr.length
+  for (let i = shortStr.length - 1; i >= 0; i--) {
+    if (shortStr[i] != longStr[i + n]) {
+      end = i + n
+      break
+    }
+  }
+
+  if (start >= end) {
+    end = longStr.length - 1
+  }
+
+  diffs.push(longStr.substring(start, end + 1))
+
+  return diffs
+}
 
 watch(
   () => props.modelValue,
-  (newVal, oldVal) => {
-    if (newVal == '<br>') {
+  (val, oldVal) => {
+    if (val == '<br>') {
       clear()
     }
-    if (!isLocked.value) text.value = newVal
-    if (!mentionConfig?.value?.show) return
+    if (!state.isLocked) text.value = val
 
-    // 移除 "br"
-    newVal = newVal.replace(/<br>/g, '')
-    oldVal = oldVal.replace(/<br>/g, '')
-    if ((oldVal.length >= newVal.length && oldVal.slice(-1) === '@') || newVal.slice(-7) === '@&nbsp;') {
-      // 隐藏提及组件
-      changeMentionShow(false)
+    // 提及处理
+    let v = getRange(editorRef.value)
+    if (oldVal.length > val.length && findDiff(oldVal, val)[0].includes('@') && v.startContainer.textContent?.slice(-1) != '@') {
+      state.showMention = false
+    } else if (isEmpty(val)) {
+      state.showMention = false
     }
-    // 搜索词
-    if (isShowMention.value && newVal.slice(-6) !== '&nbsp;') {
-      searchStr.value = newVal.split('@').pop() || ''
-      // 替换掉里面所有的单引号分隔符
-      searchStr.value = searchStr.value.replace(`'`, '')
-      console.log(searchStr.value)
-      mentionSearch(searchStr.value)
-      if (metionList.value) {
-        metionList.value.resetSelectIndex()
-      }
-    } else if (isShowMention.value && newVal.slice(-6) === '&nbsp;') {
-      changeMentionShow(false)
-    }
-    // 提取出来newVal里面所有拥有自定义属性的img标签
-    let imgTags = newVal.match(/<img [^>]*data-id="([^"]*)"[^>]*>/g)
-    if (imgTags) {
-      let dataIds = imgTags.map(tag => {
-        let match = tag.match(/data-id="([^"]*)"/)
-        return match ? match[1] : null
-      })
-      // 从mentionConfig.value.userArr里面获取id相同的user
-      let users = mentionConfig.value.userArr.filter((user: any) =>
-        dataIds.includes(`${user[mentionConfig.value.userIdKey]}`)
-      )
-      changeMetionList(users)
-    } else {
-      changeMetionList([])
+    if (state.showMention) {
+      let keyword = v.startContainer.textContent?.trim() || ''
+      keyword = keyword.substring(keyword.indexOf('@') + 1)
+      emit('mention-search', keyword)
     }
   }
 )
 
-function getRange(v: Selection | null) {
-  try {
-    return v ? v.getRangeAt(0) : undefined
-  } catch (e) {}
-  return undefined
+function onFocus(event: FocusEvent) {
+  emit('focus', event)
+  state.isLocked = true
+  state.active = true
 }
 
-function onFocus(event: Event) {
-  emit('focus', event)
-  isLocked.value = true
-  active.value = true
+function focus() {
+  nextTick(() => {
+    editorRef.value?.focus()
+  })
 }
 
 function onBlur(event: Event) {
   // 记录光标
-  try {
-    range.value = getRange(document.getSelection())
-  } catch (e) {}
+  range.value = getRange()
   emit('blur', event)
-  if (!editorRef.value?.innerHTML) active.value = false
-  isLocked.value = false
+  if (!editorRef.value?.innerHTML) state.active = false
+  state.isLocked = false
 }
 
-function moveSelectionFn(num: number) {
-  moveOption(num)
-}
-
-// 输入框事件
-function onInput(event: InputEvent) {
-  const { innerHTML } = event.target as HTMLDivElement
-  if (event.data === '@' && mentionConfig?.value.show) {
-    // 获取用户列表
-    // 记录光标
-    try {
-      range.value = getRange(window.getSelection())
-    } catch (error) {}
-
-    let rect = range.value?.getBoundingClientRect()
-    // 显示提及组件
-    changeMentionShow(true)
-    if (rect) {
-      changeMentionPosition({
-        left: rect.left,
-        top: rect.top + rect.height + 10
-      })
+// 获取光标
+function getRange(element?: HTMLElement) {
+  try {
+    if (element) {
+      element.focus()
     }
+    return window.getSelection()?.getRangeAt(0) as Range
+  } catch (e) {
+    throw '没有选择任何文本'
   }
+}
+
+// 清空内容
+function clear() {
+  if (editorRef.value) {
+    editorRef.value.innerHTML = ''
+    emit('update:modelValue', editorRef.value.innerHTML)
+    state.active = false
+  }
+}
+
+// 输入事件
+function onInput(event: InputEvent) {
+  range.value = getRange()
+  if (event.data == '@' && props.mention?.data) {
+    state.showMention = true
+  } else if (event.data == ' ') {
+    state.showMention = false
+  }
+  const { innerHTML } = event.target as HTMLDivElement
 
   emit('update:modelValue', innerHTML)
   emit('input', event)
-  onEditorSelectionChange(event)
 }
 
-function addText(val: string, isPop?: boolean) {
-  let selection = window.getSelection()
-  if (selection) {
-    selection.removeAllRanges()
-    // 为空初始化光标
-    if (!range.value) {
-      editorRef.value?.focus()
-      range.value = selection.getRangeAt(0)
+// 键盘事件
+const keyDown = (e: KeyboardEvent) => {
+  if (e.ctrlKey && e.key == 'Enter') {
+    //用户点击了ctrl+enter触发
+    state.showMention = false
+    if (isEmpty(props.modelValue.replace(/&nbsp;|<br>| /g, ''))) {
+      UToast({ message: '内容不能为空', type: 'info' })
+    } else {
+      emit('submit')
     }
-
-    // 如果isPop为true 删除@字符
-    if (isPop && !searchStr.value) {
-      if (range.value.startOffset > 0) {
-        range.value.setStart(range.value.startContainer, range.value.startOffset - 1)
-        range.value.deleteContents()
-      }
-    } else if (isPop && searchStr.value) {
-      // 删除掉@符号以及searchStr
-      let deleteLength = searchStr.value.length + 1 // +1 for @ symbol
-      let actualStartOffset = (range.value.startContainer as Text).data.lastIndexOf('@' + searchStr.value)
-      if (actualStartOffset !== -1) {
-        range.value.setStart(range.value.startContainer, actualStartOffset)
-        range.value.setEnd(range.value.startContainer, actualStartOffset + deleteLength)
-        range.value.deleteContents()
-      }
-    }
-    // 删除选中内容
-    range.value.deleteContents()
-    // 添加内容
-    range.value.insertNode(range.value.createContextualFragment(val))
-    range.value.collapse(false)
-    selection.addRange(range.value)
-
-    emit('update:modelValue', editorRef.value?.innerHTML || '')
-    const event = editorRef.value as unknown as Event
-    emit('input', event)
+  } else if (e.key == 'Enter' && state.showMention) {
+    // 提及回车事件
+    e.preventDefault()
+    insertUser(mentionRef.value?.getSelectItem())
+  } else if (e.key == 'Enter') {
+    // 回车事件
+    // console.log('Enter')
   }
+  mentionHandler(e)
 }
+
+// 粘贴事件
 function pasteFn(event: ClipboardEvent) {
   const clipboardData = event.clipboardData
   if (clipboardData) {
@@ -275,7 +237,7 @@ function pasteFn(event: ClipboardEvent) {
       event.preventDefault() // 阻止默认的粘贴行为
       document.execCommand('insertText', false, text) // 插入纯文本
     } else if (file) {
-      console.log(file)
+      // console.log(file)
       event.preventDefault() // 阻止默认的粘贴行为
       // 处理粘贴的文件，例如上传到服务器
       emit('paste', event, file)
@@ -283,135 +245,92 @@ function pasteFn(event: ClipboardEvent) {
   }
 }
 
-function clear() {
-  if (editorRef.value) {
-    editorRef.value.innerHTML = ''
-    emit('update:modelValue', editorRef.value.innerHTML)
-    active.value = false
-  }
-}
-
-function focus() {
-  nextTick(() => {
-    editorRef.value?.focus()
-  })
-}
-//@用户插入操作
-function insertUser(user: any) {
-  if (user) {
-    let img = createSvgUrl(user)
-    addText(`${img}\u2008`, true)
-  }
-}
-
-const keyDown = (e: KeyboardEvent) => {
-  if (e.ctrlKey && e.key == 'Enter') {
-    //用户点击了ctrl+enter触发
-    // console.log('ctrl+enter')
-    if (isEmpty(props.modelValue.replace(/&nbsp;|<br>| /g, ''))) {
-      UToast({ message: '内容不能为空', type: 'info' })
-    } else {
-      emit('submit')
+/**
+ * 光标处追加内容
+ * @param val 内容
+ * @param func Range处理事务
+ */
+function addText(val: string, func?: Function) {
+  let selection = window.getSelection()
+  if (selection) {
+    // 为空初始化光标
+    if (!range.value) {
+      range.value = getRange(editorRef.value)
     }
-  } else if (e.key == 'Enter' && isShowMention.value) {
-    // 插入用户操作
-    e.preventDefault()
-    const currentUser = enterConfirm()
-    insertUser(currentUser)
-    changeMentionShow(false)
-  } else {
-    //用户点击了enter触发
-    // console.log('enter')
+    mentionHandler()
+    // 删除选中内容
+    range.value.deleteContents()
+
+    func && func(range.value)
+
+    // 添加内容
+    range.value.insertNode(range.value.createContextualFragment(val))
+    range.value.collapse(false)
+
+    selection.removeAllRanges()
+    selection.addRange(range.value)
+
+    emit('update:modelValue', editorRef.value?.innerHTML || '')
+    const event = editorRef.value as unknown as Event
+    emit('input', event)
   }
 }
 
 // 移除图片
 const removeImg = (val: number) => {
   imgList?.value?.splice(val, 1)
-  emit('changeImgListFn', cloneDeep(imgList?.value as any[]))
+  emit('changeImgList', cloneDeep(imgList?.value))
 }
-//光标位置监听
-const onEditorSelectionChange = (event?: Event) => {
-  //实时保存光标位置
-  if (editorRef.value) {
-    range.value = getRange(editorRef?.value.ownerDocument.getSelection())
-  }
-}
-onMounted(() => {
-  if (editorRef?.value) {
-    editorRef.value.addEventListener('mousemove', onEditorSelectionChange)
-  }
-})
 
-onBeforeUnmount(() => {
-  if (editorRef?.value) {
-    editorRef.value.removeEventListener('mousemove', onEditorSelectionChange)
+// -->提及
+function mentionHandler(e?: KeyboardEvent) {
+  let v = getRange(editorRef.value)
+  let element = v.startContainer.parentElement
+  if (element?.tagName == 'SPAN' && element.id == 'mention') {
+    if (e) {
+      if (e.key == 'Backspace') {
+        v.deleteContents()
+        v.selectNode(element)
+        v.deleteContents()
+      } else if (e.key == ' ') {
+        v.selectNode(element)
+        v.deleteContents()
+        v.insertNode(v.createContextualFragment(`<span>${element.textContent?.trim()}</span>` || ''))
+        v.collapse(false)
+      }
+      e.preventDefault()
+    } else {
+      v.selectNode(element)
+    }
   }
-})
+}
+
+// 提及添加
+function insertUser(val: any) {
+  if (val) {
+    let alias = mention.value.alias
+    addText(`<span data-id="${val[alias.id]}" id="mention" style="color: var(--u-color-primary)">@${val[alias.username]}</span>&nbsp;`, (v: Range) => {
+      let s = v.startContainer.textContent || ''
+      let index = s.substring(0, v.startOffset).lastIndexOf('@')
+      v.setStart(v.startContainer, index)
+      v.deleteContents()
+    })
+  }
+  state.showMention = false
+  emit('mention-search', '')
+}
+
+// 提及列表选中上下移动
+function moveSelection(num: number) {
+  mentionRef.value?.moveSelection(num)
+}
+// <-
 
 defineExpose({
   addText,
   clear,
-  focus,
-  imageRef,
-  insertUser,
-  changeMentionShow
+  focus
 })
-//创建@标签
-const createSvgUrl = (user: any) => {
-  // 获取用户名和用户ID
-  const userName = user[mentionConfig.value.userNameKey]
-  const userId = user[mentionConfig.value.userIdKey]
-  const mentionColor = mentionConfig.value.mentionColor || '#409eff'
-
-  // 创建一个不可见的SVG元素用于测量文本宽度
-  const svgForMeasure = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
-      <style>
-        .mention-text { font: 14px 'PingFangSC-Regular', 'PingFang SC'; }
-      </style>
-      <text x="0" y="15" class="mention-text">@${userName}</text>
-    </svg>
-  `
-
-  // 将SVG添加到DOM中以测量文本
-  const container = document.createElement('div')
-  container.style.visibility = 'hidden' // 隐藏容器
-  container.innerHTML = svgForMeasure
-  document.body.appendChild(container)
-
-  // 测量文本宽度
-  const textElement = container.querySelector('text')
-  let textWidth = 200 // 默认宽度
-  if (textElement) {
-    textWidth = textElement.getComputedTextLength()
-  }
-
-  // 移除用于测量的SVG
-  document.body.removeChild(container)
-
-  // 创建最终的SVG元素
-  const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="${textWidth}" height="20">
-      <style>
-        .mention-text { font: 14px 'PingFangSC-Regular', 'PingFang SC'; fill: ${mentionColor}; }
-      </style>
-      <text x="0" y="15" class="mention-text">@${userName}</text>
-    </svg>
-  `
-
-  // 编码SVG以便作为URL使用
-  const encodedSvg = encodeURIComponent(svg).replace(/'/g, '%27').replace(/"/g, '%22')
-
-  const url = `data:image/svg+xml,${encodedSvg}`
-
-  // 返回img标签
-  return `
-    <img src="${url}" alt="@${userName}" style="width:${textWidth}px;height:20px;user-select: none;  vertical-align: sub;"
-     data-userName="${userName}" data-id="${userId}"
-     draggable="false"
-    >`
-}
 </script>
 
 <style lang="scss" scoped>

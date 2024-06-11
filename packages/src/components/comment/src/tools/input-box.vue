@@ -3,6 +3,7 @@
     <u-editor
       ref="editorRef"
       v-model="content"
+      :mention="mention"
       :class="{ 'input-active': action }"
       :placeholder="props.placeholder"
       :min-height="64"
@@ -12,7 +13,8 @@
       @input="input"
       @submit="onSubmit"
       @paste="change"
-      @change-img-list-fn="changeFilesFn"
+      @change-img-list="changeFilesFn"
+      @mention-search="mentionSearch"
     ></u-editor>
     <div v-if="action" class="action-box">
       <u-emoji :emoji="emoji" @add-emoji="(val: string) => editorRef?.addText(val)"></u-emoji>
@@ -48,8 +50,9 @@ import { h, inject, nextTick, reactive, ref } from 'vue'
 import { ClickOutside as vClickOutside, ElButton } from 'element-plus'
 import { UEmoji, UToast, UEditor, translate as $u, EditorInstance } from 'undraw-ui'
 import { EmojiApi } from '~/components/emoji'
-import { InjectInputBox, InjectInputBoxApi, InjectSlots, CommentApi,InjectionEmojiApi } from '~/components/comment'
+import { InjectInputBox, InjectInputBoxApi, InjectSlots, CommentApi, InjectionEmojiApi } from '~/components/comment'
 import { isEmpty, isNull, isImage, createObjectURL } from '~/util'
+import { MentionApi } from '~/components/editor/mention.vue'
 
 export interface InputBoxApi {
   focus(): void
@@ -89,6 +92,7 @@ const emit = defineEmits<{
 
 const { upload, submit, focus } = inject(InjectInputBox) as InjectInputBoxApi
 const emoji = inject(InjectionEmojiApi) as EmojiApi
+const mention = inject('injectMention') as MentionApi
 
 // 提交评论的数据
 const onSubmit = () => {
@@ -153,14 +157,9 @@ function onFocus() {
   focus()
 }
 
-function AddMention() {
-  console.log(editorRef.value)
-}
-
 defineExpose({
   focus: () => (editorRef as any).value?.focus(),
-  changeMentionShow: (isShow: boolean) => (editorRef as any).value?.changeMentionShow(isShow),
-  AddMention
+  changeMentionShow: (isShow: boolean) => (editorRef as any).value?.changeMentionShow(isShow)
 })
 
 const change = (val: Event, file?: File) => {
@@ -184,6 +183,12 @@ const change = (val: Event, file?: File) => {
       }
     }
   }
+}
+
+const injectMentionSearch = inject('injectMentionSearch') as Function
+// 提及改变
+function mentionSearch(val: string) {
+  injectMentionSearch(val)
 }
 
 // slots

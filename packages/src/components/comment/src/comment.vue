@@ -13,12 +13,7 @@
             <img v-else src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
         </div>
-        <InputBox
-          v-bind="$attrs"
-          ref="inputBox"
-          :placeholder="$u('comment.placeholder')"
-          :content-btn="$u('comment.contentBtn')"
-        />
+        <InputBox v-bind="$attrs" ref="inputBox" :placeholder="$u('comment.placeholder')" :content-btn="$u('comment.contentBtn')" />
       </div>
     </div>
     <!-- <div class="hot-list"></div> -->
@@ -73,8 +68,7 @@ const {
   showLikes = true,
   showAddress = true,
   showHomeLink = true,
-  showReply = true,
-  mentionConfig
+  showReply = true
 } = toRefs(props.config)
 
 const emit = defineEmits<{
@@ -117,7 +111,13 @@ const submit = ({ content, parentId, reply, files, clear }: SubmitParam2Api) => 
       }
     }
   }
-  emit('submit', { content, parentId, reply, files, mentionList: mentionList.value, finish })
+  // 提取出来content里面所有拥有自定义属性的提及标签
+  let spans = content.match(/<span [^>]*data-id="([^"]*)"[^>]*>/g) || []
+  let dataIds = spans.map(tag => {
+    let match = tag.match(/data-id="([^"]*)"/)
+    return match ? match[1] : null
+  })
+  emit('submit', { content, parentId, reply, files, mentionList: dataIds, finish })
 }
 const inputBoxParam: InjectInputBoxApi = {
   upload: props.upload,
@@ -222,34 +222,20 @@ const remove = (comment: CommentApi) => {
   }
 }
 const inputBox = ref(null)
-const mentionList = ref<any[]>([])
-function changeMetionList(list: any[]) {
-  mentionList.value = list
-}
-function getMentionList() {
-  return mentionList.value
-}
+// 表情包
+provide(InjectionEmojiApi, props.config.emoji)
+// 工具卡槽
+provide(InjectSlots, useSlots())
+//提及配置
+provide('injectMention', props.config.mention)
 // mentionList 触发事件
 const mentionSearch = debounce((searchStr: string) => {
   emit('mentionSearch', searchStr)
 }, 300)
-// 表情包
-provide(InjectionEmojiApi, props.config.emoji)
-//提及配置
-provide('mentionConfig', mentionConfig as any)
-// 工具卡槽
-provide(InjectSlots, useSlots())
-//修改提及列表
-provide('changeMetionList', changeMetionList)
-//修改提及列表
-provide('mentionSearch', mentionSearch)
+provide('injectMentionSearch', mentionSearch)
+
 defineExpose({
-  remove: remove,
-  mentionList: mentionList,
-  getMentionList: getMentionList,
-  setMentionShow: (show: boolean) => {
-    ;(inputBox.value as any).setMentionShow(show)
-  }
+  remove: remove
 })
 </script>
 

@@ -14,15 +14,13 @@ export * from './notice-bar'
 export * from './search'
 export * from './toast'
 
-
-import { withInstall } from '~/util'
 import Anchor from './anchor'
 import Chat from './chat'
 import Comment from './comment'
 import CommentNav from './comment-nav'
 import CommentScroll from './comment-scroll'
 import Counter from './counter'
-import Dialog  from './dialog'
+import Dialog from './dialog'
 import Divider from './divider'
 import Editor from './editor'
 import Emoji from './emoji'
@@ -45,15 +43,13 @@ const components = [
   Fold,
   Icon,
   NoticeBar,
-  Emoji,
   Search
 ]
-
 
 import { App } from 'vue'
 const install = (app: App) => {
   components.forEach(item => {
-    app.use(withInstall(item))
+    app.component(item.name, item)
   })
 }
 export { install }
