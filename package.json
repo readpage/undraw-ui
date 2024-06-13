@@ -25,7 +25,7 @@
     "dayjs": "^1.11.7",
     "element-plus": "^2.6.0",
     "highlight.js": "^11.7.0",
-    "undraw-ui": "^1.1.2",
+    "undraw-ui": "1.1.1",
     "vitepress": "^1.0.0-alpha.72",
     "vue": "^3.3.4"
   },

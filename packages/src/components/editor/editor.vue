@@ -309,7 +309,7 @@ function mentionHandler(e?: KeyboardEvent) {
 // 提及添加
 function insertUser(val: any) {
   if (val) {
-    let alias = props.mention?.alias
+    let alias = mention.value.alias
     addText(`<span data-id="${val[alias.id]}" id="mention" style="color: var(--u-color-primary)">@${val[alias.username]}</span>&nbsp;`, (v: Range) => {
       let s = v.startContainer.textContent || ''
       let index = s.substring(0, v.startOffset).lastIndexOf('@')

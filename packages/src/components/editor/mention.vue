@@ -4,8 +4,8 @@
       <li v-for="(item, index) in data" :key="index" :class="{ hover: index === selectedIndex }" @click="clickSelectedItem(index)">
         <slot name="mention-user" :item="item" :index="index">
           <div class="userInfo">
-            <img v-if="showAvatar" :src="item[$props.alias.avatar]" width="30" class="avatar" />
-            <span class="username">{{ item[$props.alias.username] }}</span>
+            <img v-if="showAvatar" :src="item[alias.avatar]" width="30" class="avatar" />
+            <span class="username">{{ item[alias.username] }}</span>
           </div>
         </slot>
       </li>

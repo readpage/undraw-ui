@@ -27,12 +27,11 @@
     "dev": "vite",
     "build": "npm run build:es && npm run build:umd",
     "build:es": "vite build --emptyOutDir --config ./scripts/build.es.ts && node ./scripts/element.js",
-    "build:umd": "vite build --emptyOutDir --config ./scripts/build.umd.ts",
+    "build:umd": "vite build --emptyOutDir --config ./scripts/build.umd.ts && node ./scripts/remove.js",
     "preview": "vite preview"
   },
   "dependencies": {
     "element-plus": "^2.6.0",
-    "undraw-ui": "1.1.2",
     "vue": "^3.3.4"
   },
   "devDependencies": {

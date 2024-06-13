@@ -46,7 +46,6 @@ export default defineConfig({
               return id.split('node_modules/.pnpm')[1].split('/')[3]
             }
           }
-          
           let arr = ['components', 'hooks', 'element', 'language']
           for (let i = 0; i < arr.length; i++) {
             if (id.includes(`/packages/src/${arr[i]}`)) {
