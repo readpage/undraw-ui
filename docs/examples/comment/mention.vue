@@ -1,5 +1,5 @@
 <template>
-  <u-comment :config="config" @submit="submit" @like="like" @mention-search="mentionSearchFn" relative-time>
+  <u-comment :config="config" relative-time @submit="submit" @like="like" @mention-search="mentionSearch" @before-data="beforeData">
     <!-- <div>导航栏卡槽</div> -->
     <!-- <template #header>头部卡槽</template> -->
     <!-- <template #info>用户信息卡槽</template> -->
@@ -15,7 +15,60 @@
 import emoji from './emoji'
 import { reactive } from 'vue'
 import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL } from 'undraw-ui'
-
+// 相对时间
+import { dayjs } from './day'
+const userArr = [
+  {
+    id: 1,
+    name: '张三',
+    avatar: 'https://gd-hbimg.huaban.com/cba6c7af94997ba172c32bbe668794553f29e91ef26f-qnroJ7_fw240webp'
+  },
+  {
+    id: 2,
+    name: '李四',
+    avatar: 'https://gd-hbimg.huaban.com/d01263d11d07748a2193bbbdd3b9a0c8a4b062b9f39d-PKvV2t_fw240webp'
+  },
+  {
+    id: 3,
+    name: '王五',
+    avatar: 'https://gd-hbimg.huaban.com/69d92bfbf36fc111e1f563403311e7943628c9fc108bf-6l34Pa_fw240webp'
+  },
+  {
+    id: 4,
+    name: '赵六',
+    avatar: 'https://gd-hbimg.huaban.com/7f5c54a455f61f431ec1f7b7c0e583f4a725fb73adba-5DgU3q_fw240webp'
+  },
+  {
+    id: 5,
+    name: '孙七',
+    avatar: 'https://gd-hbimg.huaban.com/edea85f44f3f8bce8d094ed78f390164a9eba229cb2e-1Lc22F_fw240webp'
+  },
+  {
+    id: 6,
+    name: '周八',
+    avatar: 'https://gd-hbimg.huaban.com/c1b2131c6977e01a430d6575ba678a4afeabcad222605-UJUwwb_fw240webp'
+  },
+  {
+    id: 7,
+    name: '吴九',
+    avatar: 'https://gd-hbimg.huaban.com/4942e77078bda39a458980049b528236bf79183814998-zVzEJv_fw240webp'
+  },
+  {
+    id: 8,
+    name: '郑十',
+    avatar: 'https://gd-hbimg.huaban.com/628236086a2ca12d2074bdd29f496f38a4d0c06ae50f-Rj3vsO_fw240webp'
+  },
+  {
+    id: 9,
+    name: '王富贵',
+    avatar: 'https://gd-hbimg.huaban.com/0108a6b65d211d3bc602bc0431e84b31f9e62ac08015f-JifENm_fw240webp'
+  },
+  {
+    id: 10,
+    name: '赵富贵',
+    avatar: 'https://gd-hbimg.huaban.com/d9643d6181d506ccc159a940e11bdc6b9a2b53ae57139-pxAnk9_fw240webp'
+  }
+]
 const config = reactive<ConfigApi>({
   user: {
     id: 1,
@@ -26,85 +79,19 @@ const config = reactive<ConfigApi>({
   },
   emoji: emoji,
   comments: [],
-  // aTarget: '_self',
-  // showForm: false,
-  // showContent: false,
-  total: 10,
-  mentionConfig: {
-    userArr: [
-      {
-        userId: 1,
-        userName: '张三',
-        userAvatar: 'https://gd-hbimg.huaban.com/cba6c7af94997ba172c32bbe668794553f29e91ef26f-qnroJ7_fw240webp'
-      },
-      {
-        userId: 2,
-        userName: '李四',
-        userAvatar: 'https://gd-hbimg.huaban.com/d01263d11d07748a2193bbbdd3b9a0c8a4b062b9f39d-PKvV2t_fw240webp'
-      },
-      {
-        userId: 3,
-        userName: '王五',
-        userAvatar: 'https://gd-hbimg.huaban.com/69d92bfbf36fc111e1f563403311e7943628c9fc108bf-6l34Pa_fw240webp'
-      },
-      {
-        userId: 4,
-        userName: '赵六',
-        userAvatar: 'https://gd-hbimg.huaban.com/7f5c54a455f61f431ec1f7b7c0e583f4a725fb73adba-5DgU3q_fw240webp'
-      },
-      {
-        userId: 5,
-        userName: '孙七',
-        userAvatar: 'https://gd-hbimg.huaban.com/edea85f44f3f8bce8d094ed78f390164a9eba229cb2e-1Lc22F_fw240webp'
-      },
-      {
-        userId: 6,
-        userName: '周八',
-        userAvatar: 'https://gd-hbimg.huaban.com/c1b2131c6977e01a430d6575ba678a4afeabcad222605-UJUwwb_fw240webp'
-      },
-      {
-        userId: 7,
-        userName: '吴九',
-        userAvatar: 'https://gd-hbimg.huaban.com/4942e77078bda39a458980049b528236bf79183814998-zVzEJv_fw240webp'
-      },
-      {
-        userId: 8,
-        userName: '郑十',
-        userAvatar: 'https://gd-hbimg.huaban.com/628236086a2ca12d2074bdd29f496f38a4d0c06ae50f-Rj3vsO_fw240webp'
-      },
-      {
-        userId: 9,
-        userName: '王富贵',
-        userAvatar: 'https://gd-hbimg.huaban.com/0108a6b65d211d3bc602bc0431e84b31f9e62ac08015f-JifENm_fw240webp'
-      },
-      {
-        userId: 10,
-        userName: '赵富贵',
-        userAvatar: 'https://gd-hbimg.huaban.com/d9643d6181d506ccc159a940e11bdc6b9a2b53ae57139-pxAnk9_fw240webp'
-      }
-    ],
-    userIdKey: 'userId',
-    userNameKey: 'userName',
-    userAvatarKey: 'userAvatar',
-    show: true,
-    mentionColor: '#1e80ff'
+  mention: {
+    data: userArr,
+    alias: {
+      username: 'name'
+    },
+    showAvatar: true
   }
 })
 
 let temp_id = 100
 // 提交评论事件
 const submit = ({ content, parentId, files, finish, reply, mentionList }: SubmitParamApi) => {
-  let str =
-    '提交评论:' +
-    content +
-    ';\t父id: ' +
-    parentId +
-    ';\t图片:' +
-    files +
-    ';\t被回复评论:' +
-    reply +
-    ';\t提及列表:' +
-    JSON.stringify(mentionList)
+  let str = '提交评论:' + content + ';\t父id: ' + parentId + ';\t图片:' + files + ';\t被回复评论:' + reply + ';\t提及列表:' + JSON.stringify(mentionList)
   console.log(str, reply)
 
   /**
@@ -149,8 +136,7 @@ config.comments = [
     parentId: null,
     uid: '1',
     address: '来自上海',
-    content:
-      '缘生缘灭，缘起缘落，我在看别人的故事，别人何尝不是在看我的故事?别人在演绎人生，我又何尝不是在这场戏里?谁的眼神沧桑了谁?我的眼神，只是沧桑了自己[喝酒]',
+    content: '缘生缘灭，缘起缘落，我在看别人的故事，别人何尝不是在看我的故事?别人在演绎人生，我又何尝不是在这场戏里?谁的眼神沧桑了谁?我的眼神，只是沧桑了自己[喝酒]',
     likes: 2,
     contentImg: 'https://gitee.com/undraw/undraw-ui/raw/master/public/docs/normal.webp',
     createTime: '2024-05-16',
@@ -163,66 +149,12 @@ config.comments = [
   }
 ]
 
-const baseUserArr = [
-  {
-    userId: 1,
-    userName: '张三',
-    userAvatar: 'https://gd-hbimg.huaban.com/cba6c7af94997ba172c32bbe668794553f29e91ef26f-qnroJ7_fw240webp'
-  },
-  {
-    userId: 2,
-    userName: '李四',
-    userAvatar: 'https://gd-hbimg.huaban.com/d01263d11d07748a2193bbbdd3b9a0c8a4b062b9f39d-PKvV2t_fw240webp'
-  },
-  {
-    userId: 3,
-    userName: '王五',
-    userAvatar: 'https://gd-hbimg.huaban.com/69d92bfbf36fc111e1f563403311e7943628c9fc108bf-6l34Pa_fw240webp'
-  },
-  {
-    userId: 4,
-    userName: '赵六',
-    userAvatar: 'https://gd-hbimg.huaban.com/7f5c54a455f61f431ec1f7b7c0e583f4a725fb73adba-5DgU3q_fw240webp'
-  },
-  {
-    userId: 5,
-    userName: '孙七',
-    userAvatar: 'https://gd-hbimg.huaban.com/edea85f44f3f8bce8d094ed78f390164a9eba229cb2e-1Lc22F_fw240webp'
-  },
-  {
-    userId: 6,
-    userName: '周八',
-    userAvatar: 'https://gd-hbimg.huaban.com/c1b2131c6977e01a430d6575ba678a4afeabcad222605-UJUwwb_fw240webp'
-  },
-  {
-    userId: 7,
-    userName: '吴九',
-    userAvatar: 'https://gd-hbimg.huaban.com/4942e77078bda39a458980049b528236bf79183814998-zVzEJv_fw240webp'
-  },
-  {
-    userId: 8,
-    userName: '郑十',
-    userAvatar: 'https://gd-hbimg.huaban.com/628236086a2ca12d2074bdd29f496f38a4d0c06ae50f-Rj3vsO_fw240webp'
-  },
-  {
-    userId: 9,
-    userName: '王富贵',
-    userAvatar: 'https://gd-hbimg.huaban.com/0108a6b65d211d3bc602bc0431e84b31f9e62ac08015f-JifENm_fw240webp'
-  },
-  {
-    userId: 10,
-    userName: '赵富贵',
-    userAvatar: 'https://gd-hbimg.huaban.com/d9643d6181d506ccc159a940e11bdc6b9a2b53ae57139-pxAnk9_fw240webp'
-  }
-]
+const mentionSearch = (val: string) => {
+  config.mention!.data = userArr.filter(v => v.name.includes(val))
+}
 
-const mentionSearchFn = (keyword: string) => {
-  if (!keyword) {
-    config.mentionConfig.userArr = baseUserArr
-    return
-  }
-  config.mentionConfig.userArr = baseUserArr.filter(e => {
-    return e.userName.includes(keyword)
-  })
+// 加载前评论数据处理
+function beforeData(val: any) {
+  val.createTime = dayjs(val.createTime).fromNow()
 }
 </script>

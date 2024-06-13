@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --force",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "format": "prettier --write **/*.{ts,js,json,vue}",
     "commit": "git add . && git-cz && git push",
-    "dev:docs": "vitepress dev docs",
+    "dev:docs": "vitepress dev docs --force",
     "build:docs": "vitepress build docs",
     "preview:docs": "vitepress preview docs"
   },
@@ -25,7 +25,7 @@
     "dayjs": "^1.11.7",
     "element-plus": "^2.6.0",
     "highlight.js": "^11.7.0",
-    "undraw-ui": "^1.1.1",
+    "undraw-ui": "^1.1.2",
     "vitepress": "^1.0.0-alpha.72",
     "vue": "^3.3.4"
   },

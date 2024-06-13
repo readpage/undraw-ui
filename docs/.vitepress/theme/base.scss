@@ -49,3 +49,8 @@ img, svg, video, canvas, audio, iframe, embed, object {
 ::-webkit-scrollbar-corner {
   background-color: transparent;
 }
+
+.mention-list {
+  padding: 0 !important;
+  margin: 0 !important;
+}

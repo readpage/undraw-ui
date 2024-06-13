@@ -4,6 +4,9 @@ dependencies:
   element-plus:
     specifier: ^2.6.0
     version: 2.6.0(vue@3.3.4)
+  undraw-ui:
+    specifier: 1.1.2
+    version: 1.1.2
   vue:
     specifier: ^3.3.4
     version: 3.3.4
@@ -1116,6 +1119,15 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
     dev: true
+
+  /undraw-ui@1.1.2:
+    resolution: {integrity: sha512-YqMOkuPPuK5zUa3Ze2lP7jIwvLcIzzJ17Rv5LVRcBMC3j5ASW4yzXuwYbGC0IAKP5shjw3o7I38vc3s0uxqDKg==}
+    dependencies:
+      element-plus: 2.6.0(vue@3.3.4)
+      vue: 3.3.4
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+    dev: false
 
   /universalify@0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}

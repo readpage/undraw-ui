@@ -4,8 +4,8 @@
       <li v-for="(item, index) in data" :key="index" :class="{ hover: index === selectedIndex }" @click="clickSelectedItem(index)">
         <slot name="mention-user" :item="item" :index="index">
           <div class="userInfo">
-            <img v-if="showAvatar" :src="item[alias.avatar]" width="30" class="avatar" />
-            <span class="username">{{ item[alias.username] }}</span>
+            <img v-if="showAvatar" :src="item[$props.alias.avatar]" width="30" class="avatar" />
+            <span class="username">{{ item[$props.alias.username] }}</span>
           </div>
         </slot>
       </li>
@@ -16,8 +16,8 @@
   </ul>
 </template>
 <script setup lang="ts">
-import type { ElScrollbar } from 'element-plus'
-import { computed, nextTick, onMounted, onUnmounted, ref, toRefs, watch } from 'vue'
+import { ElScrollbar, ElEmpty } from 'element-plus'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 export interface MentionApi {
   target?: string
   data?:
@@ -66,8 +66,8 @@ function setPosition() {
   // 设置弹出层的位置
   let mention = mentionRef.value
   if (mention && rect && editor) {
-    mention.style.top = `${rect.top}px`
-    mention.style.left = `${rect.left}px`
+    mention.style.top = `${rect.top - editor.top}px`
+    mention.style.left = `${rect.left - editor.left}px`
   }
 }
 
@@ -132,9 +132,9 @@ defineExpose({
 
 <style lang="scss" scoped>
 .mention-list {
-  position: fixed;
-  left: 0;
-  top: 0;
+  position: absolute;
+  left: 30px;
+  top: 20px;
   flex-direction: column;
   width: 150px;
   height: 240px;

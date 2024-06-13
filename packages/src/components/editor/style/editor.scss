@@ -10,6 +10,7 @@ span {
   border: 1px solid var(--u-bg-color-overlay);
   border-radius: 4px;
   font-size: 14px;
+  position: relative;
 
   .rich-input {
     min-height: $minHeight;

@@ -36,7 +36,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { UToast, cloneDeep, isEmpty, isNull } from 'undraw-ui'
+import { UToast, cloneDeep, isEmpty } from 'undraw-ui'
 import { ClickOutside as vClickOutside } from 'element-plus'
 import { computed, nextTick, reactive, ref, toRefs, watch } from 'vue'
 import Mention, { MentionApi } from './mention.vue'
@@ -59,9 +59,9 @@ const props = withDefaults(defineProps<Props>(), {
 const { imgList } = toRefs(props)
 
 const state = reactive({
-  showMention: false,
   active: false,
-  isLocked: false
+  isLocked: false,
+  showMention: false
 })
 
 const range = ref<Range>()
@@ -72,7 +72,8 @@ const text = ref()
 const minHeight = computed(() => props.minHeight + 'px')
 const padding = computed(() => (props.minHeight == 30 ? '4px 10px' : '8px 12px'))
 const mention = computed(() => {
-  let mention = props.mention || ({} as any)
+  let mention = cloneDeep(props.mention)
+  mention.showMention = false
   mention.target = props.mention?.target
   mention.alias = fillDeafults(mention?.alias, {
     id: 'id',
@@ -279,7 +280,7 @@ function addText(val: string, func?: Function) {
 // 移除图片
 const removeImg = (val: number) => {
   imgList?.value?.splice(val, 1)
-  emit('changeImgList', cloneDeep(imgList?.value))
+  emit('change-img-list', cloneDeep(imgList?.value))
 }
 
 // -->提及
@@ -308,7 +309,7 @@ function mentionHandler(e?: KeyboardEvent) {
 // 提及添加
 function insertUser(val: any) {
   if (val) {
-    let alias = mention.value.alias
+    let alias = props.mention?.alias
     addText(`<span data-id="${val[alias.id]}" id="mention" style="color: var(--u-color-primary)">@${val[alias.username]}</span>&nbsp;`, (v: Range) => {
       let s = v.startContainer.textContent || ''
       let index = s.substring(0, v.startOffset).lastIndexOf('@')

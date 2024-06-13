@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "element-plus": "^2.6.0",
+    "undraw-ui": "1.1.2",
     "vue": "^3.3.4"
   },
   "devDependencies": {

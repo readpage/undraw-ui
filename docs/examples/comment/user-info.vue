@@ -72,8 +72,7 @@ config.comments = [
     parentId: null,
     uid: '1',
     address: '来自上海',
-    content:
-      '缘生缘灭，缘起缘落，我在看别人的故事，别人何尝不是在看我的故事?别人在演绎人生，我又何尝不是在这场戏里?谁的眼神沧桑了谁?我的眼神，只是沧桑了自己[喝酒]',
+    content: '缘生缘灭，缘起缘落，我在看别人的故事，别人何尝不是在看我的故事?别人在演绎人生，我又何尝不是在这场戏里?谁的眼神沧桑了谁?我的眼神，只是沧桑了自己[喝酒]',
     likes: 2,
     contentImg: 'https://gitee.com/undraw/undraw-ui/raw/master/public/docs/normal.webp',
     createTime: '2024-05-16',

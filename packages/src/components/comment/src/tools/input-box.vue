@@ -1,6 +1,6 @@
 <template>
   <div v-click-outside:[popperRef]="onClickOutside" class="comment-box">
-    <Editor
+    <u-editor
       ref="editorRef"
       v-model="content"
       :mention="mention"
@@ -15,7 +15,7 @@
       @paste="change"
       @change-img-list="changeFilesFn"
       @mention-search="mentionSearch"
-    ></Editor>
+    ></u-editor>
     <div v-if="action" class="action-box">
       <u-emoji :emoji="emoji" @add-emoji="(val: string) => editorRef?.addText(val)"></u-emoji>
       <div v-if="upload" class="picture" @click="inputRef?.click">
@@ -53,7 +53,6 @@ import { EmojiApi } from '~/components/emoji'
 import { InjectInputBox, InjectInputBoxApi, InjectSlots, CommentApi, InjectionEmojiApi } from '~/components/comment'
 import { isEmpty, isNull, isImage, createObjectURL } from '~/util'
 import { MentionApi } from '~/components/editor/mention.vue'
-import Editor from '~/components/editor/index'
 
 export interface InputBoxApi {
   focus(): void

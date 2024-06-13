@@ -1,5 +1,5 @@
 <template>
-  <u-comment :config="config" @submit="submit">
+  <u-comment :config="config" @submit="submit" @before-data="beforeData">
     <!-- <template>导航栏卡槽</template> -->
     <!-- <template #header>头部卡槽</template> -->
     <!-- <template #info>信息卡槽</template> -->
@@ -32,20 +32,21 @@ const config = reactive<ConfigApi>({
   showLikes: false
 })
 
-function convertComment(comments: any, callback: (v: CommentApi) => void) {
+// 自定义别名转换
+function convertComment(comments: any, func: (v: any) => void) {
   if (isArray(comments)) {
     comments.forEach((t: any) => {
-      convertComment(t, callback)
+      convertComment(t, func)
     })
     return comments
   } else if (isObject(comments)) {
     if (comments.reply) {
       let replys = comments.reply.list
       if (replys && replys.length > 0) {
-        convertComment(replys, callback)
+        convertComment(replys, func)
       }
     }
-    callback(comments)
+    func(comments)
     return comments
   }
 }
@@ -58,7 +59,7 @@ const comments = [
     content: '等闲识得东风面，万紫千红总是春。',
     createTime: '2023-04-30 16:22',
     user: {
-      username: '团团喵喵',
+      name: '团团喵喵',
       avatar: 'https://static.juzicon.com/user/avatar-23ac4bfe-ae93-4e0b-9f13-f22f22c7fc12-221001003441-Y0MB.jpeg',
       homeLink: ''
     },
@@ -72,7 +73,7 @@ const comments = [
           content: '[微笑]',
           createTime: '2023-04-30 16:22',
           user: {
-            username: '团团喵喵',
+            name: '团团喵喵',
             avatar: 'https://static.juzicon.com/user/avatar-23ac4bfe-ae93-4e0b-9f13-f22f22c7fc12-221001003441-Y0MB.jpeg'
           }
         }
@@ -86,15 +87,11 @@ const comments = [
     content: '长风破浪会有时，直挂云帆济沧海。',
     createTime: '2023-04-28 09:00',
     user: {
-      username: '且美且独立',
+      name: '且美且独立',
       avatar: 'https://static.juzicon.com/avatars/avatar-20200926115919-a45y.jpeg'
     }
   }
 ]
-
-function commentCall(v: CommentApi) {
-  v.createTime = dayjs(v.createTime).fromNow()
-}
 
 // 评论数据
 setTimeout(() => {
@@ -104,7 +101,7 @@ setTimeout(() => {
     username: 'jack',
     avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100'
   }
-  config.comments = convertComment(comments, v => commentCall(v))
+  config.comments = convertComment(comments, v => (v.user.username = v.user.name))
 }, 500)
 
 // 评论提交事件
@@ -126,8 +123,13 @@ const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
     reply: null
   }
   setTimeout(() => {
-    finish(convertComment(comment, v => commentCall(v)))
+    finish(comment)
     UToast({ message: '评论成功!', type: 'info' })
   }, 200)
+}
+
+// 加载前评论数据处理
+function beforeData(val: any) {
+  val.createTime = dayjs(val.createTime).fromNow()
 }
 </script>
