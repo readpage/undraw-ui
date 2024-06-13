@@ -17,9 +17,9 @@
 </template>
 <script setup lang="ts">
 import { ElScrollbar, ElEmpty } from 'element-plus'
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { Ref, computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 export interface MentionApi {
-  target?: string
+  target?: Ref<HTMLDivElement>
   data?:
     | any[]
     | {
@@ -32,7 +32,7 @@ export interface MentionApi {
   showMention?: boolean
 }
 const props = withDefaults(defineProps<MentionApi>(), {})
-const target = computed(() => document.querySelector(props.target || '.u-editor') as HTMLElement)
+const target = computed(() => props.target?.value as HTMLElement)
 
 const mentionRef = ref<HTMLElement>()
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
@@ -134,7 +134,7 @@ defineExpose({
 .mention-list {
   position: absolute;
   left: 30px;
-  top: 20px;
+  top: 30px;
   flex-direction: column;
   width: 150px;
   height: 240px;

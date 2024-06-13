@@ -72,9 +72,9 @@ const text = ref()
 const minHeight = computed(() => props.minHeight + 'px')
 const padding = computed(() => (props.minHeight == 30 ? '4px 10px' : '8px 12px'))
 const mention = computed(() => {
-  let mention = cloneDeep(props.mention)
+  let mention = cloneDeep(props.mention || {})
   mention.showMention = false
-  mention.target = props.mention?.target
+  mention.target = editorRef
   mention.alias = fillDeafults(mention?.alias, {
     id: 'id',
     username: 'username',
@@ -146,7 +146,7 @@ watch(
     }
     if (state.showMention) {
       let keyword = v.startContainer.textContent?.trim() || ''
-      keyword = keyword.substring(keyword.indexOf('@') + 1)
+      keyword = keyword.substring(keyword.lastIndexOf('@') + 1)
       emit('mention-search', keyword)
     }
   }

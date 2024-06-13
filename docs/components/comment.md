@@ -11,7 +11,7 @@ title: Comment
 :::demo
 comment/basic
 :::
-<!-- 
+
 ## 图片上传
 :::demo 使用 `uplaod` 来开启图片上传
 comment/upload
@@ -30,7 +30,7 @@ comment/user-card
 ## 工具栏
 :::demo 自定义操作栏卡槽
 comment/tools
-::: -->
+:::
 
 ### 操作栏实例->operate.vue
 ```ts
@@ -107,7 +107,7 @@ const onCommand = (command: any) => {
 
 ```
 
-<!-- ## 导航栏排序
+## 导航栏排序
 :::demo 使用v-comment-nav组件切换评论最新和排序，也可自定义默认卡槽
 comment/nav-sort
 :::
@@ -121,7 +121,7 @@ comment/scroll
 ## @mention提及
 :::demo
 comment/mention
-::: -->
+:::
 
 
 ## Comment 属性
