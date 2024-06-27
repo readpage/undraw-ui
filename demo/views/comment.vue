@@ -8,9 +8,6 @@
 import { ref } from 'vue'
 import Basic from './comment/basic.vue'
 import Full from './comment/full.vue'
-defineOptions({
-  name: 'commentVue'
-})
 </script>
 
 <style lang="scss" scoped></style>

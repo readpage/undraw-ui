@@ -15,6 +15,7 @@
 
 
 <p align="center">Undraw UI - A Vue.js 3 UI library</p>
+<a href="https://hellogithub.com/repository/787564b16f214b2f851724bc140cb493" target="_blank"><img src="https://api.hellogithub.com/v1/widgets/recommend.svg?rid=787564b16f214b2f851724bc140cb493&claim_uid=2LGtR6bWFcSuqfk" alt="Featured｜HelloGitHub" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 
 ## 🔥功能
 
@@ -65,16 +66,15 @@ npm i element-plus2.6.0 undraw-ui@1.1.1
 
 ### 按需导入(推荐)
 您需要使用额外的插件来导入要使用的组件。  
-首先你需要安装 unplugin-vue-components 和 unplugin-auto-import 两款插件。
+首先你需要安装 unplugin-vue-components 两款插件。
 
 ```sh
-npm install -D unplugin-vue-components unplugin-auto-import
+npm install -D unplugin-vue-components
 ```
 
 然后修改 vite.config.ts 或 vue.config.js 的配置。
 
 ```ts
-import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { UndrawUiResolver } from 'undraw-ui/es/resolvers'
 
@@ -87,7 +87,7 @@ export default {
 }
 ```
 
-### 全局注册
+### 全局注册(不推荐)-选择按需导入忽略
 如果你对打包后的文件大小不是很在乎，那么使用完整导入会更方便。
 ```ts
 import ElementPlus from 'element-plus'
@@ -125,8 +125,6 @@ app.mount('#app')
   </div>
 </template>
 ```
-
-
 ### 评论组件
 [基础使用-vite模板地址](https://gitee.com/undraw/undraw-ui-demo/tree/master/Vue)  
 [组件后端相关实例](https://gitee.com/undraw/undraw-ui-demo/tree/master/Java)  

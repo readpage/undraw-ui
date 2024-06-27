@@ -27,7 +27,8 @@
     "highlight.js": "^11.7.0",
     "undraw-ui": "1.1.3",
     "vitepress": "^1.0.0-alpha.72",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-router": "4.2.4"
   },
   "devDependencies": {
     "@types/node": "^16.4.7",

@@ -1,38 +1,8 @@
 <template>
-  <el-config-provider :locale="zhCn">
-    <Page :components="components" title="组件测试" />
-  </el-config-provider>
+ <Page />
 </template>
 <script setup lang="ts">
-import anchorVue from './components/anchor.vue'
-import commentVue from './components/comment.vue'
-import dialogVue from './components/dialog.vue'
-import editorVue from './components/editor.vue'
-import iconVue from './components/icon.vue'
-import noticeBarVue from './components/notice-bar.vue'
-import searchVue from './components/search.vue'
-import testVue from './components/test.vue'
-import Fold from './components/fold.vue'
-import chatVue from './components/chat.vue'
-import { ElConfigProvider } from 'element-plus'
-import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
-import Page from './components/Page.vue'
-import counterVue from './components/counter.vue'
-import { cloneDeep } from '~/index'
-
-const components = [
-  commentVue,
-  chatVue,
-  searchVue,
-  noticeBarVue,
-  anchorVue,
-  dialogVue,
-  editorVue,
-  iconVue,
-  counterVue,
-  Fold,
-  testVue
-]
+import Page from './layouts/page.vue'
 </script>
 
 <style lang="scss">

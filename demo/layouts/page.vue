@@ -1,60 +1,44 @@
 <template>
   <div class="page">
     <el-scrollbar class="slider">
-      <div v-if="props.title" class="title">
-        <h1>{{ title }}</h1>
+      <div class="title">
+        <h2>{{ route.name }}</h2>
       </div>
       <div class="content">
-        <div
-          v-for="(tab, index) in components"
-          :key="index"
-          class="menu-li"
-          :class="bindClass(tab)"
-          @click="switchTab(tab)"
-        >
+        <div v-for="(tab, index) in tabs" :key="index" class="menu-li" :class="bindClass(tab)" @click="switchTab(tab)">
           {{ tab.name }}
         </div>
       </div>
     </el-scrollbar>
     <el-scrollbar class="container">
-      <component :is="currentTab.components"></component>
+      <router-view v-slot="{ Component }">
+        <component :is="Component" />
+      </router-view>
     </el-scrollbar>
-    <el-switch
-      v-model="isDark"
-      inline-prompt
-      :active-icon="Moon"
-      :inactive-icon="Sunny"
-      style="position: absolute; right: 20px; top: 5px"
-    />
+    <el-switch v-model="isDark" inline-prompt :active-icon="Moon" :inactive-icon="Sunny" style="position: absolute; right: 20px; top: 5px" />
   </div>
 </template>
 <script setup lang="ts">
-import { markRaw, provide, reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { ElScrollbar } from 'element-plus'
 import { isDark } from '@/util'
 import { Moon, Sunny } from '@element-plus/icons-vue'
 import { ElSwitch } from 'element-plus'
 import 'element-plus/es/components/switch/style/css'
+import { staticRoutes } from '@/router'
+import { useRoute, useRouter } from 'vue-router'
 
-interface Props {
-  title?: string
-  components: any[]
-}
+const route = useRoute()
+const router = useRouter()
 
-const props = defineProps<Props>()
-
-const currentTab = reactive({
-  name: props.components[0].name,
-  components: markRaw(props.components[0])
-})
+const tabs = computed(() => staticRoutes.filter(t => t.name != null))
 
 const bindClass = (tab: any) => {
-  return currentTab.name.toLocaleLowerCase() === tab.name.toLocaleLowerCase() ? 'current-tab' : ''
+  return route.name == tab.name ? 'current-tab' : ''
 }
 
 const switchTab = (tab: any) => {
-  currentTab.name = tab.name
-  currentTab.components = markRaw(tab)
+  router.push(tab.path)
 }
 </script>
 
@@ -65,7 +49,7 @@ const switchTab = (tab: any) => {
   height: 100vh;
   .slider {
     text-align: center;
-    width: 200px;
+    width: 150px;
     border: 1px solid #e1e1e1;
     box-sizing: border-box;
     min-height: 100vh;
