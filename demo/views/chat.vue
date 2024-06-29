@@ -1,78 +1,158 @@
 <template>
-  <u-chat :user-id="userId" :emoji="emoji" :data="data" @submit="submit"></u-chat>
+  <Chat :config="config" style="width: 500px" @load-more="loadMore" @submit="submit" />
 </template>
 <script setup lang="ts">
-import { onMounted, onUnmounted, reactive, ref } from 'vue'
-import { ChatApi, ChatSubmitParam } from '~/index'
-// 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases
-// static文件放在public下,引入emoji.ts文件可以移动到自定义位置
+import { onMounted, reactive, ref } from 'vue'
+import Chat, { ConfigApi } from '~/components/chat/chat.vue'
+import { usePage } from 'undraw-ui'
 import emoji from '@/assets/emoji'
+import { ChatApi } from '~/components/chat/chat.vue'
 
-defineOptions({
-  name: 'chat'
+const config = reactive<ConfigApi>({
+  user: {
+    id: 1,
+    username: 'user',
+    avatar: ''
+  },
+  data: [],
+  emoji: emoji
 })
 
-const userId = ref(1)
-
-const data = reactive<ChatApi[]>([
-  { id: 1, username: 'user', avatar: '', content: 'adfsdfa' },
+let data = [
   {
-    id: 2,
-    username: 'admin',
-    avatar: '',
-    content: '每次出门都带本书，旅途中没事就拿出来晒晒，在火车上拿出来放窗边，住酒店拿出来放床头。旅行结束，在扉页写上：此书曾经到某地一游。买了书就要负责任，不看，难道还不带人家出门旅行吗？'
+    id: 10,
+    content: 'test10',
+    uid: 1,
+    user: {
+      username: 'user',
+      avatar: ''
+    },
+    createTime: '2024-06-29 09:30:00'
+  },
+  {
+    id: 9,
+    content: 'test9',
+    uid: 2,
+    user: {
+      username: 'user2',
+      avatar: ''
+    },
+    createTime: '2024-06-29 09:10:30'
+  },
+  {
+    id: 8,
+    content: 'test8',
+    uid: 1,
+    user: {
+      username: 'user',
+      avatar: ''
+    },
+    createTime: '2024-06-29 09:11:20'
+  },
+  {
+    id: 7,
+    content: 'test7',
+    uid: 2,
+    user: {
+      username: 'user2',
+      avatar: ''
+    },
+    createTime: '2024-06-29 09:11:10'
+  },
+  {
+    id: 6,
+    content: 'test6',
+    uid: 1,
+    user: {
+      username: 'user',
+      avatar: ''
+    },
+    createTime: '2024-06-29 09:11:00'
+  },
+  {
+    id: 5,
+    content: 'test5',
+    uid: 1,
+    user: {
+      username: 'user2',
+      avatar: ''
+    },
+    createTime: '2024-06-29 08:45:30'
+  },
+  {
+    id: 4,
+    content: 'test4',
+    uid: 1,
+    user: {
+      username: 'user',
+      avatar: ''
+    },
+    createTime: '2024-06-29 08:45:00'
+  },
+  {
+    id: 3,
+    content: 'test3',
+    uid: 1,
+    user: {
+      username: 'user',
+      avatar: ''
+    },
+    createTime: '2024-06-28 09:00:00'
   },
   {
     id: 2,
-    username: 'admin',
-    avatar: '',
-    content: '每次出门都带本书，旅途中没事就拿出来晒晒，在火车上拿出来放窗边，住酒店拿出来放床头。旅行结束，在扉页写上：此书曾经到某地一游。买了书就要负责任，不看，难道还不带人家出门旅行吗？'
+    content: 'test2',
+    uid: 1,
+    user: {
+      username: 'user',
+      avatar: ''
+    },
+    createTime: '2024-05-27 09:01:20'
+  },
+  {
+    id: 1,
+    content: 'test1',
+    uid: 2,
+    user: {
+      username: 'user2',
+      avatar: ''
+    },
+    createTime: '2024-05-27 09:01:00'
   }
-])
+]
 
-const submit = ({ clear, content }: ChatSubmitParam) => {
-  data.push({ id: 1, username: 'user', avatar: '', content: content })
-  clear()
+function getRandom(min: number, max: number) {
+  return Math.round(Math.random() * (max - min) + min)
 }
 
-const address = 'ws://localhost:8099/ws'
-
-let socket: WebSocket
-
-const connect = () => {
-  if (window.WebSocket) {
-    socket = new WebSocket(address)
-    //相当于channelRead0，ev收到服务器端回送的消息
-    socket.onmessage = ev => {
-      console.log(ev, ev.data)
-    }
-    // 连接开启
-    socket.onopen = ev => {
-      console.log('连接开启了...')
-    }
-    // 感知到连接关闭
-    socket.onclose = ev => {
-      console.log('连接关闭了...')
-    }
+let n = 0
+function loadMore(finish: Function) {
+  if (n <= Math.ceil(data.length / 4)) {
+    setTimeout(() => {
+      finish(usePage(++n, 4, data))
+    }, getRandom(200, 500))
   } else {
-    alert('当前的浏览器不支持webSocket')
+    // 传入空数组没有更多消息了
+    finish([])
   }
 }
 
-const send = () => {
-  if (socket.readyState == WebSocket.OPEN) {
-    //通过socket 发送消息
-    socket.send('你好呀!')
-  }
+let id = 10
+function submit(val: string, finish: (obj: ChatApi) => void) {
+  setTimeout(() => {
+    let chat: ChatApi = {
+      id: ++id,
+      content: val,
+      uid: 1,
+      user: {
+        username: 'user',
+        avatar: ''
+      },
+      createTime: new Date() as any
+    }
+    finish(chat)
+  }, 200)
 }
-
-onMounted(() => {
-  connect()
-})
-
-onUnmounted(() => {
-  socket.close()
-})
 </script>
 
 <style lang="scss" scoped></style>

@@ -32,6 +32,8 @@
         </div>
       </div>
     </div>
+    <slot name="footer">
+    </slot>
     <Mention v-show="state.showMention" ref="mentionRef" v-bind="mention" :show-mention="state.showMention" @insert="insertUser" />
   </div>
 </template>
