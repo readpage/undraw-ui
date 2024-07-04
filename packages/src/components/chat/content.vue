@@ -35,6 +35,7 @@ import { inject, reactive, ref } from 'vue'
 import { ChatApi } from './chat.vue'
 import { formatTime, parseTime } from '~/util/datetime'
 import { useEmojiParse } from '~/hooks'
+import { ElAvatar } from 'element-plus'
 
 interface Props {
   data: ChatApi[]

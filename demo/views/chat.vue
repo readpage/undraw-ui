@@ -1,14 +1,19 @@
 <template>
-  <Chat :config="config" style="width: 500px" @load-more="loadMore" @submit="submit" />
+  <Chat :config="config" style="width: 500px" @load-more="loadMore" @submit="submit" >
+    <template #header>
+      <div style="height: 40px; display: flex; align-items: center;">
+        <div>聊天</div>
+      </div>
+    </template>
+  </Chat>
 </template>
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import Chat, { ConfigApi } from '~/components/chat/chat.vue'
+import Chat, { ChatConfigApi, ChatApi } from '~/components/chat/chat.vue'
 import { usePage } from 'undraw-ui'
 import emoji from '@/assets/emoji'
-import { ChatApi } from '~/components/chat/chat.vue'
 
-const config = reactive<ConfigApi>({
+const config = reactive<ChatConfigApi>({
   user: {
     id: 1,
     username: 'user',
@@ -138,7 +143,7 @@ function loadMore(finish: Function) {
 }
 
 let id = 10
-function submit(val: string, finish: (obj: ChatApi) => void) {
+function submit(val: string, finish: Function) {
   setTimeout(() => {
     let chat: ChatApi = {
       id: ++id,

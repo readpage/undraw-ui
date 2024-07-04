@@ -85,13 +85,15 @@ const element = {
   UChat: [
     'undraw-ui/es/index.css',
     'undraw-ui/es/components/chat/chat.css',
-    'undraw-ui/es/components/icon/icon.css',
+    'element-plus/es/components/scrollbar/style/css',
     'undraw-ui/es/components/emoji/emoji.css',
     'element-plus/es/components/popover/style/css',
     'element-plus/es/components/image/style/css',
-    'element-plus/es/components/button/style/css',
-    'element-plus/es/components/input/style/css',
-    'element-plus/es/components/avatar/style/css',
-    'element-plus/es/components/scrollbar/style/css'
+    'element-plus/es/components/scrollbar/style/css',
+    'undraw-ui/es/components/icon/icon.css',
+    'undraw-ui/es/components/toast/toast.css',
+    'undraw-ui/es/components/editor/editor.css',
+    'element-plus/es/components/empty/style/css',
+    'element-plus/es/components/avatar/style/css'
   ]
 }

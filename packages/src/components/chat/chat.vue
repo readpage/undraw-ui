@@ -1,7 +1,9 @@
 <template>
   <div class="u-chat">
     <!-- 头部区域 -->
-    <header></header>
+    <header>
+      <slot name="header"></slot>
+    </header>
     <!-- 聊天区域 -->
     <main>
       <el-scrollbar ref="scrollbarRef" @scroll="onScroll($event)">
@@ -53,7 +55,7 @@ export interface ChatApi {
   float?: 'left' | 'right'
 }
 
-export interface ConfigApi {
+export interface ChatConfigApi {
   user: {
     id: string | number
     username: string
@@ -64,7 +66,7 @@ export interface ConfigApi {
 }
 
 interface Props {
-  config: ConfigApi
+  config: ChatConfigApi
 }
 
 defineOptions({
@@ -162,7 +164,6 @@ onMounted(() => {
   flex-direction: column;
   height: 100vh;
   header {
-    height: 60px;
     border-bottom: 1px solid var(--u-border-color);
   }
   main {
