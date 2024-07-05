@@ -37,7 +37,7 @@
             <div v-html="contents"></div>
             <div class="imgbox" style="display: flex">
               <template v-for="(url, index) in imgList" :key="index">
-                <ElImage :src="url" style="height: 72px; padding: 8px 4px" lazy :preview-src-list="imgList" :initial-index="index"></ElImage>
+                <ElImage preview-teleported :src="url" style="height: 72px; padding: 8px 4px" lazy :preview-src-list="imgList" :initial-index="index"></ElImage>
               </template>
             </div>
           </u-fold>
