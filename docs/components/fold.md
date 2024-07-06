@@ -25,3 +25,4 @@ fold/unfold
 |-------|------|--------------|:------:|
 | line  | 行数 | string / number | 5     |
 | unfold| 是否展开 | boolean   | false  |
+| position | 位置 | left | right | left |

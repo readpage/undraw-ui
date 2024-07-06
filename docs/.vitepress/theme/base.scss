@@ -14,10 +14,16 @@ a:hover {
   text-decoration: none;
 }
 
-img, svg, video, canvas, audio, iframe, embed, object {
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
   display: inline !important;
 }
-
 
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
 ::-webkit-scrollbar {
@@ -53,4 +59,11 @@ img, svg, video, canvas, audio, iframe, embed, object {
 .mention-list {
   padding: 0 !important;
   margin: 0 !important;
+}
+
+.scroll-btn {
+  p {
+    line-height: 0 !important;
+    margin: 0 !important;
+  }
 }

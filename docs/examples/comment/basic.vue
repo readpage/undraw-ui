@@ -14,9 +14,9 @@
 import emoji from './emoji'
 import { reactive } from 'vue'
 import { CommentApi, ConfigApi, SubmitParamApi, UToast } from 'undraw-ui'
+import { isArray, isObject } from 'undraw-ui'
 // 相对时间
 import { dayjs } from './day'
-import { isArray, isObject, lang } from 'undraw-ui'
 
 defineOptions({
   name: 'comment'
@@ -101,9 +101,8 @@ setTimeout(() => {
     username: 'jack',
     avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100'
   }
-  config.comments = convertComment(comments, v => (v.user.username = v.user.name))
+  config.comments = convertComment(comments, v => v.username = v.name)
 }, 500)
-
 // 评论提交事件
 let temp_id = 100
 // 提交评论事件

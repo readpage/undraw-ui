@@ -12,6 +12,11 @@ title: Comment
 comment/basic
 :::
 
+## 别名
+:::demo
+comment/basic
+:::
+
 ## 图片上传
 :::demo 使用 `uplaod` 来开启图片上传
 comment/upload
@@ -113,7 +118,7 @@ comment/nav-sort
 :::
 
 ## 评论滚动
-**滚动样式受到文档样式影响，体验效果请在本地使用**
+**点击加载更多，然后向下滚动滚动轴**
 :::demo 使用v-comment-scroll组件实现评论滚动 
 comment/scroll
 :::
@@ -151,11 +156,12 @@ comment/mention
 
 | 事件名 | 说明 | 回调参数 |
 |-------|------|----------|
-| submit|提交评论| (submitParam: SubmitParamApi) => void |
+| submit| 提交评论| (submitParam: SubmitParamApi) => void |
 | like | 点赞 | (id: number, finish: () => void) => void |
 | reply-page | 回复分页 | (replaygeParam: ReplyPageParamApi) => void |
 | show-info | 获取用户详细信息 | (id: number, show: Function) => void |
 | cancel    |  取消事件按钮    |  () => void    |
+| beforeData    |  加载前评论数据处理    | (val: CommentApi) => void    |
 
 ## 接口类型
 ```ts

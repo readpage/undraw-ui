@@ -59,7 +59,7 @@
 
 element-plus可以选择需要版本
 ```sh
-npm i element-plus2.6.0 undraw-ui@1.1.1
+npm i element-plus2.6.0 undraw-ui@1.1.5
 ```
 
 ## 导入
@@ -126,9 +126,10 @@ app.mount('#app')
 </template>
 ```
 ### 评论组件
+[增强功能地址](https://readpage.github.io/undraw-ui/components/comment.html)
 [基础使用-vite模板地址](https://gitee.com/undraw/undraw-ui-demo/tree/master/Vue)  
 [组件后端相关实例](https://gitee.com/undraw/undraw-ui-demo/tree/master/Java)  
-[增强功能地址](https://readpage.github.io/undraw-ui/components/comment.html)
+
 
 
 ## 开发交流

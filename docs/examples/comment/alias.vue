@@ -11,14 +11,12 @@
 <script setup lang="ts">
 // 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases/tag/v0.0.0
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
-import emoji from '@/assets/emoji'
+import emoji from './emoji'
 import { reactive } from 'vue'
-import { CommentApi, ConfigApi, SubmitParamApi, UToast } from '~/components'
-import { dayjs } from '@/plugins/day'
-import { isArray, isObject, lang } from 'undraw-ui'
-import en_US from 'undraw-ui/es/language/locales/en_US'
-lang.locale = 'en'
-lang.messages.en = en_US
+import { CommentApi, ConfigApi, SubmitParamApi, UToast } from 'undraw-ui'
+// 相对时间
+import { dayjs } from './day'
+
 defineOptions({
   name: 'comment'
 })
@@ -32,25 +30,6 @@ const config = reactive<ConfigApi>({
   showAddress: false,
   showLikes: false
 })
-
-// 自定义别名转换
-function convertComment(comments: any, func: (v: any) => void) {
-  if (isArray(comments)) {
-    comments.forEach((t: any) => {
-      convertComment(t, func)
-    })
-    return comments
-  } else if (isObject(comments)) {
-    if (comments.reply) {
-      let replys = comments.reply.list
-      if (replys && replys.length > 0) {
-        convertComment(replys, func)
-      }
-    }
-    func(comments)
-    return comments
-  }
-}
 
 const comments = [
   {
@@ -104,7 +83,6 @@ setTimeout(() => {
   }
   config.comments = comments
 }, 500)
-
 // 评论提交事件
 let temp_id = 100
 // 提交评论事件
@@ -134,10 +112,3 @@ function beforeData(val: any) {
   val.createTime = dayjs(val.createTime).fromNow()
 }
 </script>
-
-<style lang="scss" scoped>
-.u-comment {
-  width: 820px;
-  margin-left: 20px;
-}
-</style>
