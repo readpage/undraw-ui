@@ -14,7 +14,7 @@ comment/basic
 
 ## 别名
 :::demo
-comment/basic
+comment/alias
 :::
 
 ## 图片上传
