@@ -24,6 +24,6 @@
 
 
 ## 评论组件
+[增强功能地址](/components/comment.html)
 [基础使用vite模板地址](https://gitee.com/undraw/undraw-ui-demo/tree/master/Vue)  
 [组件后端相关实例](https://gitee.com/undraw/undraw-ui-demo/tree/master/Java)  
-[增强功能地址](/components/comment.html)

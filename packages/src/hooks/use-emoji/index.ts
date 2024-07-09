@@ -4,7 +4,6 @@ export const useEmojiParse = (allEmoji: Emoji, val: string): string => {
   const reg = /\[.+?\]/g
   val = val.replace(reg, (str: any) => {
     const emojiPath = allEmoji[str]
-    console.log(emojiPath, allEmoji)
     //表情库不存在的就默认返回原字符串
     if (!emojiPath) {
       return str

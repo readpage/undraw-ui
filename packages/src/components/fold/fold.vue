@@ -4,7 +4,7 @@
     <div ref="textBox" class="txt-box" :class="{ 'over-hidden': fold }">
       <div ref="divBox">
         <el-button
-          v-if="isOver && unfold && position == 'end'"
+          v-if="isOver && unfold && position == 'right'"
           @click="fold = !fold"
           :class="{ 'over-hidden': fold, 'end-btn': 1 }"
           type="primary"
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="action-box select-none">
-      <div v-if="isOver && unfold && position == 'line'" class="expand-btn" @click="fold = !fold">
+      <div v-if="isOver && unfold && position == 'left'" class="expand-btn" @click="fold = !fold">
         <slot name="expand" :fold="fold">
           <el-button type="primary" plain link>{{ fold ? $u('fold.unfold') : $u('fold.fold') }}</el-button>
         </slot>
@@ -38,12 +38,12 @@ defineOptions({
 interface Props {
   line?: number | string
   unfold?: boolean
-  position?: string
+  position?: 'left' | 'right'
 }
 
 const props = withDefaults(defineProps<Props>(), {
   line: 5,
-  position: 'line'
+  position: 'left'
 })
 const line = computed(() => {
   let line = Math.trunc(Number(props.line))
