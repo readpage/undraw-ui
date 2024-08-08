@@ -46,7 +46,7 @@
 
 ## 入门
 
-请遵循[https://undraw.gitee.io/undraw-ui/](https://undraw.gitee.io/undraw-ui/)上的文档!
+请遵循[https://readpage.github.io/undraw-ui/](https://readpage.github.io/undraw-ui/)上的文档!
 
 ## 地址
 

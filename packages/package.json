@@ -16,7 +16,7 @@
     "ui",
     "vue"
   ],
-  "homepage": "https://undraw.gitee.io/undraw-ui/",
+  "homepage": "https://readpage.github.io/undraw-ui/",
   "license": "MIT",
   "main": "es/index.js",
   "unpkg": "dist/index.umd.js",
