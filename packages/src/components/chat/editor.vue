@@ -22,7 +22,7 @@
 </template>
 <script setup lang="ts">
 import { inject, ref } from 'vue'
-import { UEmoji, UToast, UIcon } from 'undraw-ui'
+import { UEmoji, UToast, UIcon, UEditor } from 'undraw-ui'
 import { EditorInstance } from '~/components/editor'
 const editorRef = ref<EditorInstance>()
 
