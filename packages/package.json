@@ -32,7 +32,8 @@
   },
   "dependencies": {
     "element-plus": "^2.6.0",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-dompurify-html": "5.1.0"
   },
   "devDependencies": {
     "@types/node": "^16.4.7",

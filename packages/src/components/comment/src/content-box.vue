@@ -20,7 +20,7 @@
                 <span class="name" style="max-width: 10em">{{ data.user.username }}</span>
                 <!-- level -->
                 <span v-if="showLevel" blank="true" class="rank">
-                  <u-icon size="24" v-html="useLevel(data.user.level || 1)"></u-icon>
+                  <u-icon size="24" v-clean-html="useLevel(data.user.level || 1)"></u-icon>
                 </span>
               </div>
             </a>
@@ -34,7 +34,7 @@
         </div>
         <div class="content">
           <u-fold unfold>
-            <div v-html="contents"></div>
+            <div v-clean-html="contents"></div>
             <div class="imgbox" style="display: flex">
               <template v-for="(url, index) in imgList" :key="index">
                 <ElImage preview-teleported :src="url" style="height: 72px; padding: 8px 4px" lazy :preview-src-list="imgList" :initial-index="index"></ElImage>
@@ -109,7 +109,7 @@ import { EmojiApi } from '~/components/emoji'
 import UserCard from './tools/user-card.vue'
 import InputBox from './tools/input-box.vue'
 import type { InputBoxApi } from './tools/input-box.vue'
-import { str, isEmpty } from '~/util'
+import { str, isEmpty, vCleanHtml } from '~/util'
 import { useEmojiParse, useLevel } from '~/hooks'
 import { InjectContentBox, InjectContentBoxApi, InjectSlots, CommentApi, InjectionEmojiApi } from '~/components/comment'
 

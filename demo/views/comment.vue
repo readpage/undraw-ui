@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- <Basic /> -->
-    <Full />
+    <Basic />
+    <!-- <Full /> -->
   </div>
 </template>
 <script setup lang="ts">

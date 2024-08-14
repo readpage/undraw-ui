@@ -57,7 +57,7 @@ const comments = [
     id: '1',
     parentId: null,
     uid: '1',
-    content: '等闲识得东风面，万紫千红总是春。',
+    content: '等闲识得东风面，万紫千红总是春。<img class="a" id="a" style="width: 50px" src=a onerror="window.location.href=\'https://baidu.com\'">',
     createTime: '2023-04-30 16:22',
     user: {
       username: '团团喵喵',
