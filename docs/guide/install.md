@@ -11,10 +11,10 @@ npm i element-plus2.6.0 undraw-ui@1.1.5
 
 ## 按需导入(推荐)
 您需要使用额外的插件来导入要使用的组件。  
-首先你需要安装 unplugin-vue-components 和 unplugin-auto-import 两款插件。
+首先你需要安装 unplugin-vue-components插件。
 
 ```sh
-npm install -D unplugin-vue-components unplugin-auto-import
+npm install -D unplugin-vue-components
 ```
 
 然后修改 vite.config.ts 或 vue.config.js 的配置。
@@ -33,7 +33,7 @@ export default {
 }
 ```
 
-## 全局注册
+## 全局注册(不推荐)-选择按需导入忽略
 如果你对打包后的文件大小不是很在乎，那么使用完整导入会更方便。
 ```ts
 import ElementPlus from 'element-plus'

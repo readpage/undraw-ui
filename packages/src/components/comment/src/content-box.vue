@@ -5,8 +5,7 @@
         <!-- avatar -->
         <a :href="data.user.homeLink" :target="aTarget" :class="{ 'pointer-events-none': !showHomeLink }" class="no-underline" style="display: block">
           <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.user.avatar">
-            <span v-if="data.user.avatar">{{ data.user.username }}</span>
-            <img v-else src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+            <span>{{ data.user.username }}</span>
           </el-avatar>
         </a>
       </UserCard>
