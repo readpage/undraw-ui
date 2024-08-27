@@ -13,6 +13,7 @@ export * from './icon'
 export * from './notice-bar'
 export * from './search'
 export * from './toast'
+export * from './form'
 
 import Anchor from './anchor'
 import Chat from './chat'
@@ -28,6 +29,7 @@ import Fold from './fold'
 import Icon from './icon'
 import NoticeBar from './notice-bar'
 import Search from './search'
+import Form from './form'
 
 const components = [
   Anchor,
@@ -43,7 +45,8 @@ const components = [
   Fold,
   Icon,
   NoticeBar,
-  Search
+  Search,
+  Form
 ]
 
 import { App } from 'vue'

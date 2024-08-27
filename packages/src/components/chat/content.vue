@@ -8,7 +8,7 @@
     </div>
     <!-- 聊天消息 -->
     <div v-for="(item, index) in data" :key="item.id" class="message-item">
-      <div class="datetime" v-show="showCreateTime(index, item.createTime)">{{ formatTime(item.createTime) }}</div>
+      <div class="datetime" v-show="showCreateTime(index, item.createTime)">{{ humanTime(item.createTime) }}</div>
       <div class="message-box" :class="{ right: item.float }">
         <aside class="avatar">
           <el-avatar :size="40">
@@ -33,7 +33,7 @@
 <script setup lang="ts">
 import { inject, reactive, ref } from 'vue'
 import { ChatApi } from './chat.vue'
-import { formatTime, parseTime } from '~/util/datetime'
+import { formatTime, humanTime } from '~/util/datetime'
 import { useEmojiParse } from '~/hooks'
 import { ElAvatar } from 'element-plus'
 
@@ -60,7 +60,7 @@ function showCreateTime(index: number, datetime: any) {
     return true
   }
   let prevTime = props.data[index - 1].createTime
-  return !(parseTime(datetime, '{y}-{m}-{d} {h}:{i}') == parseTime(prevTime, '{y}-{m}-{d} {h}:{i}'))
+  return !(formatTime(datetime, 'y-m-d h:i') == formatTime(prevTime, 'y-m-d h:i'))
 }
 </script>
 

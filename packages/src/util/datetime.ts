@@ -1,9 +1,48 @@
+type UnitType = 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'second' | 'ms'
+export class Time {
+  public value: Date = new Date()
+
+  constructor(...params: any) {
+    //@ts-ignore
+    this.value = formatTime(new Date(...params))
+  }
+  
+  add(n: number, unit: UnitType) {
+    let date = new Date(this.value)
+    const table = {
+      ms: 1,
+      second: 1000,
+      minute: 1000 * 60,
+      hour: 1000 * 60 * 60,
+      day: 1000 * 60 * 60 * 24,
+      week: 1000 * 60 * 60 * 24 * 7
+    }
+    if (unit === 'year') {
+      date.setFullYear(date.getFullYear() + n)
+    } else if (unit === 'month') {
+      date.setMonth(date.getMonth() + n)
+    } else {
+      // @ts-ignore
+      date = new Date(date - 0 + table[unit] * n)
+    }
+    return formatTime(date)
+  }
+
+  format(v?: any) {
+    return formatTime(this.value, v)
+  }
+
+  toString() {
+    return `${this.value}`
+  }
+}
+
 /**
  * 人性化时间显示
  *
  * @param {Object} datetime
  */
-export function formatTime(datetime: any) {
+export function humanTime(datetime: any) {
   if (datetime == null) return ''
 
   let time = new Date()
@@ -13,30 +52,30 @@ export function formatTime(datetime: any) {
   }
 
   if (time.getTime() < outTime.getTime() || time.getFullYear() != outTime.getFullYear()) {
-    return parseTime(outTime, '{y}-{m}-{d} {h}:{i}')
+    return formatTime(outTime, 'y-m-d h:i')
   }
 
   if (time.getMonth() != outTime.getMonth()) {
-    return parseTime(outTime, '{m}-{d} {h}:{i}')
+    return formatTime(outTime, 'm-d h:i')
   }
 
   if (time.getDate() != outTime.getDate()) {
     let day = outTime.getDate() - time.getDate()
     if (day == -1) {
-      return parseTime(outTime, '昨天 {h}:{i}')
+      return formatTime(outTime, '昨天 h:i')
     }
 
     if (day == -2) {
-      return parseTime(outTime, '前天 {h}:{i}')
+      return formatTime(outTime, '前天 h:i')
     }
 
-    return parseTime(outTime, '{m}-{d} {h}:{i}')
+    return formatTime(outTime, 'm-d h:i')
   }
 
   let diff = time.getTime() - outTime.getTime()
 
   if (time.getHours() != outTime.getHours() || diff > 30 * 60 * 1000) {
-    return parseTime(outTime, '{h}:{i}')
+    return formatTime(outTime, 'h:i')
   }
 
   let minutes = outTime.getMinutes() - time.getMinutes()
@@ -52,22 +91,20 @@ export function formatTime(datetime: any) {
  * 时间格式化方法
  *
  * @param {(Object|string|number)} time
- * @param {String} cFormat {y}-{m}-{d} {h}:{i}:{s}
+ * @param {String} cFormat y-m-d h:i:s
  * @returns {String | null}
  */
-export function parseTime(time: any, cFormat: any) {
+export function formatTime(time: any, cFormat?: any) {
   if (arguments.length === 0) {
     return null
   }
 
-  let date
-  const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}'
+  let date = new Date(time)
+  const format = cFormat || 'y-m-d h:i:s'
 
   if (typeof time === 'string' && /^[0-9]+$/.test(time)) {
     time = parseInt(time)
   }
-
-  date = new Date(time)
 
   const formatObj = {
     y: date.getFullYear(),
@@ -79,7 +116,8 @@ export function parseTime(time: any, cFormat: any) {
     a: date.getDay()
   }
 
-  const time_str = format.replace(/{([ymdhisa])+}/g, (result: any, key: any) => {
+  const time_str = format.replace(/([ymdhisa])+/g, (result: any, key: any) => {
+    // @ts-ignore
     const value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
     if (key === 'a') {
