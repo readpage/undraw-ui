@@ -4,7 +4,7 @@
       <div class="user-card">
         <div class="user-avatar">
           <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="scope.avatar">
-            <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+            <span>{{ scope.username }}</span>
           </el-avatar>
         </div>
         <div class="user-content">

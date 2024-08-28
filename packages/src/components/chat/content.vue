@@ -12,8 +12,7 @@
       <div class="message-box" :class="{ right: item.float }">
         <aside class="avatar">
           <el-avatar :size="40">
-            <!-- <span v-if="config.user.username">{{ config.user.username }}</span> -->
-            <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+            <span>{{ item.user.username }}</span>
           </el-avatar>
         </aside>
         <main class="main-column">

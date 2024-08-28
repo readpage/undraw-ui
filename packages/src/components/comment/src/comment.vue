@@ -9,8 +9,7 @@
       <div class="content">
         <div class="avatar-box">
           <el-avatar :size="40" :src="config.user.avatar">
-            <span v-if="config.user.username">{{ config.user.username }}</span>
-            <img v-else src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+            <span>{{ config.user.username }}</span>
           </el-avatar>
         </div>
         <InputBox v-bind="$attrs" ref="inputBox" :placeholder="$u('comment.placeholder')" :content-btn="$u('comment.contentBtn')" />
