@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { h, inject, ref } from 'vue'
 import { ElPopover } from 'element-plus'
-import { InjectContentBox, InjectContentBoxApi, InjectSlots } from '~/components/comment'
+import { CommentFunApi } from '~/components';
 
 interface Props {
   uid: string
@@ -29,10 +29,10 @@ const props = defineProps<Props>()
 
 const userInfo = ref({})
 
-const { showInfo } = inject(InjectContentBox) as InjectContentBoxApi
+const { showInfo } = inject('comment-fun') as CommentFunApi
 
 //工具slots
-const slots = inject(InjectSlots) as any
+const slots = inject('comment-slot') as any
 const Card = () => h('div', slots.card(userInfo.value))
 </script>
 

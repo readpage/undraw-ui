@@ -95,5 +95,16 @@ const element = {
     'undraw-ui/es/components/editor/editor.css',
     'element-plus/es/components/empty/style/css',
     'element-plus/es/components/avatar/style/css'
+  ],
+  UForm: [
+    'undraw-ui/es/index.css',
+    'undraw-ui/es/components/form/form.css',
+    'element-plus/es/components/form/style/css',
+    'element-plus/es/components/form/style/css',
+    'element-plus/es/components/form-item/style/css',
+    'element-plus/es/components/input/style/css',
+    'element-plus/es/components/select/style/css',
+    'element-plus/es/components/option/style/css',
+    'element-plus/es/components/date-picker/style/css',
   ]
 }

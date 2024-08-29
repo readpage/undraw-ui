@@ -2,7 +2,7 @@
   <div v-if="data.length > 0" class="reply-box">
     <div class="reply-list">
       <ContentBox v-for="(reply, index) in data.list" :id="id" :key="index" :data="reply" reply></ContentBox>
-      <div v-if="data.length > replyShowSize" class="fetch-more">
+      <div v-if="data.length > (replyShowSize || 3)" class="fetch-more">
         <span v-if="state.loading">{{ $u('comment.more.loading')}}</span>
         <div v-else>
           <div v-if="!state.over">
@@ -38,10 +38,10 @@
 
 <script setup lang="ts">
 import { computed, inject, reactive, watch } from 'vue'
-import { translate as $u } from 'undraw-ui'
+import { translate as $u, } from 'undraw-ui'
 import { ElPagination } from 'element-plus'
 import ContentBox from './content-box.vue'
-import { InjectReplyBox, InjectReplyBoxApi, ReplyApi } from '~/components/comment'
+import { CommentFunApi, InjectReplyBox, InjectReplyBoxApi, ReplyApi, ConfigApi } from '~/components'
 
 interface Props {
   data?: ReplyApi | null
@@ -56,9 +56,8 @@ const state = reactive({
   pageSize: 5
 })
 
-const { replyPage, replyShowSize, comments } = inject(InjectReplyBox) as InjectReplyBoxApi
-
-const { page } = inject(InjectReplyBox) as InjectReplyBoxApi
+const { comments, replyShowSize, page } = inject('config') as ConfigApi
+const { replyPage} = inject('comment-fun') as CommentFunApi
 
 // 分页操作
 const data = computed(() => {
@@ -104,7 +103,7 @@ const replyMore = () => {
 }
 
 const finish = (val: any) => {
-  comments.value.forEach(e => {
+  comments.forEach(e => {
     if (e.id == props.id) {
       if (e.reply) {
         e.reply = val
@@ -118,7 +117,6 @@ const finish = (val: any) => {
  * @param val
  */
 const changePage = (val: number) => {
-  console.log(val)
   state.currentPage = val
   replyPage(props.id, val, state.pageSize, reply => finish(reply))
 }

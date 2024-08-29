@@ -66,7 +66,17 @@
 import { ref } from 'vue'
 import { translate as $u } from 'undraw-ui'
 import { ElPopover, ElImage, ElScrollbar } from 'element-plus'
-import { EmojiApi } from '~/components/emoji'
+
+export interface Emoji {
+  [key: string]: string
+}
+
+export interface EmojiApi {
+  faceList: string[]
+  emojiList: Emoji[]
+  allEmoji: Emoji
+}
+
 
 defineOptions({
   name: 'UEmoji'

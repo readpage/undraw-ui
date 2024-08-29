@@ -1,3 +1,5 @@
+import { isObject } from "undraw-ui"
+
 /**
  * 转换字符串，为null转换为空字符串
  * @param val
@@ -94,7 +96,19 @@ export const toPx = (val: any) => {
 
 export function mergeObject(target: any, source: any) {
   for (const key in source) {
+    if (source.hasOwnProperty(key)) {  
+      // 如果 target 中没有这个属性，直接添加  
+      if (!target.hasOwnProperty(key)) {  
+        target[key] = source[key];  
+      } else {
+        // 如果 target 中有这个属性，且两者都是对象，则递归合并  
+        if (isObject(source[key]) && (isObject(target[key]))) {
+          mergeObject(target[key], source[key])
+        }
+      }
+    }
     if (source.hasOwnProperty(key) && !target.hasOwnProperty(key)) {
+      console.log(key)
       target[key] = source[key];
     }
   }

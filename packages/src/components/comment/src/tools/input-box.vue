@@ -49,8 +49,7 @@
 import { h, inject, nextTick, reactive, ref } from 'vue'
 import { ClickOutside as vClickOutside, ElButton } from 'element-plus'
 import { UEmoji, UToast, UEditor, translate as $u, EditorInstance } from 'undraw-ui'
-import { EmojiApi } from '~/components/emoji'
-import { InjectInputBox, InjectInputBoxApi, InjectSlots, CommentApi, InjectionEmojiApi } from '~/components/comment'
+import { CommentApi, CommentFunApi, ConfigApi, InjectionEmojiApi } from '~/components'
 import { isEmpty, isNull, isImage, createObjectURL } from '~/util'
 import { MentionApi } from '~/components/editor/mention.vue'
 
@@ -90,8 +89,8 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
-const { upload, submit, focus } = inject(InjectInputBox) as InjectInputBoxApi
-const emoji = inject(InjectionEmojiApi) as EmojiApi
+const { upload, emoji } = inject('config') as ConfigApi
+const { submit, focus, cancelFn } = inject('comment-fun') as CommentFunApi
 const mention = inject('injectMention') as MentionApi
 
 // 提交评论的数据
@@ -109,7 +108,6 @@ const onSubmit = () => {
     }
   })
 }
-const cancelFn = inject('cancelFn') as Function
 // 取消按钮的事件
 const onCancel = () => {
   // 关闭评论框事件
@@ -189,7 +187,7 @@ function mentionSearch(val: string) {
 }
 
 // slots
-const slots = inject(InjectSlots) as any
+const slots = inject('comment-slot') as any
 // 功能卡槽
 const Func = () => h('div', slots.func())
 </script>

@@ -1,5 +1,16 @@
-import { MentionApi } from '../editor/mention.vue'
-import { EmojiApi } from '../emoji/interface'
+import { EmojiApi, MentionApi, SubmitParam2Api } from '~/components'
+
+export interface ReplyApi {
+  total: number
+  list: CommentApi[]
+}
+
+export interface CommentUserApi {
+  username: string
+  avatar: string
+  level?: number
+  homeLink?: string
+}
 
 export interface CommentApi {
   id: string | number
@@ -14,18 +25,6 @@ export interface CommentApi {
   reply?: ReplyApi | null
 }
 
-export interface ReplyApi {
-  total: number
-  list: CommentApi[]
-}
-
-export interface CommentUserApi {
-  username: string
-  avatar: string
-  level?: number
-  homeLink?: string
-}
-
 export interface UserApi {
   id: string | number
   username: string
@@ -33,34 +32,34 @@ export interface UserApi {
   likeIds?: string[] | number[]
 }
 
+interface ShowApi {
+  form?: boolean
+  content?: boolean
+  level?: boolean
+  likes?: boolean
+  address?: boolean
+  homeLink?: boolean
+  reply?: boolean
+}
+
 export interface ConfigApi {
   user: UserApi
   emoji: EmojiApi
   comments: CommentApi[]
   replyShowSize?: number
-  showForm?: boolean
-  showContent?: boolean
-  showLevel?: boolean
-  showLikes?: boolean
-  showAddress?: boolean
-  showHomeLink?: boolean
-  showReply?: boolean
+  show?: ShowApi
   aTarget?: '_blank' | '_parent' | '_self' | '_top'
   mention?: MentionApi
+  upload?: boolean
+  page?: boolean
+  relativeTime?: boolean
 }
 
-export interface SubmitParamApi {
-  content: string
-  parentId: string | null
-  files?: any[]
-  reply?: CommentApi
-  finish: (comment?: CommentApi) => void
-  mentionList?: any[]
-}
-
-export interface ReplyPageParamApi {
-  parentId: string
-  pageNum: number
-  pageSize: number
-  finish: (reply: ReplyApi) => void
+export interface CommentFunApi {
+  like: (id: string) => void
+  showInfo: (uid: string, finish: Function) => void
+  replyPage: (parentId: string, pageNum: any, pageSize: number, finish: (reply: ReplyApi) => void) => void
+  submit: ({ content, parentId, reply, files, clear }: SubmitParam2Api) => void
+  focus: () => void
+  cancelFn: () => void
 }

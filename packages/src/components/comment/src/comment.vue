@@ -1,6 +1,6 @@
 <template>
   <div class="u-comment">
-    <div v-if="showForm" class="comment-form">
+    <div v-if="show?.form" class="comment-form">
       <slot name="header">
         <div class="header">
           <span class="header-title">{{ $u('comment.headerTitle') }}</span>
@@ -16,7 +16,7 @@
       </div>
     </div>
     <!-- <div class="hot-list"></div> -->
-    <div v-if="showContent" class="comment-list-wrapper">
+    <div v-if="show?.content" class="comment-list-wrapper">
       <slot>
         <div class="title">{{ $u('comment.title') }}</div>
       </slot>
@@ -28,15 +28,11 @@
 <script setup lang="ts">
 import { provide, ref, toRefs, useSlots } from 'vue'
 import { ElAvatar } from 'element-plus'
-import { translate as $u } from 'undraw-ui'
+import { translate as $u, InjectionEmojiApi, ReplyPageParamApi, SubmitParam2Api, SubmitParamApi, isObject } from 'undraw-ui'
 import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
-import { isNull, debounce, isEmpty } from '~/util'
-import { InjectContentBox, InjectInputBox, InjectReplyBox, InjectSlots, InjectionEmojiApi } from '~/components/comment'
-/* eslint-disable */
-import { InjectContentBoxApi, InjectReplyBoxApi, InjectInputBoxApi } from '~/components/comment'
-import { SubmitParamApi, ReplyPageParamApi, ConfigApi, CommentApi, SubmitParam2Api } from '~/components/comment'
-/* eslint-enable */
+import { isNull, debounce, isEmpty, mergeObject } from '~/util'
+import { CommentApi, CommentFunApi, ConfigApi, ReplyApi } from '~/components'
 
 defineOptions({
   name: 'UComment'
@@ -44,31 +40,29 @@ defineOptions({
 
 interface Props {
   config: ConfigApi
-  page?: boolean
-  upload?: boolean
-  relativeTime?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  page: false,
-  upload: false,
-  formDiabled: true
-})
+const props = withDefaults(defineProps<Props>(), {})
 // 将这个属性转换为响应式数据。
 // const comments = toRef(props.config, 'comments')
-const {
-  user,
-  comments,
-  replyShowSize,
-  aTarget,
-  showForm = true,
-  showContent = true,
-  showLevel = true,
-  showLikes = true,
-  showAddress = true,
-  showHomeLink = true,
-  showReply = true
-} = toRefs(props.config)
+function init() {
+  let show = {
+    form: true,
+    content: true,
+    level: true,
+    likes: true,
+    address: true,
+    homeLink: true,
+    reply: true,
+  }
+  mergeObject(props.config, {
+    show: show,
+    aTarget: '_blank',
+    replyShowSize: 4
+  } as ConfigApi)
+}
+init()
+const { comments, show } = toRefs(props.config)
 
 const emit = defineEmits<{
   (e: 'submit', { content, parentId, files, reply, finish }: SubmitParamApi): void
@@ -119,14 +113,6 @@ const submit = ({ content, parentId, reply, files, clear }: SubmitParam2Api) => 
   })
   emit('submit', { content, parentId, reply, files, mentionList: dataIds, finish })
 }
-const inputBoxParam: InjectInputBoxApi = {
-  upload: props.upload,
-  submit: submit,
-  focus: () => emit('focus')
-}
-// 输入框盒子
-provide(InjectInputBox, inputBoxParam)
-provide('cancelFn', () => emit('cancel'))
 
 // 点赞评论数组处理
 const editLikeCount = (id: string, count: number) => {
@@ -170,32 +156,18 @@ const like = (id: string) => {
     })
   }
 }
-/**
- * 评论盒子参数或方法
- */
-const contentBoxParam: InjectContentBoxApi = {
-  user: user,
+
+provide('config', props.config)
+provide('comment-fun', {
   like: like,
   showInfo: (uid, finish) => emit('showInfo', uid, finish),
-  aTarget: isNull(aTarget, '_blank'),
-  showLevel,
-  showLikes,
-  showAddress,
-  showHomeLink,
-  showReply
-}
-provide(InjectContentBox, contentBoxParam)
-
-// 回复盒子
-const replyBoxParam: InjectReplyBoxApi = {
-  page: props.page,
   replyPage: (parentId, pageNum, pageSize, finish) => {
     emit('replyPage', { parentId, pageNum, pageSize, finish })
   },
-  replyShowSize: isNull(replyShowSize?.value, 3),
-  comments: comments
-}
-provide(InjectReplyBox, replyBoxParam)
+  submit: submit,
+  focus: () => emit('focus'),
+  cancelFn: () => emit('cancel')
+} as CommentFunApi)
 
 /**
  * 删除当前评论
@@ -222,10 +194,8 @@ const remove = (comment: CommentApi) => {
   }
 }
 const inputBox = ref(null)
-// 表情包
-provide(InjectionEmojiApi, props.config.emoji)
 // 工具卡槽
-provide(InjectSlots, useSlots())
+provide('comment-slot', useSlots())
 //提及配置
 provide('injectMention', props.config.mention)
 // mentionList 触发事件

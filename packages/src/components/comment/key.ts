@@ -1,6 +1,6 @@
 import { EmojiApi, ReplyApi } from '~/components'
 import { InjectionKey, Ref } from 'vue'
-import { CommentApi, ReplyPageParamApi, UserApi } from './interface'
+import { CommentApi, UserApi } from './interface'
 
 export const InjectSlots = Symbol()
 

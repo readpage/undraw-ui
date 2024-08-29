@@ -29,7 +29,7 @@ import Fold from './fold'
 import Icon from './icon'
 import NoticeBar from './notice-bar'
 import Search from './search'
-// import Form from './form'
+import Form from './form'
 
 const components = [
   Anchor,
@@ -46,7 +46,7 @@ const components = [
   Icon,
   NoticeBar,
   Search,
-  // Form
+  Form
 ]
 
 import { App } from 'vue'

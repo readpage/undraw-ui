@@ -13,12 +13,13 @@
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from '@/assets/emoji'
 import { reactive } from 'vue'
-import { CommentApi, ConfigApi, SubmitParamApi, UToast } from '~/components'
+import { CommentApi, ConfigApi, UToast } from '~/components'
 import { dayjs } from '@/plugins/day'
 import { isArray, isObject, lang } from 'undraw-ui'
 import en_US from 'undraw-ui/es/language/locales/en_US'
-lang.locale = 'en'
-lang.messages.en = en_US
+import { Time } from '~/util'
+// lang.locale = 'en'
+// lang.messages.en = en_US
 defineOptions({
   name: 'comment'
 })
@@ -27,30 +28,14 @@ const config = reactive<ConfigApi>({
   user: {} as any,
   emoji: emoji,
   comments: [],
-  showLevel: false,
-  showHomeLink: false,
-  showAddress: false,
-  showLikes: false
-})
-
-// 自定义别名转换
-function convertComment(comments: any, func: (v: any) => void) {
-  if (isArray(comments)) {
-    comments.forEach((t: any) => {
-      convertComment(t, func)
-    })
-    return comments
-  } else if (isObject(comments)) {
-    if (comments.reply) {
-      let replys = comments.reply.list
-      if (replys && replys.length > 0) {
-        convertComment(replys, func)
-      }
-    }
-    func(comments)
-    return comments
+  relativeTime: true,
+  show: {
+    level: false,
+    homeLink: false,
+    address: false,
+    likes: false
   }
-}
+})
 
 const comments = [
   {
@@ -58,7 +43,7 @@ const comments = [
     parentId: null,
     uid: '1',
     content: '等闲识得东风面，万紫千红总是春。<img class="a" id="a" style="width: 50px" src=a onerror="window.location.href=\'https://baidu.com\'">',
-    createTime: '2023-04-30 16:22',
+    createTime: new Time().add(-1, 'day'),
     user: {
       username: '团团喵喵',
       avatar: 'https://static.juzicon.com/user/avatar-23ac4bfe-ae93-4e0b-9f13-f22f22c7fc12-221001003441-Y0MB.jpeg',
@@ -72,7 +57,7 @@ const comments = [
           parentId: 1,
           uid: '1',
           content: '[微笑]',
-          createTime: '2023-04-30 16:22',
+          createTime: new Time().add(-1, 'month'),
           user: {
             username: '团团喵喵',
             avatar: 'https://static.juzicon.com/user/avatar-23ac4bfe-ae93-4e0b-9f13-f22f22c7fc12-221001003441-Y0MB.jpeg'
@@ -116,7 +101,7 @@ const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
     parentId: parentId,
     uid: config.user.id,
     content: content,
-    createTime: new Date().toString(),
+    createTime: new Time().toString(),
     user: {
       username: config.user.username,
       avatar: config.user.avatar
@@ -131,7 +116,7 @@ const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
 
 // 加载前评论数据处理
 function beforeData(val: any) {
-  val.createTime = dayjs(val.createTime).fromNow()
+  // val.createTime = dayjs(val.createTime).fromNow()
 }
 </script>
 

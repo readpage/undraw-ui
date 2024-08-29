@@ -4,8 +4,6 @@
       ref="commentRef"
       :config="config"
       relative-time
-      page
-      upload
       cancel-btn="取消"
       :show-form="false"
       @submit="submit"
@@ -164,7 +162,9 @@ const config = reactive<ConfigApi>({
       username: 'name'
     },
     showAvatar: true
-  }
+  },
+  page: true,
+  upload: true
 })
 
 const commentRef = ref<CommentInstance>()

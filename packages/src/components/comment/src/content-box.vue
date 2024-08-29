@@ -3,7 +3,7 @@
     <div class="comment-sub">
       <UserCard :uid="str(data.uid)">
         <!-- avatar -->
-        <a :href="data.user.homeLink" :target="aTarget" :class="{ 'pointer-events-none': !showHomeLink }" class="no-underline" style="display: block">
+        <a :href="data.user.homeLink" :target="aTarget" :class="{ 'pointer-events-none': !show?.homeLink }" class="no-underline" style="display: block">
           <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.user.avatar">
             <span>{{ data.user.username }}</span>
           </el-avatar>
@@ -14,24 +14,27 @@
       <div class="comment-main">
         <div class="user-info">
           <UserCard :uid="str(data.uid)">
-            <a :href="data.user.homeLink" :target="aTarget" :class="{ 'pointer-events-none': !showHomeLink }" class="no-underline" style="display: block">
+            <a :href="data.user.homeLink" :target="aTarget" :class="{ 'pointer-events-none': !show?.homeLink }" class="no-underline" style="display: block">
               <div class="username">
                 <span class="name" style="max-width: 10em">{{ data.user.username }}</span>
                 <!-- level -->
-                <span v-if="showLevel" blank="true" class="rank">
+                <span v-if="show?.level" blank="true" class="rank">
                   <u-icon size="24" v-clean-html="useLevel(data.user.level || 1)"></u-icon>
                 </span>
               </div>
             </a>
           </UserCard>
           <!-- <span class="author-badge-text">（作者）</span> -->
-          <span v-if="showAddress" class="address" style="color: #939393; font-size: 12px">&nbsp;&nbsp;{{ data.address }}</span>
+          <!-- 地址 -->
+          <span v-if="show?.address" class="address" style="color: #939393; font-size: 12px">&nbsp;&nbsp;{{ data.address }}</span>
           <template v-if="slots.info">
             <Info />
           </template>
-          <time class="time">{{ data.createTime }}</time>
+          <!-- 时间 -->
+          <time class="time">{{ relativeTime ? humanTime(data.createTime) : data.createTime }}</time>
         </div>
         <div class="content">
+           <!-- 评论内容 -->
           <u-fold unfold>
             <div v-clean-html="contents"></div>
             <div class="imgbox" style="display: flex">
@@ -43,7 +46,7 @@
         </div>
         <div class="action-box select-none">
           <!-- 点赞 -->
-          <div v-if="showLikes" class="item" @click="like(str(data.id))">
+          <div v-if="show?.likes" class="item" @click="like(str(data.id))">
             <u-icon v-if="user.likeIds && user.likeIds.map(String).indexOf(str(data.id)) == -1">
               <svg t="1650360973068" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1168" width="200" height="200">
                 <path
@@ -64,7 +67,7 @@
             <span v-if="data.likes != 0">{{ data.likes }}</span>
           </div>
           <!-- 回复 -->
-          <div v-if="showReply" ref="btnRef" class="item" :class="{ active: state.active }" @click="reply">
+          <div v-if="show?.reply" ref="btnRef" class="item" :class="{ active: state.active }" @click="reply">
             <u-icon>
               <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1320" width="200" height="200">
                 <path
@@ -103,14 +106,12 @@
 import { computed, inject, nextTick, ref, reactive, h } from 'vue'
 import { ElImage, ElAvatar } from 'element-plus'
 import { UFold, UIcon, translate as $u } from 'undraw-ui'
-import '~/components/icon/icon.scss'
-import { EmojiApi } from '~/components/emoji'
 import UserCard from './tools/user-card.vue'
 import InputBox from './tools/input-box.vue'
 import type { InputBoxApi } from './tools/input-box.vue'
-import { str, isEmpty, vCleanHtml } from '~/util'
+import { str, isEmpty, vCleanHtml, humanTime } from '~/util'
 import { useEmojiParse, useLevel } from '~/hooks'
-import { InjectContentBox, InjectContentBoxApi, InjectSlots, CommentApi, InjectionEmojiApi } from '~/components/comment'
+import { CommentApi, ConfigApi, CommentFunApi } from '~/components'
 
 interface Props {
   reply?: boolean
@@ -140,8 +141,8 @@ const imgList = computed(() => {
   return temp?.split('||')
 })
 
-const { allEmoji } = inject(InjectionEmojiApi) as EmojiApi
-const { like, user, aTarget, showLevel, showLikes, showAddress, showHomeLink, showReply } = inject(InjectContentBox) as InjectContentBoxApi
+const { user, aTarget, show, emoji, relativeTime } = inject('config') as ConfigApi
+const { like } = inject('comment-fun') as CommentFunApi
 
 //点击回复按钮打开输入框
 function reply() {
@@ -163,14 +164,14 @@ function hide(event: Event) {
 }
 
 //工具slots
-const slots = inject(InjectSlots) as any
+const slots = inject('comment-slot') as any
 // 信息卡槽
 const Info = () => h('div', slots.info(props.data))
 
 //操作栏卡槽
 const Operate = () => h('div', slots.operate(props.data))
 
-const contents = computed(() => useEmojiParse(allEmoji, props.data.content))
+const contents = computed(() => useEmojiParse(emoji.allEmoji, props.data.content))
 </script>
 
 <style lang="scss" scoped>
