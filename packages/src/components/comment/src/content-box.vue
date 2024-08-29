@@ -2,12 +2,17 @@
   <div class="comment" :class="{ reply: props.reply }">
     <div class="comment-sub">
       <UserCard :uid="str(data.uid)">
-        <!-- avatar -->
-        <a :href="data.user.homeLink" :target="aTarget" :class="{ 'pointer-events-none': !show?.homeLink }" class="no-underline" style="display: block">
-          <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.user.avatar">
-            <span>{{ data.user.username }}</span>
-          </el-avatar>
-        </a>
+        <!-- 头像卡槽 -->
+        <template v-if="slots.avatar">
+          <Avatar />
+        </template>
+        <template v-else>
+          <a :href="data.user.homeLink" :target="aTarget" :class="{ 'pointer-events-none': !show?.homeLink }" class="no-underline" style="display: block">
+            <el-avatar style="margin-top: 5px" :size="40" fit="cover" :src="data.user.avatar">
+              <span>{{ data.user.username }}</span>
+            </el-avatar>
+          </a>
+        </template>
       </UserCard>
     </div>
     <div class="comment-primary">
@@ -34,7 +39,7 @@
           <time class="time">{{ relativeTime ? humanTime(data.createTime) : data.createTime }}</time>
         </div>
         <div class="content">
-           <!-- 评论内容 -->
+          <!-- 评论内容 -->
           <u-fold unfold>
             <div v-clean-html="contents"></div>
             <div class="imgbox" style="display: flex">
@@ -78,6 +83,10 @@
             </u-icon>
             <span>{{ state.active ? $u('comment.cancelReply') : $u('comment.reply') }}</span>
           </div>
+          <!-- 动作卡槽 -->
+          <template v-if="slots.action">
+            <Action />
+          </template>
           <!-- 操作栏 -->
           <template v-if="slots.operate">
             <Operate />
@@ -163,11 +172,14 @@ function hide(event: Event) {
   }
 }
 
-//工具slots
+// 工具slots
 const slots = inject('comment-slot') as any
 // 信息卡槽
 const Info = () => h('div', slots.info(props.data))
-
+// 头像卡槽
+const Avatar = () => h('div', slots.avatar(props.data))
+// 动作卡槽
+const Action = () => h('div', slots.action(props.data))
 //操作栏卡槽
 const Operate = () => h('div', slots.operate(props.data))
 

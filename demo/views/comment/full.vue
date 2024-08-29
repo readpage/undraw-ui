@@ -17,6 +17,8 @@
     >
       <!-- <template>导航栏卡槽</template> -->
       <!-- <template #header>头部卡槽</template> -->
+      <!-- <template #action="{ user }">动作卡槽{{ user.username }}</template> -->
+      <!-- <template #avatar="{ id, user }">头像卡槽{{ user.avatar }}</template> -->
       <!-- <template #info>信息卡槽</template> -->
       <!-- <template #card>用户信息卡片卡槽</template> -->
       <!-- <template #func>功能区域卡槽</template> -->
@@ -156,6 +158,7 @@ const config = reactive<ConfigApi>({
   },
   emoji: emoji,
   comments: [],
+  relativeTime: true,
   mention: {
     data: userArr,
     alias: {
@@ -247,9 +250,7 @@ const submit = ({ content, parentId, files, finish, reply, mentionList }: Submit
 }
 
 // 加载前评论数据处理
-function beforeData(val: any) {
-  val.createTime = dayjs(val.createTime).fromNow()
-}
+function beforeData(val: any) {}
 
 // 点赞按钮事件
 const like = (id: string, finish: () => void) => {
