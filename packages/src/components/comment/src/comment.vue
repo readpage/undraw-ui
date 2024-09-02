@@ -28,11 +28,11 @@
 <script setup lang="ts">
 import { provide, ref, toRefs, useSlots } from 'vue'
 import { ElAvatar } from 'element-plus'
-import { translate as $u, ReplyPageParamApi, SubmitParam2Api, SubmitParamApi } from 'undraw-ui'
+import { translate as $u, ReplyPageParamApi, } from 'undraw-ui'
 import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
-import { isNull, debounce, isEmpty, mergeObject } from '~/util'
-import { CommentApi, CommentFunApi, ConfigApi, ReplyApi } from '~/components'
+import { isEmpty, mergeObject } from '~/util'
+import { CommentApi, CommentFunApi, CommentSubmit2Api, CommentSubmitApi, ConfigApi } from '~/components'
 
 defineOptions({
   name: 'UComment'
@@ -65,7 +65,7 @@ init()
 const { comments, show } = toRefs(props.config)
 
 const emit = defineEmits<{
-  (e: 'submit', { content, parentId, files, reply, finish }: SubmitParamApi): void
+  (e: 'submit', { content, parentId, finish, reply, mentionList}: CommentSubmitApi): void
   (e: 'like', id: string, finish: () => void): void
   (e: 'replyPage', { parentId, pageNum, pageSize, finish }: ReplyPageParamApi): void
   (e: 'showInfo', id: string, finish: Function): void
@@ -79,7 +79,7 @@ const emit = defineEmits<{
 /**
  * 提交评论
  */
-const submit = ({ content, parentId, reply, files, clear }: SubmitParam2Api) => {
+const submit = ({ content, parentId, reply, clear }: CommentSubmit2Api) => {
   // 添加评论
   const finish = (comment?: CommentApi) => {
     // 清空输入框内容
@@ -111,7 +111,7 @@ const submit = ({ content, parentId, reply, files, clear }: SubmitParam2Api) => 
     let match = tag.match(/data-id="([^"]*)"/)
     return match ? match[1] : null
   })
-  emit('submit', { content, parentId, reply, files, mentionList: dataIds, finish })
+  emit('submit', { content, parentId, finish, reply, mentionList: dataIds })
 }
 
 // 点赞评论数组处理
@@ -161,7 +161,7 @@ const like = (id: string) => {
  * 删除当前评论
  * @param comment
  */
- const remove = (comment: CommentApi) => {
+const remove = (comment: CommentApi) => {
   // 删除评论数据操作
   const { parentId, id } = comment
   if (parentId) {

@@ -112,13 +112,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, nextTick, ref, reactive, h } from 'vue'
+import { computed, inject, nextTick, ref, reactive, h, toRefs } from 'vue'
 import { ElImage, ElAvatar } from 'element-plus'
 import { UFold, UIcon, translate as $u } from 'undraw-ui'
 import UserCard from './tools/user-card.vue'
 import InputBox from './tools/input-box.vue'
 import type { InputBoxApi } from './tools/input-box.vue'
-import { str, isEmpty, vCleanHtml, humanTime } from '~/util'
+import { str, vCleanHtml, humanTime } from '~/util'
 import { useEmojiParse, useLevel } from '~/hooks'
 import { CommentApi, ConfigApi, CommentFunApi } from '~/components'
 
@@ -136,6 +136,7 @@ const state = reactive({
 
 const commentRef = ref<InputBoxApi>()
 const btnRef = ref<HTMLDivElement>()
+const imgList = ref<string[]>()
 
 const data = computed(() => {
   let val = props.data
@@ -143,13 +144,9 @@ const data = computed(() => {
   return val
 })
 
-const imgList = computed(() => {
-  let temp = props.data.contentImg
-  if (isEmpty(temp)) return []
-  return temp?.split('||')
-})
 
-const { user, aTarget, show, emoji, relativeTime } = inject('config') as ConfigApi
+const config = inject('config') as ConfigApi
+const { user, aTarget, show, emoji, relativeTime } = toRefs(config)
 const { like, beforeData } = inject('comment-fun') as CommentFunApi
 
 //点击回复按钮打开输入框
@@ -182,7 +179,21 @@ const Action = () => h('div', slots.action(props.data))
 //操作栏卡槽
 const Operate = () => h('div', slots.operate(props.data))
 
-const contents = computed(() => useEmojiParse(emoji.allEmoji, props.data.content))
+function imgParse(val: string) {
+  //解析表情
+  const reg = /u-img\[.+?\]/g
+  val = val.replace(reg, (str: string) => {
+    str = str.substring(6, str.length - 1)
+    imgList.value = str.split(',')
+    return ""
+  })
+  console.log('img', val, imgList.value)
+  return val
+}
+const contents = computed(() => {
+  let val = imgParse(props.data.content)
+  return useEmojiParse(emoji.value.allEmoji, val)
+})
 </script>
 
 <style lang="scss" scoped>

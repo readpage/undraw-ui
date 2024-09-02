@@ -11,7 +11,6 @@
       @reply-page="replyPage"
       @show-info="showInfo"
       @focus="focus"
-      @cancel="cancelFn"
       @mention-search="mentionSearch"
       @before-data="beforeData"
     >
@@ -88,9 +87,8 @@ import emoji from '@/assets/emoji'
 import { ElAvatar, ElButton } from 'element-plus'
 import { getComment, reply, commentSize } from '@/assets/comment'
 import { CommentInstance } from '~/index'
+import { Time } from '~/util'
 import Operate from './operate.vue'
-// 相对时间
-import { dayjs } from '@/plugins/day'
 
 defineOptions({
   name: 'comment'
@@ -153,7 +151,7 @@ const config = reactive<ConfigApi>({
     id: 0,
     username: '',
     avatar: '',
-    // 评论id数组 建议:存储方式用户id和文章id和评论id组成关系,根据用户id和文章id来获取对应点赞评论id,然后加入到数组中返回
+    // 评论id数组 建议:存储方式用户id和评论id组成关系,根据用户id获取对应点赞评论id,然后加入到数组中返回
     likeIds: []
   },
   emoji: emoji,
@@ -178,14 +176,12 @@ const config = reactive<ConfigApi>({
 })
 
 const commentRef = ref<CommentInstance>()
-const cancelFn = () => {
-  console.log('取消按钮')
-}
 setTimeout(() => {
   const user = {
     id: 1,
-    username: 'user',
-    avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
+    username: '杜甫 [唐代]',
+    level: 6,
+    avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg',
     // 评论id数组 建议:存储方式用户id和文章id和评论id组成关系,根据用户id和文章id来获取对应点赞评论id,然后加入到数组中返回
     likeIds: [1, 2, 3]
   }
@@ -224,13 +220,7 @@ let temp_id = 100
 // 提交评论事件
 const submit = ({ content, parentId, files, finish, reply, mentionList }: SubmitParamApi) => {
   let str = '提交评论:' + content + ';\t父id: ' + parentId + ';\t图片:' + files + ';\t被回复评论:' + reply + ';\t提及列表:' + JSON.stringify(mentionList)
-
   console.log(str)
-  /**
-   * 上传文件后端返回图片访问地址，格式以'||'为分割; 如:  '/static/img/program.gif||/static/img/normal.webp'
-   */
-  let contentImg = files?.map(e => createObjectURL(e)).join('||')
-
   temp_id += 1
   const comment: CommentApi = {
     id: String(temp_id),
@@ -240,13 +230,7 @@ const submit = ({ content, parentId, files, finish, reply, mentionList }: Submit
     content: content,
     likes: 0,
     createTime: new Date().toString(),
-    contentImg: contentImg,
-    user: {
-      username: config.user.username,
-      avatar: config.user.avatar,
-      level: 6,
-      homeLink: `/${temp_id}`
-    },
+    user: config.user,
     reply: null
   }
   setTimeout(() => {
@@ -271,7 +255,6 @@ const like = (id: string, finish: () => void) => {
 const focus = () => {
   console.log('评论框焦点事件')
 }
-
 // 删除评论
 const remove = (comment: CommentApi) => {
   setTimeout(() => {
@@ -305,8 +288,207 @@ const replyPage = ({ parentId, pageNum, pageSize, finish }: ReplyPageParamApi) =
   }, 200)
 }
 
-// 初始化评论列表
-config.comments = getComment(1, 1)
+// --> 初始化评论列表
+const comments = [
+  {
+    id: '1',
+    parentId: null,
+    uid: '2',
+    content: '床前明月光，疑是地上霜。<br>举头望明月，低头思故乡。',
+    createTime: new Time().add(-1, 'day'),
+    user: {
+      username: '李白 [唐代]',
+      level: 6,
+      avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png',
+      homeLink: '/1'
+    },
+    reply: {
+      total: 1,
+      list: [
+        {
+          id: '11',
+          parentId: 1,
+          uid: '2',
+          content: '[狗头]',
+          createTime: new Time().add(-2, 'day'),
+          user: {
+            username: '李白 [唐代]',
+            avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png',
+            homeLink: '/1'
+          }
+        }
+      ]
+    }
+  },
+  {
+    id: '2',
+    parentId: null,
+    uid: '3',
+    content: '国破山河在，城春草木深。<br>感时花溅泪，恨别鸟惊心。<br>烽火连三月，家书抵万金。<br>白头搔更短，浑欲不胜簪。',
+    createTime: new Time().add(-2, 'day'),
+    user: {
+      username: '杜甫 [唐代]',
+      level: 5,
+      avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg'
+    }
+  },
+  {
+    id: '3',
+    parentId: null,
+    uid: '2',
+    content: '日照香炉生紫烟，遥看瀑布挂前川。<br>飞流直下三千尺，疑是银河落九天。',
+    likes: 34116,
+    createTime: new Time().add(-2, 'day'),
+    user: {
+      username: '李白 [唐代]',
+      level: 4,
+      avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png',
+      homeLink: '/1'
+    }
+  },
+  {
+    id: '4',
+    parentId: null,
+    uid: '4',
+    content: '明月几时有？把酒问青天。',
+    likes: 34116,
+    createTime: new Time().add(-2, 'day'),
+    user: {
+      username: '苏轼[宋代]',
+      level: 6,
+      avatar: 'https://static.juzicon.com/images/image-180327175138-PCH1.jpg',
+      homeLink: '/4'
+    },
+    reply: {
+      total: 7,
+      list: [
+        {
+          id: '41',
+          parentId: 4,
+          uid: '4',
+          content: '不知天上宫阙，今夕是何年。',
+          likes: 34116,
+          createTime: new Time().add(-2, 'day'),
+          user: {
+            username: '苏轼[宋代]',
+            level: 6,
+            avatar: 'https://static.juzicon.com/images/image-180327175138-PCH1.jpg',
+            homeLink: '/4'
+          }
+        },
+        {
+          id: '42',
+          parentId: 4,
+          uid: '4',
+          content: '我欲乘风归去，又恐琼楼玉宇，高处不胜寒。',
+          likes: 34116,
+          createTime: new Time().add(-2, 'day'),
+          user: {
+            username: '苏轼[宋代]',
+            level: 5,
+            avatar: 'https://static.juzicon.com/images/image-180327175138-PCH1.jpg',
+            homeLink: '/4'
+          }
+        },
+        {
+          id: '43',
+          parentId: 4,
+          uid: '4',
+          content: '起舞弄清影，何似在人间。',
+          likes: 34116,
+          createTime: new Time().add(-2, 'day'),
+          user: {
+            username: '苏轼[宋代]',
+            level: 4,
+            avatar: 'https://static.juzicon.com/images/image-180327175138-PCH1.jpg',
+            homeLink: '/4'
+          }
+        },
+        {
+          id: '44',
+          parentId: 4,
+          uid: '4',
+          content: '转朱阁，低绮户，照无眠。',
+          likes: 34116,
+          createTime: new Time().add(-2, 'day'),
+          user: {
+            username: '苏轼[宋代]',
+            level: 3,
+            avatar: 'https://static.juzicon.com/images/image-180327175138-PCH1.jpg',
+            homeLink: '/4'
+          }
+        },
+        {
+          id: '45',
+          parentId: 4,
+          uid: '4',
+          content: '不应有恨，何事长向别时圆？',
+          likes: 34116,
+          createTime: new Time().add(-2, 'day'),
+          user: {
+            username: '苏轼[宋代]',
+            level: 2,
+            avatar: 'https://static.juzicon.com/images/image-180327175138-PCH1.jpg',
+            homeLink: '/4'
+          }
+        },
+        {
+          id: '46',
+          parentId: 4,
+          uid: '4',
+          content: '人有悲欢离合，月有阴晴圆缺，此事古难全。',
+          likes: 34116,
+          createTime: new Time().add(-2, 'day'),
+          user: {
+            username: '苏轼[宋代]',
+            avatar: 'https://static.juzicon.com/images/image-180327175138-PCH1.jpg',
+            homeLink: '/4'
+          }
+        },
+        {
+          id: '47',
+          parentId: 4,
+          uid: '4',
+          content: '但愿人长久，千里共婵娟。',
+          likes: 34116,
+          createTime: new Time().add(-2, 'day'),
+          user: {
+            username: '苏轼[宋代]',
+            avatar: 'https://static.juzicon.com/images/image-180327175138-PCH1.jpg',
+            homeLink: '/4'
+          }
+        },
+      ]
+    }
+  },
+  {
+    id: '5',
+    parentId: null,
+    uid: '3',
+    content: '折戟沉沙铁未销，自将磨洗认前朝。<br>东风不与周郎便，铜雀春深锁二乔。',
+    createTime: new Time().add(-1, 'week'),
+    user: {
+      username: '杜甫 [唐代]',
+      level: 6,
+      avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg'
+    }
+  },
+  {
+    id: '7',
+    parentId: null,
+    uid: '3',
+    content: '东临碣石，以观沧海。<br>水何澹澹，山岛竦峙。<br>树木丛生，百草丰茂。<br>秋风萧瑟，洪波涌起。<br>日月之行，若出其中；<br>星汉灿烂，若出其里。<br>幸甚至哉，歌以咏志。',
+    createTime: new Time().add(-1, 'week'),
+    user: {
+      username: '曹操 [东汉末年]',
+      level: 6,
+      avatar: 'https://static.juzicon.com/images/image-200821112305-QQ9O.jpg'
+    }
+  },
+] as CommentApi[]
+config.comments = comments
+
+// <-
 
 // 是否禁用滚动加载评论
 const disable = ref(false)

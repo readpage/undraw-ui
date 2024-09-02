@@ -13,7 +13,6 @@
       @input="input"
       @submit="onSubmit"
       @paste="change"
-      @change-img-list="changeFilesFn"
       @mention-search="mentionSearch"
     ></u-editor>
     <div v-if="action" class="action-box">
@@ -91,7 +90,9 @@ const { submit, focus, cancelFn, mentionSearch } = inject('comment-fun') as Comm
 // 提交评论的数据
 const onSubmit = () => {
   let text = props.reply && props.parentId != props.reply.id ? `回复 <span style="color: var(--u-color-success-dark-2);">@${props.reply.user.username}:</span> ${content.value}` : content.value
-  text += `\nu-img[${imgList.value}]`
+  if (!isEmpty(imgList.value)) {
+    text += `u-img[${imgList.value}]`
+  }
   submit({
     content: text,
     parentId: isNull(props.parentId, null),
@@ -115,7 +116,6 @@ const onCancel = () => {
 const clearData = () => {
   // 清空评论框内容
   ;(editorRef.value as any).clear()
-  imgList.value.length = 0
   //清空图片列表
   //提交按钮禁用
   disabled.value = true
@@ -154,12 +154,7 @@ defineExpose({
 })
 
 const change = (val: Event, file?: File) => {
-  // if (!file) {
-  //   imgList.value.length = 0 //清空上一次显示图片效果
-  //   files2.value.length = 0
-  // }
   let arr: File[] = new Array()
-  console.log('check', file, inputRef.value?.files)
   const files = file ? [file] : (inputRef.value?.files as any) //获取选中的文件对象
   if (files) {
     for (let i = 0; i < files.length; i++) {
@@ -172,7 +167,6 @@ const change = (val: Event, file?: File) => {
       }
     }
   }
-  console.log('change', arr)
   upload && upload(arr, v => imgList.value.push(...v))
 }
 

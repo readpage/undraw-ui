@@ -16,10 +16,9 @@ export interface CommentApi {
   id: string | number
   parentId: string | number | null
   uid: string | number
-  address?: string
   content: string
+  address?: string
   likes?: number
-  contentImg?: string
   createTime: string
   user: CommentUserApi
   reply?: ReplyApi | null
@@ -59,9 +58,24 @@ export interface CommentFunApi {
   like: (id: string) => void
   showInfo: (uid: string, finish: Function) => void
   replyPage: (parentId: string, pageNum: any, pageSize: number, finish: (reply: ReplyApi) => void) => void
-  submit: ({ content, parentId, reply, files, clear }: SubmitParam2Api) => void
+  submit: ({ content, parentId, reply, clear }: CommentSubmit2Api) => void
   focus: () => void
   cancelFn: () => void
   mentionSearch: (val: string) => void
   beforeData: (val: any) => void
+}
+
+export interface CommentSubmitApi {
+  content: string
+  parentId: string | null
+  finish: (comment?: CommentApi) => void
+  reply?: CommentApi
+  mentionList?: any[]
+}
+
+export interface CommentSubmit2Api {
+  content: string;
+  parentId: string | null;
+  reply?: CommentApi;
+  clear: () => void;
 }
