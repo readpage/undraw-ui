@@ -1,24 +1,34 @@
 export const UndrawUiResolver = {
   type: 'component',
   resolve: name => {
-    if (name.startsWith('U')) {
-      let styleName = name
-        .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-        .toLowerCase()
-        .slice(1)
+    if (name in element) {
       return {
         name: name,
         from: 'undraw-ui',
-        sideEffects:
-          name in element
-            ? element[name]
-            : ['undraw-ui/es/index.css', `undraw-ui/es/components/${styleName}/${styleName}.css`]
+        sideEffects: element[name]
       }
     }
   }
 }
 
 const element = {
+  UCommentNav: [
+    'undraw-ui/es/index.css',
+    'undraw-ui/es/components/comment-nav/comment-nav.css'
+  ],
+  UCommentScroll: [
+    'undraw-ui/es/index.css',
+    'undraw-ui/es/components/comment-scroll/comment-scroll.css'
+  ],
+  UDivider: [
+    'undraw-ui/es/index.css',
+    'undraw-ui/es/components/divider/divider.css'
+  ],
+  UIcon: [
+    'undraw-ui/es/index.css',
+    'undraw-ui/es/components/icon/icon.css'
+  ],
+  UCounter: [],
   UFold: [
     'undraw-ui/es/index.css',
     'undraw-ui/es/components/fold/fold.css',
@@ -95,16 +105,5 @@ const element = {
     'undraw-ui/es/components/editor/editor.css',
     'element-plus/es/components/empty/style/css',
     'element-plus/es/components/avatar/style/css'
-  ],
-  UForm: [
-    'undraw-ui/es/index.css',
-    'undraw-ui/es/components/form/form.css',
-    'element-plus/es/components/form/style/css',
-    'element-plus/es/components/form/style/css',
-    'element-plus/es/components/form-item/style/css',
-    'element-plus/es/components/input/style/css',
-    'element-plus/es/components/select/style/css',
-    'element-plus/es/components/option/style/css',
-    'element-plus/es/components/date-picker/style/css',
   ]
 }

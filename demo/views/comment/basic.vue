@@ -54,16 +54,15 @@ const comments = [
     reply: {
       total: 1,
       list: [
-        {
+      {
           id: '11',
-          parentId: 1,
-          uid: '2',
-          content: '[狗头]',
-          createTime: new Time().add(-2, 'day'),
+          parentId: null,
+          uid: '1',
+          content: '[狗头][微笑2]',
+          createTime: new Time().add(-3, 'day'),
           user: {
-            username: '李白 [唐代]',
-            avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png',
-            homeLink: '/1'
+            username: '杜甫 [唐代]',
+            avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg',
           }
         }
       ]
