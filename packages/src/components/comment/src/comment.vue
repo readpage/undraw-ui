@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import { provide, ref, toRefs, useSlots } from 'vue'
 import { ElAvatar } from 'element-plus'
-import { translate as $u, InjectionEmojiApi, ReplyPageParamApi, SubmitParam2Api, SubmitParamApi, isObject } from 'undraw-ui'
+import { translate as $u, ReplyPageParamApi, SubmitParam2Api, SubmitParamApi } from 'undraw-ui'
 import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
 import { isNull, debounce, isEmpty, mergeObject } from '~/util'
@@ -157,23 +157,11 @@ const like = (id: string) => {
   }
 }
 
-provide('config', props.config)
-provide('comment-fun', {
-  like: like,
-  showInfo: (uid, finish) => emit('showInfo', uid, finish),
-  replyPage: (parentId, pageNum, pageSize, finish) => {
-    emit('replyPage', { parentId, pageNum, pageSize, finish })
-  },
-  submit: submit,
-  focus: () => emit('focus'),
-  cancelFn: () => emit('cancel')
-} as CommentFunApi)
-
 /**
  * 删除当前评论
  * @param comment
  */
-const remove = (comment: CommentApi) => {
+ const remove = (comment: CommentApi) => {
   // 删除评论数据操作
   const { parentId, id } = comment
   if (parentId) {
@@ -193,20 +181,23 @@ const remove = (comment: CommentApi) => {
     }
   }
 }
-const inputBox = ref(null)
+
+provide('config', props.config)
+provide('comment-fun', {
+  like: like,
+  showInfo: (uid, finish) => emit('showInfo', uid, finish),
+  replyPage: (parentId, pageNum, pageSize, finish) => {
+    emit('replyPage', { parentId, pageNum, pageSize, finish })
+  },
+  submit: submit,
+  focus: () => emit('focus'),
+  cancelFn: () => emit('cancel'),
+  mentionSearch: (val: string) => emit('mentionSearch', val),
+  beforeData: (val: any) => emit('before-data', val)
+} as CommentFunApi)
+
 // 工具卡槽
 provide('comment-slot', useSlots())
-//提及配置
-provide('injectMention', props.config.mention)
-// mentionList 触发事件
-const mentionSearch = debounce((searchStr: string) => {
-  emit('mentionSearch', searchStr)
-}, 300)
-provide('injectMentionSearch', mentionSearch)
-provide('injectBeforeData', (val: any) => {
-  emit('before-data', val)
-})
-
 defineExpose({
   remove: remove
 })

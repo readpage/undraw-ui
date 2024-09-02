@@ -50,7 +50,7 @@ export interface ConfigApi {
   show?: ShowApi
   aTarget?: '_blank' | '_parent' | '_self' | '_top'
   mention?: MentionApi
-  upload?: boolean
+  upload?: (files: File[], finish: (val: string[]) => void) => void
   page?: boolean
   relativeTime?: boolean
 }
@@ -62,4 +62,6 @@ export interface CommentFunApi {
   submit: ({ content, parentId, reply, files, clear }: SubmitParam2Api) => void
   focus: () => void
   cancelFn: () => void
+  mentionSearch: (val: string) => void
+  beforeData: (val: any) => void
 }

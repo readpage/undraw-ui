@@ -282,7 +282,7 @@ function addText(val: string, func?: Function) {
 // 移除图片
 const removeImg = (val: number) => {
   imgList?.value?.splice(val, 1)
-  emit('change-img-list', cloneDeep(imgList?.value))
+  // emit('change-img-list', cloneDeep(imgList?.value))
 }
 
 // -->提及

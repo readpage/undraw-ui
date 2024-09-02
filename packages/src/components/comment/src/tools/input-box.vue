@@ -18,6 +18,7 @@
     ></u-editor>
     <div v-if="action" class="action-box">
       <u-emoji :emoji="emoji" @add-emoji="(val: string) => editorRef?.addText(val)"></u-emoji>
+      <!-- 文件上传 -->
       <div v-if="upload" class="picture" @click="inputRef?.click">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon">
           <path
@@ -51,7 +52,6 @@ import { ClickOutside as vClickOutside, ElButton } from 'element-plus'
 import { UEmoji, UToast, UEditor, translate as $u, EditorInstance } from 'undraw-ui'
 import { CommentApi, CommentFunApi, ConfigApi, InjectionEmojiApi } from '~/components'
 import { isEmpty, isNull, isImage, createObjectURL } from '~/util'
-import { MentionApi } from '~/components/editor/mention.vue'
 
 export interface InputBoxApi {
   focus(): void
@@ -74,13 +74,9 @@ const editorRef = ref<EditorInstance>()
 const popperRef = ref()
 const inputRef = ref<HTMLInputElement>()
 const imgList = ref<string[]>([])
-const files2 = ref<any[]>([])
 const state = reactive({
   imgLength: 0
 })
-const changeFilesFn = (arr: any[]) => {
-  files2.value = arr
-}
 const input = (e: Event) => {
   isEmpty(content.value.replace(/&nbsp;|<br>| /g, '')) ? (disabled.value = true) : (disabled.value = false)
 }
@@ -89,17 +85,17 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
-const { upload, emoji } = inject('config') as ConfigApi
-const { submit, focus, cancelFn } = inject('comment-fun') as CommentFunApi
-const mention = inject('injectMention') as MentionApi
+const { upload, emoji, mention } = inject('config') as ConfigApi
+const { submit, focus, cancelFn, mentionSearch } = inject('comment-fun') as CommentFunApi
 
 // 提交评论的数据
 const onSubmit = () => {
+  let text = props.reply && props.parentId != props.reply.id ? `回复 <span style="color: var(--u-color-success-dark-2);">@${props.reply.user.username}:</span> ${content.value}` : content.value
+  text += `\nu-img[${imgList.value}]`
   submit({
-    content: props.reply && props.parentId != props.reply.id ? `回复 <span style="color: var(--u-color-success-dark-2);">@${props.reply.user.username}:</span> ${content.value}` : content.value,
+    content: text,
     parentId: isNull(props.parentId, null),
     reply: props.reply,
-    files: files2.value,
     clear: () => {
       //清理输入框提交的数据
       clearData()
@@ -121,9 +117,9 @@ const clearData = () => {
   ;(editorRef.value as any).clear()
   imgList.value.length = 0
   //清空图片列表
-  files2.value = []
   //提交按钮禁用
   disabled.value = true
+  imgList.value.length = 0 //清空上一次显示图片效果
 }
 
 // 点击评论框外关闭操作栏和失去评论框焦点
@@ -158,32 +154,26 @@ defineExpose({
 })
 
 const change = (val: Event, file?: File) => {
-  if (!file) {
-    imgList.value.length = 0 //清空上一次显示图片效果
-    files2.value.length = 0
-  }
-
+  // if (!file) {
+  //   imgList.value.length = 0 //清空上一次显示图片效果
+  //   files2.value.length = 0
+  // }
+  let arr: File[] = new Array()
+  console.log('check', file, inputRef.value?.files)
   const files = file ? [file] : (inputRef.value?.files as any) //获取选中的文件对象
-  state.imgLength = isNull(files?.length, 0)
   if (files) {
     for (let i = 0; i < files.length; i++) {
       let fileName = files[i].name //获取当-前文件的文件名
-      let url = createObjectURL(files[i]) //获取当前文件对象的URL
-      files2.value.push(files[i])
       //判断文件是否是图片类型
       if (isImage(fileName)) {
-        imgList.value.push(url)
+        arr.push(files[i])
       } else {
         UToast({ type: 'warn', message: '请选择图片类型文件!', duration: 2500 })
       }
     }
   }
-}
-
-const injectMentionSearch = inject('injectMentionSearch') as Function
-// 提及改变
-function mentionSearch(val: string) {
-  injectMentionSearch(val)
+  console.log('change', arr)
+  upload && upload(arr, v => imgList.value.push(...v))
 }
 
 // slots

@@ -167,7 +167,14 @@ const config = reactive<ConfigApi>({
     showAvatar: true
   },
   page: true,
-  upload: true
+  upload: (files, finish) => {
+    // 模拟后端上传处理
+    setTimeout(() => {
+      let list = files.map(e => createObjectURL(e))
+      // 上传成功返回图像列表
+      finish(list)
+    }, 200)
+  }
 })
 
 const commentRef = ref<CommentInstance>()

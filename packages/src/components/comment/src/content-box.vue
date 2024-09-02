@@ -137,10 +137,9 @@ const state = reactive({
 const commentRef = ref<InputBoxApi>()
 const btnRef = ref<HTMLDivElement>()
 
-const injectBeforeData = inject('injectBeforeData') as Function
 const data = computed(() => {
   let val = props.data
-  injectBeforeData(val)
+  beforeData(val)
   return val
 })
 
@@ -151,7 +150,7 @@ const imgList = computed(() => {
 })
 
 const { user, aTarget, show, emoji, relativeTime } = inject('config') as ConfigApi
-const { like } = inject('comment-fun') as CommentFunApi
+const { like, beforeData } = inject('comment-fun') as CommentFunApi
 
 //点击回复按钮打开输入框
 function reply() {
