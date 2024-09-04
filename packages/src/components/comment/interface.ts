@@ -57,12 +57,19 @@ export interface ConfigApi {
 export interface CommentFunApi {
   like: (id: string) => void
   showInfo: (uid: string, finish: Function) => void
-  replyPage: (parentId: string, pageNum: any, pageSize: number, finish: (reply: ReplyApi) => void) => void
+  replyPage: ({ parentId, pageNum, pageSize, finish }: CommentReplyPageApi) => void
   submit: ({ content, parentId, reply, clear }: CommentSubmit2Api) => void
   focus: () => void
   cancelFn: () => void
   mentionSearch: (val: string) => void
   beforeData: (val: any) => void
+}
+
+export interface CommentReplyPageApi {
+  parentId: string
+  pageNum: any
+  pageSize: number
+  finish: (reply: ReplyApi) => void
 }
 
 export interface CommentSubmitApi {
@@ -74,8 +81,8 @@ export interface CommentSubmitApi {
 }
 
 export interface CommentSubmit2Api {
-  content: string;
-  parentId: string | null;
-  reply?: CommentApi;
-  clear: () => void;
+  content: string
+  parentId: string | null
+  reply?: CommentApi
+  clear: () => void
 }

@@ -80,7 +80,7 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { UToast, ConfigApi, CommentApi, createObjectURL, useLevel, usePage, throttle, CommentSubmitApi } from '~/index'
+import { UToast, ConfigApi, CommentApi, createObjectURL, useLevel, usePage, throttle, CommentSubmitApi, CommentReplyPageApi } from '~/index'
 // 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases/tag/v0.0.0
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from '@/assets/emoji'
@@ -201,12 +201,12 @@ const showInfo = (uid: string, finish: Function) => {
   loading.value = true
   console.log('获取用户信息: ' + uid)
   let userInfo
+  // 模拟获取后端根据uid查询用户信息
   setTimeout(() => {
     userInfo = {
-      id: String(uid),
-      username: '落🤍尘' + uid,
-      avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
+      username: '杜甫 [唐代]',
       level: 6,
+      avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg',
       like: 36011,
       attention: 15,
       follower: 6878
@@ -535,7 +535,8 @@ config.comments = usePage(1, 2, comments)
 
 //回复分页
 let reply = cloneDeep(comments[3].reply)
-const replyPage = ({ parentId, pageNum, pageSize, finish }: ReplyPageParamApi) => {
+const replyPage = ({ parentId, pageNum, pageSize, finish }: CommentReplyPageApi) => {
+  // 根据 parentId查询后端分页回复列表返回并覆盖回复
   if (reply) {
     let tmp = {
       total: reply?.total,

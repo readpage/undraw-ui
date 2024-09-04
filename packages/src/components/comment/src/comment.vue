@@ -186,7 +186,7 @@ provide('config', props.config)
 provide('comment-fun', {
   like: like,
   showInfo: (uid, finish) => emit('showInfo', uid, finish),
-  replyPage: (parentId, pageNum, pageSize, finish) => {
+  replyPage: ({ parentId, pageNum, pageSize, finish}) => {
     emit('replyPage', { parentId, pageNum, pageSize, finish })
   },
   submit: submit,
