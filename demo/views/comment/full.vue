@@ -262,17 +262,6 @@ const remove = (comment: CommentApi) => {
   }, 200)
 }
 
-const _throttle = throttle((type: string, comment: CommentApi, finish: Function) => {
-  switch (type) {
-    case '删除':
-      alert(`删除成功: ${comment.id}`)
-      finish()
-      break
-    case '举报':
-      alert(`举报成功: ${comment.id}`)
-      break
-  }
-})
 const mentionSearch = (val: string) => {
   config.mention!.data = userArr.filter(v => v.name.includes(val))
 }
@@ -536,6 +525,7 @@ config.comments = usePage(1, 2, comments)
 //回复分页
 let reply = cloneDeep(comments[3].reply)
 const replyPage = ({ parentId, pageNum, pageSize, finish }: CommentReplyPageApi) => {
+  console.log(pageNum, pageSize)
   // 根据 parentId查询后端分页回复列表返回并覆盖回复
   if (reply) {
     let tmp = {

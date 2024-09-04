@@ -1,4 +1,4 @@
-import { EmojiApi, MentionApi, SubmitParam2Api } from '~/components'
+import { EmojiApi, MentionApi } from '~/components'
 
 export interface ReplyApi {
   total: number

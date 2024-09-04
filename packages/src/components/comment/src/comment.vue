@@ -32,7 +32,7 @@ import { translate as $u, ReplyPageParamApi, } from 'undraw-ui'
 import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
 import { isEmpty, mergeObject } from '~/util'
-import { CommentApi, CommentFunApi, CommentSubmit2Api, CommentSubmitApi, ConfigApi } from '~/components'
+import { CommentApi, CommentFunApi, CommentReplyPageApi, CommentSubmit2Api, CommentSubmitApi, ConfigApi } from '~/components'
 
 defineOptions({
   name: 'UComment'
@@ -67,7 +67,7 @@ const { comments, show } = toRefs(props.config)
 const emit = defineEmits<{
   (e: 'submit', { content, parentId, finish, reply, mentionList}: CommentSubmitApi): void
   (e: 'like', id: string, finish: () => void): void
-  (e: 'replyPage', { parentId, pageNum, pageSize, finish }: ReplyPageParamApi): void
+  (e: 'replyPage', { parentId, pageNum, pageSize, finish }: CommentReplyPageApi): void
   (e: 'showInfo', id: string, finish: Function): void
   (e: 'focus'): void
   (e: 'cancel'): void

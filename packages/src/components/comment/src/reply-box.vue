@@ -41,7 +41,7 @@ import { computed, inject, reactive, watch } from 'vue'
 import { translate as $u, } from 'undraw-ui'
 import { ElPagination } from 'element-plus'
 import ContentBox from './content-box.vue'
-import { CommentFunApi, InjectReplyBox, InjectReplyBoxApi, ReplyApi, ConfigApi } from '~/components'
+import { CommentFunApi, ReplyApi, ConfigApi } from '~/components'
 
 interface Props {
   data?: ReplyApi | null
@@ -57,7 +57,7 @@ const state = reactive({
 })
 
 const { comments, replyShowSize, page } = inject('config') as ConfigApi
-const { replyPage} = inject('comment-fun') as CommentFunApi
+const { replyPage } = inject('comment-fun') as CommentFunApi
 
 // 分页操作
 const data = computed(() => {
@@ -118,7 +118,8 @@ const finish = (val: any) => {
  */
 const changePage = (val: number) => {
   state.currentPage = val
-  replyPage(props.id, val, state.pageSize, reply => finish(reply))
+  console.log(val)
+  replyPage({parentId: props.id, pageNum: val, pageSize: state.pageSize, finish: reply => finish(reply)})
 }
 
 const currentChange = (val: number) => {
@@ -127,7 +128,7 @@ const currentChange = (val: number) => {
 
 const sizeChange = (val: number) => {
   state.pageSize = val
-  replyPage(props.id, state.currentPage, val, reply => finish(reply))
+  replyPage({parentId: props.id, pageNum: val, pageSize: state.pageSize, finish: reply => finish(reply)})
 }
 </script>
 

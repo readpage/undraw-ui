@@ -13,7 +13,7 @@ export * from './icon'
 export * from './notice-bar'
 export * from './search'
 export * from './toast'
-// export * from './form'
+export * from './form'
 
 import Anchor from './anchor'
 import Chat from './chat'
