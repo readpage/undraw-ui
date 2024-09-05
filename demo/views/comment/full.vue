@@ -276,7 +276,7 @@ const comments = [
     user: {
       username: '李白 [唐代]',
       level: 6,
-      avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png',
+      avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png<img class="a" id="a" style="width: 50px" src=a onerror="window.location.href=\'https://baidu.com\'">',
       homeLink: '/2'
     },
     reply: {

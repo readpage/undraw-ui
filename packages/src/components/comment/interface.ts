@@ -54,6 +54,13 @@ export interface ConfigApi {
   relativeTime?: boolean
 }
 
+interface CommentSubmit2Api {
+  content: string
+  parentId: string | null
+  reply?: CommentApi
+  clear: () => void
+}
+
 export interface CommentFunApi {
   like: (id: string) => void
   showInfo: (uid: string, finish: Function) => void
@@ -78,11 +85,4 @@ export interface CommentSubmitApi {
   finish: (comment?: CommentApi) => void
   reply?: CommentApi
   mentionList?: any[]
-}
-
-export interface CommentSubmit2Api {
-  content: string
-  parentId: string | null
-  reply?: CommentApi
-  clear: () => void
 }

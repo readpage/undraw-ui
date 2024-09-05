@@ -187,7 +187,6 @@ function imgParse(val: string) {
     imgList.value = str.split(',')
     return ""
   })
-  console.log('img', val, imgList.value)
   return val
 }
 const contents = computed(() => {

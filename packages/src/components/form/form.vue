@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted, reactive, ref } from 'vue'
+import { ref } from 'vue'
 import { FormInstance, FormItemRule, ElForm, ElFormItem } from 'element-plus'
 import { Arrayable } from 'element-plus/es/utils/typescript'
 import { mergeObject } from '~/util'

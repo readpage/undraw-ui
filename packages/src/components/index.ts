@@ -15,6 +15,8 @@ export * from './search'
 export * from './toast'
 export * from './form'
 export * from './group'
+export * from './table'
+export * from './crud'
 
 import Anchor from './anchor'
 import Chat from './chat'
@@ -32,6 +34,8 @@ import NoticeBar from './notice-bar'
 import Search from './search'
 import Form from './form'
 import Group from './group'
+import Table from './table'
+import Crud from './crud'
 
 const components = [
   Anchor,
@@ -49,7 +53,9 @@ const components = [
   NoticeBar,
   Search,
   Form,
-  Group
+  Group,
+  Table,
+  Crud
 ]
 
 import { App } from 'vue'

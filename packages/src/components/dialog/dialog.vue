@@ -76,9 +76,35 @@ watch(
 </script>
 
 <style lang="scss">
-@use './dialog.scss';
+.el-dialog {
+  .el-dialog__header {
+    text-align: left;
+  }
+  .el-dialog__body {
+    padding: 20px !important;
+  }
+  .el-dialog__footer {
+    padding: 10px 20px;
+  }
+}
 </style>
 
 <style lang="scss" scoped>
-@use './dialog1.scss';
+.el-dialog {
+  .full-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -4px;
+    right: 40px;
+    width: 54px;
+    height: 54px;
+    color: var(--el-color-info);
+    cursor: pointer;
+  }
+  .full-screen:hover {
+    color: var(--el-color-primary);
+  }
+}
 </style>

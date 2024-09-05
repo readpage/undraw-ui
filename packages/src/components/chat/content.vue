@@ -21,7 +21,7 @@
           </div>
           <div class="content">
             <div class="text">
-              <div v-html="useEmojiParse(emoji.allEmoji, item.content)"></div>
+              <div v-clean-html="useEmojiParse(emoji.allEmoji, item.content)"></div>
             </div>
           </div>
         </main>
@@ -35,6 +35,7 @@ import { ChatApi } from './chat.vue'
 import { formatTime, humanTime } from '~/util/datetime'
 import { useEmojiParse } from '~/hooks'
 import { ElAvatar } from 'element-plus'
+import { vCleanHtml } from '~/util'
 
 interface Props {
   data: ChatApi[]

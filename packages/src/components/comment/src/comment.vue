@@ -32,7 +32,7 @@ import { translate as $u, ReplyPageParamApi, } from 'undraw-ui'
 import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
 import { isEmpty, mergeObject } from '~/util'
-import { CommentApi, CommentFunApi, CommentReplyPageApi, CommentSubmit2Api, CommentSubmitApi, ConfigApi } from '~/components'
+import { CommentApi, CommentFunApi, CommentReplyPageApi, CommentSubmitApi, ConfigApi } from '~/components'
 
 defineOptions({
   name: 'UComment'
@@ -76,10 +76,11 @@ const emit = defineEmits<{
   (e: 'before-data', val: any): void
 }>()
 
+
 /**
  * 提交评论
  */
-const submit = ({ content, parentId, reply, clear }: CommentSubmit2Api) => {
+const submit: CommentFunApi['submit'] = ({ content, parentId, reply, clear }) => {
   // 添加评论
   const finish = (comment?: CommentApi) => {
     // 清空输入框内容

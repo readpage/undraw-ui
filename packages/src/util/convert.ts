@@ -1,5 +1,3 @@
-import { buildVueDompurifyHTMLDirective } from 'vue-dompurify-html'
-
 export function toFormData(object: any) {
   const formData = new FormData()
   Object.keys(object).forEach(key => {
@@ -18,6 +16,3 @@ export function removeEmptyField(obj: any) {
     .filter(key => obj[key] !== null && obj[key] !== undefined)
     .reduce((acc, key) => ({ ...acc, [key]: obj[key] }), {})
 }
-
-
-export const vCleanHtml = buildVueDompurifyHTMLDirective();

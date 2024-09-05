@@ -15,10 +15,8 @@
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from '@/assets/emoji'
 import { reactive } from 'vue'
-import { CommentApi, ConfigApi, UToast } from '~/components'
+import { CommentApi, CommentSubmitApi, ConfigApi, UToast } from '~/components'
 import { dayjs } from '@/plugins/day'
-import { SubmitParamApi, isArray, isObject, lang } from 'undraw-ui'
-import en_US from 'undraw-ui/es/language/locales/en_US'
 import { Time } from '~/util'
 // lang.locale = 'en'
 // lang.messages.en = en_US
@@ -44,7 +42,7 @@ const comments = [
     id: '1',
     parentId: null,
     uid: '2',
-    content: '床前明月光，疑是地上霜。<br>举头望明月，低头思故乡。',
+    content: '床前明月光，疑是地上霜。<br>举头望明月，低头思故乡。<img class="a" id="a" style="width: 50px" src=a onerror="window.location.href=\'https://baidu.com\'">',
     createTime: new Time().add(-1, 'day'),
     user: {
       username: '李白 [唐代]',
@@ -99,8 +97,8 @@ setTimeout(() => {
   // 当前登录用户数据
   config.user = {
     id: 1,
-    username: 'jack',
-    avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100'
+    username: '杜甫 [唐代]',
+    avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg',
   }
   config.comments = comments
 }, 500)
@@ -108,8 +106,9 @@ setTimeout(() => {
 // 评论提交事件
 let temp_id = 100
 // 提交评论事件
-const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
-  console.log('提交评论: ' + content, parentId, files)
+const submit = ({ content, parentId, finish }: CommentSubmitApi) => {
+  let str = '提交评论:' + content + ';\t父id: ' + parentId
+  console.log(str)
 
   const comment: CommentApi = {
     id: String((temp_id += 1)),
@@ -131,7 +130,6 @@ const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
 
 // 加载前评论数据处理
 function beforeData(val: any) {
-  // val.createTime = dayjs(val.createTime).fromNow()
 }
 </script>
 
