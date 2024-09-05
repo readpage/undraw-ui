@@ -8,7 +8,7 @@ export const staticRoutes: Array<RouteRecordRaw> = [
   }
 ]
 
-let arr = ['fold', 'comment', 'chat', 'search', 'editor', 'anchor', 'counter', 'notice-bar', 'dialog', 'form']
+let arr = ['fold', 'comment', 'chat', 'search', 'editor', 'anchor', 'counter', 'notice-bar', 'dialog', 'form', 'group']
 let routes = arr.map(v => ({
   path: `/${v}`,
   name: `${v}`,

@@ -1,12 +1,12 @@
 <template>
-  <u-form ref="formRef" :form="form">
+  <u-group ref="groupRef" :form="form">
     <template #form-role="{ item, data }">
       <el-radio-group v-model="data.role">
         <el-radio value="用户" size="small">用户</el-radio>
         <el-radio value="管理员" size="small">管理员</el-radio>
       </el-radio-group>
     </template>
-  </u-form>
+  </u-group>
   <div>
     <el-button @click="reset">重置</el-button>
     <el-button type="primary" @click="submit">提交</el-button>
@@ -14,11 +14,15 @@
 </template>
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { FormApi } from '~/components'
+import { FormApi } from '~/components';
 import { Time } from '~/util'
 
 const form = reactive<FormApi>({
   data: {},
+  group: {
+    type: 'collapse',
+    labels: ['基础信息', '详细信息'],
+  },
   items: [
     {
       label: '用户名',
@@ -27,7 +31,8 @@ const form = reactive<FormApi>({
       required: true,
       component: {
         name: 'el-input'
-      }
+      },
+      group: '基础信息'
     },
     {
       label: '性别',
@@ -38,7 +43,8 @@ const form = reactive<FormApi>({
       component: {
         name: 'el-select',
         options: ['男', '女']
-      }
+      },
+      group: '基础信息'
     },
     {
       label: '角色',
@@ -52,7 +58,8 @@ const form = reactive<FormApi>({
       value: 0,
       component: {
         name: 'el-input'
-      }
+      },
+      group: '详细信息'
     },
     {
       label: '日期',
@@ -60,19 +67,20 @@ const form = reactive<FormApi>({
       value: new Time().value,
       component: {
         name: 'el-date'
-      }
+      },
+      group: '详细信息'
     }
   ]
 })
 
-const formRef = ref()
+const groupRef = ref()
 
 function reset() {
-  formRef.value.resetFields()
+  groupRef.value.resetFields()
 }
 
 async function submit() {
-  formRef.value.validate((valid: boolean) => {
+ groupRef.value.validate((valid: boolean) => {
   if (valid) {
     console.log(form.data)
   } else {
