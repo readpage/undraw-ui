@@ -5,11 +5,13 @@ export interface ReplyApi {
   list: CommentApi[]
 }
 
-export interface CommentUserApi {
+export interface UserApi {
+  id: string | number
   username: string
   avatar: string
   level?: number
   homeLink?: string
+  likeIds?: string[] | number[]
 }
 
 export interface CommentApi {
@@ -20,15 +22,8 @@ export interface CommentApi {
   address?: string
   likes?: number
   createTime: string
-  user: CommentUserApi
+  user: UserApi
   reply?: ReplyApi | null
-}
-
-export interface UserApi {
-  id: string | number
-  username: string
-  avatar: string
-  likeIds?: string[] | number[]
 }
 
 interface ShowApi {

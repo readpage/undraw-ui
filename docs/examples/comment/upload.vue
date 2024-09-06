@@ -1,8 +1,12 @@
 <template>
-  <u-comment :config="config" upload @submit="submit" @like="like" relative-time>
-    <!-- <div>导航栏卡槽</div> -->
-    <!-- <template #info>用户信息卡槽</template> -->
+  <u-comment :config="config" @submit="submit">
+    <!-- <template>导航栏卡槽</template> -->
+    <!-- <template #header>头部卡槽</template> -->
+    <!-- <template #action="{ user }">动作卡槽{{ user.username }}</template> -->
+    <!-- <template #avatar="{ id, user }">头像卡槽{{ user.avatar }}</template> -->
+    <!-- <template #info>信息卡槽</template> -->
     <!-- <template #card>用户信息卡片卡槽</template> -->
+    <!-- <template #func>功能区域卡槽</template> -->
   </u-comment>
 </template>
 
@@ -11,44 +15,122 @@
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from './emoji'
 import { reactive } from 'vue'
-import { CommentApi, ConfigApi, SubmitParamApi, UToast, createObjectURL } from 'undraw-ui'
+import { UToast, Time, CommentApi, CommentSubmitApi, ConfigApi, createObjectURL } from 'undraw-ui'
 
 const config = reactive<ConfigApi>({
-  user: {
-    id: 1,
-    username: 'jack',
-    avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100',
-    // 评论id数组 建议:存储方式用户uid和评论id组成关系,根据用户uid来获取对应点赞评论id,然后加入到数组中返回
-    likeIds: [1, 2, 3]
+  user: {} as any, // 当前用户信息
+  emoji: emoji, // 表情包数据
+  comments: [], // 评论数据
+  relativeTime: true, // 开启人性化时间
+  show: {
+    level: false,    // 关闭等级显示
+    homeLink: false, // 关闭个人主页链接跳转
+    address: false, // 关闭地址信息
+    likes: false    // 关闭点赞按钮显示
   },
-  emoji: emoji,
-  comments: []
+  // 图片上传
+  upload: (files, finish) => {
+    // 模拟请求接口上传处理
+    setTimeout(() => {
+      let list = files.map(e => createObjectURL(e))
+      // 上传成功返回图像列表 格式数组字符串地址
+      console.log(list)
+      finish(list)
+    }, 200)
+  }
 })
 
+/**
+ * 评论对象数据结构
+ * 存储结构: 一个评论表，通过paretnId是否为空判断类型 评论/回复
+ * 层数: 两层
+ * 第一层：评论 parentId属性为空 第二层关系: id等于parentId的数据，则为第二层回复的评论数据
+ * 第二层: 回复 第一层关系: parentId等于id，则为第一层评论的回复数据
+ * 
+ */
+const comments = [
+{
+    id: '1',
+    parentId: null,
+    uid: '2',
+    content: '床前明月光，疑是地上霜。<br>举头望明月，低头思故乡。<img class="a" id="a" style="width: 50px" src=a onerror="window.location.href=\'https://baidu.com\'">',
+    createTime: new Time().add(-1, 'day'),
+    user: {
+      username: '李白 [唐代]',
+      avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png',
+      homeLink: '/1'
+    },
+    reply: {
+      total: 1,
+      list: [
+      {
+          id: '11',
+          parentId: null,
+          uid: '1',
+          content: '[狗头][微笑2]',
+          createTime: new Time().add(-3, 'day'),
+          user: {
+            username: '杜甫 [唐代]',
+            avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg',
+          }
+        }
+      ]
+    }
+  },
+  {
+    id: '2',
+    parentId: null,
+    uid: '3',
+    content: '国破山河在，城春草木深。<br>感时花溅泪，恨别鸟惊心。<br>烽火连三月，家书抵万金。<br>白头搔更短，浑欲不胜簪。',
+    createTime: new Time().add(-5, 'day'),
+    user: {
+      username: '杜甫 [唐代]',
+      avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg'
+    }
+  },
+  {
+    id: '3',
+    parentId: null,
+    uid: '2',
+    content: '日照香炉生紫烟，遥看瀑布挂前川。<br>飞流直下三千尺，疑是银河落九天。',
+    likes: 34116,
+    createTime: new Time().add(-2, 'month'),
+    user: {
+      username: '李白 [唐代]',
+      avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png',
+      homeLink: '/1'
+    }
+  }
+]
+
+// 模拟请求接口获取评论数据
+setTimeout(() => {
+  // 当前登录用户数据
+  config.user = {
+    id: 1,
+    username: '杜甫 [唐代]',
+    avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg',
+  }
+  config.comments = comments
+}, 500)
+
+// 评论提交事件
 let temp_id = 100
 // 提交评论事件
-const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
-  console.log('提交评论: ' + content, parentId, files)
+const submit = ({ content, parentId, finish }: CommentSubmitApi) => {
+  let str = '提交评论:' + content + ';\t父id: ' + parentId
+  console.log(str)
 
-  /**
-   * 上传文件后端返回图片访问地址，格式以'||'为分割; 如:  '/static/img/program.gif||/static/img/normal.webp'
-   */
-  let contentImg = files?.map(e => createObjectURL(e)).join('||')
-  temp_id += 1
+  // 模拟请求接口生成数据
   const comment: CommentApi = {
-    id: String(temp_id),
+    id: String((temp_id += 1)),
     parentId: parentId,
     uid: config.user.id,
-    address: '来自江苏',
     content: content,
-    likes: 0,
-    createTime: '2024-05-16',
-    contentImg: contentImg,
+    createTime: new Time().toString(),
     user: {
       username: config.user.username,
-      avatar: config.user.avatar,
-      level: 6,
-      homeLink: `/${temp_id}`
+      avatar: config.user.avatar
     },
     reply: null
   }
@@ -57,29 +139,7 @@ const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
     UToast({ message: '评论成功!', type: 'info' })
   }, 200)
 }
-// 点赞按钮事件 将评论id返回后端判断是否点赞，然后在处理点赞状态
-const like = (id: string, finish: () => void) => {
-  console.log('点赞: ' + id)
-  setTimeout(() => {
-    finish()
-  }, 200)
-}
-
-config.comments = [
-  {
-    id: '2',
-    parentId: null,
-    uid: '2',
-    address: '来自苏州',
-    content: '知道在学校为什么感觉这么困吗？[大笑2]因为学校，是梦开始的地方。[脱单doge]',
-    likes: 11,
-    createTime: '2024-05-16',
-    user: {
-      username: '悟二空',
-      avatar: 'https://static.juzicon.com/user/avatar-bf22291e-ea5c-4280-850d-88bc288fcf5d-220408002256-ZBQQ.jpeg',
-      level: 1,
-      homeLink: '/2'
-    }
-  }
-]
 </script>
+
+<style lang="scss" scoped>
+</style>

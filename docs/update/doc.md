@@ -2,6 +2,13 @@
 sidebar: false
 ---
 
+## 1.2.1
+### 新增
+- 新增[form]、[table]、[group]、[table]组件
+
+### 重构
+- [comment] 重构评论组件
+
 ## 1.1.5
 ### 重构
 - [chat] 重构聊天组件

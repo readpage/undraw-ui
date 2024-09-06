@@ -22,6 +22,13 @@ comment/alias
 comment/upload
 :::
 
+
+## 加载更多评论
+**点击加载更多，然后向下滚动滚动轴**
+:::demo 使用v-comment-scroll组件实现评论滚动 
+comment/more
+:::
+
 ## 回复分页
 :::demo 使用 `page` 来开启回复分页
 comment/reply-page
@@ -112,29 +119,16 @@ const onCommand = (command: any) => {
 
 ```
 
-## 导航栏排序
-:::demo 使用v-comment-nav组件切换评论最新和排序，也可自定义默认卡槽
-comment/nav-sort
-:::
-
-## 评论滚动
-**点击加载更多，然后向下滚动滚动轴**
-:::demo 使用v-comment-scroll组件实现评论滚动 
-comment/scroll
-:::
-
 ## @mention提及
 :::demo
 comment/mention
 :::
-
 
 ## Comment 属性
 
 | 属性    | 说明 | 类型           | 默认值 |
 |----------|-------|---------------|--------|
 | config | 评论    |  ConfigApi  | -      |
-| upload | 是否上传图片    |  boolean  | false      |
 | page | 是否启动回复分页    |  boolean  | false      |
 | relative-time | 是否使用相对时间    |  boolean  | false      |
 
@@ -142,14 +136,13 @@ comment/mention
 
 | 属性    | 说明 | 类型           | 默认值 |
 |----------|-------|---------------|--------|
+| user   | 当前用户信息 | UserApi  | null |
+| emoji   | 表情包数据 | ConfigApi['emoji']  | null |
+| page   | 是否开启分页 | boolean  | false |
+| mention   | 提及信息 | ConfigApi['mention']  | null |
+| upload | 开启图片上传    |  ConfigApi['upload']  | null      |
+| show      | 显示对象     | ConfigApi['show']     | null  |
 | aTarget       | 头像链接a标签target | _blank / _parent / _self / _top |
-| showForm      | 是否显示评论表单     | boolean     | true  |
-| showContent   | 是否显示评论内容     | boolean     | true  |
-| showReply   | 是否显示回复按钮     | boolean     | true  |
-| showLevel     | 是否显示等级     | boolean     | true  |
-| showLikes     | 是否显示点赞    | boolean     | true  |
-| showAddress     | 是否显示地址    | boolean     | true  |
-| showHomeLink     | 是否启用个人主页链接     | boolean     | true  |
 | placeholder     | 输入框占位文本     | string     | 输入评论（Enter换行，Ctrl + Enter发送）  |
 
 ## Comment 事件
@@ -165,72 +158,75 @@ comment/mention
 
 ## 接口类型
 ```ts
+// 评论对象
 export interface CommentApi {
-    id: string | number;
-    parentId: string | number | null;
-    uid: string | number;
-    address?: string;
-    content: string;
-    likes?: number;
-    contentImg?: string;
-    createTime: string;
-    user: CommentUserApi;
-    reply?: ReplyApi | null;
+  id: string | number // 评论id
+  parentId: string | number | null // 回复的父id, 一级评论为null
+  uid: string | number // 用户id
+  content: string  // 评论内容
+  address?: string  // 用户地址
+  likes?: number  // 点赞数量
+  createTime: string  // 创建时间
+  user: UserApi  // 用户对象
+  reply?: ReplyApi | null // 回复数据
 }
+
+// 回复对象
 export interface ReplyApi {
-    total: number;
-    list: CommentApi[];
+  total: number  // 回复总数
+  list: CommentApi[]  // 回复列表
 }
-export interface CommentUserApi {
-    username: string;
-    avatar: string;
-    level?: number;
-    homeLink?: string;
-}
+
+// 用户对象
 export interface UserApi {
-    id: string | number;
-    username: string;
-    avatar: string;
-    likeIds?: string[] | number[];
+  id: string | number  // 用户id
+  username: string  // 用户名
+  avatar: string  // 用户头像
+  level?: number  // 用户等级
+  homeLink?: string  // 用户个人主页链接
+  likeIds?: string[] | number[]  // 点赞的评论数组id
 }
+
+// 评论配置参数
 export interface ConfigApi {
-    user: UserApi;
-    emoji: EmojiApi;
-    comments: CommentApi[];
-    replyShowSize?: number;
-    showForm?: boolean;
-    showContent?: boolean;
-    showLevel?: boolean;
-    showLikes?: boolean;
-    showAddress?: boolean;
-    showHomeLink?: boolean;
-    showReply?: boolean;
-    placeholder?: string;
-    aTarget?: '_blank' | '_parent' | '_self' | '_top';
-    mentionConfig?: {
-        isLoading?: boolean;
-        show?: boolean;
-        userIdKey?: string;
-        userNameKey?: string;
-        userAvatarKey?: string;
-        mentionColor?: string;
-        userArr?: any[];
-        showAvatar?: boolean;
-    };
+  user: UserApi  // 当前用户
+  emoji: EmojiApi // 表情包数据
+  comments: CommentApi[]  // 评论数据
+  replyShowSize?: number // 回复页大小
+  show?: ShowApi  // 显示对象
+  aTarget?: '_blank' | '_parent' | '_self' | '_top' // 个人主页跳转方式
+  mention?: MentionApi  // @提及
+  upload?: (files: File[], finish: (val: string[]) => void) => void // 图片上传事件
+  page?: boolean // 是否分页
+  relativeTime?: boolean // 是否开启人性化时间
 }
-export interface SubmitParamApi {
-    content: string;
-    parentId: string | null;
-    files?: any[];
-    reply?: CommentApi;
-    finish: (comment?: CommentApi) => void;
-    mentionList?: any[];
+
+interface ShowApi {
+  form?: boolean  // 是否显示评论表单
+  content?: boolean  // 是否显示评论内容
+  level?: boolean // 是否显示等级
+  likes?: boolean  // 是否点赞
+  address?: boolean  // 是否显示地址
+  homeLink?: boolean // 是否跳转个人主页地址
+  reply?: boolean // 是否显示回复按钮
 }
-export interface ReplyPageParamApi {
-    parentId: string;
-    pageNum: number;
-    pageSize: number;
-    finish: (reply: ReplyApi) => void;
+
+// 回复分页事件
+export interface CommentReplyPageApi {
+  parentId: string // 父id
+  pageNum: any // 页数
+  pageSize: number // 页大小
+  finish: (reply: ReplyApi) => void // 回调完成覆盖回复数据
 }
+
+// 提及评论事件
+export interface CommentSubmitApi {
+  content: string // 评论内容
+  parentId: string | null // 父id
+  finish: (comment?: CommentApi) => void // 回调完成添加评论数据
+  reply?: CommentApi // 回复数据
+  mentionList?: any[] // 提及数据
+}
+
 
 ```

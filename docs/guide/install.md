@@ -4,7 +4,7 @@
 
 element-plus可以选择需要版本
 ```sh
-npm i element-plus2.6.0 undraw-ui@1.1.5
+npm i element-plus2.6.0 undraw-ui@1.2.1
 ```
 
 # 导入
@@ -20,7 +20,6 @@ npm install -D unplugin-vue-components
 然后修改 vite.config.ts 或 vue.config.js 的配置。
 
 ```ts
-import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { UndrawUiResolver } from 'undraw-ui/es/resolvers'
 

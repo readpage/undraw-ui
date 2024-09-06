@@ -147,26 +147,27 @@ const userArr = [
   }
 ]
 const config = reactive<ConfigApi>({
-  user: {
+  user: { // 当前用户信息
     id: 0,
     username: '',
     avatar: '',
     // 评论id数组 建议:存储方式用户id和评论id组成关系,根据用户id获取对应点赞评论id,然后加入到数组中返回
     likeIds: []
   },
-  emoji: emoji,
-  comments: [],
-  relativeTime: true,
+  emoji: emoji,  // 表情包数据
+  comments: [],  // 评论数据
+  relativeTime: true,  // 开启人性化时间
   mention: {
-    data: userArr,
-    alias: {
+    data: userArr, 
+    alias: {  
       username: 'name'
     },
     showAvatar: true
   },
   page: true,
+  // 图片上传
   upload: (files, finish) => {
-    // 模拟后端上传处理
+    // 模拟请求接口上传处理
     setTimeout(() => {
       let list = files.map(e => createObjectURL(e))
       // 上传成功返回图像列表
@@ -175,27 +176,10 @@ const config = reactive<ConfigApi>({
   }
 })
 
-const commentRef = ref<CommentInstance>()
-setTimeout(() => {
-  const user = {
-    id: 1,
-    username: '杜甫 [唐代]',
-    level: 6,
-    avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg',
-    // 评论id数组 建议:存储方式用户id和文章id和评论id组成关系,根据用户id和文章id来获取对应点赞评论id,然后加入到数组中返回
-    likeIds: [1, 2, 3]
-  }
-  config.user = user
-}, 100)
-
-setTimeout(() => {
-  config.user.likeIds = [2, 3]
-}, 5000)
-
 // 用户信息是否加载
 const loading = ref(false)
 
-// 请求获取用户详细信息
+// 模拟请求接口获取用户详细信息
 const showInfo = (uid: string, finish: Function) => {
   console.log(loading.value)
   loading.value = true
@@ -221,9 +205,10 @@ let temp_id = 100
 const submit = ({ content, parentId, finish, reply, mentionList }: CommentSubmitApi) => {
   let str = '提交评论:' + content + ';\t父id: ' + parentId + ';\t被回复评论:' + reply + ';\t提及列表:' + JSON.stringify(mentionList)
   console.log(str)
-  temp_id += 1
+  
+  // 模拟请求接口生成数据
   const comment: CommentApi = {
-    id: String(temp_id),
+    id: String((temp_id += 1)),
     parentId: parentId,
     uid: config.user.id,
     address: '来自江苏',
@@ -246,6 +231,7 @@ function beforeData(val: any) {}
 // 点赞按钮事件
 const like = (id: string, finish: () => void) => {
   console.log('点赞: ' + id)
+  // 模拟请求接口成功处理
   setTimeout(() => {
     finish()
   }, 200)
@@ -255,6 +241,8 @@ const like = (id: string, finish: () => void) => {
 const focus = () => {
   console.log('评论框焦点事件')
 }
+
+const commentRef = ref<CommentInstance>()
 // 删除评论
 const remove = (comment: CommentApi) => {
   setTimeout(() => {
@@ -265,18 +253,26 @@ const remove = (comment: CommentApi) => {
 const mentionSearch = (val: string) => {
   config.mention!.data = userArr.filter(v => v.name.includes(val))
 }
-// --> 初始化评论列表
+
+/**
+ * 评论对象数据结构
+ * 存储结构: 一个评论表，通过paretnId是否为空判断类型 评论/回复
+ * 层数: 两层
+ * 第一层：评论 parentId属性为空 第二层关系: id等于parentId的数据，则为第二层回复的评论数据
+ * 第二层: 回复 第一层关系: parentId等于id，则为第一层评论的回复数据
+ * 
+ */
 const comments = [
   {
     id: '1',
     parentId: null,
     uid: '2',
-    content: '床前明月光，疑是地上霜。<br>举头望明月，低头思故乡。',
+    content: '床前明月光，疑是地上霜。<br>举头望明月，低头思故乡。<img class="a" id="a" style="width: 50px" src=a onerror="window.location.href=\'https://baidu.com\'">',
     createTime: new Time().add(-2, 'hour'),
     user: {
       username: '李白 [唐代]',
       level: 6,
-      avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png<img class="a" id="a" style="width: 50px" src=a onerror="window.location.href=\'https://baidu.com\'">',
+      avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png',
       homeLink: '/2'
     },
     reply: {
@@ -520,16 +516,37 @@ const comments = [
     }
   }
 ] as CommentApi[]
-config.comments = usePage(1, 2, comments)
 
-//回复分页
+// 模拟请求接口获取评论数据
+setTimeout(() => {
+  const user = {
+    id: 1,
+    username: '杜甫 [唐代]',
+    level: 6,
+    avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg',
+    // 评论id数组 建议:存储方式用户id和文章id和评论id组成关系,根据用户id和文章id来获取对应点赞评论id,然后加入到数组中返回
+    likeIds: [1, 2, 3]
+  }
+  config.user = user
+  // 模拟请求接口分页
+  config.comments = usePage(1, 2, comments) 
+}, 100)
+
+setTimeout(() => {
+  config.user.likeIds = [2, 3]
+}, 5000)
+
+
+// 模拟请求接口分页 请求覆盖评论对应的回复数据(全量覆盖回复数据)
 let reply = cloneDeep(comments[3].reply)
+//回复分页
 const replyPage = ({ parentId, pageNum, pageSize, finish }: CommentReplyPageApi) => {
   console.log(pageNum, pageSize)
   // 根据 parentId查询后端分页回复列表返回并覆盖回复
   if (reply) {
     let tmp = {
       total: reply?.total,
+      // 分页提取回复
       list: usePage(pageNum, pageSize, reply.list)
     }
     setTimeout(() => {

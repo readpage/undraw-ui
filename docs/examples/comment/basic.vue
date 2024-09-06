@@ -1,7 +1,9 @@
 <template>
-  <u-comment :config="config" @submit="submit" @before-data="beforeData">
+  <u-comment :config="config" @submit="submit">
     <!-- <template>导航栏卡槽</template> -->
     <!-- <template #header>头部卡槽</template> -->
+    <!-- <template #action="{ user }">动作卡槽{{ user.username }}</template> -->
+    <!-- <template #avatar="{ id, user }">头像卡槽{{ user.avatar }}</template> -->
     <!-- <template #info>信息卡槽</template> -->
     <!-- <template #card>用户信息卡片卡槽</template> -->
     <!-- <template #func>功能区域卡槽</template> -->
@@ -13,48 +15,53 @@
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from './emoji'
 import { reactive } from 'vue'
-import { CommentApi, ConfigApi, SubmitParamApi, UToast } from 'undraw-ui'
-// 相对时间
-import { dayjs } from './day'
-
-defineOptions({
-  name: 'comment'
-})
+import { UToast, Time, CommentApi, CommentSubmitApi, ConfigApi } from 'undraw-ui'
 
 const config = reactive<ConfigApi>({
-  user: {} as any,
-  emoji: emoji,
-  comments: [],
-  showLevel: false,
-  showHomeLink: false,
-  showAddress: false,
-  showLikes: false
+  user: {} as any, // 当前用户信息
+  emoji: emoji, // 表情包数据
+  comments: [], // 评论数据
+  relativeTime: true, // 开启人性化时间
+  show: {
+    level: false,    // 关闭等级显示
+    homeLink: false, // 关闭个人主页链接跳转
+    address: false, // 关闭地址信息
+    likes: false    // 关闭点赞按钮显示
+  }
 })
 
+/**
+ * 评论对象数据结构
+ * 存储结构: 一个评论表，通过paretnId是否为空判断类型 评论/回复
+ * 层数: 两层
+ * 第一层：评论 parentId属性为空 第二层关系: id等于parentId的数据，则为第二层回复的评论数据
+ * 第二层: 回复 第一层关系: parentId等于id，则为第一层评论的回复数据
+ * 
+ */
 const comments = [
-  {
+{
     id: '1',
     parentId: null,
-    uid: '1',
-    content: '等闲识得东风面，万紫千红总是春。',
-    createTime: '2023-04-30 16:22',
+    uid: '2',
+    content: '床前明月光，疑是地上霜。<br>举头望明月，低头思故乡。<img class="a" id="a" style="width: 50px" src=a onerror="window.location.href=\'https://baidu.com\'">',
+    createTime: new Time().add(-1, 'day'),
     user: {
-      username: '团团喵喵',
-      avatar: 'https://static.juzicon.com/user/avatar-23ac4bfe-ae93-4e0b-9f13-f22f22c7fc12-221001003441-Y0MB.jpeg',
-      homeLink: ''
+      username: '李白 [唐代]',
+      avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png',
+      homeLink: '/1'
     },
     reply: {
       total: 1,
       list: [
-        {
+      {
           id: '11',
-          parentId: 1,
+          parentId: null,
           uid: '1',
-          content: '[微笑]',
-          createTime: '2023-04-30 16:22',
+          content: '[狗头][微笑2]',
+          createTime: new Time().add(-3, 'day'),
           user: {
-            username: '团团喵喵',
-            avatar: 'https://static.juzicon.com/user/avatar-23ac4bfe-ae93-4e0b-9f13-f22f22c7fc12-221001003441-Y0MB.jpeg'
+            username: '杜甫 [唐代]',
+            avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg',
           }
         }
       ]
@@ -63,38 +70,54 @@ const comments = [
   {
     id: '2',
     parentId: null,
-    uid: '2',
-    content: '长风破浪会有时，直挂云帆济沧海。',
-    createTime: '2023-04-28 09:00',
+    uid: '3',
+    content: '国破山河在，城春草木深。<br>感时花溅泪，恨别鸟惊心。<br>烽火连三月，家书抵万金。<br>白头搔更短，浑欲不胜簪。',
+    createTime: new Time().add(-5, 'day'),
     user: {
-      username: '且美且独立',
-      avatar: 'https://static.juzicon.com/avatars/avatar-20200926115919-a45y.jpeg'
+      username: '杜甫 [唐代]',
+      avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg'
+    }
+  },
+  {
+    id: '3',
+    parentId: null,
+    uid: '2',
+    content: '日照香炉生紫烟，遥看瀑布挂前川。<br>飞流直下三千尺，疑是银河落九天。',
+    likes: 34116,
+    createTime: new Time().add(-2, 'month'),
+    user: {
+      username: '李白 [唐代]',
+      avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png',
+      homeLink: '/1'
     }
   }
 ]
 
-// 评论数据
+// 模拟请求接口获取评论数据
 setTimeout(() => {
   // 当前登录用户数据
   config.user = {
     id: 1,
-    username: 'jack',
-    avatar: 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100'
+    username: '杜甫 [唐代]',
+    avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg',
   }
   config.comments = comments
 }, 500)
+
 // 评论提交事件
 let temp_id = 100
 // 提交评论事件
-const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
-  console.log('提交评论: ' + content, parentId, files)
+const submit = ({ content, parentId, finish }: CommentSubmitApi) => {
+  let str = '提交评论:' + content + ';\t父id: ' + parentId
+  console.log(str)
 
+  // 模拟请求接口生成数据
   const comment: CommentApi = {
     id: String((temp_id += 1)),
     parentId: parentId,
     uid: config.user.id,
     content: content,
-    createTime: new Date().toString(),
+    createTime: new Time().toString(),
     user: {
       username: config.user.username,
       avatar: config.user.avatar
@@ -106,9 +129,7 @@ const submit = ({ content, parentId, files, finish }: SubmitParamApi) => {
     UToast({ message: '评论成功!', type: 'info' })
   }, 200)
 }
-
-// 加载前评论数据处理
-function beforeData(val: any) {
-  val.createTime = dayjs(val.createTime).fromNow()
-}
 </script>
+
+<style lang="scss" scoped>
+</style>

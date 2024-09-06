@@ -50,7 +50,7 @@ import { h, inject, nextTick, reactive, ref } from 'vue'
 import { ClickOutside as vClickOutside, ElButton } from 'element-plus'
 import { UEmoji, UToast, UEditor, translate as $u, EditorInstance } from 'undraw-ui'
 import { CommentApi, CommentFunApi, ConfigApi } from '~/components'
-import { isEmpty, isNull, isImage, createObjectURL } from '~/util'
+import { isEmpty, isNull, isImage } from '~/util'
 
 export interface InputBoxApi {
   focus(): void

@@ -1,4 +1,4 @@
-const raw = '/undraw-ui/static'
+const raw = '/static'
 
 const faceList = [`${raw}/emoji/smile.webp`, `${raw}/emoji/tv/tv.webp`]
 
@@ -7,6 +7,7 @@ const emojiList: {}[] = [
     '[口罩]': `${raw}/emoji/kouzhao.webp`,
     '[狗头]': `${raw}/emoji/goutou.webp`,
     '[微笑]': `${raw}/emoji/smile.webp`,
+    '[微笑2]': `${raw}/emoji/smile2.webp`,
     '[大笑2]': `${raw}/emoji/daxiao2.png`,
     '[OK]': `${raw}/emoji/ok.webp`,
     '[星星眼]': `${raw}/emoji/star.webp`,

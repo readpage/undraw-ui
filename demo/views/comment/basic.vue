@@ -15,25 +15,19 @@
 // static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
 import emoji from '@/assets/emoji'
 import { reactive } from 'vue'
-import { CommentApi, CommentSubmitApi, ConfigApi, UToast } from '~/components'
-import { dayjs } from '@/plugins/day'
+import { UToast, CommentApi, CommentSubmitApi, ConfigApi } from '~/components'
 import { Time } from '~/util'
-// lang.locale = 'en'
-// lang.messages.en = en_US
-defineOptions({
-  name: 'comment'
-})
 
 const config = reactive<ConfigApi>({
-  user: {} as any,
-  emoji: emoji,
-  comments: [],
-  relativeTime: true,
+  user: {} as any, // 当前用户信息
+  emoji: emoji, // 表情包数据
+  comments: [], // 评论数据
+  relativeTime: true, // 开启人性化时间
   show: {
-    level: false,
-    homeLink: false,
-    address: false,
-    likes: false
+    level: false,    // 关闭等级显示
+    homeLink: false, // 关闭个人主页链接跳转
+    address: false, // 关闭地址信息
+    likes: false    // 关闭点赞按钮显示
   }
 })
 
@@ -92,7 +86,7 @@ const comments = [
   }
 ]
 
-// 评论数据
+// 模拟请求接口获取评论数据
 setTimeout(() => {
   // 当前登录用户数据
   config.user = {
@@ -110,6 +104,7 @@ const submit = ({ content, parentId, finish }: CommentSubmitApi) => {
   let str = '提交评论:' + content + ';\t父id: ' + parentId
   console.log(str)
 
+  // 模拟请求接口生成数据
   const comment: CommentApi = {
     id: String((temp_id += 1)),
     parentId: parentId,
@@ -134,8 +129,4 @@ function beforeData(val: any) {
 </script>
 
 <style lang="scss" scoped>
-.u-comment {
-  width: 820px;
-  margin-left: 20px;
-}
 </style>
