@@ -1,4 +1,4 @@
-const raw = '/static'
+const raw = '/undraw-ui/static'
 
 const faceList = [`${raw}/emoji/smile.webp`, `${raw}/emoji/tv/tv.webp`]
 
