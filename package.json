@@ -22,12 +22,12 @@
     "@element-plus/icons-vue": "^2.1.0",
     "@highlightjs/vue-plugin": "^2.1.2",
     "@vueuse/core": "^10.1.2",
-    "dayjs": "^1.11.7",
     "element-plus": "^2.6.0",
     "highlight.js": "^11.7.0",
-    "undraw-ui": "1.1.5",
+    "undraw-ui": "1.2.0",
     "vitepress": "^1.0.0-alpha.72",
     "vue": "^3.3.4",
+    "vue-dompurify-html": "5.1.0",
     "vue-router": "4.2.4"
   },
   "devDependencies": {

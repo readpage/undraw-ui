@@ -14,6 +14,7 @@
 </template>
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
+import { UIcon } from 'undraw-ui'
 
 interface Props {
   label: string // 标题

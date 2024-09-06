@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@element-plus/icons-vue':
     specifier: ^2.1.0
@@ -10,9 +14,6 @@ dependencies:
   '@vueuse/core':
     specifier: ^10.1.2
     version: 10.1.2(vue@3.3.4)
-  dayjs:
-    specifier: ^1.11.7
-    version: 1.11.7
   element-plus:
     specifier: ^2.6.0
     version: 2.6.0(vue@3.3.4)
@@ -20,14 +21,17 @@ dependencies:
     specifier: ^11.7.0
     version: 11.7.0
   undraw-ui:
-    specifier: 1.1.5
-    version: 1.1.5
+    specifier: 1.2.0
+    version: 1.2.0
   vitepress:
     specifier: ^1.0.0-alpha.72
     version: 1.0.0-alpha.72(@algolia/client-search@4.19.1)(@types/node@16.4.7)(sass@1.49.7)(search-insights@2.7.0)
   vue:
     specifier: ^3.3.4
     version: 3.3.4
+  vue-dompurify-html:
+    specifier: 5.1.0
+    version: 5.1.0(vue@3.3.4)
   vue-router:
     specifier: 4.2.4
     version: 4.2.4(vue@3.3.4)
@@ -1449,6 +1453,10 @@ packages:
       esutils: 2.0.3
     dev: true
 
+  /dompurify@3.1.6:
+    resolution: {integrity: sha512-cTOAhc36AalkjtBpfG6O8JimdTMWNXjiePT2xQH/ppBGi/4uIpmj8eKyIkMJErXWARyINV/sB38yf8JCLF5pbQ==}
+    dev: false
+
   /element-plus@2.6.0(vue@3.3.4):
     resolution: {integrity: sha512-MP+N48P+diyndR+GjY+0VOrUmFnajD4U0CkrXIMzmeRmq4+dwi0bdzVo587v4wDo9Hs+ggviyacqm3NS8JYVqw==}
     peerDependencies:
@@ -2698,11 +2706,12 @@ packages:
     resolution: {integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==}
     dev: true
 
-  /undraw-ui@1.1.5:
-    resolution: {integrity: sha512-8khksyEOEaiFSgbWlr0+RkhS1DepIJBvckyjqaFgXkIZxcodauKrcxsQ4vw7lBRi54bIGojEgB1vtmaJime43g==}
+  /undraw-ui@1.2.0:
+    resolution: {integrity: sha512-Y+SBmR/SL/L//7zb5P0v4AA38u4Na2Ouajhg/WSKQrT7ogfGJeVuAqkTxsAQKlTuKOrMfMpxGxN7j9U78LrKug==}
     dependencies:
       element-plus: 2.6.0(vue@3.3.4)
       vue: 3.3.4
+      vue-dompurify-html: 5.1.0(vue@3.3.4)
     transitivePeerDependencies:
       - '@vue/composition-api'
     dev: false
@@ -2818,6 +2827,15 @@ packages:
       vue: 3.3.4
     dev: false
 
+  /vue-dompurify-html@5.1.0(vue@3.3.4):
+    resolution: {integrity: sha512-616o2/PBdOLM2bwlRWLdzeEC9NerLkwiudqNgaIJ5vBQWXec+u7Kuzh+45DtQQrids67s4pHnTnJZLVfyPMxbA==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      dompurify: 3.1.6
+      vue: 3.3.4
+    dev: false
+
   /vue-eslint-parser@8.3.0(eslint@8.12.0):
     resolution: {integrity: sha512-dzHGG3+sYwSf6zFBa0Gi9ZDshD7+ad14DGOdTLjruRVgZXe2J+DcZ9iUhyR48z5g1PqRa20yt3Njna/veLJL/g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -2907,7 +2925,3 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false

@@ -27,7 +27,7 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import { FormApi, UForm } from '~/components'
+import { FormApi, UForm } from 'undraw-ui'
 import { ElTabs, ElTabPane } from 'element-plus'
 import Collapse from './collapse.vue'
 

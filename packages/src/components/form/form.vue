@@ -117,4 +117,8 @@ defineExpose({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+span {
+  font-size: inherit;
+}
+</style>

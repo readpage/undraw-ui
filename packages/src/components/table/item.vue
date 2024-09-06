@@ -50,7 +50,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { TableItemApi } from './table.vue'
-import { ElTableColumn, ElFormItem, ElImage, ElInput, ElDatePicker, ElSelect } from 'element-plus'
+import { ElTableColumn, ElFormItem, ElImage, ElInput, ElDatePicker, ElSelect, ElOption } from 'element-plus'
+import { UIcon } from 'undraw-ui'
 import { Time } from '~/util'
 
 interface Props {

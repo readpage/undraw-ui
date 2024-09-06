@@ -83,7 +83,7 @@
 </template>
 <script setup lang="ts">
 import { nextTick, onMounted, provide, reactive, ref } from 'vue'
-import { UGroup, UTable, UDialog, FormApi, TableApi } from '~/components'
+import { UGroup, UTable, UDialog, FormApi, TableApi } from 'undraw-ui'
 import { ElMessageBox, ElButton, ElTooltip } from 'element-plus'
 import { cloneDeep } from '~/util'
 
