@@ -179,10 +179,7 @@ export interface Props {
   maxHeight?: number | string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  maxHeight: window.innerHeight - 300,
-  pageSize: 10
-})
+const props = defineProps<Props>()
 const tableRef = ref<InstanceType<typeof ElTable>>()
 
 const state = reactive({
@@ -210,7 +207,7 @@ const svg = `
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `
 
-const emptyHeight = computed(() => toPx(props.maxHeight).replace('px') - 40)
+const emptyHeight = computed(() => toPx(windowHeight.value).replace('px') - 40)
 
 const remove = (val: any[]) => {
   ElMessageBox.confirm('你确定要删除吗？', '系统提示', {
@@ -362,7 +359,7 @@ function resize() {
   setWindowHeight()
 }
 onMounted(() => {
-  
+  resize()
 })
 
 onUnmounted(() => {
