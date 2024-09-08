@@ -114,7 +114,7 @@
 <script setup lang="ts">
 import { computed, inject, nextTick, ref, reactive, h, toRefs } from 'vue'
 import { ElImage, ElAvatar } from 'element-plus'
-import { UFold, UIcon, translate as $u } from 'undraw-ui'
+import { UFold, UIcon, translate as $u, mergeObject } from 'undraw-ui'
 import UserCard from './tools/user-card.vue'
 import InputBox from './tools/input-box.vue'
 import type { InputBoxApi } from './tools/input-box.vue'
@@ -140,6 +140,11 @@ const imgList = ref<string[]>()
 
 const data = computed(() => {
   let val = props.data
+  mergeObject(val.user, {
+    level: 1,
+    homeLink: null,
+    likeIds: []
+  })
   beforeData(val)
   return val
 })

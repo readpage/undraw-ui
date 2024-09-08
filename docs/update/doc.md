@@ -4,7 +4,7 @@ sidebar: false
 
 ## 1.2.1
 ### 新增
-- 新增[form]、[table]、[group]、[table]组件
+- 新增[form]、[table]、[group]、[crud]组件
 
 ### 重构
 - [comment] 重构评论组件

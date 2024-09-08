@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import { provide, ref, toRefs, useSlots } from 'vue'
 import { ElAvatar } from 'element-plus'
-import { translate as $u, ReplyPageParamApi, } from 'undraw-ui'
+import { translate as $u, } from 'undraw-ui'
 import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
 import { isEmpty, mergeObject } from '~/util'

@@ -169,8 +169,9 @@ const config = reactive<ConfigApi>({
   upload: (files, finish) => {
     // 模拟请求接口上传处理
     setTimeout(() => {
+      // 模拟返回请求接口字符串地址数组
       let list = files.map(e => createObjectURL(e))
-      // 上传成功返回图像列表
+      // 上传成功返回图像列表地址追加到submit事件的content属性里
       finish(list)
     }, 200)
   }
@@ -258,8 +259,8 @@ const mentionSearch = (val: string) => {
  * 评论对象数据结构
  * 存储结构: 一个评论表，通过paretnId是否为空判断类型 评论/回复
  * 层数: 两层
- * 第一层：评论 parentId属性为空 第二层关系: id等于parentId的数据，则为第二层回复的评论数据
- * 第二层: 回复 第一层关系: parentId等于id，则为第一层评论的回复数据
+ * 第一层：评论 parentId属性为空; 第二层关系: id等于parentId的数据，则为第二层回复的评论数据
+ * 第二层: 回复 parentId属性不为空; 第一层关系: parentId等于第一层id，则为第一层评论的回复数据
  * 
  */
 const comments = [
