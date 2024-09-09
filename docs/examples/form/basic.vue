@@ -14,8 +14,7 @@
 </template>
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { FormApi } from '~/components'
-import { Time } from '~/util'
+import { Time, FormApi } from 'undraw-ui'
 
 const form = reactive<FormApi>({
   data: {},
@@ -23,7 +22,7 @@ const form = reactive<FormApi>({
     {
       label: '用户名',
       prop: 'username',
-      width: 300,
+      width: 200,
       required: true,
       component: {
         name: 'el-input'
@@ -33,7 +32,7 @@ const form = reactive<FormApi>({
       label: '性别',
       prop: 'sex',
       value: '',
-      width: 200,
+      width: 150,
       rule: [{ required: true, message: '性别不能为空', trigger: 'blur' }],
       component: {
         name: 'el-select',

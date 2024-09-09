@@ -46,29 +46,29 @@ export interface ComponentApi {
 }
 
 export interface ItemApi {
-  label?: string
-  prop?: string
-  value?: any
-  width?: number
-  labelWidth?: number
-  component?: any
-  required?: boolean
-  rule?: Arrayable<FormItemRule>
-  group?: string
+  label?: string // 标签文本
+  prop?: string  // 字段
+  value?: any   // 默认值
+  width?: number  // 组件宽度
+  labelWidth?: number // 表单标签的宽度
+  component?: any // 组件
+  required?: boolean // 是否必填
+  rule?: Arrayable<FormItemRule> // 验证规则
+  group?: string // 分组显示
 }
 
 interface GroupApi {
-  type: 'tabs' | 'collapse'
-  labels: string[]
-  value?: string
+  type: 'tabs' | 'collapse' // 分组类型
+  labels: string[] // 分组标签列表
+  value?: string // 默认值
 }
 
 export interface FormApi {
-  items: ItemApi[]
-  data: any
+  items: ItemApi[] // 表单项
+  data: any // 数据
   labelWidth?: number
-  labelPosition?: 'right' | 'left' | 'top'
-  group?: GroupApi
+  labelPosition?: 'right' | 'left' | 'top' // 标签文本对齐方式
+  group?: GroupApi // 分组
 }
 
 interface Props {

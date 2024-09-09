@@ -18,6 +18,7 @@ const element = {
   ],
   UCommentScroll: [
     'undraw-ui/es/index.css',
+    'element-plus/es/components/link/style/css',
     'undraw-ui/es/components/comment-scroll/comment-scroll.css'
   ],
   UDivider: [

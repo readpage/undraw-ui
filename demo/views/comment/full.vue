@@ -164,7 +164,7 @@ const config = reactive<ConfigApi>({
     },
     showAvatar: true
   },
-  page: true,
+  page: true, // 开启分页
   // 图片上传
   upload: (files, finish) => {
     // 模拟请求接口上传处理
@@ -541,14 +541,14 @@ setTimeout(() => {
 // 模拟请求接口分页 请求覆盖评论对应的回复数据(全量覆盖回复数据)
 let reply = cloneDeep(comments[3].reply)
 //回复分页
-const replyPage = ({ parentId, pageNum, pageSize, finish }: CommentReplyPageApi) => {
-  console.log(pageNum, pageSize)
+const replyPage = ({ current, size, parentId, finish }: CommentReplyPageApi) => {
+  console.log(current, size)
   // 根据 parentId查询后端分页回复列表返回并覆盖回复
   if (reply) {
     let tmp = {
       total: reply?.total,
       // 分页提取回复
-      list: usePage(pageNum, pageSize, reply.list)
+      list: usePage(current, size, reply.list)
     }
     setTimeout(() => {
       finish(tmp)

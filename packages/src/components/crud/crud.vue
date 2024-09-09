@@ -92,9 +92,9 @@ defineOptions({
 })
 
 export interface CrudApi {
-  save?: (val: any, finish: () => void) => void
-  update?: (val: any, finish: () => void) => void
-  remove?: (val: any[], finish: () => void) => void
+  save?: (val: any, finish: () => void) => void // 添加
+  update?: (val: any, finish: () => void) => void // 修改
+  remove?: (val: any[], finish: () => void) => void // 删除
 }
 
 interface Props {

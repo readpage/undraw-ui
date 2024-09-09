@@ -95,6 +95,18 @@ export const zhConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
               link: '/components/chat'
             },
             {
+              text: 'Form 表单',
+              link: '/components/form'
+            },
+            {
+              text: 'Table 表格',
+              link: '/components/table'
+            },
+            {
+              text: 'Crud 表格的增删改查',
+              link: '/components/crud'
+            },
+            {
               text: 'Counter 滚动数字',
               link: '/components/counter'
             },

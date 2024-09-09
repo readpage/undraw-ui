@@ -59,7 +59,7 @@ interface CommentSubmit2Api {
 export interface CommentFunApi {
   like: (id: string) => void
   showInfo: (uid: string, finish: Function) => void
-  replyPage: ({ parentId, pageNum, pageSize, finish }: CommentReplyPageApi) => void
+  replyPage: ({ current, size, parentId, finish }: CommentReplyPageApi) => void
   submit: ({ content, parentId, reply, clear }: CommentSubmit2Api) => void
   focus: () => void
   cancelFn: () => void
@@ -68,9 +68,9 @@ export interface CommentFunApi {
 }
 
 export interface CommentReplyPageApi {
+  current: any
+  size: number
   parentId: string
-  pageNum: any
-  pageSize: number
   finish: (reply: ReplyApi) => void
 }
 

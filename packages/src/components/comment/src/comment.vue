@@ -67,7 +67,7 @@ const { comments, show } = toRefs(props.config)
 const emit = defineEmits<{
   (e: 'submit', { content, parentId, finish, reply, mentionList}: CommentSubmitApi): void
   (e: 'like', id: string, finish: () => void): void
-  (e: 'replyPage', { parentId, pageNum, pageSize, finish }: CommentReplyPageApi): void
+  (e: 'replyPage', { current, size, parentId, finish }: CommentReplyPageApi): void
   (e: 'showInfo', id: string, finish: Function): void
   (e: 'focus'): void
   (e: 'cancel'): void
@@ -187,8 +187,8 @@ provide('config', props.config)
 provide('comment-fun', {
   like: like,
   showInfo: (uid, finish) => emit('showInfo', uid, finish),
-  replyPage: ({ parentId, pageNum, pageSize, finish}) => {
-    emit('replyPage', { parentId, pageNum, pageSize, finish })
+  replyPage: ({ current, size, parentId, finish}) => {
+    emit('replyPage', { current, size, parentId,finish })
   },
   submit: submit,
   focus: () => emit('focus'),

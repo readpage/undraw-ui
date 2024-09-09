@@ -118,8 +118,7 @@ const finish = (val: any) => {
  */
 const changePage = (val: number) => {
   state.currentPage = val
-  console.log(val)
-  replyPage({parentId: props.id, pageNum: val, pageSize: state.pageSize, finish: reply => finish(reply)})
+  replyPage({ current: val, size: state.pageSize, parentId: props.id, finish: reply => finish(reply)})
 }
 
 const currentChange = (val: number) => {
@@ -128,7 +127,7 @@ const currentChange = (val: number) => {
 
 const sizeChange = (val: number) => {
   state.pageSize = val
-  replyPage({parentId: props.id, pageNum: val, pageSize: state.pageSize, finish: reply => finish(reply)})
+  replyPage({ current: val, size: state.pageSize, parentId: props.id, finish: reply => finish(reply)})
 }
 </script>
 
