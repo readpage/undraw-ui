@@ -17,6 +17,7 @@ export * from './form'
 export * from './group'
 export * from './table'
 export * from './crud'
+export * from './context-menu'
 
 import Anchor from './anchor'
 import Chat from './chat'

@@ -79,6 +79,7 @@
         </div>
       </template>
     </u-dialog>
+    <slot></slot>
   </div>
 </template>
 <script setup lang="ts">

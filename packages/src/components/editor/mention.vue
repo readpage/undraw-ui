@@ -39,7 +39,7 @@ const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 const selectedIndex = ref(0)
 
 const emit = defineEmits<{
-  (e: 'insert', val: any): void
+  (e: 'select', val: any): void
 }>()
 
 watch(
@@ -66,7 +66,7 @@ function setPosition() {
   // 设置弹出层的位置
   let mention = mentionRef.value
   if (mention && rect && editor) {
-    mention.style.top = `${rect.top - editor.top}px`
+    mention.style.top = `${rect.top - editor.top + 20}px`
     mention.style.left = `${rect.left - editor.left}px`
   }
 }
@@ -104,7 +104,7 @@ const moveSelection = (step: number) => {
 const clickSelectedItem = (index: number) => {
   selectedIndex.value = index
   if (props.data) {
-    emit('insert', props.data[selectedIndex.value])
+    emit('select', props.data[selectedIndex.value])
   }
 }
 

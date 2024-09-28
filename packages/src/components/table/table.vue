@@ -145,6 +145,13 @@ defineOptions({
   name: 'UTable'
 })
 
+interface ComponentApi {
+  name: string // 组件名称
+  options?: any[] | {label: string, value: string}[] // el-select 选择项
+  disabled?: boolean // 是否禁用
+  placeholder?: string // 占位文本
+}
+
 export interface TableItemApi {
   label?: string  // 标签文本
   prop?: string  // 字段
@@ -153,12 +160,11 @@ export interface TableItemApi {
   minWidth?: number // 列的最小宽度
   align?: 'left' | 'center' | 'right' // 对齐方式
   fixed?: 'left' | 'right' | false 
-  type?: 'basic' | 'index' | 'selection' | 'img' | 'input' | 'date' | 'select'  // 列的类型
-  | 'row-add' | 'custom' | 'operation'
+  type?: 'basic' | 'index' | 'selection' | 'img' | 'row-add' | 'custom' | 'operation' | 'component' // 列的类型
   editor?: boolean // 是否可编辑
   required?: boolean  // 是否必填
   rule?: Arrayable<FormItemRule>  // 验证规则
-  options?: {label: any, value: any}[] | any[]  // select组件标签列表
+  component?: ComponentApi | any // 组件
 }
 
 export interface TableApi {

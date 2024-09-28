@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { getToastType, getDefaultToastType } from './toastTypes'
 import { UIcon } from 'undraw-ui'
 

@@ -10,6 +10,7 @@
       @blur="onBlur"
       @keydown="keyDown"
       @paste="pasteFn"
+      @mouseup="onMouseup"
       @keydown.up.prevent="moveSelection(-1)"
       @keydown.down.prevent="moveSelection(1)"
       v-html="text"
@@ -32,14 +33,13 @@
         </div>
       </div>
     </div>
-    <slot name="footer">
-    </slot>
-    <Mention v-show="state.showMention" ref="mentionRef" v-bind="mention" :show-mention="state.showMention" @insert="insertUser" />
+    <slot name="footer"></slot>
+    <Mention v-show="state.showMention" ref="mentionRef" v-bind="mention" :show-mention="state.showMention" @select="onSelect" />
   </div>
 </template>
 <script setup lang="ts">
 import { UToast, cloneDeep, isEmpty } from 'undraw-ui'
-import { ClickOutside as vClickOutside } from 'element-plus'
+import { affixEmits, ClickOutside as vClickOutside } from 'element-plus'
 import { computed, nextTick, reactive, ref, toRefs, watch } from 'vue'
 import Mention, { MentionApi } from './mention.vue'
 defineOptions({
@@ -64,6 +64,12 @@ const state = reactive({
   active: false,
   isLocked: false,
   showMention: false
+})
+
+const at = reactive({
+  focusNode: window.getSelection()?.focusNode,
+  index: -1,
+  searchStr: ''
 })
 
 const range = ref<Range>()
@@ -100,37 +106,6 @@ const emit = defineEmits<{
   (e: 'change-img-list', val: any[]): void
 }>()
 
-function findDiff(str1: string, str2: string) {
-  let shortStr = str1.length < str2.length ? str1 : str2
-  let longStr = shortStr == str1 ? str2 : str1
-  let start = shortStr.length
-  let end = start
-  let diffs = []
-
-  for (let i = 0; i < shortStr.length; i++) {
-    if (shortStr[i] != longStr[i]) {
-      start = i
-      break
-    }
-  }
-
-  let n = longStr.length - shortStr.length
-  for (let i = shortStr.length - 1; i >= 0; i--) {
-    if (shortStr[i] != longStr[i + n]) {
-      end = i + n
-      break
-    }
-  }
-
-  if (start >= end) {
-    end = longStr.length - 1
-  }
-
-  diffs.push(longStr.substring(start, end + 1))
-
-  return diffs
-}
-
 watch(
   () => props.modelValue,
   (val, oldVal) => {
@@ -138,19 +113,6 @@ watch(
       clear()
     }
     if (!state.isLocked) text.value = val
-
-    // 提及处理
-    let v = getRange(editorRef.value)
-    if (oldVal.length > val.length && findDiff(oldVal, val)[0].includes('@') && v.startContainer.textContent?.slice(-1) != '@') {
-      state.showMention = false
-    } else if (isEmpty(val)) {
-      state.showMention = false
-    }
-    if (state.showMention) {
-      let keyword = v.startContainer.textContent?.trim() || ''
-      keyword = keyword.substring(keyword.lastIndexOf('@') + 1)
-      emit('mention-search', keyword)
-    }
   }
 )
 
@@ -163,6 +125,7 @@ function onFocus(event: FocusEvent) {
 function focus() {
   nextTick(() => {
     editorRef.value?.focus()
+    range.value = getRange()
   })
 }
 
@@ -195,18 +158,52 @@ function clear() {
   }
 }
 
+function getCursorBeforeStr() {
+  let cursorBeforeStr = ''
+  const selection: any = window.getSelection()
+  if (selection?.focusNode?.data) {
+    at.focusNode = selection.focusNode
+    cursorBeforeStr = selection.focusNode?.data.slice(0, selection.focusOffset)
+  }
+  return cursorBeforeStr
+}
+
+function getSearchStr() {
+  let searchStr = null
+  let cursorBeforeStr = getCursorBeforeStr()
+  const lastAtIndex = cursorBeforeStr?.lastIndexOf('@')
+  if (lastAtIndex !== -1) {
+    searchStr = cursorBeforeStr.slice(lastAtIndex + 1)
+    at.index = lastAtIndex
+    at.searchStr = searchStr
+  }
+  return searchStr
+}
+
+function getShowMention() {
+  let searchStr = getSearchStr()
+  return searchStr != null && !(searchStr.includes(' ') || searchStr.trim() != searchStr)
+}
+
 // 输入事件
 function onInput(event: InputEvent) {
   range.value = getRange()
-  if (event.data == '@' && props.mention?.data) {
-    state.showMention = true
-  } else if (event.data == ' ') {
-    state.showMention = false
+  state.showMention = getShowMention()
+  if (state.showMention) {
+    let searchStr = getSearchStr()
+    emit('mention-search', searchStr || '')
   }
-  const { innerHTML } = event.target as HTMLDivElement
 
+  const { innerHTML } = event.target as HTMLDivElement
   emit('update:modelValue', innerHTML)
   emit('input', event)
+}
+
+function onMouseup() {
+  range.value = getRange()
+  let searchStr = getSearchStr()
+  console.log('mousedown', searchStr)
+  state.showMention = getShowMention()
 }
 
 // 键盘事件
@@ -222,12 +219,24 @@ const keyDown = (e: KeyboardEvent) => {
   } else if (e.key == 'Enter' && state.showMention) {
     // 提及回车事件
     e.preventDefault()
-    insertUser(mentionRef.value?.getSelectItem())
+    onSelect(mentionRef.value?.getSelectItem())
   } else if (e.key == 'Enter') {
     // 回车事件
     // console.log('Enter')
+  } else if (e.key == 'Backspace') {
+    let selection = window.getSelection()
+    let ran = range.value
+    let atEl = selection?.focusNode?.parentNode as HTMLElement
+    if (atEl && ran && selection && atEl.tagName == 'SPAN' && atEl.classList.contains('at-span')) {
+      ran.setStartBefore(atEl)
+      ran.setEndAfter(atEl.nextSibling?.textContent == ' ' ? atEl.nextSibling : atEl)
+      ran.deleteContents()
+      selection.removeAllRanges()
+      selection.addRange(ran)
+      state.showMention = false
+      e.preventDefault()
+    }
   }
-  mentionHandler(e)
 }
 
 // 粘贴事件
@@ -249,30 +258,70 @@ function pasteFn(event: ClipboardEvent) {
 }
 
 /**
+ * @param id 唯一的id 可以uid
+ * @param name 用户姓名
+ * @param color 回显颜色
+ * @returns
+ */
+const createAtSpanTag = (id: number | string, name: string, color = 'var(--u-color-primary)') => {
+  const ele = document.createElement('span')
+  ele.className = 'at-span'
+  ele.style.color = color
+  ele.id = id.toString()
+  ele.innerHTML = `@${name}`
+  return ele
+}
+
+/**
  * 光标处追加内容
  * @param val 内容
  * @param func Range处理事务
  */
-function addText(val: string, func?: Function) {
-  let selection = window.getSelection()
-  if (selection) {
-    // 为空初始化光标
-    if (!range.value) {
-      range.value = getRange(editorRef.value)
-    }
-    mentionHandler()
-    // 删除选中内容
-    range.value.deleteContents()
+function addText(val: string) {
+  let editor = editorRef.value
+  // 为空初始化光标
+  if (!range.value) {
+    range.value = getRange(editor)
+  }
+  let ran = range.value
+  // 获取选定对象
+  let selection = getSelection()
+  // 删除选中内容
+  range.value.deleteContents()
 
-    func && func(range.value)
-
-    // 添加内容
-    range.value.insertNode(range.value.createContextualFragment(val))
-    range.value.collapse(false)
-
+  // 判断选定对象范围是编辑框还是文本节点
+  if (editor && selection) {
+    // 存在最后光标对象，选定对象清除所有光标并添加最后光标还原之前的状态
     selection.removeAllRanges()
     selection.addRange(range.value)
 
+    if (selection.anchorNode?.nodeName != '#text') {
+      // 如果是编辑框范围。则创建表情文本节点进行插入
+      var emojiText = document.createTextNode(val)
+      ran.insertNode(emojiText)
+      // 清除选定对象的所有光标对象
+      selection.removeAllRanges()
+      // 插入新的光标对象
+      selection.addRange(ran)
+      selection.collapseToEnd()
+    } else {
+      // 获取光标对象的范围界定对象，一般就是textNode对象
+      let textNode = ran.startContainer
+      // 获取光标位置
+      var rangeStartOffset = ran.startOffset
+      // 文本节点在光标位置处插入新的表情内容
+      ;(textNode as Text).insertData(rangeStartOffset, val)
+      // 光标移动到到原来的位置加上新内容的长度
+      ran.setStart(textNode, rangeStartOffset + val.length)
+      // 光标开始和光标结束重叠
+      ran.collapse(true)
+      // 清除选定对象的所有光标对象
+      selection.removeAllRanges()
+      // 插入新的光标对象
+      selection.addRange(ran)
+    }
+    // 记录最后光标对象
+    range.value = getRange(editor)
     emit('update:modelValue', editorRef.value?.innerHTML || '')
     const event = editorRef.value as unknown as Event
     emit('input', event)
@@ -285,41 +334,48 @@ const removeImg = (val: number) => {
   // emit('change-img-list', cloneDeep(imgList?.value))
 }
 
-// -->提及
-function mentionHandler(e?: KeyboardEvent) {
-  let v = getRange(editorRef.value)
-  let element = v.startContainer.parentElement
-  if (element?.tagName == 'SPAN' && element.id == 'mention') {
-    if (e) {
-      if (e.key == 'Backspace') {
-        v.deleteContents()
-        v.selectNode(element)
-        v.deleteContents()
-      } else if (e.key == ' ') {
-        v.selectNode(element)
-        v.deleteContents()
-        v.insertNode(v.createContextualFragment(`<span>${element.textContent?.trim()}</span>` || ''))
-        v.collapse(false)
-      }
-      e.preventDefault()
-    } else {
-      v.selectNode(element)
-    }
-  }
-}
 
 // 提及添加
-function insertUser(val: any) {
-  if (val) {
-    let alias = mention.value.alias
-    addText(`<span data-id="${val[alias.id]}" id="mention" style="color: var(--u-color-primary)">@${val[alias.username]}</span>&nbsp;`, (v: Range) => {
-      let s = v.startContainer.textContent || ''
-      let index = s.substring(0, v.startOffset).lastIndexOf('@')
-      v.setStart(v.startContainer, index)
-      v.deleteContents()
-    })
+function onSelect(val: any) {
+  const selection = window.getSelection()
+  let ran = range.value
+  let alias = mention.value.alias
+  let atEl = at.focusNode?.parentNode as HTMLElement
+  if (val && selection && ran) {
+    // 选中输入的 @关键字  -> @张
+    if (atEl && atEl.tagName == 'SPAN' && atEl.classList.contains('at-span')) {
+      ran.setStartBefore(atEl)
+      ran.setEndAfter(atEl.nextSibling?.textContent == ' ' ? atEl.nextSibling : atEl)
+      ran.deleteContents()
+      ran.insertNode(document.createTextNode('@'))
+    } else {
+      ran.setStart(at.focusNode as Node, at.index)
+      ran.setEnd(at.focusNode as Node, at.index + 1 + at.searchStr.length)
+    }
+   
+    // 删除输入的 @关键字
+    ran.deleteContents()
+    // 创建元素节点
+    const newNode = createAtSpanTag(val[alias.id], val[alias.username])
+    // 插入元素节点
+    ran.insertNode(newNode)
+    const spanNode = document.createElement('span')
+    spanNode.innerHTML = ' '
+    spanNode.style.whiteSpace = 'pre-wrap'
+    newNode.after(spanNode)
+    ran.setStartAfter(spanNode)
+   
+    selection.removeAllRanges()
+    selection.addRange(ran)
+    // 关闭弹框
+    state.showMention = false
+    // 记录最后光标对象
+    // range.value = getRange(editorRef.value)
+
+    emit('update:modelValue', editorRef.value?.innerHTML || '')
+    const event = editorRef.value as unknown as Event
+    emit('input', event)
   }
-  state.showMention = false
   emit('mention-search', '')
 }
 

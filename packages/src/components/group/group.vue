@@ -1,5 +1,5 @@
 <template>
-  <el-tabs v-if="form.group && form.group.type == 'tabs'" v-model="form.group.value">
+  <el-tabs class="u-group" v-if="form.group && form.group.type == 'tabs'" v-model="form.group.value">
     <template v-for="(label, index) in form.group.labels" :key="index">
       <el-tab-pane :label="label" :name="label">
         <u-form ref="formRef" :form="form">
@@ -22,7 +22,11 @@
     </template>
   </template>
   <template v-else>
-    <u-form ref="formRef" :form="form"></u-form>
+    <u-form ref="formRef" :form="form">
+      <template v-for="(item, index) in form.items" :key="index" #[`form-${item.prop}`]="v">
+        <slot v-if="!item.component" :name="`form-${item.prop}`" v-bind="v" />
+      </template>
+    </u-form>
   </template>
 </template>
 <script setup lang="ts">
@@ -65,7 +69,7 @@ function init() {
 init()
 
 function resetFields() {
-  (formRef.value[0] || formRef.value).resetFields()
+  ;(formRef.value[0] || formRef.value).resetFields()
   let group = props.form.group
   if (group) {
     group.value = group.labels[0]
@@ -78,4 +82,10 @@ defineExpose({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+.u-group {
+  .el-tabs__content {
+    overflow: unset;
+  }
+}
+</style>

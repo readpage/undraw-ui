@@ -11,9 +11,7 @@
     draggable
   >
     <div class="full-screen" @click="fullscreen = !fullscreen">
-      <svg v-if="fullscreen" width="16" height="16" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-        <path fill="currentColor" d="M128 544h768a32 32 0 1 0 0-64H128a32 32 0 0 0 0 64z"></path>
-      </svg>
+      <svg v-if="fullscreen" width="16" height="16" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M704 354.133333H896c17.066667 0 34.133333-12.8 34.133333-34.133333s-17.066667-29.866667-34.133333-29.866667h-162.133333V128c0-17.066667-12.8-34.133333-34.133334-34.133333s-25.6 17.066667-25.6 34.133333v192c0 17.066667 12.8 34.133333 29.866667 34.133333zM320 98.133333c-17.066667 0-29.866667 12.8-29.866667 29.866667v162.133333H128c-17.066667 0-34.133333 12.8-34.133333 34.133334s17.066667 29.866667 34.133333 29.866666h192c17.066667 0 34.133333-12.8 34.133333-34.133333V128c0-17.066667-17.066667-29.866667-34.133333-29.866667zM320 674.133333H128c-17.066667 0-34.133333 12.8-34.133333 34.133334s12.8 34.133333 34.133333 34.133333h162.133333V896c0 17.066667 12.8 34.133333 34.133334 34.133333s34.133333-12.8 34.133333-34.133333v-192c-4.266667-17.066667-21.333333-29.866667-38.4-29.866667zM896 674.133333h-192c-17.066667 0-34.133333 12.8-34.133333 34.133334V896c0 17.066667 12.8 34.133333 34.133333 34.133333s34.133333-12.8 34.133333-34.133333v-162.133333H896c17.066667 0 34.133333-12.8 34.133333-34.133334s-17.066667-25.6-34.133333-25.6z" p-id="5080"  fill="currentColor"></path></svg>
       <svg v-else width="16" height="16" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
         <path
           fill="currentColor"
@@ -21,7 +19,9 @@
         ></path>
       </svg>
     </div>
-    <slot></slot>
+    <el-scrollbar ref="scrollbarRef">
+      <slot></slot>
+    </el-scrollbar>
     <template v-if="$slots.footer" #footer>
       <slot name="footer"></slot>
     </template>
@@ -29,8 +29,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { ElDialog } from 'element-plus'
+import { onMounted, ref, watch } from 'vue'
+import { ElDialog, ElScrollbar } from 'element-plus'
 
 defineOptions({
   name: 'UDialog'
@@ -73,6 +73,7 @@ watch(
     emit('update:modelValue', val)
   }
 )
+
 </script>
 
 <style lang="scss">

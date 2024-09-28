@@ -42,9 +42,12 @@ const table = reactive<TableApi>({
       prop: 'sex',
       value: '男',
       width: 300,
-      type: 'select',
+      type: 'component',
       rule: [{ required: true, message: '性别不能为空', trigger: 'blur' }],
-      options: ['男', '女']
+      component: {
+        name: 'el-select',
+        options: ['男', '女']
+      }
     },
     {
       label: '年龄',
@@ -64,7 +67,10 @@ const table = reactive<TableApi>({
       prop: 'date',
       value: new Time().value,
       minWidth: 100,
-      type: 'date'
+      type: 'component',
+      component: {
+        name: 'el-date'
+      }
     },
     {
       label: '操作',

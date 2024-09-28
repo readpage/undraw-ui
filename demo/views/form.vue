@@ -26,7 +26,8 @@ const form = reactive<FormApi>({
       width: 300,
       required: true,
       component: {
-        name: 'el-input'
+        name: 'el-input',
+        disabled: true
       }
     },
     {
@@ -59,7 +60,7 @@ const form = reactive<FormApi>({
       prop: 'date',
       value: new Time().value,
       component: {
-        name: 'el-date'
+        name: 'el-date',
       }
     }
   ]

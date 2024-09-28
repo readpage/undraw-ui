@@ -22,7 +22,12 @@ export interface CommentApi {
   address?: string
   likes?: number
   createTime: string
-  user: UserApi
+  user: {
+    username: string
+    avatar: string
+    level?: number
+    homeLink?: string
+  }
   reply?: ReplyApi | null
 }
 

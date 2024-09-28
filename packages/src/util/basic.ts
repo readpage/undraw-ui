@@ -1,4 +1,6 @@
 import { isObject } from "undraw-ui"
+import { isNull } from "./isEmpty"
+import { cloneDeep } from "./clone-deep"
 
 /**
  * 转换字符串，为null转换为空字符串
@@ -112,5 +114,4 @@ export function mergeObject(target: any, source: any) {
       target[key] = source[key];
     }
   }
-  return target;
 }

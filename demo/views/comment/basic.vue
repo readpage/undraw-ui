@@ -39,8 +39,8 @@ const config = reactive<ConfigApi>({
  * 第二层: 回复 parentId属性不为空; 第一层关系: parentId等于第一层id，则为第一层评论的回复数据
  * 
  */
-const comments = [
-{
+const comments: CommentApi[] = [
+  {
     id: '1',
     parentId: null,
     uid: '2',
