@@ -35,7 +35,11 @@ const table = reactive<TableApi>({
       required: true,
       width: 300,
       align: 'center',
-      type: 'input'
+      type: 'component',
+      component: {
+        name: 'el-input',
+        disabled: true
+      }
     },
     {
       label: '性别',
@@ -46,7 +50,7 @@ const table = reactive<TableApi>({
       rule: [{ required: true, message: '性别不能为空', trigger: 'blur' }],
       component: {
         name: 'el-select',
-        options: ['男', '女']
+        options: ['男', '女'],
       }
     },
     {

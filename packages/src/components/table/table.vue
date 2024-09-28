@@ -150,6 +150,7 @@ interface ComponentApi {
   options?: any[] | {label: string, value: string}[] // el-select 选择项
   disabled?: boolean // 是否禁用
   placeholder?: string // 占位文本
+  [key: string]: any
 }
 
 export interface TableItemApi {
@@ -164,7 +165,7 @@ export interface TableItemApi {
   editor?: boolean // 是否可编辑
   required?: boolean  // 是否必填
   rule?: Arrayable<FormItemRule>  // 验证规则
-  component?: ComponentApi | any // 组件
+  component?: ComponentApi // 组件
 }
 
 export interface TableApi {
