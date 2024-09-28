@@ -182,7 +182,7 @@ function getSearchStr() {
 
 function getShowMention() {
   let searchStr = getSearchStr()
-  return searchStr != null && !(searchStr.includes(' ') || searchStr.trim() != searchStr)
+  return props.mention != null && searchStr != null && !(searchStr.includes(' ') || searchStr.trim() != searchStr)
 }
 
 // 输入事件
