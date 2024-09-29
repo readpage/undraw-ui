@@ -22,6 +22,7 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 3001
   },
+  ssr: { noExternal: ['element-plus', 'undraw-ui'] },
   // 打包
   build: {
     // 打包输出目录

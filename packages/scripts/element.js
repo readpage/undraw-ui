@@ -8,7 +8,3 @@ fs.writeFileSync('./es/index.js', newContent)
 
 fs.appendFileSync('./es/index.js', 'export * from "./language/index.js";')
 fs.appendFileSync('./es/index.d.ts', 'export * from "./language";')
-fs.appendFileSync('./es/components/toast/index.js', `import 'undraw-ui/es/index.css';import 'undraw-ui/es/components/icon/icon.css';import 'undraw-ui/es/components/toast/toast.css';`)
-fs.appendFileSync('./es/components/toast/index.d.ts', `import 'undraw-ui/es/index.css';import 'undraw-ui/es/components/icon/icon.css';import 'undraw-ui/es/components/toast/toast.css';`)
-fs.appendFileSync('./es/components/context-menu/index.js', `import 'undraw-ui/es/index.css';import 'undraw-ui/es/components/context-menu/context-menu.css';`)
-fs.appendFileSync('./es/components/context-menu/index.d.ts', `import 'undraw-ui/es/index.css';import 'undraw-ui/es/components/context-menu/context-menu.css';`)
