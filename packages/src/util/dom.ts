@@ -15,7 +15,7 @@ export function createNode(dom: any, options: object) {
   render(vnode, container)
   // 然后将container appendChild 到body上面
   document.body.appendChild(container.firstElementChild!)
-  return { vnode, container }
+  return { vnode, container: container }
 }
 
 

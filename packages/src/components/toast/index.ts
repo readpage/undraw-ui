@@ -1,16 +1,18 @@
 import toast from './index.vue'
-import { createNode, removeNode } from '~/util'
+import { createNode, mergeObject, removeNode } from '~/util'
 import type { ToastApi } from './index.vue'
 
 // 函数式调用
 export function UToast(options: ToastApi) {
-  let duration = options.duration
   if (!options.message) return
-  options.duration = duration ? duration : 1000
-  const { vnode, div } = createNode(toast as any, options)
+  mergeObject(options, {
+    duration: 1000,
+    type: 'normal'
+  })
+  const { vnode, container } = createNode(toast as any, options)
 
   setTimeout(() => {
-    removeNode(div)
+    removeNode(container)
   }, options.duration + 300)
   return vnode
 }

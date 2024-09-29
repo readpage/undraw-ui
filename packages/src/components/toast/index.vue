@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch } from 'vue'
-import { getToastType, getDefaultToastType } from './toastTypes'
+import { getToastType } from './toastTypes'
 import { UIcon } from 'undraw-ui'
 
 export interface ToastApi {
@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<ToastApi>(), {
   type: 'normal'
 })
 
-const alert = reactive(getDefaultToastType().options)
+const alert = reactive(getToastType('normal').options)
 const visible = ref(false)
 
 watch(

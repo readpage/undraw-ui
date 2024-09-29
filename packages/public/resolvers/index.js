@@ -35,11 +35,6 @@ const element = {
     'undraw-ui/es/components/fold/fold.css',
     'element-plus/es/components/button/style/css'
   ],
-  UToast: [
-    'undraw-ui/es/index.css',
-    'undraw-ui/es/components/toast/toast.css',
-    'undraw-ui/es/components/icon/icon.css'
-  ],
   UAnchor: [
     'undraw-ui/es/index.css',
     'undraw-ui/es/components/anchor/anchor.css',

@@ -28,8 +28,8 @@ const toastTypes: toastType[] = [
   {
     type: 'warn',
     options: {
-      color: '#fdf6ec',
-      bgColor: '#e6a23c',
+      color: '#e6a23c',
+      bgColor: '#fdf6ec',
       icon: '<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1980"><path d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896z m0 192a58.432 58.432 0 0 0-58.24 63.744l23.36 256.384a35.072 35.072 0 0 0 69.76 0l23.296-256.384A58.432 58.432 0 0 0 512 256z m0 512a51.2 51.2 0 1 0 0-102.4 51.2 51.2 0 0 0 0 102.4z" p-id="1981"></path></svg>'
     }
   },
@@ -40,23 +40,17 @@ const toastTypes: toastType[] = [
       bgColor: '#fef0f0',
       icon: '<svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8851"><path d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896z m0 393.664L407.936 353.6a38.4 38.4 0 1 0-54.336 54.336L457.664 512 353.6 616.064a38.4 38.4 0 1 0 54.336 54.336L512 566.336 616.064 670.4a38.4 38.4 0 1 0 54.336-54.336L566.336 512 670.4 407.936a38.4 38.4 0 1 0-54.336-54.336L512 457.664z" p-id="8852"></path></svg>'
     }
+  },
+  {
+    type: 'normal',
+    options: { color: '#fff', bgColor: 'rgba(0, 0, 0, .5)', icon: '' }
   }
 ]
-
-const defaultToastType: toastType = {
-  type: 'normal',
-  options: { color: '#fff', bgColor: 'rgba(0, 0, 0, .5)', icon: '' }
-}
 
 export function getToastType(type: string): toastType {
   return toastTypes.find(toastType => toastType.type === type) as toastType
 }
 
-export function getDefaultToastType(): toastType {
-  return defaultToastType
-}
-
 export default {
-  getToastType,
-  getDefaultToastType
+  getToastType
 }

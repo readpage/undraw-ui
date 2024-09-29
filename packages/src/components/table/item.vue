@@ -27,15 +27,15 @@
         <!-- componnet 组件 -->
         <template v-else-if="item.type == 'component'">
           <template v-if="item.prop && item.component && item.component.name == 'el-input'">
-            <el-input v-model="scope.row[item.prop]" clearable v-bind="item.component"></el-input>
+            <el-input v-model="scope.row[item.prop]" clearable :placeholder="item.component.placeholder || `请选择${item.label}`" v-bind="item.component"></el-input>
           </template>
           <template v-else-if="item.prop && item.component && item.component.name == 'el-select'">
-            <el-date-picker v-model="scope.row[item.prop]" type="date" value-format="YYYY-MM-DD" :shortcuts="shortcuts" v-bind="item.component" />
-          </template>
-          <template v-else-if="item.prop && item.component && item.component.name == 'el-date'">
-            <el-select v-model="scope.row[item.prop]" v-bind="item.component">
+            <el-select v-model="scope.row[item.prop]" :placeholder="item.component.placeholder || `请选择${item.label}`" v-bind="item.component">
               <el-option v-for="e in item.component.options" :key="e.value" :label="e.label" :value="e.value || e" />
             </el-select>
+          </template>
+          <template v-else-if="item.prop && item.component && item.component.name == 'el-date'">
+            <el-date-picker v-model="scope.row[item.prop]" type="date" value-format="YYYY-MM-DD" :shortcuts="shortcuts" :placeholder="item.component.placeholder || `请选择${item.label}`" v-bind="item.component" />
           </template>
         </template>
         <!-- custom 自定义 -->

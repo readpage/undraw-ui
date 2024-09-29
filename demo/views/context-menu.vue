@@ -24,6 +24,7 @@ function open(e: MouseEvent) {
     ]
   })
 }
+
 </script>
 
 <style lang="scss" scoped>

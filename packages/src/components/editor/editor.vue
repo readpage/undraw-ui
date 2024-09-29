@@ -202,7 +202,6 @@ function onInput(event: InputEvent) {
 function onMouseup() {
   range.value = getRange()
   let searchStr = getSearchStr()
-  console.log('mousedown', searchStr)
   state.showMention = getShowMention()
 }
 

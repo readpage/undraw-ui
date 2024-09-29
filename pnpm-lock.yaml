@@ -21,8 +21,8 @@ dependencies:
     specifier: ^11.7.0
     version: 11.7.0
   undraw-ui:
-    specifier: 1.2.1
-    version: 1.2.1
+    specifier: 1.2.2
+    version: 1.2.2
   vitepress:
     specifier: ^1.0.0-alpha.72
     version: 1.0.0-alpha.72(@algolia/client-search@4.19.1)(@types/node@16.4.7)(sass@1.49.7)(search-insights@2.7.0)
@@ -2706,8 +2706,8 @@ packages:
     resolution: {integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==}
     dev: true
 
-  /undraw-ui@1.2.1:
-    resolution: {integrity: sha512-b8FiUEy8EUAzSroPx6qIuDUJiiAym2lT+xkHgiDjEkHNDAnas17f3vvdlsAtdi7iWWxdC9bGVFXjtEj1tmuqAw==}
+  /undraw-ui@1.2.2:
+    resolution: {integrity: sha512-eyDXCqJ4UohgMMhCAMXFUK+48bc+7m+nJLRAGbwS0sh9KlpdaYjcnFIyrEKiuX4p8bnn+e9VgSNtQI1eEgF3oQ==}
     dependencies:
       element-plus: 2.6.0(vue@3.3.4)
       vue: 3.3.4
