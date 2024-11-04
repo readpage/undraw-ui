@@ -200,6 +200,7 @@ provide('comment-fun', {
 // 工具卡槽
 provide('comment-slot', useSlots())
 defineExpose({
+  submit: submit,
   remove: remove
 })
 </script>

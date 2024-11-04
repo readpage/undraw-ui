@@ -89,10 +89,8 @@ watch(
   val => {
     if (val) {
       let totalPage = Math.ceil(val / state.pageSize)
-      let currentPage = state.currentPage > totalPage ? totalPage : state.currentPage
-      currentPage = currentPage < 1 ? 1 : currentPage
-      if (state.currentPage != currentPage) {
-        changePage(currentPage)
+      if (state.currentPage > totalPage) {
+        changePage(totalPage)
       }
     }
   }

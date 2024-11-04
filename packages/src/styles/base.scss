@@ -29,6 +29,7 @@ svg {
   cursor: pointer;
 }
 
+
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
 .u-scrollbar::-webkit-scrollbar {
   width: 6px; /*滚动条宽度*/
@@ -69,4 +70,12 @@ svg {
    -webkit-box-orient: vertical;
    //用来限制在一个块元素显示的文本的行数。
    -webkit-line-clamp: 1;
+}
+
+
+.u-small {
+  height: 28px !important;
+  padding: 5px 11px !important;
+  font-size: 12px !important;
+  border-radius: calc(var(--el-border-radius-base) - 1px) !important;
 }

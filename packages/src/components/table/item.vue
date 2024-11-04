@@ -1,15 +1,23 @@
 <template>
-  <el-table-column :label="item.label" :prop="item.prop" :width="item.width" :min-width="item.minWidth" :align="item.align" :type="item.type">
-    <template #default="scope">
-      <el-form-item
-        v-if="!['selection', 'index'].includes(item.type || '')"
-        :prop="`${scope.$index}.${item.prop}`"
-        :rules="item.required ? { required: true, message: `${item.label}不能为空`, trigger: 'change' } : item.rule"
-        :class="{ 'no-add': noAdd }"
-        style="width: 100%"
-      >
+  <el-table-column
+    :show-overflow-tooltip="item.overflow"
+    :label="item.label"
+    :prop="item.prop"
+    :width="item.width"
+    :min-width="item.minWidth"
+    :sortable="item.sort !== undefined && (props.sort == 'custom' ? 'custom' : true)"
+    :align="item.align"
+    :type="item.type"
+    :fixed="item.fixed"
+  >
+    <template #default="scope" v-if="!['selection', 'index'].includes(item.type || '')">
+      <el-form-item :prop="`${scope.$index}.${item.prop}`" :rules="item.required ? { required: true, message: `${item.label}不能为空`, trigger: 'change' } : item.rule" :class="{ 'no-add': noAdd, center: item.align == 'center' }">
+        <!-- basic -->
+        <template v-if="!item.component && (!item.type || item.type == 'basic')">
+          <slot name="basic" v-bind="scope"></slot>
+        </template>
         <!-- img -->
-        <template v-if="item.prop && item.type == 'img'">
+        <template v-else-if="item.prop && item.type == 'img'">
           <el-image :src="scope.row[item.prop]" :preview-src-list="[scope.row[item.prop]]" preview-teleported fit="cover" class="w-10 h-10">
             <template #error>
               <u-icon style="display: flex; justify-content: center; align-items: center">
@@ -25,22 +33,37 @@
           </el-image>
         </template>
         <!-- componnet 组件 -->
-        <template v-else-if="item.type == 'component'">
-          <template v-if="item.prop && item.component && item.component.name == 'el-input'">
+        <template v-else-if="item.component">
+          <template v-if="item.prop && item.component.name == 'el-input'">
             <el-input v-model="scope.row[item.prop]" clearable :placeholder="item.component.placeholder || `请选择${item.label}`" v-bind="item.component"></el-input>
           </template>
-          <template v-else-if="item.prop && item.component && item.component.name == 'el-select'">
-            <el-select v-model="scope.row[item.prop]" :placeholder="item.component.placeholder || `请选择${item.label}`" v-bind="item.component">
+          <template v-else-if="item.prop && item.component.name == 'el-select'">
+            <el-select v-model="scope.row[item.prop]" clearable :placeholder="item.component.placeholder || `请选择${item.label}`" v-bind="item.component">
               <el-option v-for="e in item.component.options" :key="e.value" :label="e.label" :value="e.value || e" />
             </el-select>
           </template>
-          <template v-else-if="item.prop && item.component && item.component.name == 'el-date'">
-            <el-date-picker v-model="scope.row[item.prop]" type="date" value-format="YYYY-MM-DD" :shortcuts="shortcuts" :placeholder="item.component.placeholder || `请选择${item.label}`" v-bind="item.component" />
+          <template v-else-if="item.prop && item.component.name == 'el-date'">
+            <el-date-picker
+              v-model="scope.row[item.prop]"
+              type="date"
+              value-format="YYYY-MM-DD"
+              :shortcuts="shortcuts"
+              :placeholder="item.component.placeholder || `请选择${item.label}`"
+              v-bind="item.component"
+            />
+          </template>
+          <template v-else-if="item.prop && item.component.name == 'el-tag'">
+            <el-tag v-for="e in getTags(item.component.options, scope.row[item.prop])" :type="e.type">
+              {{ e.label }}
+            </el-tag>
+          </template>
+          <template v-else-if="item.prop && item.component.name == 'u-search2'">
+            <u-search2 v-model="scope.row[item.prop]" @remote-search="item.component.remoteSearch" :placeholder="item.component.placeholder || `请选择${item.label}`" v-bind="item.component" />
           </template>
         </template>
         <!-- custom 自定义 -->
         <template v-if="item.type == 'custom'">
-          <slot :name="`table-${item.prop}`" :row="scope.row"></slot>
+          <slot :name="`table-${item.prop}`" v-bind="scope"></slot>
         </template>
       </el-form-item>
     </template>
@@ -49,13 +72,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { TableItemApi } from './table.vue'
-import { ElTableColumn, ElFormItem, ElImage, ElInput, ElDatePicker, ElSelect, ElOption } from 'element-plus'
-import { UIcon } from 'undraw-ui'
+import { ElTableColumn, ElFormItem, ElImage, ElInput, ElDatePicker, ElSelect, ElOption, ElTag } from 'element-plus'
+import { UIcon, USearch2 } from 'undraw-ui'
 import { Time } from '~/util'
 
 interface Props {
   item: TableItemApi
   noAdd: boolean
+  sort?: string
 }
 
 const shortcuts = [
@@ -74,10 +98,25 @@ const shortcuts = [
 ]
 
 const props = defineProps<Props>()
+
+function getTags(arr: any[] | undefined, v: any) {
+  if (!arr) arr = [{ label: '', type: 'primary'}]
+  let tag = arr.find(e => e.value == v || e.label == v) || { label: '', type: 'primary'}
+  return [tag]
+}
 </script>
 
 <style lang="scss" scoped>
 .no-add {
   margin-bottom: 0;
 }
+
+.center :deep(.el-form-item__content) {
+  display: flex;
+  justify-content: center;
+}
+/*
+:deep(.el-form-item__content) {
+  display: block !important;
+} */
 </style>

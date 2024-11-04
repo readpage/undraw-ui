@@ -18,6 +18,7 @@ export * from './group'
 export * from './table'
 export * from './crud'
 export * from './context-menu'
+export * from './search2'
 
 import Anchor from './anchor'
 import Chat from './chat'
@@ -37,6 +38,7 @@ import Form from './form'
 import Group from './group'
 import Table from './table'
 import Crud from './crud'
+import Search2 from './search2'
 
 const components = [
   Anchor,
@@ -56,7 +58,8 @@ const components = [
   Form,
   Group,
   Table,
-  Crud
+  Crud,
+  Search2
 ]
 
 import { App } from 'vue'

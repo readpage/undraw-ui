@@ -15,6 +15,7 @@
           :class="`form-${item.prop}`"
           :rules="item.required ? { required: true, message: `${item.label}不能为空`, trigger: 'change' } : item.rule"
           :label-width="item.labelWidth"
+          :style="{ width: toPx(item.width) }"
           v-show="groupType(item.group)"
         >
           <Item :item="item" :data="form.data">
@@ -33,7 +34,7 @@
 import { ref } from 'vue'
 import { FormInstance, FormItemRule, ElForm, ElFormItem } from 'element-plus'
 import { Arrayable } from 'element-plus/es/utils/typescript'
-import { mergeObject } from '~/util'
+import { mergeObject, toPx } from '~/util'
 import Item from './item.vue'
 
 defineOptions({
@@ -41,19 +42,21 @@ defineOptions({
 })
 
 interface ComponentApi {
-  name: string // 组件名称
+  name: 'el-input' | 'el-select' | 'el-date' | 'u-search2' | string // 组件名称
+  width?: number // 组件宽度
   options?: any[] | {label: string, value: string}[] // el-select 选择项
   disabled?: boolean // 是否禁用
   placeholder?: string // 占位文本
+  [key: string]: any
 }
 
 export interface FormItemApi {
   label?: string // 标签文本
   prop?: string  // 字段
   value?: any   // 默认值
-  width?: number  // 组件宽度
-  labelWidth?: number // 表单标签的宽度
-  component?: ComponentApi | any // 组件
+  width?: number  // 表单行宽度
+  labelWidth?: number // 表单行标签的宽度
+  component?: ComponentApi // 组件
   required?: boolean // 是否必填
   rule?: Arrayable<FormItemRule> // 验证规则
   group?: string // 分组显示
@@ -77,6 +80,7 @@ interface Props {
   form: FormApi
   group?: string
   validate?: (v: Promise<any>) => void
+  inline?: boolean
 }
 const props = defineProps<Props>()
 

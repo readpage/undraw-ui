@@ -1,6 +1,6 @@
 <template>
   <u-table ref="tableRef" :table="table" max-height="800">
-    <template #table-role="{ row }">
+    <template #table-role="{ row, column }">
       <el-radio-group v-model="row.role">
         <el-radio value="用户" size="small">用户</el-radio>
         <el-radio value="管理员" size="small">管理员</el-radio>
@@ -35,7 +35,6 @@ const table = reactive<TableApi>({
       required: true,
       width: 300,
       align: 'center',
-      type: 'component',
       component: {
         name: 'el-input',
         disabled: true
@@ -46,7 +45,6 @@ const table = reactive<TableApi>({
       prop: 'sex',
       value: '男',
       width: 300,
-      type: 'component',
       rule: [{ required: true, message: '性别不能为空', trigger: 'blur' }],
       component: {
         name: 'el-select',
@@ -58,6 +56,7 @@ const table = reactive<TableApi>({
       prop: 'age',
       value: 0,
       minWidth: 100,
+      align: 'center',
       editor: true
     },
     {
@@ -71,7 +70,6 @@ const table = reactive<TableApi>({
       prop: 'date',
       value: new Time().value,
       minWidth: 100,
-      type: 'component',
       component: {
         name: 'el-date'
       }

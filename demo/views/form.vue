@@ -1,16 +1,16 @@
 <template>
-  <u-form ref="formRef" :form="form">
+  <u-form  ref="formRef" :form="form">
     <template #form-role="{ item, data }">
       <el-radio-group v-model="data.role">
         <el-radio value="用户" size="small">用户</el-radio>
         <el-radio value="管理员" size="small">管理员</el-radio>
       </el-radio-group>
     </template>
+    <div class="submit">
+      <el-button type="primary" @click="submit">提交</el-button>
+      <el-button @click="reset">重置</el-button>
+    </div>
   </u-form>
-  <div>
-    <el-button @click="reset">重置</el-button>
-    <el-button type="primary" @click="submit">提交</el-button>
-  </div>
 </template>
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
@@ -34,10 +34,10 @@ const form = reactive<FormApi>({
       label: '性别',
       prop: 'sex',
       value: '',
-      width: 200,
       rule: [{ required: true, message: '性别不能为空', trigger: 'blur' }],
       component: {
         name: 'el-select',
+        width: 250,
         options: ['男', '女']
       }
     },
@@ -60,11 +60,77 @@ const form = reactive<FormApi>({
       prop: 'date',
       value: new Time().value,
       component: {
-        name: 'el-date',
+        name: 'el-date'
+      }
+    },
+    {
+      label: '关键词',
+      prop: 'search',
+      value: '',
+      component: {
+        name: 'u-search2',
+        remoteSearch: (val: string, done: (arg: any[]) => void) => {
+          setTimeout(() => {
+            done(states.filter(e => e.toLowerCase().includes(val.toLowerCase())))
+          }, 200)
+        }
       }
     }
   ]
 })
+
+const states = [
+  'Alabama',
+  'Alaska',
+  'Arizona',
+  'Arkansas',
+  'California',
+  'Colorado',
+  'Connecticut',
+  'Delaware',
+  'Florida',
+  'Georgia',
+  'Hawaii',
+  'Idaho',
+  'Illinois',
+  'Indiana',
+  'Iowa',
+  'Kansas',
+  'Kentucky',
+  'Louisiana',
+  'Maine',
+  'Maryland',
+  'Massachusetts',
+  'Michigan',
+  'Minnesota',
+  'Mississippi',
+  'Missouri',
+  'Montana',
+  'Nebraska',
+  'Nevada',
+  'New Hampshire',
+  'New Jersey',
+  'New Mexico',
+  'New York',
+  'North Carolina',
+  'North Dakota',
+  'Ohio',
+  'Oklahoma',
+  'Oregon',
+  'Pennsylvania',
+  'Rhode Island',
+  'South Carolina',
+  'South Dakota',
+  'Tennessee',
+  'Texas',
+  'Utah',
+  'Vermont',
+  'Virginia',
+  'Washington',
+  'West Virginia',
+  'Wisconsin',
+  'Wyoming'
+]
 
 const formRef = ref()
 
@@ -74,26 +140,33 @@ function reset() {
 
 async function submit() {
   formRef.value.validate((valid: boolean) => {
-  if (valid) {
-    console.log(form.data)
-  } else {
-    console.log(valid)
-  }
- })
+    if (valid) {
+      console.log(form.data)
+    } else {
+      console.log(valid)
+    }
+  })
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+
 .u-form {
-  .el-form {
+  :deep(.el-form) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    .form-role {
-      grid-column: 1 / -1;
-    }
+
     @media only screen and (max-width: 768px) {
       grid-template-columns: repeat(1, 1fr);
     }
+    .form-role {
+      grid-column: 1 / -1;
+    }
+    .submit {
+      grid-column: 1 / -1;
+      margin-left: 80px;
+    }
   }
 }
+
 </style>

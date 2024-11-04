@@ -105,6 +105,7 @@ const element = {
   UForm: [
     'undraw-ui/es/index.css',
     'element-plus/es/components/input/style/css',
+    'element-plus/es/components/autocomplete/style/css',
     'element-plus/es/components/select/style/css',
     'element-plus/es/components/option/style/css',
     'element-plus/es/components/date-picker/style/css',
@@ -114,6 +115,7 @@ const element = {
   ],
   UGroup: [
     'element-plus/es/components/input/style/css',
+    'element-plus/es/components/autocomplete/style/css',
     'element-plus/es/components/select/style/css',
     'element-plus/es/components/option/style/css',
     'element-plus/es/components/date-picker/style/css',
@@ -134,6 +136,7 @@ const element = {
     'element-plus/es/components/form/style/css',
     'element-plus/es/components/form-item/style/css',
     'element-plus/es/components/input/style/css',
+    'element-plus/es/components/autocomplete/style/css',
     'element-plus/es/components/link/style/css',
     'element-plus/es/components/image/style/css',
     'element-plus/es/components/date-picker/style/css',
@@ -142,10 +145,12 @@ const element = {
     'element-plus/es/components/empty/style/css',
     'element-plus/es/components/pagination/style/css',
     'element-plus/es/components/message-box/style/css',
+    'element-plus/es/components/tag/style/css',
     'undraw-ui/es/components/table/table.css'
   ],
   UCrud: [
     'element-plus/es/components/input/style/css',
+    'element-plus/es/components/autocomplete/style/css',
     'element-plus/es/components/select/style/css',
     'element-plus/es/components/option/style/css',
     'element-plus/es/components/date-picker/style/css',
@@ -163,6 +168,7 @@ const element = {
     'element-plus/es/components/empty/style/css',
     'element-plus/es/components/pagination/style/css',
     'element-plus/es/components/message-box/style/css',
+    'element-plus/es/components/tag/style/css',
     'undraw-ui/es/components/table/table.css',
     'element-plus/es/components/dialog/style/css',
     'undraw-ui/es/components/dialog/dialog.css',
@@ -170,5 +176,10 @@ const element = {
     'element-plus/es/components/button/style/css',
     'element-plus/es/components/tooltip/style/css',
     'undraw-ui/es/components/crud/crud.css'
+  ],
+  USearch2: [
+    'element-plus/es/components/autocomplete/style/css',
+    'undraw-ui/es/index.css',
+    'undraw-ui/es/components/search2/search2.css'
   ]
 }

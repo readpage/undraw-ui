@@ -2,6 +2,7 @@
   <el-dialog
     v-model="visible"
     :close-on-click-modal="closeOnClickModal"
+    class="u-dialog"
     :title="title"
     :width="width"
     :top="top"

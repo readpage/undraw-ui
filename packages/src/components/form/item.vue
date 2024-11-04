@@ -2,11 +2,11 @@
   <template v-if="item.prop && item.component">
     <!-- el-input -->
     <template v-if="item.component.name == 'el-input'">
-      <el-input v-model="data[item.prop]" clearable :style="{ width: toPx(item.width) }" :placeholder="item.component.placeholder || `请选择${item.label}`" v-bind="item.component"></el-input>
+      <el-input v-model="data[item.prop]" clearable :style="{ width: toPx(item.component.width) }" :placeholder="item.component.placeholder || `请输入${item.label}`" v-bind="item.component"></el-input>
     </template>
     <!-- el-select -->
     <template v-if="item.component.name == 'el-select'">
-      <el-select v-model="data[item.prop]" :style="{ width: toPx(item.width) }" :placeholder="item.component.placeholder || `请选择${item.label}`" v-bind="item.component">
+      <el-select v-model="data[item.prop]" clearable :style="{ width: toPx(item.component.width) }" :placeholder="item.component.placeholder || `请选择${item.label}`" v-bind="item.component">
         <el-option v-for="e in item.component.options" :key="e.value" :label="e.label || e" :value="e.value || e" />
       </el-select>
     </template>
@@ -17,10 +17,14 @@
         type="date"
         value-format="YYYY-MM-DD"
         :shortcuts="shortcuts"
-        :style="{ width: toPx(item.width) }"
+        :style="{ width: toPx(item.component.width) }"
         :placeholder="item.component.placeholder || `请选择${item.label}`"
         v-bind="item.component"
       />
+    </template>
+    <!-- u-search2 -->
+    <template v-if="item.component.name == 'u-search2'">
+      <u-search2 v-model="data[item.prop]" @remote-search="item.component.remoteSearch" :style="{ width: toPx(item.component.width) }" :placeholder="item.component.placeholder || `请输入${item.label}`" v-bind="item.component"></u-search2>
     </template>
   </template>
   <!-- custom 自定义 -->
@@ -32,6 +36,7 @@
 import { FormItemApi } from './form.vue'
 import { Time, mergeObject, toPx } from '~/util'
 import { ElInput, ElSelect, ElOption, ElDatePicker } from 'element-plus'
+import { USearch2 } from 'undraw-ui'
 
 interface Props {
   item: FormItemApi
@@ -55,4 +60,13 @@ const shortcuts = [
 ]
 </script>
 
-<style lang="scss" scoped></style>
+
+<style lang="scss" scoped>
+:deep(.el-select__wrapper) {
+  width: 100%;
+}
+
+:deep(.el-date-editor .el-input__wrapper), :deep(.el-date-editor .el-input) {
+  width: auto !important;
+}
+</style>
