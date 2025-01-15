@@ -62,7 +62,7 @@ export interface ChatConfigApi {
     avatar: string
   }
   data: ChatApi[]
-  emoji: EmojiApi
+  emoji: any
 }
 
 interface Props {

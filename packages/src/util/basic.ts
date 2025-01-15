@@ -1,6 +1,7 @@
-import { isObject } from "undraw-ui"
+import { debounce, isObject } from "undraw-ui"
 import { isNull } from "./isEmpty"
 import { cloneDeep } from "./clone-deep"
+import { DirectiveBinding } from "vue"
 
 /**
  * 转换字符串，为null转换为空字符串
@@ -113,5 +114,22 @@ export function mergeObject(target: any, source: any) {
       console.log(key)
       target[key] = source[key];
     }
+  }
+}
+
+export const vClickOutside = {
+  beforeMount(el: any, binding: DirectiveBinding) {
+    function documentClick(e: MouseEvent) {
+      let el2 = document.querySelector(binding.arg as any)
+      if (!(el.contains(e.target as Node) || el2 && el2.contains(e.target as Node))) {
+        binding.value(e)
+      }
+    }
+    document.addEventListener('click', documentClick);
+    el._clickOutside = documentClick;
+  },
+  unmounted(el: any) {
+    document.removeEventListener('click', el._clickOutside);
+    delete el._clickOutside;
   }
 }

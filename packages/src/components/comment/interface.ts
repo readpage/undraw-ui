@@ -43,7 +43,7 @@ interface ShowApi {
 
 export interface ConfigApi {
   user: UserApi
-  emoji: EmojiApi
+  emoji?: any
   comments: CommentApi[]
   replyShowSize?: number
   show?: ShowApi

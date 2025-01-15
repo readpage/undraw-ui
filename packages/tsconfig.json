@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "ignoreDeprecations": "5.0",
+    "suppressImplicitAnyIndexErrors": true,
     "useDefineForClassFields": true,
     "module": "ESNext",
     "moduleResolution": "Node",

@@ -1,5 +1,5 @@
 <template>
-  <u-form  ref="formRef" :form="form">
+  <u-form ref="formRef" :form="form">
     <template #form-role="{ item, data }">
       <el-radio-group v-model="data.role">
         <el-radio value="用户" size="small">用户</el-radio>
@@ -17,8 +17,34 @@ import { reactive, ref } from 'vue'
 import { FormApi } from '~/components'
 import { Time } from '~/util'
 
+const options = [
+  {
+    value: 'Option1',
+    label: 'Option1'
+  },
+  {
+    value: 'Option2',
+    label: 'Option2'
+  },
+  {
+    value: 'Option3',
+    label: 'Option3'
+  },
+  {
+    value: 'Option4',
+    label: 'Option4'
+  },
+  {
+    value: 'Option5',
+    label: 'Option5'
+  }
+]
+
 const form = reactive<FormApi>({
-  data: {},
+  data: {
+    username: 1,
+    date: '2026'
+  },
   items: [
     {
       label: '用户名',
@@ -38,7 +64,7 @@ const form = reactive<FormApi>({
       component: {
         name: 'el-select',
         width: 250,
-        options: ['男', '女']
+        remoteSearch: (done: (val: any[]) => void) => done(['男', '女'])
       }
     },
     {
@@ -58,9 +84,10 @@ const form = reactive<FormApi>({
     {
       label: '日期',
       prop: 'date',
-      value: new Time().value,
       component: {
-        name: 'el-date'
+        name: 'el-date',
+        type: 'year',
+        'value-format': 'YYYY'
       }
     },
     {
@@ -71,9 +98,34 @@ const form = reactive<FormApi>({
         name: 'u-search2',
         remoteSearch: (val: string, done: (arg: any[]) => void) => {
           setTimeout(() => {
+            console.log('搜索')
             done(states.filter(e => e.toLowerCase().includes(val.toLowerCase())))
           }, 200)
         }
+      }
+    },
+    {
+      label: '选项',
+      prop: 'option',
+      width: 300,
+      component: {
+        name: 'el-select',
+        options: options,
+        multiple: true,
+        'collapse-tags': true
+      }
+    },
+    {
+      label: '校验',
+      prop: 'rule',
+      width: 300,
+      rule: { trigger: 'blur', validator: (rule: any, value: any, done: any) => {
+        form.data.rule = 1
+        console.log('test')
+        done()
+      }},
+      component: {
+        name: 'el-input'
       }
     }
   ]
@@ -150,7 +202,6 @@ async function submit() {
 </script>
 
 <style lang="scss" scoped>
-
 .u-form {
   :deep(.el-form) {
     display: grid;
@@ -168,5 +219,4 @@ async function submit() {
     }
   }
 }
-
 </style>

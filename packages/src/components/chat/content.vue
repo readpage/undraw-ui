@@ -11,7 +11,7 @@
       <div class="datetime" v-show="showCreateTime(index, item.createTime)">{{ humanTime(item.createTime) }}</div>
       <div class="message-box" :class="{ right: item.float }">
         <aside class="avatar">
-          <el-avatar :size="40">
+          <el-avatar :src="item.user.avatar" :size="40">
             <span>{{ item.user.username }}</span>
           </el-avatar>
         </aside>
@@ -21,7 +21,7 @@
           </div>
           <div class="content">
             <div class="text">
-              <div v-clean-html="useEmojiParse(emoji.allEmoji, item.content)"></div>
+              <div v-clean-html="useEmojiParse(emoji.allEmoji, item.content)" style="padding: 2px;"></div>
             </div>
           </div>
         </main>

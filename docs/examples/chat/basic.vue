@@ -17,7 +17,7 @@ const config = reactive<ChatConfigApi>({
   user: {
     id: 1,
     username: 'user',
-    avatar: ''
+    avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg'
   },
   data: [],
   emoji: emoji
@@ -30,7 +30,7 @@ let data = [
     uid: 1,
     user: {
       username: 'user',
-      avatar: ''
+      avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg'
     },
     createTime: '2024-06-29 09:30:00'
   },
@@ -40,7 +40,7 @@ let data = [
     uid: 2,
     user: {
       username: 'user2',
-      avatar: ''
+      avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png'
     },
     createTime: '2024-06-29 09:10:30'
   },
@@ -50,7 +50,7 @@ let data = [
     uid: 1,
     user: {
       username: 'user',
-      avatar: ''
+      avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg'
     },
     createTime: '2024-06-29 09:11:20'
   },
@@ -60,7 +60,7 @@ let data = [
     uid: 2,
     user: {
       username: 'user2',
-      avatar: ''
+      avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png'
     },
     createTime: '2024-06-29 09:11:10'
   },
@@ -70,7 +70,7 @@ let data = [
     uid: 1,
     user: {
       username: 'user',
-      avatar: ''
+      avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg'
     },
     createTime: '2024-06-29 09:11:00'
   },
@@ -80,7 +80,7 @@ let data = [
     uid: 1,
     user: {
       username: 'user2',
-      avatar: ''
+      avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png'
     },
     createTime: '2024-06-29 08:45:30'
   },
@@ -90,7 +90,7 @@ let data = [
     uid: 1,
     user: {
       username: 'user',
-      avatar: ''
+      avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg'
     },
     createTime: '2024-06-29 08:45:00'
   },
@@ -100,7 +100,7 @@ let data = [
     uid: 1,
     user: {
       username: 'user',
-      avatar: ''
+      avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg'
     },
     createTime: '2024-06-28 09:00:00'
   },
@@ -110,7 +110,7 @@ let data = [
     uid: 1,
     user: {
       username: 'user',
-      avatar: ''
+      avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg'
     },
     createTime: '2024-05-27 09:01:20'
   },
@@ -120,7 +120,7 @@ let data = [
     uid: 2,
     user: {
       username: 'user2',
-      avatar: ''
+      avatar: 'https://static.juzicon.com/images/image-231107185110-DFSX.png'
     },
     createTime: '2024-05-27 09:01:00'
   }
@@ -151,7 +151,7 @@ function submit(val: string, finish: Function) {
       uid: 1,
       user: {
         username: 'user',
-        avatar: ''
+        avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg'
       },
       createTime: new Date() as any
     }

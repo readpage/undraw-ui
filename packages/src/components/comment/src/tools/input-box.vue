@@ -1,5 +1,5 @@
 <template>
-  <div v-click-outside:[popperRef]="onClickOutside" class="comment-box">
+  <div v-click-outside:[popper]="onClickOutside" class="comment-box">
     <u-editor
       ref="editorRef"
       v-model="content"
@@ -16,7 +16,9 @@
       @mention-search="mentionSearch"
     ></u-editor>
     <div v-if="action" class="action-box">
-      <u-emoji :emoji="emoji" @add-emoji="(val: string) => editorRef?.addText(val)"></u-emoji>
+      <div>
+        <u-emoji :emoji="emoji" @add-emoji="(val: string) => editorRef?.addText(val)"></u-emoji>
+      </div>
       <!-- 文件上传 -->
       <div v-if="upload" class="picture" @click="inputRef?.click">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon">
@@ -47,11 +49,10 @@
 
 <script setup lang="ts">
 import { h, inject, nextTick, reactive, ref } from 'vue'
-import { ClickOutside as vClickOutside, ElButton } from 'element-plus'
+import { ElButton } from 'element-plus'
 import { UEditor, UEmoji, UToast, translate as $u, EditorInstance, } from 'undraw-ui'
 import { CommentApi, CommentFunApi, ConfigApi } from '~/components'
-import { isEmpty, isNull, isImage } from '~/util'
-
+import { isEmpty, isNull, isImage, vClickOutside } from '~/util'
 export interface InputBoxApi {
   focus(): void
 }
@@ -65,12 +66,12 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const popper = `div[id^='el-popper-container']`
 
 const content = ref('')
 const action = ref(false)
 const disabled = ref(true)
 const editorRef = ref<EditorInstance>()
-const popperRef = ref()
 const inputRef = ref<HTMLInputElement>()
 const imgList = ref<string[]>([])
 const state = reactive({
@@ -90,6 +91,7 @@ const { submit, focus, cancelFn, mentionSearch } = inject('comment-fun') as Comm
 // 提交评论的数据
 const onSubmit = () => {
   let text = props.reply && props.parentId != props.reply.id ? `回复 <span style="color: var(--u-color-success-dark-2);">@${props.reply.user.username}:</span> ${content.value}` : content.value
+  // console.log('img', imgList.value)
   if (!isEmpty(imgList.value)) {
     text += `u-img[${imgList.value}]`
   }
@@ -129,7 +131,6 @@ function onClickOutside(event: Event) {
   // if (!target?.contains(child) && isEmpty(content.value)) {
   //   action.value = false
   // }
-
   // 评论框有内容情况下不执行操作
   if (isEmpty(content.value) && !state.imgLength) {
     action.value = false
@@ -139,11 +140,6 @@ function onClickOutside(event: Event) {
 
 function onFocus() {
   action.value = true
-  // 显示操作栏
-  nextTick(() => {
-    // 所有以'el-popper-container'开头的id且被选中的元素
-    popperRef.value = document.querySelector("div[id^='el-popper-container']")
-  })
   // u-comment 评论框焦点事件
   focus()
 }
@@ -174,6 +170,7 @@ const change = (val: Event, file?: File) => {
 const slots = inject('comment-slot') as any
 // 功能卡槽
 const Func = () => h('div', slots.func())
+
 </script>
 
 <style lang="scss" scoped>

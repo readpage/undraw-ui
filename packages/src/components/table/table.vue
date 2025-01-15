@@ -16,6 +16,7 @@
         @expand-change="expandChange"
         @selection-change="handleSelectionChange"
         @sort-change="sortChange"
+        :default-sort="state.defaultSort"
       >
         <template v-for="(item, index) in table.columns" :key="index">
           <!-- rowAdd -->
@@ -75,7 +76,7 @@
                 @blur="onInputBlur(scope)"
               />
               <!-- 判断为显示状态 -->
-              <div v-else class="row-content" :class="{overflow: item.overflow}" style="width: 100%" @dblclick="dbClickCell(scope)">
+              <div v-else class="row-content" :class="{ overflow: item.overflow }" style="width: 100%" @dblclick="dbClickCell(scope)">
                 {{ scope.row[item.prop || ''] }}
               </div>
             </template>
@@ -110,7 +111,7 @@
 
 <script setup lang="ts">
 import { computed, inject, nextTick, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
-import { ElForm, ElTable, ElTableColumn, ElInput, ElLink, ElEmpty, ElPagination, ElMessageBox, FormInstance, FormItemRule, vLoading } from 'element-plus'
+import { ElForm, ElTable, ElTableColumn, ElInput, ElLink, ElEmpty, ElPagination, ElMessageBox, FormInstance, FormItemRule, vLoading, Sort } from 'element-plus'
 import { UIcon, debounce, cloneDeep } from 'undraw-ui'
 import { CrudApi } from '~/components'
 import { mergeObject, toPx } from '~/util'
@@ -135,6 +136,7 @@ export interface TableItemApi {
   value?: any // 默认值
   width?: number // 列的宽度
   minWidth?: number // 列的最小宽度
+  headerAlign?: 'left' | 'center' | 'right' // 表头对齐方式
   align?: 'left' | 'center' | 'right' // 对齐方式
   fixed?: 'left' | 'right' | false
   type?: 'basic' | 'index' | 'selection' | 'img' | 'row-add' | 'custom' | 'operation' | 'component' // 列的类型
@@ -156,6 +158,7 @@ export interface TableApi {
   size?: number
   single?: boolean
   number?: string
+  minWidth?: number // 列的最小宽度
   refresh?: (done: () => void, current: number, size: number, sort?: any) => void // 刷新列表
   rowForm?: any
 }
@@ -177,7 +180,8 @@ const state = reactive({
   tableRowEditIndex: undefined, // 编辑的表格行
   tableColumnEditIndex: undefined, // 编辑的表格列
   noAdd: false,
-  sort: {}
+  sort: {},
+  defaultSort: { prop: '', order: 'ascending' } as Sort
 })
 
 const crud = inject('u-crud', {}) as CrudApi
@@ -333,13 +337,38 @@ function init() {
   mergeObject(table, {
     single: true
   })
+
+
+  // minWidth
+  table.columns.forEach(e => {
+    if (!e.minWidth) {
+      e.minWidth = table.minWidth
+    }
+  })
+
+  // sort
   state.sort = table.columns.reduce((acc: any, cur) => {
-    if (cur.sort !== undefined) {
+    if (cur.sort !== undefined && cur.sort != null) {
       // @ts-ignore
       acc[cur.prop] = cur.sort
+      let order: any = cur.sort
+      switch (order) {
+        case 'asc':
+          order = 'ascending'
+          break
+        case 'desc':
+          order = 'descending'
+          break
+        default:
+          order = null
+      }
+      state.defaultSort = { prop: cur.prop || '', order: order}
     }
     return acc
   }, {})
+
+
+  //
   state.noAdd = !table.columns.some(e => e.type == 'row-add')
   if (!state.noAdd) {
     props.table.data.push(newItem())
@@ -371,20 +400,15 @@ function clear() {
 
 // --> 样式处理
 function headerCellStyle({ column }: any) {
-  let style = { background: '#f5f7fa', color: '#606266' }
-  props.table.columns.forEach(e => {
-    if (e.prop == column.property) {
-      // @ts-ignore
-      let sort = state.sort[column.property]
-      if (sort) {
-        switch (sort) {
-          case 'asc':
-            column.order = 'ascending'
-            break
-          case 'desc':
-            column.order = 'descending'
-            break
-        }
+  let style = { background: '#f5f7fa', color: '#606266', textAlign: '' }
+  let columns = props.table.columns
+  columns.forEach(e => {
+    if (column.property == e.prop) {
+      if (e.align == 'right') {
+        style.textAlign = 'left'
+      }
+      if (e.headerAlign) {
+        style.textAlign = e.headerAlign
       }
     }
   })
@@ -395,6 +419,12 @@ function headerCellStyle({ column }: any) {
  * 排序顺序: ascending 升序，descending 降序，null 表示还原为原始顺序
  */
 function sortChange({ column, prop, order }: any) {
+  let obj = state.sort
+  if (obj) {
+    Object.keys(obj).forEach(key => {
+      obj[key] = null
+    })
+  }
   if (order == 'ascending') {
     //@ts-ignore
     state.sort[prop] = 'asc'
@@ -446,6 +476,9 @@ defineExpose({
 <style lang="scss" scoped>
 .el-table {
   margin-bottom: 10px;
+  :deep(.el-form-item .el-form-item__content) {
+    display: block;
+  }
 }
 
 .overflow {

@@ -1,16 +1,19 @@
 <template>
   <div ref="contextMenuRef" class="u-context-menu">
     <div class="item" v-for="(item, index) in data" :key="index" @click="rowClick(index)">
-      {{ item.label }}
+      <u-icon v-if="item.svg" style="margin-right: 5px;" v-clean-html="item.svg"></u-icon>
+      <span>{{ item.label }}</span>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { ref, onMounted, nextTick, reactive } from 'vue'
 import { removeNode } from '~/util'
+import { UIcon, vCleanHtml } from 'undraw-ui'
 
 interface ItemApi {
   label: string
+  svg?: string
   callback?(done: () => void): void 
 }
 

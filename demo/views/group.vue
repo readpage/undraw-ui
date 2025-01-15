@@ -18,7 +18,8 @@ import { FormApi } from '~/components';
 import { Time } from '~/util'
 
 const form = reactive<FormApi>({
-  data: {},
+  data: {
+  },
   group: {
     type: 'collapse',
     labels: ['基础信息', '详细信息'],
@@ -72,6 +73,7 @@ const form = reactive<FormApi>({
     }
   ]
 })
+
 
 const groupRef = ref()
 

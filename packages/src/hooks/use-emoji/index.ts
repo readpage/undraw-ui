@@ -1,5 +1,7 @@
-import { Emoji } from '~/components/emoji'
-export const useEmojiParse = (allEmoji: Emoji, val: string): string => {
+export const useEmojiParse = (allEmoji: any, val: string): string => {
+  if (!allEmoji) {
+    return val
+  }
   //解析表情
   const reg = /\[.+?\]/g
   val = val.replace(reg, (str: any) => {

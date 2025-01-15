@@ -72,7 +72,7 @@
             <span v-if="data.likes != 0">{{ data.likes }}</span>
           </div>
           <!-- 回复 -->
-          <div v-if="show?.reply" ref="btnRef" class="item" :class="{ active: state.active }" @click="reply">
+          <div v-if="show?.reply" ref="btnRef" class="item" :class="{ active: state.active }" @click.stop="reply">
             <u-icon>
               <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1320" width="200" height="200">
                 <path
@@ -185,7 +185,6 @@ const Action = () => h('div', slots.action(props.data))
 const Operate = () => h('div', slots.operate(props.data))
 
 function imgParse(val: string) {
-  //解析表情
   const reg = /u-img\[.+?\]/g
   val = val.replace(reg, (str: string) => {
     str = str.substring(6, str.length - 1)
@@ -195,8 +194,12 @@ function imgParse(val: string) {
   return val
 }
 const contents = computed(() => {
+  imgList.value = []
   let val = imgParse(props.data.content)
-  return useEmojiParse(emoji.value.allEmoji, val)
+  if (emoji) {
+    val = useEmojiParse(emoji.value!.allEmoji, val)
+  }
+  return val
 })
 </script>
 

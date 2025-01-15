@@ -11,14 +11,18 @@
     :fixed="item.fixed"
   >
     <template #default="scope" v-if="!['selection', 'index'].includes(item.type || '')">
-      <el-form-item :prop="`${scope.$index}.${item.prop}`" :rules="item.required ? { required: true, message: `${item.label}不能为空`, trigger: 'change' } : item.rule" :class="{ 'no-add': noAdd, center: item.align == 'center' }">
+      <el-form-item
+        :prop="`${scope.$index}.${item.prop}`"
+        :rules="item.required ? { required: true, message: `${item.label}不能为空`, trigger: 'change' } : item.rule"
+        :class="{ 'no-add': noAdd, center: item.align == 'center' }"
+      >
         <!-- basic -->
         <template v-if="!item.component && (!item.type || item.type == 'basic')">
           <slot name="basic" v-bind="scope"></slot>
         </template>
         <!-- img -->
         <template v-else-if="item.prop && item.type == 'img'">
-          <el-image :src="scope.row[item.prop]" :preview-src-list="[scope.row[item.prop]]" preview-teleported fit="cover" class="w-10 h-10">
+          <el-image :src="scope.row[item.prop]" :preview-src-list="[scope.row[item.prop]]" preview-teleported fit="fill" class="w-10 h-10">
             <template #error>
               <u-icon style="display: flex; justify-content: center; align-items: center">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" data-v-974b4c7f="">
@@ -39,7 +43,7 @@
           </template>
           <template v-else-if="item.prop && item.component.name == 'el-select'">
             <el-select v-model="scope.row[item.prop]" clearable :placeholder="item.component.placeholder || `请选择${item.label}`" v-bind="item.component">
-              <el-option v-for="e in item.component.options" :key="e.value" :label="e.label" :value="e.value || e" />
+              <el-option v-for="e in item.component.options" :key="e.value" :label="e.label" :value="e.value || e.label || e" />
             </el-select>
           </template>
           <template v-else-if="item.prop && item.component.name == 'el-date'">
@@ -63,7 +67,9 @@
         </template>
         <!-- custom 自定义 -->
         <template v-if="item.type == 'custom'">
-          <slot :name="`table-${item.prop}`" v-bind="scope"></slot>
+          <div :class="{ overflow: item.overflow }">
+            <slot :name="`table-${item.prop}`" v-bind="scope"></slot>
+          </div>
         </template>
       </el-form-item>
     </template>
@@ -99,9 +105,22 @@ const shortcuts = [
 
 const props = defineProps<Props>()
 
+function getSort(val: any) {
+  let sort: any = { order: null }
+  switch (val) {
+    case 'asc':
+      sort.order = 'ascending'
+      break
+    case 'desc':
+      sort.order = 'descending'
+      break
+  }
+  return sort
+}
+
 function getTags(arr: any[] | undefined, v: any) {
-  if (!arr) arr = [{ label: '', type: 'primary'}]
-  let tag = arr.find(e => e.value == v || e.label == v) || { label: '', type: 'primary'}
+  if (!arr) arr = [{ label: '', type: 'primary' }]
+  let tag = arr.find(e => e.value == v || e.label == v) || { label: '', type: 'primary' }
   return [tag]
 }
 </script>
@@ -115,8 +134,9 @@ function getTags(arr: any[] | undefined, v: any) {
   display: flex;
   justify-content: center;
 }
-/*
-:deep(.el-form-item__content) {
-  display: block !important;
-} */
+.overflow {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 </style>

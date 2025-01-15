@@ -5,7 +5,7 @@
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
 import { ElAutocomplete } from 'element-plus'
-import { isEmpty } from 'undraw-ui';
+import { debounce, isEmpty, str } from 'undraw-ui';
 
 defineOptions({
   name: 'USearch2'
@@ -51,8 +51,8 @@ watch(
 )
 
 let keywords = ref<any[]>([])
-function remoteSearch(queryString: string, cb: (arg: any[]) => void) {
-  if (loading.value) {
+const remoteSearch = (queryString: string, cb: (arg: any[]) => void) => {
+  if (loading.value || isEmpty(keywords.value)) {
     emit('remoteSearch', queryString, (arg: any[]) => {
       if (arg) {
         keywords.value = arg.map(e => ({ label: e.label || e, value: e.value || e }))

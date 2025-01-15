@@ -22,7 +22,7 @@
   </u-crud>
 </template>
 <script setup lang="ts">
-import { reactive, ref, watch } from 'vue'
+import { nextTick, reactive, ref, watch } from 'vue'
 import { debounce } from 'undraw-ui'
 import { Download, Upload, UploadFilled } from '@element-plus/icons-vue'
 import { TableApi, CrudApi, FormApi, CrudInstance } from '~/components'
@@ -44,6 +44,7 @@ const crudRef = ref<CrudInstance>()
 const title = ref()
 const table = reactive<TableApi>({
   type: 'page',
+  sort: 'custom',
   columns: [
     {
       type: 'selection',
@@ -64,7 +65,8 @@ const table = reactive<TableApi>({
     {
       label: '角色',
       prop: 'role',
-      type: 'custom'
+      type: 'custom',
+      sort: null
     },
     {
       label: '性别',
@@ -91,7 +93,13 @@ const table = reactive<TableApi>({
   refresh: refresh
 })
 
+
+
 const crud = reactive<CrudApi>({
+  beforeSave: () => {
+    form.data.username = new Time().value
+    console.log(form.data.username)
+  },
   save: (val, done) => {
     console.log('save', val)
     done()
@@ -107,7 +115,8 @@ const crud = reactive<CrudApi>({
 })
 
 const form = reactive<FormApi>({
-  data: {},
+  data: {
+  },
   group: {
     type: 'collapse',
     labels: ['基础信息', '详细信息']
@@ -188,7 +197,6 @@ function refresh(done: () => void, current: number, size: number, sort: any) {
   setTimeout(() => {
     table.data = data
     table.total = total.value
-    console.log(table.total, total.value)
     done()
   }, 300)
 }

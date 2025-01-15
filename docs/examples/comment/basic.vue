@@ -11,15 +11,11 @@
 </template>
 
 <script setup lang="ts">
-// 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases/tag/v0.0.0
-// static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
-import emoji from './emoji'
 import { reactive } from 'vue'
 import { UToast, Time, CommentApi, CommentSubmitApi, ConfigApi } from 'undraw-ui'
 
 const config = reactive<ConfigApi>({
   user: {} as any, // 当前用户信息
-  emoji: emoji, // 表情包数据
   comments: [], // 评论数据
   relativeTime: true, // 开启人性化时间
   show: {

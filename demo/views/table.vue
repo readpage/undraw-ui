@@ -33,8 +33,8 @@ const table = reactive<TableApi>({
       label: '用户名',
       prop: 'username',
       required: true,
-      width: 300,
       align: 'center',
+      overflow: true,
       component: {
         name: 'el-input',
         disabled: true
@@ -55,8 +55,8 @@ const table = reactive<TableApi>({
       label: '年龄',
       prop: 'age',
       value: 0,
-      minWidth: 100,
-      align: 'center',
+      width: 100,
+      align: 'right',
       editor: true
     },
     {

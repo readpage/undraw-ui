@@ -46,6 +46,7 @@ const table = reactive<TableApi>({
     {
       label: '日期',
       prop: 'date',
+      headerAlign: 'left',
       align: 'center',
       width: 180,
       sort: 'desc'

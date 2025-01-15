@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import { provide, ref, toRefs, useSlots } from 'vue'
 import { ElAvatar } from 'element-plus'
-import { translate as $u, } from 'undraw-ui'
+import { translate as $u  } from 'undraw-ui'
 import InputBox from './tools/input-box.vue'
 import CommentList from './comment-list.vue'
 import { isEmpty, mergeObject } from '~/util'
@@ -58,7 +58,7 @@ function init() {
   mergeObject(props.config, {
     show: show,
     aTarget: '_blank',
-    replyShowSize: 4
+    replyShowSize: 4,
   } as ConfigApi)
 }
 init()
@@ -188,7 +188,7 @@ provide('comment-fun', {
   like: like,
   showInfo: (uid, finish) => emit('showInfo', uid, finish),
   replyPage: ({ current, size, parentId, finish}) => {
-    emit('replyPage', { current, size, parentId,finish })
+    emit('replyPage', { current, size, parentId, finish })
   },
   submit: submit,
   focus: () => emit('focus'),

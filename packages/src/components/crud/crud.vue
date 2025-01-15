@@ -134,22 +134,22 @@ const emit = defineEmits<{
 
 function save() {
   let crud = props.crud
-  crud.beforeSave && crud.beforeSave()
-  state.title = '新增'
   visible.form = true
   nextTick(() => {
+    state.title = '新增'
     groupRef.value.resetFields()
+    crud.beforeSave && crud.beforeSave()
   })
 }
 
 const update = (val: any) => {
   let crud = props.crud
-  crud.beforeUpdate && crud.beforeUpdate()
   state.title = '修改'
   visible.form = true
   nextTick(() => {
     groupRef.value.resetFields()
     props.form!.data = cloneDeep(val)
+    crud.beforeUpdate && crud.beforeUpdate()
   })
 }
 
@@ -189,13 +189,9 @@ const refresh = throttle(() => {
   tableRef.value?.reload()
 })
 
-const sortRefrsh = debounce(() => {
-  refresh()
-})
-
 function sortChange(val: any) {
   if (props.table.sort == 'custom') {
-    sortRefrsh()
+    refresh()
   }
   emit('sortChange', val)
 }

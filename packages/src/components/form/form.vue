@@ -1,13 +1,6 @@
 <template>
   <div class="u-form">
-    <el-form
-      ref="formRef"
-      :model="form.data"
-      status-icon
-      :label-width="form.labelWidth"
-      :label-position="form.labelPosition"
-      v-bind="$props"
-    >
+    <el-form ref="formRef" :model="form.data" status-icon :label-width="form.labelWidth" :label-position="form.labelPosition" v-bind="$props">
       <template v-for="(item, index) in form.items" :key="index">
         <el-form-item
           :label="item.label"
@@ -44,17 +37,17 @@ defineOptions({
 interface ComponentApi {
   name: 'el-input' | 'el-select' | 'el-date' | 'u-search2' | string // 组件名称
   width?: number // 组件宽度
-  options?: any[] | {label: string, value: string}[] // el-select 选择项
+  options?: any[] | { label: string; value: string }[] // el-select 选择项
   disabled?: boolean // 是否禁用
   placeholder?: string // 占位文本
   [key: string]: any
 }
 
 export interface FormItemApi {
-  label?: string // 标签文本
-  prop?: string  // 字段
-  value?: any   // 默认值
-  width?: number  // 表单行宽度
+  label: string // 标签文本
+  prop: string // 字段
+  value?: any // 默认值
+  width?: number // 表单行宽度
   labelWidth?: number // 表单行标签的宽度
   component?: ComponentApi // 组件
   required?: boolean // 是否必填
@@ -92,11 +85,16 @@ function init() {
     labelWidth: 80,
     labelPosition: 'right'
   })
+  form.items && form.items.forEach(e => {
+    let component = e.component
+    if (component && component.name == 'el-select') {
+      component.remoteSearch && component.remoteSearch((v: any[]) => component!.options = v)
+    }
+  })
   form.data = form.items.reduce((acc: any, cur) => {
-    // @ts-ignore
-    acc[cur.prop] = cur.value
+    if (!acc[cur.prop]) acc[cur.prop] = cur.value
     return acc
-  }, {})
+  }, form.data)
 }
 init()
 
