@@ -1,0 +1,1 @@
+import{_ as t,o as a,c as e,O as r}from"./chunks/framework.ea809f5c.js";const m=JSON.parse('{"title":"支持这个项目","description":"","frontmatter":{},"headers":[],"relativePath":"other/support.md","lastUpdated":1688558307000}'),o={name:"other/support.md"},s=r("",4),p=[s];function _(c,i,n,d,h,l){return a(),e("div",null,p)}const f=t(o,[["render",_]]);export{m as __pageData,f as default};

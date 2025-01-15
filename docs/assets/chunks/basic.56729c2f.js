@@ -1,1 +1,0 @@
-import{h as t,r as l,D as s,i as r,j as u,G as m,z as p,m as c,F as d}from"./framework.d2839b17.js";const V=t({__name:"basic",setup(i){const e=l("");return(_,a)=>{const o=s("u-editor");return r(),u(d,null,[m(o,{modelValue:e.value,"onUpdate:modelValue":a[0]||(a[0]=n=>e.value=n),placeholder:"请输入内容"},null,8,["modelValue"]),p("span",null,c(e.value),1)],64)}}});export{V as default};
