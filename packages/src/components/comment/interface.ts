@@ -54,7 +54,7 @@ export interface ConfigApi {
   relativeTime?: boolean
 }
 
-interface CommentSubmit2Api {
+export interface CommentSubmit2Api {
   content: string
   parentId: string | null
   reply?: CommentApi

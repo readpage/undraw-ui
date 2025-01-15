@@ -41,7 +41,6 @@ import { nextTick, onMounted, provide, reactive, ref, watch } from 'vue'
 import Content from './content.vue'
 import Editor from './editor.vue'
 import { ElScrollbar } from 'element-plus'
-import { EmojiApi } from '~/components'
 
 export interface ChatApi {
   id: string | number

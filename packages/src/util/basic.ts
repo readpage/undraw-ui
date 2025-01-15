@@ -120,10 +120,18 @@ export function mergeObject(target: any, source: any) {
 export const vClickOutside = {
   beforeMount(el: any, binding: DirectiveBinding) {
     function documentClick(e: MouseEvent) {
-      let el2 = document.querySelector(binding.arg as any)
-      if (!(el.contains(e.target as Node) || el2 && el2.contains(e.target as Node))) {
-        binding.value(e)
+      let el2 = document.querySelectorAll(binding.arg as any)
+      if (el.contains(e.target as Node)) {
+        return
       }
+      if (el2) {
+        for (const v of Array.from(el2)) {
+          if (v.contains(e.target as Node)) {
+            return
+          }
+        }
+      }
+      binding.value(e)
     }
     document.addEventListener('click', documentClick);
     el._clickOutside = documentClick;
