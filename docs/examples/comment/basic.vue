@@ -53,7 +53,7 @@ const comments = [
           id: '11',
           parentId: 1,
           uid: '1',
-          content: '[狗头][微笑2]',
+          content: '🤪🤗😒',
           createTime: new Time().add(-3, 'day'),
           user: {
             username: '杜甫 [唐代]',
