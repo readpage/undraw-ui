@@ -13,6 +13,9 @@ import { ChatConfigApi, ChatApi } from 'undraw-ui'
 import { usePage } from 'undraw-ui'
 import emoji from './emoji'
 
+// 下载表情包资源emoji.zip https://gitee.com/undraw/undraw-ui/releases/tag/v1.0.0
+// static文件放在public下,引入emoji.ts文件可以移动assets下引入,也可以自定义到指定位置
+
 const config = reactive<ChatConfigApi>({
   user: {
     id: 1,
@@ -20,7 +23,7 @@ const config = reactive<ChatConfigApi>({
     avatar: 'https://static.juzicon.com/images/image-180327173755-IELJ.jpg'
   },
   data: [],
-  emoji: emoji
+  emoji: emoji // 可选
 })
 
 let data = [

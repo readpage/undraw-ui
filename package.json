@@ -23,7 +23,7 @@
     "@vueuse/core": "^10.1.2",
     "element-plus": "^2.6.0",
     "highlight.js": "^11.7.0",
-    "undraw-ui": "1.2.2",
+    "undraw-ui": "1.2.4",
     "vitepress": "1.0.0-alpha.72",
     "vue": "^3.3.4",
     "vue-dompurify-html": "5.1.0",

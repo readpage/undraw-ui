@@ -4,7 +4,7 @@
 
 element-plus可以选择需要版本
 ```sh
-npm i element-plus2.6.0 undraw-ui@1.2.1
+npm i element-plus2.6.0 undraw-ui@1.2.4
 ```
 
 # 导入

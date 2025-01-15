@@ -35,7 +35,7 @@ const config = reactive<ConfigApi>({
  * 
  */
 const comments = [
-{
+  {
     id: '1',
     parentId: null,
     uid: '2',
