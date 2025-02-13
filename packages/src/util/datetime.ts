@@ -28,6 +28,11 @@ export class Time {
     return formatTime(date)
   }
 
+  /**
+   * 
+   * @param {String} v y-m-d h:i:s 
+   * @returns 
+   */
   format(v?: any) {
     return formatTime(this.value, v)
   }
@@ -154,4 +159,20 @@ export const timeState = () => {
     msg = '傍晚好!'
   }
   return msg
+}
+
+// 获取指定月份的第一天
+export function getFirstDayOfMonth(v?: Date) {
+  var date = v ? new Date(v) : new Date()
+	var year = date.getFullYear()
+	var month = date.getMonth()
+  return new Time(year, month, 1)
+}
+
+// 获取指定月份的最后一天
+export function getLastDayOfMonth(v?: Date) {
+  var date = v ? new Date(v) : new Date()
+	var year = date.getFullYear()
+	var month = date.getMonth()
+  return new Time(year, month + 1, 0)
 }

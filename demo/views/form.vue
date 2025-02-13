@@ -63,8 +63,9 @@ const form = reactive<FormApi>({
       rule: [{ required: true, message: '性别不能为空', trigger: 'blur' }],
       component: {
         name: 'el-select',
-        width: 250,
-        remoteSearch: (done: (val: any[]) => void) => done(['男', '女'])
+        width: 200,
+        showValue: true,
+        options: [{label: '男', value: 1}, {label: '女', value: 0}]
       }
     },
     {

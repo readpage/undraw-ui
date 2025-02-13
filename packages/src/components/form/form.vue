@@ -40,6 +40,7 @@ interface ComponentApi {
   options?: any[] | { label: string; value: string }[] // el-select 选择项
   disabled?: boolean // 是否禁用
   placeholder?: string // 占位文本
+  showValue?: boolean // 是否显示value
   [key: string]: any
 }
 

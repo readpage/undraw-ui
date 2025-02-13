@@ -110,7 +110,9 @@ interface Props {
   maxHeight?: number | string
 }
 
-const props = withDefaults(defineProps<Props>(), {})
+const props = withDefaults(defineProps<Props>(), {
+  crud: () => ({})
+})
 
 const searchVisible = ref(true)
 const btnLoading = ref(false)

@@ -7,7 +7,12 @@
     <!-- el-select -->
     <template v-if="item.component.name == 'el-select'">
       <el-select v-model="data[item.prop]" clearable :style="{ width: toPx(item.component.width) }" :placeholder="item.component.placeholder || `请选择${item.label}`" v-bind="item.component">
-        <el-option v-for="e in item.component.options" :key="e.value" :label="e.label || e" :value="e.value || e.label || e" />
+        <el-option v-for="e in item.component.options" :key="e.value" :label="e.label || e" :value="e.value || e.label || e">
+          <div v-if="item.component.showValue" style="display: flex; justify-content: space-between;">
+            <span>{{ e.label }}</span>
+            <span style="color: var(--el-text-color-secondary); font-size: 13px;">{{ e.value }}</span>
+          </div>
+        </el-option>
       </el-select>
     </template>
     <!-- el-date -->
