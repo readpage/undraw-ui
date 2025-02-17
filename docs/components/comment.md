@@ -5,7 +5,7 @@ title: Comment
 # Comment 评论
 功能: 评论回复、点赞、支持表情包、删除评论、图片上传
 
-[Comment完整前后端代码实例地址](https://gitee.com/undraw/undraw-comment-demo)
+[Comment完整前后端代码实例地址](https://gitee.com/undraw/undraw-ui-demo)
 
 ## 基础用法
 :::demo
@@ -33,6 +33,20 @@ comment/more
 :::demo 使用 `page` 来开启回复分页
 comment/reply-page
 :::
+
+### 分页翻译
+```ts
+<template>
+  <el-config-provider :locale="zhCn">
+    <app />
+  </el-config-provider>
+</template>
+
+<script setup lang="ts">
+import { ElConfigProvider } from 'element-plus'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
+</script>
+```
 
 ## 用户信息卡片
 :::demo 利用卡槽取代用户信息卡片内容, 鼠标移动在头像内显示用户信息

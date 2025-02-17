@@ -14,8 +14,8 @@ export default {
     cancelReply: 'cancel reply',
     more: {
       loading: 'loading',
-      prefixTotal: 'unfold',
-      suffixTotal: 'return receipt'
+      prefixTotal: 'Expand ',
+      suffixTotal: ' replies'
     }
   },
   scroll: {
