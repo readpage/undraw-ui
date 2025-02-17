@@ -1,1 +1,0 @@
-import{_ as c,D as _,o as s,c as a,G as o}from"./framework.ea809f5c.js";const n={class:"icon-box"},t={__name:"basic",setup(r){return(i,l)=>{const e=_("u-icon");return s(),a("div",n,[o(e,{name:"home"}),o(e,{name:"lightning",color:"purple"}),o(e,{name:"whale",color:"blue",size:"35"})])}}},m=c(t,[["__scopeId","data-v-bb8e38a4"]]);export{m as default};
