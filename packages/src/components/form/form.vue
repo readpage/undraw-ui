@@ -1,14 +1,16 @@
 <template>
   <div class="u-form">
-    <el-form ref="formRef" :model="form.data" status-icon :label-width="form.labelWidth" :label-position="form.labelPosition" v-bind="$props">
+    <el-form ref="formRef" v-loading="form.loading" :model="form.data" status-icon :label-width="form.labelWidth" :label-position="form.labelPosition" v-bind="$props">
       <template v-for="(item, index) in form.items" :key="index">
         <el-form-item
+          v-if="!item.hide"
           :label="item.label"
           :prop="item.prop"
           :class="`form-${item.prop}`"
           :rules="item.required ? { required: true, message: `${item.label}不能为空`, trigger: 'change' } : item.rule"
           :label-width="item.labelWidth"
-          :style="{ width: toPx(item.width) }"
+          :style="{ width: toPx(item.width), position: 'relative' }"
+          v-loading="item.loading"
           v-show="groupType(item.group)"
         >
           <Item :item="item" :data="form.data">
@@ -25,7 +27,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { FormInstance, FormItemRule, ElForm, ElFormItem } from 'element-plus'
+import { FormInstance, FormItemRule, ElForm, ElFormItem, vLoading } from 'element-plus'
 import { Arrayable } from 'element-plus/es/utils/typescript'
 import { mergeObject, toPx } from '~/util'
 import Item from './item.vue'
@@ -51,9 +53,11 @@ export interface FormItemApi {
   width?: number // 表单行宽度
   labelWidth?: number // 表单行标签的宽度
   component?: ComponentApi // 组件
+  hide?: boolean // 是否隐藏
   required?: boolean // 是否必填
   rule?: Arrayable<FormItemRule> // 验证规则
   group?: string // 分组显示
+  loading?: boolean // 加载
 }
 
 interface GroupApi {
@@ -65,6 +69,7 @@ interface GroupApi {
 export interface FormApi {
   items: FormItemApi[] // 表单项
   data: any // 数据
+  loading?: boolean // 加载
   labelWidth?: number
   labelPosition?: 'right' | 'left' | 'top' // 标签文本对齐方式
   group?: GroupApi // 分组
@@ -86,12 +91,27 @@ function init() {
     labelWidth: 80,
     labelPosition: 'right'
   })
-  form.items && form.items.forEach(e => {
-    let component = e.component
-    if (component && component.name == 'el-select') {
-      component.remoteSearch && component.remoteSearch((v: any[]) => component!.options = v)
-    }
-  })
+  form.items &&
+    form.items.forEach(e => {
+      let component = e.component
+      if (component && component.name == 'el-select') {
+        if (component.remoteSearch) {
+          component.filterable = true
+          component.remote = true
+          let tmp: any = null
+          component.remoteMethod = (val: string) => {
+            if (tmp != val) {
+              component!.loading = true
+              component!.remoteSearch(val, (v: any[]) => {
+                component!.options = v
+                component!.loading = false
+              })
+            }
+            tmp = val
+          }
+        }
+      }
+    })
   form.data = form.items.reduce((acc: any, cur) => {
     if (!acc[cur.prop]) acc[cur.prop] = cur.value
     return acc
@@ -118,7 +138,7 @@ function validate(callback: (vaild: boolean, fields: any) => void) {
 
 defineExpose({
   validate: validate,
-  resetFields: () => formRef.value?.resetFields()
+  resetFields: () => formRef.value?.resetFields(),
 })
 </script>
 

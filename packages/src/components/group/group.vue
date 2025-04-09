@@ -34,6 +34,7 @@ import { ref } from 'vue'
 import { FormApi, UForm } from 'undraw-ui'
 import { ElTabs, ElTabPane } from 'element-plus'
 import Collapse from './collapse.vue'
+import { nextTick } from 'vue'
 
 defineOptions({
   name: 'UGroup'
@@ -78,7 +79,7 @@ function resetFields() {
 
 defineExpose({
   validate: validate,
-  resetFields: resetFields
+  resetFields: resetFields,
 })
 </script>
 

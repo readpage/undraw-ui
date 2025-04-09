@@ -98,7 +98,6 @@ const table = reactive<TableApi>({
 const crud = reactive<CrudApi>({
   beforeSave: () => {
     form.data.username = new Time().value
-    console.log(form.data.username)
   },
   save: (val, done) => {
     console.log('save', val)
@@ -107,6 +106,9 @@ const crud = reactive<CrudApi>({
   update: (val, done) => {
     console.log('update', val)
     done()
+  },
+  beforeUpdate: (val: any) => {
+    console.log('before-update', val)
   },
   remove: (val, done) => {
     console.log(val)
@@ -134,7 +136,6 @@ const form = reactive<FormApi>({
     {
       label: '性别',
       prop: 'sex',
-      value: '',
       rule: [{ required: true, message: '性别不能为空', trigger: 'blur' }],
       component: {
         name: 'el-select',
@@ -145,7 +146,6 @@ const form = reactive<FormApi>({
     {
       label: '角色',
       prop: 'role',
-      value: '用户',
       component: {
         name: 'el-select',
         options: options.roles
@@ -183,7 +183,7 @@ let total = ref(20)
 function refresh(done: () => void, current: number, size: number, sort: any) {
   console.log(sort)
   let data = [
-    { username: '刘一', sex: '男', role: 1, age: 23, date: '2024-07-01' },
+    { id: 1, username: '刘一', sex: '男', role: 1, age: 23, date: '2024-07-01' },
     { username: '陈二', sex: '男', role: 'admin', age: 22, date: '2024-07-06' },
     { username: '张三', sex: '男', role: 'user', age: 25, date: '2024-07-21' },
     { username: '李四', sex: '男', role: 'admin', age: 21, date: '2024-07-11' },

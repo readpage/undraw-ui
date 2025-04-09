@@ -87,7 +87,7 @@
 </template>
 <script setup lang="ts">
 import { nextTick, onMounted, provide, reactive, ref } from 'vue'
-import { UGroup, UTable, UDialog, FormApi, TableApi, debounce, throttle } from 'undraw-ui'
+import { UTable, UGroup, UDialog, FormApi, TableApi, debounce, throttle } from 'undraw-ui'
 import { ElMessageBox, ElButton, ElTooltip } from 'element-plus'
 import { cloneDeep } from '~/util'
 
@@ -97,7 +97,7 @@ defineOptions({
 
 export interface CrudApi {
   beforeSave?: () => void // 添加前
-  beforeUpdate?: () => void // 修改前
+  beforeUpdate?: (val: any) => void // 修改前
   save?: (val: any, done: () => void) => void // 添加
   update?: (val: any, done: () => void) => void // 修改
   remove?: (val: any[], done: () => void) => void // 删除
@@ -136,11 +136,12 @@ const emit = defineEmits<{
 
 function save() {
   let crud = props.crud
+  state.title = '新增'
   visible.form = true
+  props.form!.data = {}
   nextTick(() => {
-    state.title = '新增'
-    groupRef.value.resetFields()
     crud.beforeSave && crud.beforeSave()
+    groupRef.value.resetFields()
   })
 }
 
@@ -149,9 +150,9 @@ const update = (val: any) => {
   state.title = '修改'
   visible.form = true
   nextTick(() => {
-    groupRef.value.resetFields()
     props.form!.data = cloneDeep(val)
-    crud.beforeUpdate && crud.beforeUpdate()
+    crud.beforeUpdate && crud.beforeUpdate(val)
+    groupRef.value.resetFields()
   })
 }
 

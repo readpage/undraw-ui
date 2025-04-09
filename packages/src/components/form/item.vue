@@ -7,8 +7,8 @@
     <!-- el-select -->
     <template v-if="item.component.name == 'el-select'">
       <el-select v-model="data[item.prop]" clearable :style="{ width: toPx(item.component.width) }" :placeholder="item.component.placeholder || `请选择${item.label}`" v-bind="item.component">
-        <el-option v-for="e in item.component.options" :key="e.value" :label="e.label || e" :value="e.value || e.label || e">
-          <div v-if="item.component.showValue" style="display: flex; justify-content: space-between;">
+        <el-option v-for="e in convertOptions(item.component.options)" :key="e.value" :label="e.label" :value="e.value">
+          <div v-if="item.component.showValue" style="display: flex; justify-content: space-between; margin-right: 5px;">
             <span>{{ e.label }}</span>
             <span style="color: var(--el-text-color-secondary); font-size: 13px;">{{ e.value }}</span>
           </div>
@@ -63,6 +63,17 @@ const shortcuts = [
     value: new Time().add(-1, 'week')
   }
 ]
+
+function convertOptions(v: any[] | undefined) {
+  if (v) {
+    return v.map(e => {
+      let label = e.label != undefined ? e.label : e
+      let value = e.value != undefined ? e.value : label
+      return { label: label, value: value }
+    })
+  }
+  return v
+}
 </script>
 
 

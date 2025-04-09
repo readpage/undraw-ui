@@ -6,6 +6,9 @@
         <el-radio value="管理员" size="small">管理员</el-radio>
       </el-radio-group>
     </template>
+    <template #form-allUser="{ item, data }">
+      <el-switch v-model="data.allUser" />
+    </template>
     <div class="submit">
       <el-button type="primary" @click="submit">提交</el-button>
       <el-button @click="reset">重置</el-button>
@@ -13,7 +16,7 @@
   </u-form>
 </template>
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { FormApi } from '~/components'
 import { Time } from '~/util'
 
@@ -41,6 +44,7 @@ const options = [
 ]
 
 const form = reactive<FormApi>({
+  labelWidth: 120,
   data: {
     username: 1,
     date: '2026'
@@ -51,6 +55,7 @@ const form = reactive<FormApi>({
       prop: 'username',
       width: 300,
       required: true,
+      loading: true,
       component: {
         name: 'el-input',
         disabled: true
@@ -65,6 +70,10 @@ const form = reactive<FormApi>({
         name: 'el-select',
         width: 200,
         showValue: true,
+        filterable: true,
+        reserveKeyword: false,
+        multiple: true,
+        collapseTags: true,
         options: [{label: '男', value: 1}, {label: '女', value: 0}]
       }
     },
@@ -72,6 +81,12 @@ const form = reactive<FormApi>({
       label: '角色',
       prop: 'role',
       value: '用户',
+      group: '详细信息'
+    },
+    {
+      label: '是否全部用户',
+      prop: 'allUser',
+      value: false,
       group: '详细信息'
     },
     {
@@ -107,13 +122,17 @@ const form = reactive<FormApi>({
     },
     {
       label: '选项',
-      prop: 'option',
-      width: 300,
+      prop: 'options',
+      width: 310,
       component: {
         name: 'el-select',
-        options: options,
         multiple: true,
-        'collapse-tags': true
+        collapseTags: true,
+        remoteSearch: (val: string, done: (arg: any[]) => void) => { 
+          setTimeout(() => {
+            done(options.filter(e => e.label.includes(val)))
+          }, 200)
+        }
       }
     },
     {
@@ -131,6 +150,14 @@ const form = reactive<FormApi>({
     }
   ]
 })
+
+watch(() => form.data.allUser, val => {
+  form.items.forEach(v => {
+    if (v.prop == 'options') {
+      v.hide = val
+    }
+  })
+}, {immediate: true})
 
 const states = [
   'Alabama',

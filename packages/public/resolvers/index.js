@@ -104,6 +104,7 @@ const element = {
   ],
   UForm: [
     'undraw-ui/es/index.css',
+    'element-plus/es/components/loading/style/css',
     'element-plus/es/components/input/style/css',
     'element-plus/es/components/autocomplete/style/css',
     'element-plus/es/components/select/style/css',
@@ -114,6 +115,7 @@ const element = {
     'undraw-ui/es/components/form/form.css'
   ],
   UGroup: [
+    'element-plus/es/components/loading/style/css',
     'element-plus/es/components/input/style/css',
     'element-plus/es/components/autocomplete/style/css',
     'element-plus/es/components/select/style/css',
@@ -135,6 +137,7 @@ const element = {
     'element-plus/es/components/table-column/style/css',
     'element-plus/es/components/form/style/css',
     'element-plus/es/components/form-item/style/css',
+    'element-plus/es/components/loading/style/css',
     'element-plus/es/components/input/style/css',
     'element-plus/es/components/autocomplete/style/css',
     'element-plus/es/components/link/style/css',
@@ -179,7 +182,6 @@ const element = {
   ],
   USearch2: [
     'element-plus/es/components/autocomplete/style/css',
-    'undraw-ui/es/index.css',
-    'undraw-ui/es/components/search2/search2.css'
+    'undraw-ui/es/index.css'
   ]
 }

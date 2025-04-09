@@ -107,9 +107,9 @@ const submit: CommentFunApi['submit'] = ({ content, parentId, reply, clear }) =>
     }
   }
   // 提取出来content里面所有拥有自定义属性的提及标签
-  let spans = content.match(/<span [^>]*data-id="([^"]*)"[^>]*>/g) || []
+  let spans = content.match(/<span [^>]*id="([^"]*)"[^>]*>/g) || []
   let dataIds = spans.map(tag => {
-    let match = tag.match(/data-id="([^"]*)"/)
+    let match = tag.match(/id="([^"]*)"/)
     return match ? match[1] : null
   })
   emit('submit', { content, parentId, finish, reply, mentionList: dataIds })

@@ -117,6 +117,7 @@ const throttle = (fn: (...args: any) => void, interval = 500) => {
  * 定时器 支持(多次)执行切换开启/关闭
  * @param fn 执行的函数
  * @param interval 执行间隔 秒(s)
+ * @param immedidate 是否立即执行
  * @returns
  * 用法:
  * (1) 定义函数初始化
@@ -127,10 +128,13 @@ const throttle = (fn: (...args: any) => void, interval = 500) => {
  * 执行:
  * task() 开启， 再次执行task() 关闭 或使用 task.close()关闭
  */
-const interval = (fn: (...args: any) => void, interval = 1000) => {
+const interval = (fn: (...args: any) => void, interval = 1000, immedidate = false) => {
   let timer: any = null
   const _interval = (...args: any) => {
     if (!timer) {
+      if (immedidate) {
+        fn.apply(this, args)
+      }
       timer = setInterval(() => {
         fn.apply(this, args)
       }, interval)
