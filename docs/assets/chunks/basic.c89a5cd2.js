@@ -1,1 +1,0 @@
-import{d as n,h as l,D as s,o as r,c as u,G as c,z as p,t as d,F as m}from"./framework.ea809f5c.js";const V=n({__name:"basic",setup(_){const e=l("");return(i,o)=>{const a=s("u-editor");return r(),u(m,null,[c(a,{modelValue:e.value,"onUpdate:modelValue":o[0]||(o[0]=t=>e.value=t),placeholder:"请输入内容"},null,8,["modelValue"]),p("span",null,d(e.value),1)],64)}}});export{V as default};

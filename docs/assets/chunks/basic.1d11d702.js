@@ -1,1 +1,0 @@
-import{_ as n,D as s,o as t,c,G as a,F as r,z as e}from"./framework.ea809f5c.js";const _={},d=e("p",null,"有一个夜晚我烧毁了所有的记忆，从此我的梦就透明了；有一个早晨我扔掉了所有的昨天，从此我的脚步就轻盈了。",-1),l=e("p",null,"终有人会在你昏暗的时光里撒下星星，即便离去也会留下些许光明",-1);function i(p,u){const o=s("u-divider");return t(),c(r,null,[d,a(o),l],64)}const f=n(_,[["render",i]]);export{f as default};
