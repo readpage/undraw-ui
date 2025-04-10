@@ -1,11 +1,6 @@
-# Editor directories and files
-.idea
-*.log
-
-# Ignore directory
-logs/
-node_modules/
+packages/
 dist/
+<<<<<<< HEAD
 # !docs/.vitepress/**/dist/
 public/static/
 demo-dist/
@@ -16,3 +11,7 @@ cache/
 demo/
 node_modules/
 packages/
+=======
+node_modules/
+logs/
+>>>>>>> a640014fdcd4c0e80d5bf4aadf02c488132923a6
