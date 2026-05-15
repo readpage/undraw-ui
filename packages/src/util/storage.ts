@@ -6,7 +6,7 @@ const getType = (localStorage: boolean) => {
  * setStorage
  * @param key
  * @param value
- * @param localStorage
+ * @param localStorage default: true => {true: 'localStorage', false: 'sessionStorage'}
  */
 export const set = <T = any>(key: string, value: T, localStorage = true) => {
   if (value === '' || value === null || value === undefined) {
@@ -19,7 +19,7 @@ export const set = <T = any>(key: string, value: T, localStorage = true) => {
 /**
  * 获取 getStorage
  * @param key
- * @param localStorage
+ * @param localStorage default: true => {true: 'localStorage', false: 'sessionStorage'}
  * @returns
  */
 export const get = <T = any>(key: string, localStorage = true) => {
@@ -34,7 +34,7 @@ export const get = <T = any>(key: string, localStorage = true) => {
 /**
  * 删除 removeStorage
  * @param key
- * @param localStorage
+ * @param localStorage default: true => {true: 'localStorage', false: 'sessionStorage'}
  */
 export const remove = (key: string, localStorage = true) => {
   window[getType(localStorage)].removeItem(key)
@@ -42,7 +42,7 @@ export const remove = (key: string, localStorage = true) => {
 
 /**
  * 清空 clearStorage
- * @param localStorage
+ * @param localStorage default: true => {true: 'localStorage', false: 'sessionStorage'}
  */
 export const clear = (localStorage = true) => {
   window[getType(localStorage)].clear()

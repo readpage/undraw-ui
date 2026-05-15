@@ -18,6 +18,13 @@ export default defineConfig({
       }
     ]
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern'
+      }
+    }
+  },
   server: {
     host: '0.0.0.0',
     port: 3001

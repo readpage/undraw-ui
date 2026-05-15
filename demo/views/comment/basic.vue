@@ -1,31 +1,47 @@
 <template>
-  <u-comment :config="config" @submit="submit" @before-data="beforeData">
-    <!-- <template>导航栏卡槽</template> -->
-    <!-- <template #header>头部卡槽</template> -->
-    <!-- <template #action="{ user }">动作卡槽{{ user.username }}</template> -->
-    <!-- <template #avatar="{ id, user }">头像卡槽{{ user.avatar }}</template> -->
-    <!-- <template #info>信息卡槽</template> -->
-    <!-- <template #card>用户信息卡片卡槽</template> -->
-    <!-- <template #func>功能区域卡槽</template> -->
-  </u-comment>
+  <div>
+    <div class="mode-switch">
+      <span class="mode-label">当前模式：</span>
+      <el-switch
+        v-model="isMobile"
+        active-text="移动端"
+        inactive-text="PC 端"
+        active-color="#409eff"
+        inactive-color="#909399"
+        inline-prompt
+      />
+      <span class="mode-tip">{{ isMobile ? 'Enter 换行，Shift+Enter 发送' : 'Enter 发送，Shift+Enter 换行' }}</span>
+    </div>
+    <u-comment :config="config" @submit="submit" @before-data="beforeData">
+    </u-comment>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { UToast, CommentApi, CommentSubmitApi, ConfigApi } from '~/components'
 import { Time } from '~/util'
 
+const isMobile = ref(false)
+
 const config = reactive<ConfigApi>({
-  user: {} as any, // 当前用户信息
-  comments: [], // 评论数据
-  relativeTime: true, // 开启人性化时间
+  user: {} as any,
+  comments: [],
+  relativeTime: true,
   show: {
-    level: false,    // 关闭等级显示
-    homeLink: false, // 关闭个人主页链接跳转
-    address: false, // 关闭地址信息
-    likes: false    // 关闭点赞按钮显示
-  }
+    level: false,
+    homeLink: false,
+    address: false,
+    likes: false
+  },
+  editor: {}
 })
+
+watch(isMobile, (val) => {
+  config.editor = val
+    ? { keys: { Enter: 'newline', 'Shift+Enter': 'submit' } }
+    : { keys: { Enter: 'submit', 'Shift+Enter': 'newline' } }
+}, { immediate: true })
 
 /**
  * 评论对象数据结构
@@ -40,7 +56,7 @@ const comments: CommentApi[] = [
     id: '1',
     parentId: null,
     uid: '2',
-    content: '床前明月光，疑是地上霜。<br>举头望明月，低头思故乡。<img class="a" id="a" style="width: 50px" src=a onerror="window.location.href=\'https://baidu.com\'">',
+    content: '床前明月光，疑是地上霜。<br>举头望明月，低头思故乡。',
     createTime: new Time().add(-1, 'day'),
     user: {
       username: '李白 [唐代]',
@@ -92,7 +108,6 @@ const comments: CommentApi[] = [
 
 // 模拟请求接口获取评论数据
 setTimeout(() => {
-  // 当前登录用户数据
   config.user = {
     id: 1,
     username: '杜甫 [唐代]',
@@ -103,12 +118,10 @@ setTimeout(() => {
 
 // 评论提交事件
 let temp_id = 100
-// 提交评论事件
 const submit = ({ content, parentId, finish }: CommentSubmitApi) => {
   let str = '提交评论:' + content + ';\t父id: ' + parentId
   console.log(str)
 
-  // 模拟请求接口生成数据
   const comment: CommentApi = {
     id: String((temp_id += 1)),
     parentId: parentId,
@@ -127,10 +140,29 @@ const submit = ({ content, parentId, finish }: CommentSubmitApi) => {
   }, 200)
 }
 
-// 加载前评论数据处理
 function beforeData(val: any) {
 }
 </script>
 
 <style lang="scss" scoped>
+.mode-switch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: var(--u-bg-color-secondary, #f5f5f5);
+  border-radius: 6px;
+
+  .mode-label {
+    font-size: 14px;
+    color: var(--u-text-color, #333);
+    white-space: nowrap;
+  }
+
+  .mode-tip {
+    font-size: 12px;
+    color: var(--u-text-color-placeholder, #999);
+  }
+}
 </style>

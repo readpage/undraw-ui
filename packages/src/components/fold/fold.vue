@@ -1,6 +1,6 @@
 <template>
   <div class="u-fold">
-    <div ref="textBox" class="txt-box" :class="{ 'over-hidden': fold }">
+    <div ref="textBox" class="txt-box" :class="{ 'over-hidden': fold , 'txt-box-bottom': isOver && unfold}">
       <div class="txt-content" ref="divBox">
         <slot></slot>
         <el-button :class="[ position == 'right' ? 'right': 'left', 'txt-btn']" v-if="isOver && unfold" @click="fold = !fold" type="primary" plain link>

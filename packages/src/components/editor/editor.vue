@@ -4,7 +4,8 @@
     <div class="content">
       <div ref="editorRef" class="rich-input" contenteditable="true" :placeholder="placeholder" @focus="onFocus"
         @input="onInput" @blur="onBlur" @keydown="keyDown" @paste="pasteFn" @mouseup="onMouseup"
-        @keydown.up.prevent="moveSelection(-1)" @keydown.down.prevent="moveSelection(1)" v-html="text"></div>
+        @keydown.up.prevent="moveSelection(-1)" @keydown.down.prevent="moveSelection(1)"
+        :enterkeyhint="cfg.keys.Enter === 'newline' ? 'enter' : 'send'" v-html="text"></div>
       <div ref="imageRef" class="image-preview-box">
         <div v-for="(url, index) in imgList" :key="index" class="image-preview">
           <img :src="url" alt="" />
@@ -20,6 +21,10 @@
         </div>
       </div>
     </div>
+    <div v-if="cfg.sendBtn" class="editor-footer">
+      <button class="send-btn" :class="{ disabled: !hasContent }" :disabled="!hasContent"
+        @click="handleSubmit">{{ cfg.sendBtnText || '发送' }}</button>
+    </div>
     <slot name="footer" @click.stop=""></slot>
     <Mention v-show="state.showMention" ref="mentionRef" v-bind="mention" :show-mention="state.showMention"
       @select="onSelect" />
@@ -30,6 +35,7 @@ import { UToast, cloneDeep, isEmpty } from 'undraw-ui'
 import { affixEmits, ClickOutside as vClickOutside } from 'element-plus'
 import { computed, nextTick, reactive, ref, toRefs, watch } from 'vue'
 import Mention, { MentionApi } from './mention.vue'
+import type { UEditorConfig } from './index'
 defineOptions({
   name: 'UEditor'
 })
@@ -40,13 +46,22 @@ interface Props {
   minHeight?: number
   mention?: MentionApi
   imgList?: string[]
+  config?: UEditorConfig
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  minHeight: 30
+  minHeight: 30,
+  config: () => ({})
 })
 
 const { imgList } = toRefs(props)
+
+const defaultKeys = { Enter: 'submit', 'Shift+Enter': 'newline', 'Ctrl+Enter': 'newline' } as const
+const cfg = computed(() => ({
+  keys: { ...defaultKeys, ...props.config?.keys } as Record<string, 'submit' | 'newline'>,
+  sendBtn: props.config?.sendBtn ?? false,
+  sendBtnText: props.config?.sendBtnText ?? '发送'
+}))
 
 const state = reactive({
   active: false,
@@ -67,6 +82,7 @@ const text = ref()
 
 const minHeight = computed(() => props.minHeight + 'px')
 const padding = computed(() => (props.minHeight == 30 ? '4px 10px' : '8px 12px'))
+const hasContent = computed(() => !isEmpty(props.modelValue.replace(/&nbsp;|<br>| /g, '')))
 const mention = computed(() => {
   let mention = cloneDeep(props.mention || {})
   mention.showMention = false
@@ -192,24 +208,37 @@ function onMouseup() {
   state.showMention = getShowMention()
 }
 
+// 获取按键组合标识
+function getKeyCombo(e: KeyboardEvent): string {
+  const parts: string[] = []
+  if (e.ctrlKey || e.metaKey) parts.push('Ctrl')
+  if (e.shiftKey) parts.push('Shift')
+  if (e.altKey) parts.push('Alt')
+  parts.push(e.key === 'Enter' ? 'Enter' : e.key)
+  return parts.join('+')
+}
+
 // 键盘事件
 const keyDown = (e: KeyboardEvent) => {
-  if (e.ctrlKey && e.key == 'Enter') {
-    //用户点击了ctrl+enter触发
-    state.showMention = false
-    if (isEmpty(props.modelValue.replace(/&nbsp;|<br>| /g, ''))) {
-      UToast({ message: '内容不能为空', type: 'info' })
-    } else {
-      emit('submit')
-    }
-  } else if (e.key == 'Enter' && state.showMention) {
+  if (e.key == 'Enter' && state.showMention) {
     // 提及回车事件
     e.preventDefault()
     onSelect(mentionRef.value?.getSelectItem())
-  } else if (e.key == 'Enter') {
-    // 回车事件
-    // console.log('Enter')
-  } else if (e.key == 'Backspace') {
+    return
+  }
+
+  if (e.key === 'Enter') {
+    const combo = getKeyCombo(e)
+    const action = cfg.value.keys[combo]
+    if (action === 'submit') {
+      e.preventDefault()
+      handleSubmit()
+    }
+    // 'newline' 或未定义：走默认行为插入换行
+    return
+  }
+
+  if (e.key == 'Backspace') {
     let selection = window.getSelection()
     let ran = range.value
     let atEl = selection?.focusNode?.parentNode as HTMLElement
@@ -222,6 +251,15 @@ const keyDown = (e: KeyboardEvent) => {
       state.showMention = false
       e.preventDefault()
     }
+  }
+}
+
+function handleSubmit() {
+  state.showMention = false
+  if (isEmpty(props.modelValue.replace(/&nbsp;|<br>| /g, ''))) {
+    UToast({ message: '内容不能为空', type: 'info' })
+  } else {
+    emit('submit')
   }
 }
 

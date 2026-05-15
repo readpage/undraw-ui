@@ -10,7 +10,7 @@ $positin: left !default;
     // 会对过长的单词做词内断词处理，这样单词始终会在容器中，不会溢出容器
     word-wrap: break-word;
     position: relative;
-    margin-bottom: 20px;
+
     .txt-btn {
       position: absolute;
       bottom: -20px;
@@ -22,6 +22,10 @@ $positin: left !default;
       left: 0;
     }
   }
+  .txt-box-bottom {
+    margin-bottom: 20px;
+  }
+
 
   .action-box {
     margin-bottom: 5px;

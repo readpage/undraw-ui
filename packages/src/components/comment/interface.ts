@@ -1,4 +1,4 @@
-import { EmojiApi, MentionApi } from '~/components'
+import { EmojiApi, MentionApi, UEditorConfig } from '~/components'
 
 export interface ReplyApi {
   total: number
@@ -52,6 +52,8 @@ export interface ConfigApi {
   upload?: (files: File[], finish: (val: string[]) => void) => void
   page?: boolean
   relativeTime?: boolean
+  /** UEditor 编辑器配置，详见 UEditorConfig */
+  editor?: UEditorConfig
 }
 
 export interface CommentSubmit2Api {

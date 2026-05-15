@@ -152,21 +152,16 @@ const interval = (fn: (...args: any) => void, interval = 1000, immedidate = fals
 }
 
 function UUID() {
-  let d = new Date().getTime() //Timestamp
-  let d2 = (performance && performance.now && performance.now() * 1000) || 0 //Time in microseconds since page-load or 0 if unsupported
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    let r = Math.random() * 16 //random number between 0 and 16
-    if (d > 0) {
-      //Use timestamp until depleted
-      r = (d + r) % 16 | 0
-      d = Math.floor(d / 16)
-    } else {
-      //Use microseconds since page-load if supported
-      r = (d2 + r) % 16 | 0
-      d2 = Math.floor(d2 / 16)
-    }
-    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16)
-  })
+  // 优先使用原生 crypto.randomUUID()（Chrome 49+, Safari 16.4+）
+  if (typeof crypto?.randomUUID === 'function') {
+    return crypto.randomUUID()
+  }
+  // 降级：crypto.getRandomValues（iOS Safari 6+, Android 4.4+）
+  const bytes = crypto.getRandomValues(new Uint8Array(16))
+  bytes[6] = (bytes[6] & 0x0f) | 0x40 // 设置版本位 (v4)
+  bytes[8] = (bytes[8] & 0x3f) | 0x80 // 设置变体位
+  const hex = Array.from(bytes, (b) => b.toString(16).padStart(2, '0'))
+  return `${hex[0]}${hex[1]}${hex[2]}${hex[3]}-${hex[4]}${hex[5]}-${hex[6]}${hex[7]}-${hex[8]}${hex[9]}-${hex[10]}${hex[11]}${hex[12]}${hex[13]}${hex[14]}${hex[15]}`
 }
 
 export { debounce, throttle, interval, UUID }

@@ -8,7 +8,7 @@ export default {
     contentBtn: 'comment',
     contentBtn2: 'publish',
     title: 'comments',
-    placeholder: 'Enter a comment (Enter line feed, Ctrl + Enter send)',
+    placeholder: 'Enter a comment (Enter to send, Shift + Enter for new line)',
     placeholder2: 'reply',
     reply: 'reply',
     cancelReply: 'cancel reply',

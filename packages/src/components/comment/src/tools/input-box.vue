@@ -8,6 +8,7 @@
       :placeholder="props.placeholder"
       :min-height="64"
       :img-list="imgList"
+      :config="editorConfig"
       @click="() => (action = true)"
       @focus="onFocus"
       @input="input"
@@ -48,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { h, inject, nextTick, reactive, ref } from 'vue'
+import { computed, h, inject, nextTick, reactive, ref } from 'vue'
 import { ElButton } from 'element-plus'
 import { UEditor, UEmoji, UToast, translate as $u, EditorInstance, } from 'undraw-ui'
 import { CommentApi, CommentFunApi, ConfigApi } from '~/components'
@@ -66,6 +67,8 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const config = inject('config') as ConfigApi
+const editorConfig = computed(() => config.editor)
 const popper = `div[id^='el-popper-container']`
 
 const content = ref('')

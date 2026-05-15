@@ -8,7 +8,7 @@ export default {
     contentBtn: '发表评论',
     contentBtn2: '发布',
     title: '全部评论',
-    placeholder: '输入评论（Enter换行，Ctrl + Enter发送）',
+    placeholder: '输入评论（Enter发送，Shift + Enter换行）',
     placeholder2: '回复',
     reply: '回复',
     cancelReply: '取消回复',

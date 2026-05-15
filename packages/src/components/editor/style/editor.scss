@@ -74,6 +74,39 @@ span {
   background: var(--u-bg-color);
 }
 
+.editor-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 6px 12px;
+  border-top: 1px solid var(--u-bg-color-overlay);
+
+  .send-btn {
+    padding: 6px 20px;
+    background: var(--u-color-primary);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &.disabled,
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled):hover {
+      opacity: 0.85;
+    }
+
+    &:not(:disabled):active {
+      opacity: 0.7;
+    }
+  }
+}
+
 // .active .rich-input {
 //   background: url('/static/img/commentBack.webp') no-repeat 95% -10px/19%;
 // }
